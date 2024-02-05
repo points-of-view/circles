@@ -12,4 +12,6 @@ Once you have nix installed, you can run `nix develop` or use [direnv](https://d
 * Run the app with `yarn tauri dev`
 
 > [!NOTE]
-> Make sure you have rust, node, and the diesel-cli installed when not using Nix to manage your environment.
+> When not using Nix to manage your environment:
+> * Make sure you have rust, node, and the diesel-cli installed.
+> * Make sure you have the necessary environment variables set. See [`flake.nix`](./flake.nix) for details.
