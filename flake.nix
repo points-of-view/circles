@@ -80,7 +80,7 @@
                 value = "src-tauri/diesel.toml";
               }
               {
-                name ="DATABASE_URL";
+                name = "DATABASE_URL";
                 eval = "$PRJ_DATA_DIR/erasmus.sqlite";
               }
             ];
