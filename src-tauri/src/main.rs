@@ -1,15 +1,22 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+use erasmus::{create_session, GlobalState};
+
 #[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
+fn start_session(state: tauri::State<GlobalState>) -> i32 {
+    let mut connection = state.connection.lock().unwrap();
+
+    let session = create_session(&mut *connection);
+    session.id
 }
 
 fn main() {
+    let state = GlobalState::build();
+
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
+        .manage(state)
+        .invoke_handler(tauri::generate_handler![start_session])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

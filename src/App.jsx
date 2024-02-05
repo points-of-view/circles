@@ -2,32 +2,19 @@ import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  const [sessionID, setSessionID] = useState(null);
 
-  async function greet() {
+  async function startNewSession() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
+    const response = await invoke("start_session");
+    setSessionID(response);
   }
 
   return (
-    <div className="container">
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
+    <div className="">
+      <button onClick={startNewSession}>Start new session</button>
 
-      <p>{greetMsg}</p>
+      {sessionID && <div className="">Currently in session {sessionID}</div>}
     </div>
   );
 }
