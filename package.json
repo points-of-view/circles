@@ -1,0 +1,36 @@
+{
+  "name": "erasmus",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "./src"
+  ],
+  "scripts": {
+    "tauri": "tauri",
+    "lint": "yarn lint:js && yarn lint:css",
+    "lint:fix": "yarn lint:js --fix && yarn lint:css --fix",
+    "lint:css": "stylelint '**/*.{css,scss}' --ignore-path .gitignore",
+    "lint:js": "eslint . --ext js,jsx,ts --ignore-path .gitignore"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.5.9",
+    "@tree-company/eslint-config": "^0.3.2",
+    "@tree-company/stylelint-config": "^0.3.2",
+    "eslint": "^8.56.0",
+    "prettier": "3.2.5",
+    "stylelint": "^16.2.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "@tree-company/eslint-config/react"
+    ]
+  },
+  "stylelint": {
+    "extends": [
+      "@tree-company/stylelint-config"
+    ]
+  }
+}
