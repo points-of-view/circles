@@ -11,10 +11,10 @@ function App() {
   }
 
   return (
-    <div className="">
+    <div>
       <button onClick={startNewSession}>Start new session</button>
 
-      {sessionID && <div className="">Currently in session {sessionID}</div>}
+      {sessionID && <div>Currently in session {sessionID}</div>}
     </div>
   );
 }
