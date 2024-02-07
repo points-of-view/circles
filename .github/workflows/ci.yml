@@ -46,6 +46,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Setup rust
         uses: moonrepo/setup-rust@v1
+      - name: Install packages
+        run: sudo apt-get install -y gdk-3.0 
       - name: Run tests
         run: cargo test --manifest-path src-tauri/Cargo.toml
   build:
@@ -62,5 +64,7 @@ jobs:
           cache: 'yarn'
       - name: Install dependencies
         run: yarn install
+      - name: Install packages
+        run: sudo apt-get install -y gdk-3.0 
       - name: Build
         run: yarn tauri build
