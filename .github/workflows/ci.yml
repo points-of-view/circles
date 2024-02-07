@@ -30,7 +30,15 @@ jobs:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Lint with nixpkgs-fmt
         run: nix-shell -p nixpkgs-fmt --run "nixpkgs-fmt --check flake.nix"
-  build-frontend:
+  lint-rust:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup rust
+        uses: moonrepo/setup-rust@v1
+      - name: "Lint with cargo"
+        run: cargo fmt --manifest-path src-tauri/Cargo.toml --all -- --check
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
