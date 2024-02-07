@@ -48,10 +48,13 @@ jobs:
         uses: moonrepo/setup-rust@v1
       - name: Run tests
         run: cargo test --manifest-path src-tauri/Cargo.toml
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - name: Setup rust
+        uses: moonrepo/setup-rust@v1
       - name: Set up Node
         uses: actions/setup-node@v4
         with: 
@@ -60,4 +63,4 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Build
-        run: yarn workspace frontend build
+        run: yarn tauri build
