@@ -39,6 +39,15 @@ jobs:
         uses: moonrepo/setup-rust@v1
       - name: "Lint with cargo"
         run: cargo fmt --manifest-path src-tauri/Cargo.toml --all -- --check
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup rust
+        uses: moonrepo/setup-rust@v1
+      - name: Run tests
+        run: cargo test --manifest-path src-tauri/Cargo.toml
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
