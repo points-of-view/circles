@@ -43,6 +43,10 @@
               pkgs.rustfmt
               pkgs.rust-analyzer
               pkgs.clippy
+              pkgs.diesel-cli
+
+              # SQLite
+              pkgs.sqlite
             ];
             commands = [
               {
@@ -70,7 +74,12 @@
                 '';
               }
             ];
-            env = [ ];
+            env = [
+              {
+                name = "DIESEL_CONFIG_FILE";
+                value = "src-tauri/diesel.toml";
+              }
+            ];
           };
         };
       }

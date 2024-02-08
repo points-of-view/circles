@@ -1,15 +1,36 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+use erasmus::{database::create_session, GlobalState};
+use std::fs;
+use tauri::Manager;
+
 #[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
+fn start_session(state: tauri::State<GlobalState>) -> i32 {
+    let mut connection = state.database_connection.lock().unwrap();
+
+    let session = create_session(&mut *connection);
+    session.id
 }
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
+        .setup(|app| {
+            let mut data_dir = app
+                .path_resolver()
+                .app_data_dir()
+                .expect("Error while getting `app_data_dir`");
+
+            // Make sure the data_dir exists
+            fs::create_dir_all(&data_dir)?;
+
+            data_dir.push("erasmus_db.sqlite");
+            let state = GlobalState::build(data_dir)?;
+
+            app.manage(state);
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![start_session])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
