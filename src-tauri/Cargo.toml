@@ -17,6 +17,7 @@ serde_json = "1.0"
 diesel = { version = "2.1.4", features = ["sqlite", "time", "returning_clauses_for_sqlite_3_35"] }
 time = "0.3.34"
 diesel_migrations = { version = "2.1.0", features = ["sqlite"] }
+libsqlite3-sys = { version = "0.27.0", features = ["bundled"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
