@@ -4,6 +4,7 @@ diesel::table! {
     sessions (id) {
         id -> Integer,
         created_at -> Timestamp,
-        current_step -> Integer,
+        project_key -> Text,
+        theme_key -> Text,
     }
 }

@@ -17,11 +17,11 @@ pub fn setup_database(location: &path::PathBuf) -> Result<SqliteConnection, Box<
     Ok(connection)
 }
 
-pub fn create_session(connection: &mut SqliteConnection) -> Session {
+pub fn create_session(connection: &mut SqliteConnection, project_key: &str, theme_key: &str) -> Session {
     use crate::database::schema::sessions;
 
     diesel::insert_into(sessions::table)
-        .default_values()
+        .values((sessions::project_key.eq(project_key), sessions::theme_key.eq(theme_key)))
         .returning(Session::as_returning())
         .get_result(connection)
         .expect("Error saving new session")
@@ -63,7 +63,7 @@ mod tests {
         let mut connection = test_db();
 
         connection.test_transaction::<_, Error, _>(|conn| {
-            let session = create_session(conn);
+            let session = create_session(conn, "testProject", "eco");
 
             // Every test should create a new in-memory DB, so this id is always 1
             assert_eq!(session.id, 1);
