@@ -47,12 +47,14 @@ jobs:
       - name: Setup rust
         uses: moonrepo/setup-rust@v1
       - name: Install packages
-        run: sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
       - name: Run tests
         run: cargo test --manifest-path src-tauri/Cargo.toml
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - name: Setup rust
@@ -65,6 +67,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Install packages
-        run: sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
       - name: Build
         run: yarn tauri build
