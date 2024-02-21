@@ -30,8 +30,4 @@ diesel::table! {
 diesel::joinable!(answers -> steps (step_id));
 diesel::joinable!(steps -> sessions (session_id));
 
-diesel::allow_tables_to_appear_in_same_query!(
-    answers,
-    sessions,
-    steps,
-);
+diesel::allow_tables_to_appear_in_same_query!(answers, sessions, steps,);
