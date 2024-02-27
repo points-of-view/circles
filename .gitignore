@@ -25,3 +25,6 @@ dist-ssr
 
 # Data directory
 .data/
+
+# Cargo builds and excecutables
+target/*
