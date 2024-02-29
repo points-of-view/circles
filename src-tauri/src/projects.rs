@@ -4,10 +4,11 @@ use serde::Deserialize;
 // NOTE: This path is relative to the Cargo root
 const PROJECTS_DIR: Dir = include_dir!("../projects");
 
+// NOTE: The structure for projects, themes, ... is not fully mapped here.
+// We only map the properties that we need in our rust app
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Project {
-    pub name: String,
     pub key: String,
     pub themes: Vec<Theme>,
 }
@@ -15,7 +16,6 @@ pub struct Project {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Theme {
-    pub name: String,
     pub key: String,
     pub questions: Vec<Question>,
 }
@@ -23,7 +23,6 @@ pub struct Theme {
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Question {
-    pub title: String,
     pub key: String,
     pub options: Vec<Option>,
 }
@@ -32,7 +31,6 @@ pub struct Question {
 #[serde(rename_all = "camelCase")]
 pub struct Option {
     pub key: String,
-    pub value: String,
 }
 
 impl Project {
@@ -68,15 +66,15 @@ mod tests {
             .expect("File `projects/test.json` does not exist!");
         let project = Project::build(&file);
 
-        assert_eq!(project.name, "Test project");
+        assert_eq!(project.key, "test");
         assert_eq!(project.themes.len(), 1);
 
         let theme = &project.themes[0];
-        assert_eq!(theme.name, "My first theme");
+        assert_eq!(theme.key, "theme-one");
         assert_eq!(theme.questions.len(), 1);
 
         let question = &theme.questions[0];
-        assert_eq!(question.title, "How is your day going?");
+        assert_eq!(question.key, "question-one");
         assert_eq!(question.options.len(), 2);
     }
 

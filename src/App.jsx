@@ -4,11 +4,12 @@ import projects from "../projects";
 
 export default function App() {
   const [project, setProject] = useState(null);
+  const language = project?.availableLanguages[0];
 
   return project ? (
     <Session project={project} resetProject={() => setProject(null)} />
   ) : (
-    <SelectProject setProject={setProject} />
+    <SelectProject setProject={setProject} language={language} />
   );
 }
 
@@ -36,7 +37,7 @@ function SelectProject({ setProject }) {
   );
 }
 
-function Session({ project, resetProject }) {
+function Session({ project, resetProject, language }) {
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
 
@@ -59,7 +60,7 @@ function Session({ project, resetProject }) {
 
   return (
     <div>
-      {project.name}
+      {project.name[language]}
       <form action="" onSubmit={startNewSession}>
         <input type="text" name="themeKey" id="themeKey" required />
         <button type="submit">Start new session</button>
