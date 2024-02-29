@@ -1,7 +1,7 @@
 pub mod models;
 pub mod schema;
 
-use crate::database::models::Session;
+use crate::database::models::{Answer, Session, Step};
 use diesel::{prelude::*, sqlite::Sqlite};
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use std::{error::Error, path};
@@ -17,14 +17,57 @@ pub fn setup_database(location: &path::PathBuf) -> Result<SqliteConnection, Box<
     Ok(connection)
 }
 
-pub fn create_session(connection: &mut SqliteConnection) -> Session {
+pub fn create_session(
+    connection: &mut SqliteConnection,
+    project_key: &str,
+    theme_key: &str,
+) -> Session {
     use crate::database::schema::sessions;
 
     diesel::insert_into(sessions::table)
-        .default_values()
+        .values((
+            sessions::project_key.eq(project_key),
+            sessions::theme_key.eq(theme_key),
+        ))
         .returning(Session::as_returning())
         .get_result(connection)
         .expect("Error saving new session")
+}
+
+pub fn create_step(
+    connection: &mut SqliteConnection,
+    session_id: &i32,
+    question_key: &str,
+) -> Step {
+    use crate::database::schema::steps;
+
+    diesel::insert_into(steps::table)
+        .values((
+            steps::session_id.eq(session_id),
+            steps::question_key.eq(question_key),
+        ))
+        .returning(Step::as_returning())
+        .get_result(connection)
+        .expect("Error saving step")
+}
+
+pub fn create_answer(
+    connection: &mut SqliteConnection,
+    step_id: &i32,
+    option_key: &str,
+    token_key: &str,
+) -> Answer {
+    use crate::database::schema::answers;
+
+    diesel::insert_into(answers::table)
+        .values((
+            answers::step_id.eq(step_id),
+            answers::option_key.eq(option_key),
+            answers::token_key.eq(token_key),
+        ))
+        .returning(Answer::as_returning())
+        .get_result(connection)
+        .expect("Error saving answer")
 }
 
 fn run_migrations(
@@ -63,10 +106,42 @@ mod tests {
         let mut connection = test_db();
 
         connection.test_transaction::<_, Error, _>(|conn| {
-            let session = create_session(conn);
+            let session = create_session(conn, "testProject", "eco");
 
             // Every test should create a new in-memory DB, so this id is always 1
             assert_eq!(session.id, 1);
+
+            Ok(())
+        })
+    }
+
+    #[test]
+    fn can_create_step() {
+        let mut connection = test_db();
+
+        connection.test_transaction::<_, Error, _>(|conn| {
+            let session = create_session(conn, "testProject", "eco");
+
+            let step = create_step(conn, &session.id, "my-question");
+
+            // Every test should create a new in-memory DB, so this id is always 1
+            assert_eq!(step.id, 1);
+
+            Ok(())
+        })
+    }
+
+    #[test]
+    fn can_create_answers() {
+        let mut connection = test_db();
+
+        connection.test_transaction::<_, Error, _>(|conn| {
+            let session = create_session(conn, "testProject", "eco");
+            let step = create_step(conn, &session.id, "my-question");
+            let answer = create_answer(conn, &step.id, "option-1", "abc123");
+
+            // Every test should create a new in-memory DB, so this id is always 1
+            assert_eq!(answer.id, 1);
 
             Ok(())
         })

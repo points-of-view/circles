@@ -6,10 +6,10 @@ use std::fs;
 use tauri::Manager;
 
 #[tauri::command]
-fn start_session(state: tauri::State<GlobalState>) -> i32 {
+fn start_session(state: tauri::State<GlobalState>, project_key: String, theme_key: String) -> i32 {
     let mut connection = state.database_connection.lock().unwrap();
 
-    let session = create_session(&mut *connection);
+    let session = create_session(&mut *connection, &project_key, &theme_key);
     session.id
 }
 

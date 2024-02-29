@@ -1,0 +1,7 @@
+DROP TABLE sessions;
+
+CREATE TABLE IF NOT EXISTS sessions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    created_at DATETIME DEFAULT current_timestamp NOT NULL,
+    current_step INTEGER DEFAULT 0 NOT NULL
+);
