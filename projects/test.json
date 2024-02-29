@@ -1,0 +1,26 @@
+{
+  "name": "Test project",
+  "key": "test",
+  "themes": [
+    {
+      "name": "My first theme",
+      "key": "theme-one",
+      "questions": [
+        {
+          "title": "How is your day going?",
+          "key": "question-one",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": "Great"
+            },
+            {
+              "key": "question-one-option-two",
+              "value": "Really great!"
+            }
+          ]
+        }
+      ]
+    }
+  ] 
+}

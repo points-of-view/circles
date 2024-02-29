@@ -1,4 +1,5 @@
 pub mod database;
+pub mod projects;
 
 use crate::database::setup_database;
 use diesel::prelude::*;

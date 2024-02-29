@@ -18,6 +18,7 @@ diesel = { version = "2.1.4", features = ["sqlite", "time", "returning_clauses_f
 time = "0.3.34"
 diesel_migrations = { version = "2.1.0", features = ["sqlite"] }
 libsqlite3-sys = { version = "0.27.0", features = ["bundled"] }
+include_dir = { version = "0.7.3", features = ["glob"] }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
