@@ -4,7 +4,7 @@ use serde::Deserialize;
 // NOTE: This path is relative to the Cargo root
 const PROJECTS_DIR: Dir = include_dir!("../projects");
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Project {
     pub name: String,
@@ -12,7 +12,7 @@ pub struct Project {
     pub themes: Vec<Theme>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Theme {
     pub name: String,
@@ -20,7 +20,7 @@ pub struct Theme {
     pub questions: Vec<Question>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Question {
     pub title: String,
@@ -28,7 +28,7 @@ pub struct Question {
     pub options: Vec<Option>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Option {
     pub key: String,
