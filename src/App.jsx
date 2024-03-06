@@ -1,32 +1,73 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
+import projects from "../projects";
 
-function App() {
+export default function App() {
+  const [project, setProject] = useState(null);
+  const language = project?.availableLanguages[0];
+
+  return project ? (
+    <Session project={project} resetProject={() => setProject(null)} />
+  ) : (
+    <SelectProject setProject={setProject} language={language} />
+  );
+}
+
+function SelectProject({ setProject }) {
+  const [error, setError] = useState(null);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const projectKey = data.get("projectKey");
+    try {
+      await invoke("select_project", { projectKey });
+      setProject(projects[projectKey]);
+    } catch (e) {
+      setError(e);
+    }
+  }
+
+  return (
+    <form action="" onSubmit={handleSubmit}>
+      <input type="text" name="projectKey" id="projectKey" required />
+      <button type="submit">Open project</button>
+      {error && <span>{error}</span>}
+    </form>
+  );
+}
+
+function Session({ project, resetProject, language }) {
+  const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
 
   async function startNewSession(e) {
     e.preventDefault();
     const data = new FormData(e.target);
 
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    const response = await invoke("start_session", {
-      projectKey: data.get("projectKey"),
-      themeKey: data.get("themeKey"),
-    });
-    setSessionID(response);
+    const themeKey = data.get("themeKey");
+
+    try {
+      const response = await invoke("start_session", { themeKey });
+      setSessionID(response);
+    } catch (e) {
+      if (e === "Please select a project first") {
+        resetProject();
+      }
+      setError(e);
+    }
   }
 
   return (
     <div>
+      {project.name[language]}
       <form action="" onSubmit={startNewSession}>
-        <input type="text" name="projectKey" id="projectKey" required />
         <input type="text" name="themeKey" id="themeKey" required />
         <button type="submit">Start new session</button>
+        {error && <span>{error}</span>}
       </form>
 
       {sessionID && <div>Currently in session {sessionID}</div>}
     </div>
   );
 }
-
-export default App;

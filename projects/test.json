@@ -1,0 +1,29 @@
+{
+  "name": {
+    "en": "Test project"
+  },
+  "availableLanguages": ["en"],
+  "key": "test",
+  "themes": [
+    {
+      "name": { "en": "My first theme" },
+      "key": "theme-one",
+      "questions": [
+        {
+          "title": { "en": "How is your day going?" },
+          "key": "question-one",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "en": "Great" }
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "en": "Really great!" }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

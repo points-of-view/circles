@@ -1,16 +1,18 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use erasmus::{database::create_session, GlobalState};
+use erasmus::GlobalState;
 use std::fs;
 use tauri::Manager;
 
 #[tauri::command]
-fn start_session(state: tauri::State<GlobalState>, project_key: String, theme_key: String) -> i32 {
-    let mut connection = state.database_connection.lock().unwrap();
+fn select_project(state: tauri::State<GlobalState>, project_key: String) -> Result<(), String> {
+    state.select_project(project_key)
+}
 
-    let session = create_session(&mut *connection, &project_key, &theme_key);
-    session.id
+#[tauri::command]
+fn start_session(state: tauri::State<GlobalState>, theme_key: String) -> Result<i32, String> {
+    state.start_session(theme_key)
 }
 
 fn main() {
@@ -30,7 +32,7 @@ fn main() {
             app.manage(state);
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![start_session])
+        .invoke_handler(tauri::generate_handler![select_project, start_session])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
