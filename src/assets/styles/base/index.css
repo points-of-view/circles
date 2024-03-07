@@ -1,0 +1,7 @@
+@import url("./reset.css");
+@import url("./theme.css");
+
+/* Base settings that should always apply */
+html {
+  font-family: var(--font-family);
+}
