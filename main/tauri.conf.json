@@ -3,7 +3,7 @@
     "beforeDevCommand": "yarn workspace frontend dev",
     "beforeBuildCommand": "yarn workspace frontend build",
     "devPath": "http://localhost:1420",
-    "distDir": "../src/dist"
+    "distDir": "../frontend/dist"
   },
   "package": {
     "productName": "erasmus",

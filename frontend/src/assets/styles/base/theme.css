@@ -1,0 +1,51 @@
+/* Screen breakpoints */
+@custom-media --screen-sm screen and (min-width: 640px);
+@custom-media --screen-md screen and (min-width: 768px);
+@custom-media --screen-lg screen and (min-width: 1024px);
+@custom-media --screen-xl screen and (min-width: 1280px);
+@custom-media --screen-2xl screen and (min-width: 1536px);
+
+:root {
+  /* HSL values */
+  --hsl-white: 0 0% 100%;
+  --hsl-black: 0 0% 0%;
+  --hsl-primary: 0 0% 0%;
+  --hsl-secondary: 0 0% 0%;
+  --hsl-accent: 0 0% 0%;
+  --hsl-grey: 0 0% 0%;
+  --hsl-grey-light: 0 0% 0%;
+
+  /* Colours */
+  --color-white: hsl(var(--hsl-white));
+  --color-black: hsl(var(--hsl-black));
+  --color-primary: hsl(var(--hsl-primary));
+  --color-secondary: hsl(var(--hsl-secondary));
+  --color-accent: hsl(var(--hsl-accent));
+  --color-grey: hsl(var(--hsl-grey));
+  --color-grey-light: hsl(var(--hsl-grey-light));
+
+  /* Fonts */
+  --font-family: "CUSTOM_FONT", ui-sans-serif, system-ui, -apple-system,
+    blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+  --text-xs: 0.675rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+
+  /* Border radius */
+  --rounded-sm: 2px;
+  --rounded-md: 6px;
+  --rounded-base: 10px;
+  --rounded-full: 9999px;
+
+  /* Screen breakpoints */
+  --screen-sm: 640px;
+  --screen-md: 768px;
+  --screen-lg: 1024px;
+  --screen-xl: 1280px;
+  --screen-2xl: 1536px;
+}

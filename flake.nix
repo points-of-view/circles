@@ -52,7 +52,7 @@
 
         tauriArgs = {
           src = pkgs.lib.cleanSourceWith {
-            src = ./src-tauri; # The original, unfiltered source
+            src = ./main; # The original, unfiltered source
             filter = path: type:
               (pkgs.lib.hasSuffix "\.html" path) ||
               (pkgs.lib.hasSuffix "\.scss" path) ||
@@ -95,7 +95,7 @@
             pname = "erasmus";
             version = "unstable";
             inherit cargoArtifacts;
-            tauriConfigPath = ./src-tauri/tauri.conf.json;
+            tauriConfigPath = ./main/tauri.conf.json;
             tauriDistDir = frontend;
           });
         };
@@ -131,7 +131,7 @@
                   set +e
                   yarn lint:js
                   yarn lint:css
-                  cargo fmt --manifest-path src-tauri/Cargo.toml --all -- --check
+                  cargo fmt --manifest-path main/Cargo.toml --all -- --check
                   ${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt --check flake.nix
                 '';
               }
@@ -143,7 +143,7 @@
                   set +e
                   yarn lint:js --fix
                   yarn lint:css --fix
-                  cargo fmt --manifest-path src-tauri/Cargo.toml --all
+                  cargo fmt --manifest-path main/Cargo.toml --all
                   ${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt flake.nix
                 '';
               }
@@ -151,7 +151,7 @@
             env = [
               {
                 name = "DIESEL_CONFIG_FILE";
-                value = "src-tauri/diesel.toml";
+                value = "main/diesel.toml";
               }
               {
                 name = "DATABASE_URL";

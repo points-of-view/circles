@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
-import projects from "../projects";
+import projects from "../../projects";
 
 export default function App() {
   const [project, setProject] = useState(null);
