@@ -68,6 +68,35 @@ impl GlobalState {
 
         Ok(session.id)
     }
+
+    pub fn toggle_reading(&self, reading: bool) -> Result<bool, bool> {
+        // if reading == true { 
+            println!("Reading is {}",reading);
+            Ok(reading)
+        // }
+        // let mut project = self.current_project.lock().unwrap();
+        // let project = match &mut *project {
+        //     Some(p) => p,
+        //     None => return Err("Please select a project first".to_string()),
+        // };
+
+        // let theme = match project.themes.iter().find(|&theme| theme.key == theme_key) {
+        //     Some(t) => t.clone(),
+        //     None => return Err("Could not find theme with this code!".to_string()),
+        // };
+
+        // let mut connection = self.database_connection.lock().unwrap();
+        // let mut current_session = self.current_session.lock().unwrap();
+
+        // let session = create_session(&mut *connection, &project.key, &theme_key);
+        // *current_session = Some(CurrentSession {
+        //     session_id: session.id,
+        //     theme: theme,
+        // })
+        // .into();
+
+        // Ok(session.id)
+    }
 }
 
 #[cfg(test)]

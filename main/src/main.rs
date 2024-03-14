@@ -15,6 +15,11 @@ fn start_session(state: tauri::State<GlobalState>, theme_key: String) -> Result<
     state.start_session(theme_key)
 }
 
+#[tauri::command]
+fn toggle_reading(state: tauri::State<GlobalState>, reading: bool) -> Result<bool, bool> {
+    state.toggle_reading(reading)
+}
+
 fn main() {
     tauri::Builder::default()
         .setup(|app| {
@@ -32,7 +37,7 @@ fn main() {
             app.manage(state);
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![select_project, start_session])
+        .invoke_handler(tauri::generate_handler![select_project, start_session, toggle_reading])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

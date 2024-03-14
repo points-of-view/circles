@@ -40,6 +40,7 @@ function SelectProject({ setProject }) {
 function Session({ project, resetProject, language }) {
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
+  const [reading, setReading] = useState(false);
 
   async function startNewSession(e) {
     e.preventDefault();
@@ -58,6 +59,27 @@ function Session({ project, resetProject, language }) {
     }
   }
 
+  async function toggleReading() {
+    try {
+      // Toggle reading state first
+      setReading((reading) => !reading);
+
+      // Get the updated reading state
+      const newReading = !reading;
+
+      if (newReading) {
+        console.log("Started reading tags");
+      } else {
+        console.log("Stopped reading tags");
+      }
+
+      // Invoke with the updated reading state
+      await invoke("toggle_reading", { reading: newReading });
+    } catch (e) {
+      setError(e);
+    }
+  }
+
   return (
     <div>
       {project.name[language]}
@@ -67,7 +89,16 @@ function Session({ project, resetProject, language }) {
         {error && <span>{error}</span>}
       </form>
 
-      {sessionID && <div>Currently in session {sessionID}</div>}
+      {sessionID && (
+        <div>
+          <div>Currently in session {sessionID}</div>{" "}
+          {reading ? (
+            <button onClick={() => toggleReading()}>Stop reading</button>
+          ) : (
+            <button onClick={() => toggleReading()}>Start reading</button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
