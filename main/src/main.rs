@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use erasmus::GlobalState;
+use erasmus::{GlobalState, Tags};
 use std::fs;
 use tauri::Manager;
 
@@ -16,7 +16,7 @@ fn start_session(state: tauri::State<GlobalState>, theme_key: String) -> Result<
 }
 
 #[tauri::command]
-fn toggle_reading(state: tauri::State<GlobalState>, reading: bool) -> Result<bool, bool> {
+fn toggle_reading(state: tauri::State<GlobalState>, reading: bool) -> Result<Vec<Tags>, String> {
     state.toggle_reading(reading)
 }
 

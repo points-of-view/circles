@@ -41,6 +41,7 @@ function Session({ project, resetProject, language }) {
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
   const [reading, setReading] = useState(false);
+  const [tags, setTags] = useState(null);
 
   async function startNewSession(e) {
     e.preventDefault();
@@ -74,7 +75,11 @@ function Session({ project, resetProject, language }) {
       }
 
       // Invoke with the updated reading state
-      await invoke("toggle_reading", { reading: newReading });
+      const responseTags = await invoke("toggle_reading", {
+        reading: newReading,
+      });
+      setTags(responseTags.map(a => `(${ Object.values(a) })`).join(", "));
+      console.log(responseTags)
     } catch (e) {
       setError(e);
     }
@@ -93,7 +98,10 @@ function Session({ project, resetProject, language }) {
         <div>
           <div>Currently in session {sessionID}</div>{" "}
           {reading ? (
-            <button onClick={() => toggleReading()}>Stop reading</button>
+            <div>
+              <button onClick={() => toggleReading()}>Stop reading</button>
+              <p>{tags}</p>
+            </div>
           ) : (
             <button onClick={() => toggleReading()}>Start reading</button>
           )}
