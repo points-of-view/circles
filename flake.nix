@@ -121,6 +121,9 @@
 
               # SQLite
               pkgs.sqlite
+
+              # Java
+              pkgs.oraclejre8;
             ];
             commands = [
               {
