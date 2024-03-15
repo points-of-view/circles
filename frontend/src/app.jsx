@@ -68,18 +68,11 @@ function Session({ project, resetProject, language }) {
       // Get the updated reading state
       const newReading = !reading;
 
-      if (newReading) {
-        console.log("Started reading tags");
-      } else {
-        console.log("Stopped reading tags");
-      }
-
       // Invoke with the updated reading state
       const responseTags = await invoke("toggle_reading", {
         reading: newReading,
       });
-      setTags(responseTags.map(a => `(${ Object.values(a) })`).join(", "));
-      console.log(responseTags)
+      setTags(responseTags.map((a) => `(${Object.values(a)})`).join(", "));
     } catch (e) {
       setError(e);
     }
