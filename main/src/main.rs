@@ -37,7 +37,11 @@ fn main() {
             app.manage(state);
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![select_project, start_session, toggle_reading])
+        .invoke_handler(tauri::generate_handler![
+            select_project,
+            start_session,
+            toggle_reading
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

@@ -1,7 +1,7 @@
+use std::io::{self, BufRead, BufReader, Write};
 use std::process::{Command, Stdio};
-use std::io::{self, BufReader, BufRead, Write};
-use std::thread;
 use std::sync::mpsc;
+use std::thread;
 
 pub fn run_instance() {
     let jar_path = "src/apis/rfid_api.jar";
