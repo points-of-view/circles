@@ -4,10 +4,53 @@
   },
   "availableLanguages": ["en"],
   "key": "test",
+  "copy": {
+    "chooseTheme": { "en": "Choose a theme of your choice"},
+    "themeInstruction": { "en": "Stand in the circle of your answer"}
+  },
   "themes": [
     {
       "name": { "en": "My first theme" },
       "key": "theme-one",
+      "questions": [
+        {
+          "title": { "en": "How is your day going?" },
+          "key": "question-one",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "en": "Great" }
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "en": "Really great!" }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": { "en": "My second theme" },
+      "key": "theme-two",
+      "questions": [
+        {
+          "title": { "en": "How is your day going?" },
+          "key": "question-one",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "en": "Great" }
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "en": "Really great!" }
+            }
+          ]
+        }
+      ]
+    },{
+      "name": { "en": "My third theme" },
+      "key": "theme-three",
       "questions": [
         {
           "title": { "en": "How is your day going?" },
