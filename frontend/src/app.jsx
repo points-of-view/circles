@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import projects from "../../projects";
+import ProjectSelector from "./components/project_selector";
+import Theme from "./components/theme";
 
 export default function App() {
   const [project, setProject] = useState(null);
@@ -38,36 +40,21 @@ function SelectProject({ setProject }) {
 }
 
 function Session({ project, resetProject, language }) {
-  const [error, setError] = useState(null);
-  const [sessionID, setSessionID] = useState(null);
-
-  async function startNewSession(e) {
-    e.preventDefault();
-    const data = new FormData(e.target);
-
-    const themeKey = data.get("themeKey");
-
-    try {
-      const response = await invoke("start_session", { themeKey });
-      setSessionID(response);
-    } catch (e) {
-      if (e === "Please select a project first") {
-        resetProject();
-      }
-      setError(e);
-    }
-  }
+  const [step, setStep] = useState("theme");
 
   return (
     <div>
-      {project.name[language]}
-      <form action="" onSubmit={startNewSession}>
-        <input type="text" name="themeKey" id="themeKey" required />
-        <button type="submit">Start new session</button>
-        {error && <span>{error}</span>}
-      </form>
-
-      {sessionID && <div>Currently in session {sessionID}</div>}
+      <div className="container">
+        {step === "open project" ? (
+          <ProjectSelector
+            project={project}
+            language={language}
+            resetProject={resetProject}
+          />
+        ) : (
+          step === "theme" && <Theme />
+        )}
+      </div>
     </div>
   );
 }
