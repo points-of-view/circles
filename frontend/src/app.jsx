@@ -44,6 +44,10 @@ function Session({ project, resetProject, language }) {
 
   return (
     <div>
+    <div id="control_panel">
+      <button onClick={() => setStep("open project")}>open projects</button>
+      <button onClick={() => setStep("theme")}>theme</button>
+    </div>
       <div className="container">
         {step === "open project" ? (
           <ProjectSelector

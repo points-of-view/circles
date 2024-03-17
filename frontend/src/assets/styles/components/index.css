@@ -1,3 +1,10 @@
 .page {
   width: 100%;
 }
+
+#control_panel{
+  z-index: 100;
+  position: absolute;
+  right: 0px;
+  border: 3px solid red;
+}
