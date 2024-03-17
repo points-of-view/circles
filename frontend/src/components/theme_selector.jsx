@@ -35,7 +35,9 @@ export default function ThemeSelector({
             {project.copy.themeInstruction["en"]}
           </div>
           <div className="overlay__righttoptoast">10</div>
-          <div className="overlay__rightbottomtoast">Logo / Info / Projectnumber</div>
+          <div className="overlay__rightbottomtoast">
+            Logo / Info / Projectnumber
+          </div>
         </div>
         <div className="themes">
           {project.name[language]}
