@@ -32,10 +32,10 @@
   justify-content: center;
   align-items: center;
   width: fit-content;
-  height: 8vh;
+  height: 3rem;
   padding: 0 2rem;
   vertical-align: bottom;
-  border-radius: 10rem;
+  border-radius: var(--rounded-full);
   background-color: grey;
 }
 
@@ -81,19 +81,23 @@
 
 .themes {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.themes__one {
-  grid-area: 1 / 1 / 2 / 2;
+.themes__theme { 
+  margin: 40vh auto; /* NOTE: placeholder value, to be resolved in issue #45 */
 }
 
-.themes__two {
-  grid-area: 1 / 2 / 2 / 3;
+.themes__theme:nth-of-type(1) {  
+  background-color: blue;  
 }
 
-.themes__three {
-  grid-area: 1 / 3 / 2 / 4;
+.themes__theme:nth-of-type(2) {  
+  background-color: purple;  
+}
+
+.themes__theme:nth-of-type(3) {  
+  background-color: green;  
 }
 
 #control-panel {

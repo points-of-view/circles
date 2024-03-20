@@ -9,7 +9,7 @@ export default function ThemeSelector({
 }) {
   const [error, setError] = useState(null);
 
-  async function startNewSession(e) {
+  async function startNewSession(e) { // eslint-disable-line
     e.preventDefault();
     const data = new FormData(e.target);
 
@@ -41,14 +41,9 @@ export default function ThemeSelector({
         </div>
         <div className="themes">
           {project.name[language]}
-          <form action="" onSubmit={startNewSession}>
-            <input type="text" name="themeKey" id="themeKey" required />
-            <button type="submit">Start new session</button>
-            {error && <span>{error}</span>}
-          </form>
-          <div className="themes__one">{project.themes[0].name.en}</div>
-          <div className="themes__two">{project.themes[1].name.en}</div>
-          <div className="themes__three">{project.themes[2].name.en}</div>
+          <div className="themes__theme">{project.themes[0].name.en}</div>
+          <div className="themes__theme">{project.themes[1].name.en}</div>
+          <div className="themes__theme">{project.themes[2].name.en}</div>
         </div>
       </div>
     </div>
