@@ -2,7 +2,6 @@ import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import projects from "../../projects";
 import ThemeSelector from "./components/theme_selector";
-import ChooseThemeSplash from "./components/choose_theme_splash";
 
 export default function App() {
   const [project, setProject] = useState(null);
