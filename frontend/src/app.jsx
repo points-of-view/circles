@@ -40,35 +40,36 @@ function SelectProject({ setProject }) {
 }
 
 function Session({ project, resetProject, language }) {
-  const [step, setStep] = useState("ChooseThemeSplash");
+  const STEPS = {  
+    chooseThemeSplash: "CHOOSE_THEME_SPLASH",  
+    themeSelector: "CHOOSE_THEME_SESSION"  
+  }  
+  
+  const [step, setStep] = useState(STEPS.chooseThemeSplash);
   const [sessionID, setSessionID] = useState(null);
 
   return (
-    <div>
+    <>
       <div id="control-panel">
-        <button onClick={() => setStep("ChooseThemeSplash")}>
+        <button onClick={() => setStep(STEPS.chooseThemeSplash)}>
           Choose Theme Splash
         </button>
-        <button onClick={() => setStep("OpenThemeSession")}>
+        <button onClick={() => setStep(STEPS.themeSelector)}>
           Open Theme Session
         </button>
         {sessionID && <div>Currently in session {sessionID}</div>}
       </div>
       <div className="container">
-        {step === "OpenThemeSession" ? (
           <ThemeSelector
-            project={project}
+          project={project}
             language={language}
             resetProject={resetProject}
             sessionID={sessionID}
             setSessionID={setSessionID}
+            step={step}
+            STEPS={STEPS}
           />
-        ) : (
-          step === "ChooseThemeSplash" && (
-            <ChooseThemeSplash project={project} language={language} />
-          )
-        )}
       </div>
-    </div>
+    </>
   );
 }

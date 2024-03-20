@@ -6,8 +6,10 @@ export default function ThemeSelector({
   resetProject,
   language,
   setSessionID,
+  step,
+  STEPS
 }) {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); // eslint-disable-line
 
   async function startNewSession(e) { // eslint-disable-line
     e.preventDefault();
@@ -27,23 +29,26 @@ export default function ThemeSelector({
   }
 
   return (
-    <div>
-      <div className="header">{project.translations.chooseTheme["en"]}</div>
-      <div className="content">
-        <div className="overlay">
-          <div className="overlay__middletoptoast">
+    <div className="chooseTheme">
+      <div 
+          className={step === STEPS.themeSelector ? "chooseTheme__instruction" : STEPS.chooseThemeSplash && "chooseTheme__instruction--fullscreen"}  
+
+      >{project.translations.chooseTheme["en"]}</div>
+      <div className="chooseTheme__content">
+        <div className="chooseTheme__overlay">
+          <div className="chooseTheme__overlay--middletoptoast">
             {project.translations.themeInstruction["en"]}
           </div>
-          <div className="overlay__righttoptoast">10</div>
-          <div className="overlay__rightbottomtoast">
+          <div className="chooseTheme__overlay--righttoptoast">10</div>
+          <div className="chooseTheme__overlay--rightbottomtoast">
             Logo / Info / Projectnumber
           </div>
         </div>
-        <div className="themes">
+        <div className="chooseTheme__themes">
           {project.name[language]}
-          <div className="themes__theme">{project.themes[0].name.en}</div>
-          <div className="themes__theme">{project.themes[1].name.en}</div>
-          <div className="themes__theme">{project.themes[2].name.en}</div>
+          <div className="chooseTheme__themes__theme">{project.themes[0].name.en}</div>
+          <div className="chooseTheme__themes__theme">{project.themes[1].name.en}</div>
+          <div className="chooseTheme__themes__theme">{project.themes[2].name.en}</div>
         </div>
       </div>
     </div>
