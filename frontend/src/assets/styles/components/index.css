@@ -13,7 +13,7 @@
 
 .overlay {
   position: absolute;
-  z-index: 90;
+  z-index: 1;
   display: grid;
   grid-template-rows: repeat(2, 1fr);
   grid-template-columns: repeat(3, 1fr);
