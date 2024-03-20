@@ -4,7 +4,7 @@
   },
   "availableLanguages": ["en"],
   "key": "test",
-  "copy": {
+  "translations": {
     "chooseTheme": { "en": "Choose a theme of your choice"},
     "themeInstruction": { "en": "Stand in the circle of your answer"}
   },
