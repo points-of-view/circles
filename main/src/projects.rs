@@ -67,7 +67,7 @@ mod tests {
         let project = Project::build(&file);
 
         assert_eq!(project.key, "test");
-        assert_eq!(project.themes.len(), 1);
+        assert_eq!(project.themes.len(), 3);
 
         let theme = &project.themes[0];
         assert_eq!(theme.key, "theme-one");
