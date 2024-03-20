@@ -28,11 +28,11 @@ export default function ThemeSelector({
 
   return (
     <div>
-      <div className="header">{project.copy.chooseTheme["en"]}</div>
+      <div className="header">{project.translations.chooseTheme["en"]}</div>
       <div className="content">
         <div className="overlay">
           <div className="overlay__middletoptoast">
-            {project.copy.themeInstruction["en"]}
+            {project.translations.themeInstruction["en"]}
           </div>
           <div className="overlay__righttoptoast">10</div>
           <div className="overlay__rightbottomtoast">
