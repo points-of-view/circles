@@ -40,11 +40,11 @@ function SelectProject({ setProject }) {
 }
 
 function Session({ project, resetProject, language }) {
-  const STEPS = {  
-    chooseThemeSplash: "CHOOSE_THEME_SPLASH",  
-    themeSelector: "CHOOSE_THEME_SESSION"  
-  }  
-  
+  const STEPS = {
+    chooseThemeSplash: "CHOOSE_THEME_SPLASH",
+    themeSelector: "CHOOSE_THEME_SESSION",
+  };
+
   const [step, setStep] = useState(STEPS.chooseThemeSplash);
   const [sessionID, setSessionID] = useState(null);
 
@@ -60,15 +60,15 @@ function Session({ project, resetProject, language }) {
         {sessionID && <div>Currently in session {sessionID}</div>}
       </div>
       <div className="container">
-          <ThemeSelector
+        <ThemeSelector
           project={project}
-            language={language}
-            resetProject={resetProject}
-            sessionID={sessionID}
-            setSessionID={setSessionID}
-            step={step}
-            STEPS={STEPS}
-          />
+          language={language}
+          resetProject={resetProject}
+          sessionID={sessionID}
+          setSessionID={setSessionID}
+          step={step}
+          STEPS={STEPS}
+        />
       </div>
     </>
   );

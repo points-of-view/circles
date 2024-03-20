@@ -7,7 +7,7 @@ export default function ThemeSelector({
   language,
   setSessionID,
   step,
-  STEPS
+  STEPS,
 }) {
   const [error, setError] = useState(null); // eslint-disable-line
 
@@ -30,10 +30,15 @@ export default function ThemeSelector({
 
   return (
     <div className="chooseTheme">
-      <div 
-          className={step === STEPS.themeSelector ? "chooseTheme__instruction" : STEPS.chooseThemeSplash && "chooseTheme__instruction--fullscreen"}  
-
-      >{project.translations.chooseTheme["en"]}</div>
+      <div
+        className={
+          step === STEPS.themeSelector
+            ? "chooseTheme__instruction"
+            : STEPS.chooseThemeSplash && "chooseTheme__instruction--fullscreen"
+        }
+      >
+        {project.translations.chooseTheme["en"]}
+      </div>
       <div className="chooseTheme__content">
         <div className="chooseTheme__overlay">
           <div className="chooseTheme__overlay--middletoptoast">
@@ -46,9 +51,15 @@ export default function ThemeSelector({
         </div>
         <div className="chooseTheme__themes">
           {project.name[language]}
-          <div className="chooseTheme__themes__theme">{project.themes[0].name.en}</div>
-          <div className="chooseTheme__themes__theme">{project.themes[1].name.en}</div>
-          <div className="chooseTheme__themes__theme">{project.themes[2].name.en}</div>
+          <div className="chooseTheme__themes__theme">
+            {project.themes[0].name.en}
+          </div>
+          <div className="chooseTheme__themes__theme">
+            {project.themes[1].name.en}
+          </div>
+          <div className="chooseTheme__themes__theme">
+            {project.themes[2].name.en}
+          </div>
         </div>
       </div>
     </div>
