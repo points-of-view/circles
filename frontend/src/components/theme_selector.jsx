@@ -33,33 +33,27 @@ export default function ThemeSelector({
       <div
         className={
           step === STEPS.themeSelector
-            ? "chooseTheme__instruction"
-            : STEPS.chooseThemeSplash && "chooseTheme__instruction--fullscreen"
+            ? "instruction"
+            : STEPS.chooseThemeSplash && "instruction--fullscreen"
         }
       >
         {project.translations.chooseTheme["en"]}
       </div>
-      <div className="chooseTheme__content">
-        <div className="chooseTheme__overlay">
-          <div className="chooseTheme__overlay--middletoptoast">
+      <div className="content">
+        <div className="overlay">
+          <div className="overlay--middletoptoast">
             {project.translations.themeInstruction["en"]}
           </div>
-          <div className="chooseTheme__overlay--righttoptoast">10</div>
-          <div className="chooseTheme__overlay--rightbottomtoast">
+          <div className="overlay--righttoptoast">10</div>
+          <div className="overlay--rightbottomtoast">
             Logo / Info / Projectnumber
           </div>
         </div>
-        <div className="chooseTheme__themes">
+        <div className="themes">
           {project.name[language]}
-          <div className="chooseTheme__themes__theme">
-            {project.themes[0].name.en}
-          </div>
-          <div className="chooseTheme__themes__theme">
-            {project.themes[1].name.en}
-          </div>
-          <div className="chooseTheme__themes__theme">
-            {project.themes[2].name.en}
-          </div>
+          <div className="themes__theme">{project.themes[0].name.en}</div>
+          <div className="themes__theme">{project.themes[1].name.en}</div>
+          <div className="themes__theme">{project.themes[2].name.en}</div>
         </div>
       </div>
     </div>
