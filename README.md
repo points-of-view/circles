@@ -7,9 +7,6 @@ Refer to the [the nixos documentation](https://nixos.org/download#nix-install-ma
 
 Once you have nix installed, you can run `nix develop` or use [direnv](https://direnv.net/) to load the devshell.
 
-> [!NOTE]
-> For communication with Zebra FX9600 the API com.zebra.rfid.api3 from Zebra is used and bundled in `rfid_api.jar`. The source code and the api fall under Zebra's [EULA](https://www.zebra.com/us/en/support-downloads/eula/eula-reference.html).
-
 ## Local development
 * Install dependencies with `yarn install`
 * Run the app with `yarn tauri dev`
