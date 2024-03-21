@@ -41,7 +41,6 @@ function Session({ project, resetProject, language }) {
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
   const [reading, setReading] = useState(false);
-  const [tags, setTags] = useState(null);
 
   async function startNewSession(e) {
     e.preventDefault();
@@ -64,7 +63,7 @@ function Session({ project, resetProject, language }) {
     try {
       // Invoke with the updated reading state
       const status = await invoke("toggle_reading");
-      setReading(status)
+      setReading(status);
     } catch (e) {
       setError(e);
     }
@@ -85,7 +84,6 @@ function Session({ project, resetProject, language }) {
           {reading ? (
             <div>
               <button onClick={() => toggleReading()}>Stop reading</button>
-              <p>{tags}</p>
             </div>
           ) : (
             <button onClick={() => toggleReading()}>Start reading</button>
