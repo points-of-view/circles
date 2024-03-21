@@ -2,18 +2,27 @@ use std::io::{BufRead, BufReader};
 use std::process::{Child, Command, Stdio};
 use std::sync::mpsc;
 use std::thread;
+use serde::Serialize;
+
+#[derive(Serialize)]
+pub struct Tag {
+    id: String,
+    strength: i32,
+    antenna: i32,
+} 
+
+const JAR_PATH: &str = "src/apis/rfid_api.jar";
 
 pub fn run_instance() -> Result<Child, String> {
-    let jar_path = "src/apis/rfid_api.jar";
     // Check if the JAR file exists
-    if !std::path::Path::new(&jar_path).exists() {
-        return Err(format!("Error: JAR file not found at {}", jar_path));
+    if !std::path::Path::new(&JAR_PATH).exists() {
+        return Err(format!("Error: JAR file not found at {}", JAR_PATH));
     }
 
     // Spawn a child process to run the JAR file
     let mut child = match Command::new("java")
         .arg("-jar")
-        .arg(jar_path)
+        .arg(JAR_PATH)
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .spawn()

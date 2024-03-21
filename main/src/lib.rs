@@ -6,7 +6,6 @@ use database::{create_session, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
 use rfid_tags::run_instance;
-use serde::Serialize;
 use std::{error::Error, path::PathBuf, process::Child, sync::Mutex};
 
 pub struct CurrentSession {
@@ -14,18 +13,10 @@ pub struct CurrentSession {
     pub theme: Theme,
 }
 
-#[derive(Serialize)]
-pub struct Tags {
-    id: String,
-    strength: i32,
-    antenna: i32,
-}
-
 pub struct GlobalState {
     pub database_connection: Mutex<SqliteConnection>,
     pub current_project: Mutex<Option<Project>>,
     pub current_session: Mutex<Option<CurrentSession>>,
-    pub read_tags: Mutex<Option<Tags>>,
     pub child_handle: Mutex<Option<Child>>,
 }
 
@@ -37,7 +28,6 @@ impl GlobalState {
             database_connection: Mutex::new(connection),
             current_project: Mutex::new(None),
             current_session: Mutex::new(None),
-            read_tags: Mutex::new(None),
             child_handle: Mutex::new(None),
         };
 
