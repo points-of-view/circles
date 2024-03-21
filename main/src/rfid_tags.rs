@@ -1,15 +1,15 @@
+use serde::Serialize;
 use std::io::{BufRead, BufReader};
 use std::process::{Child, Command, Stdio};
 use std::sync::mpsc;
 use std::thread;
-use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct Tag {
     id: String,
     strength: i32,
     antenna: i32,
-} 
+}
 
 const JAR_PATH: &str = "src/apis/rfid_api.jar";
 

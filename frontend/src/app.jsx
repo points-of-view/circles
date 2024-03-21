@@ -81,9 +81,12 @@ function Session({ project, resetProject, language }) {
       {sessionID && (
         <div>
           <div>Currently in session {sessionID}</div>{" "}
-            <div>
-              <span><button onClick={() => toggleReading()}>Toggle reading</button>Reading: {reading.toString()}</span>
-            </div>
+          <div>
+            <span>
+              <button onClick={() => toggleReading()}>Toggle reading</button>
+              Reading: {reading.toString()}
+            </span>
+          </div>
         </div>
       )}
     </div>
