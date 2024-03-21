@@ -123,7 +123,7 @@
               pkgs.sqlite
 
               # Java
-              pkgs.oraclejre8;
+              pkgs.openjdk17
             ];
             commands = [
               {
