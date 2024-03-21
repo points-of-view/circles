@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-.instruction--fullscreen {
+.themeselector-instruction--fullscreen {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,7 +11,7 @@
   vertical-align: bottom;
 }
 
-.instruction {
+.themeselector-instruction {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +21,7 @@
   background-color: grey;
 }
 
-.overlay {
+.themeselector-overlay {
   position: absolute;
   z-index: 1;
   display: grid;
@@ -36,7 +36,7 @@
     / repeat(1fr, 3); */
 }
 
-.overlay--middletoptoast {
+.themeselector-overlay__middletoptoast {
   grid-area: 1 / 2 / 2 /2;
   display: flex;
   justify-content: center;
@@ -49,7 +49,7 @@
   background-color: grey;
 }
 
-.overlay--righttoptoast {
+.themeselector-overlay__righttoptoast {
   grid-area: 1 / 3 / 2 /4;
   display: flex;
   justify-content: center;
@@ -62,7 +62,7 @@
   background-color: grey;
 }
 
-.overlay--rightbottomtoast {
+.themeselector-overlay__rightbottomtoast {
   grid-area: 2 / 3 / 3 /4;
   display: flex;
   justify-content: center;
@@ -75,28 +75,28 @@
   background-color: grey;
 }
 
-.content {
+.themeselector-content {
   height: 88vh;
 }
 
-.themes {
+.themeselector-themes {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.themes__theme {
+.themeselector-themes__theme {
   margin: 40vh auto; /* NOTE: placeholder value, to be resolved in issue #45 */
 }
 
-.themes__theme:nth-of-type(1) {
+.themeselector-themes__theme:nth-of-type(1) {
   background-color: blue;
 }
 
-.themes__theme:nth-of-type(2) {
+.themeselector-themes__theme:nth-of-type(2) {
   background-color: purple;
 }
 
-.themes__theme:nth-of-type(3) {
+.themeselector-themes__theme:nth-of-type(3) {
   background-color: green;
 }
 
