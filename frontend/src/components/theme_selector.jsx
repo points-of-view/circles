@@ -50,15 +50,14 @@ export default function ThemeSelector({
           </div>
         </div>
         <div className="themeselector-themes">
-          {project.name[language]}
           <div className="themeselector-themes__theme">
-            {project.themes[0].name.en}
+            {project.themes[0].name[language]}
           </div>
           <div className="themeselector-themes__theme">
-            {project.themes[1].name.en}
+            {project.themes[1].name[language]}
           </div>
           <div className="themeselector-themes__theme">
-            {project.themes[2].name.en}
+            {project.themes[2].name[language]}
           </div>
         </div>
       </div>
