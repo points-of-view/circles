@@ -8,7 +8,11 @@ export default function App() {
   const language = project?.availableLanguages[0];
 
   return project ? (
-    <Session project={project} language={language} resetProject={() => setProject(null)} />
+    <Session
+      project={project}
+      language={language}
+      resetProject={() => setProject(null)}
+    />
   ) : (
     <SelectProject setProject={setProject} language={language} />
   );
@@ -46,8 +50,6 @@ function Session({ project, resetProject, language }) {
 
   const [step, setStep] = useState(STEPS.chooseThemeSplash);
   const [sessionID, setSessionID] = useState(null);
-
-  console.log(language)
 
   return (
     <>
