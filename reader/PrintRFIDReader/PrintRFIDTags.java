@@ -19,7 +19,7 @@ public class PrintRFIDTags {
 	RFIDReader myReader = null;
 	private boolean inventoryComplete = false;
 	private Lock accessEventLock = new ReentrantLock();
-    private Condition accessEventCondVar = accessEventLock.newCondition();
+	private Condition accessEventCondVar = accessEventLock.newCondition();
 	private Lock inventoryStopEventLock = new ReentrantLock();
 	private Condition inventoryStopCondVar = inventoryStopEventLock.newCondition();
 
@@ -98,7 +98,8 @@ public class PrintRFIDTags {
 						System.out.println("TagID " + tag.getTagID() + tag.getMemoryBank().toString() + "  "
 								+ tag.getMemoryBankData());
 					else
-						System.out.println("TagID " + tag.getTagID() + "Access Status:  " + tag.getOpStatus().toString());
+						System.out
+								.println("TagID " + tag.getTagID() + "Access Status:  " + tag.getOpStatus().toString());
 
 				}
 			}
@@ -147,30 +148,24 @@ public class PrintRFIDTags {
 		}
 	}
 
-	public void connectToReader(String readerHostName, int readerPort) throws InvalidUsageException, OperationFailureException {
+	public void connectToReader(String readerHostName, int readerPort)
+			throws InvalidUsageException, OperationFailureException {
 		hostName = readerHostName;
 		port = readerPort;
 		myReader.setHostName(hostName);
 		myReader.setPort(port);
-
-//		try {
-			myReader.connect();
-			myReader.Events.setInventoryStartEvent(true);
-			myReader.Events.setTagReadEvent(true);
-			myReader.Events.addEventsListener(eventsHandler);
-			System.out.println(eventsHandler);
-			StartReading();
-			System.out.println("StartReading");
-
-//		} catch (InvalidUsageException ex) {
-//			System.out.println("invalidusage");
-//		} catch (OperationFailureException ex) {
-//			System.out.println("Operationfailure");
-//		}
+		myReader.connect();
+		myReader.Events.setInventoryStartEvent(true);
+		myReader.Events.setTagReadEvent(true);
+		myReader.Events.addEventsListener(eventsHandler);
+		System.out.println(eventsHandler);
+		StartReading();
+		System.out.println("Can't make it here"); //WIP: can't execute StartReading, only in Eclipse IDE
 
 	}
 
-	public static void main(String[] args) throws InterruptedException, InvalidUsageException, OperationFailureException {
+	public static void main(String[] args)
+			throws InterruptedException, InvalidUsageException, OperationFailureException {
 		@SuppressWarnings("unused")
 		PrintRFIDTags rfidBase;
 		rfidBase = new PrintRFIDTags();
