@@ -62,17 +62,9 @@ function Session({ project, resetProject, language }) {
 
   async function toggleReading() {
     try {
-      // Toggle reading state first
-      setReading((reading) => !reading);
-
-      // Get the updated reading state
-      const newReading = !reading;
-
       // Invoke with the updated reading state
-      const responseTags = await invoke("toggle_reading", {
-        reading: newReading,
-      });
-      setTags(responseTags.map((a) => `(${Object.values(a)})`).join(", "));
+      const status = await invoke("toggle_reading");
+      setReading(status)
     } catch (e) {
       setError(e);
     }

@@ -7,12 +7,7 @@ use diesel::prelude::*;
 use projects::{Project, Theme};
 use rfid_tags::run_instance;
 use serde::Serialize;
-use std::{
-    error::Error,
-    io::{self, Write},
-    path::PathBuf,
-    sync::Mutex,
-};
+use std::{error::Error, path::PathBuf, process::Child, sync::Mutex};
 
 pub struct CurrentSession {
     pub session_id: i32,
@@ -31,6 +26,7 @@ pub struct GlobalState {
     pub current_project: Mutex<Option<Project>>,
     pub current_session: Mutex<Option<CurrentSession>>,
     pub read_tags: Mutex<Option<Tags>>,
+    pub child_handle: Mutex<Option<Child>>,
 }
 
 impl GlobalState {
@@ -42,6 +38,7 @@ impl GlobalState {
             current_project: Mutex::new(None),
             current_session: Mutex::new(None),
             read_tags: Mutex::new(None),
+            child_handle: Mutex::new(None),
         };
 
         Ok(state)
@@ -86,47 +83,20 @@ impl GlobalState {
         Ok(session.id)
     }
 
-    pub fn toggle_reading(&self, reading: bool) -> Result<Vec<Tags>, String> {
-        println!("Reading is {}", reading);
-
-        let dev_mode = false;
-        let mut tags = vec![];
-
-        if dev_mode {
-            tags = vec![
-                Tags {
-                    id: String::from("AEB"),
-                    strength: -64,
-                    antenna: 1,
-                },
-                Tags {
-                    id: String::from("AEC"),
-                    strength: -65,
-                    antenna: 3,
-                },
-                Tags {
-                    id: String::from("AED"),
-                    strength: -57,
-                    antenna: 2,
-                },
-            ];
-        } else if !dev_mode && reading {
-            run_instance();
-        } else if !reading {
-            // Send "Return" to the child process to stop reading
-            let mut stdin_writer = io::BufWriter::new(io::stdout()); // Use stdout as a placeholder, actual child process stdin is not available
-            if let Err(err) = stdin_writer.write_all(b"\n") {
-                return Err(format!("Error: Failed to write to stdin: {}", err));
+    pub fn toggle_reading(&self) -> Result<bool, String> {
+        let mut lock = self.child_handle.lock().unwrap();
+        let status = match &mut *lock {
+            Some(child) => {
+                child.kill().unwrap();
+                *lock = None;
+                false
             }
-            if let Err(err) = stdin_writer.flush() {
-                return Err(format!("Error: Failed to flush stdin: {}", err));
+            None => {
+                *lock = Some(run_instance()?);
+                true
             }
-        } else {
-            println!("Not reading tags");
-        }
-
-        // Return the tags as a result
-        Ok(tags)
+        };
+        Ok(status)
     }
 }
 
