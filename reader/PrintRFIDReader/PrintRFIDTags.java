@@ -81,13 +81,13 @@ public class PrintRFIDTags {
 		myTags = oTagDataArray.getTags();
 
 		if (myTags != null) {
-				for (int index = 0; index < oTagDataArray.getLength(); index++) {
-					TagData tag = myTags[index];
-					String key = String.valueOf(tag.getTagID());
-					String antennaId = String.valueOf(tag.getAntennaID());
-					String peakRSSI = String.valueOf(tag.getPeakRSSI());
-					System.out.println(key + "|" + antennaId + "|" + peakRSSI);
-				}
+			for (int index = 0; index < oTagDataArray.getLength(); index++) {
+				TagData tag = myTags[index];
+				String key = String.valueOf(tag.getTagID());
+				String antennaId = String.valueOf(tag.getAntennaID());
+				String peakRSSI = String.valueOf(tag.getPeakRSSI());
+				System.out.println(key + "|" + antennaId + "|" + peakRSSI);
+			}
 		}
 
 	}
@@ -149,10 +149,10 @@ public class PrintRFIDTags {
 		myReader.Events.setReaderExceptionEvent(true);
 		myReader.Events.setTagReadEvent(true);
 		myReader.Events.setAttachTagDataWithReadEvent(false);
-                    
-                    TagStorageSettings tagStorageSettings = myReader.Config.getTagStorageSettings();
-                    tagStorageSettings.discardTagsOnInventoryStop(true);
-                    myReader.Config.setTagStorageSettings(tagStorageSettings);
+
+		TagStorageSettings tagStorageSettings = myReader.Config.getTagStorageSettings();
+		tagStorageSettings.discardTagsOnInventoryStop(true);
+		myReader.Config.setTagStorageSettings(tagStorageSettings);
 
 		myReader.Events.addEventsListener(eventsHandler);
 		StartReading();
