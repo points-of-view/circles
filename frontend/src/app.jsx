@@ -52,6 +52,20 @@ function Session({ project, resetProject, language }) {
     questionInstructionOpinion: "QUESTION_INSTRUCTION_OPINION",
   };
 
+  const tags = [
+    { label: "ABD", option: 3 },
+    { label: "ABC", option: 1 },
+    { label: "ABB", option: 1 },
+    { label: "ABA", option: 3 },
+    { label: "ABD", option: 3 },
+    { label: "ABC", option: 2 },
+    { label: "ABB", option: 1 },
+    { label: "ABA", option: 3 },
+    { label: "ABC", option: 2 },
+    { label: "ABC", option: 3 },
+    { label: "ABC", option: 1 },
+  ];
+
   const [step, setStep] = useState(STEPS.questionInstructionSplash);
   const [sessionID, setSessionID] = useState(null);
 
@@ -94,6 +108,7 @@ function Session({ project, resetProject, language }) {
           setSessionID={setSessionID}
           step={step}
           STEPS={STEPS}
+          tags={tags}
         />
       </div>
     </>

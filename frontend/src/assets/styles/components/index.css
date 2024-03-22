@@ -220,15 +220,22 @@
 }
 
 .question-content {
-  width: 32vw;
-  height: 32vw;
+  display: flex;
+  flex-direction: column;
+  width: 26vw;
+  height: 26vw;
 }
 
 .people-amount {
+  width: 6rem;
+  height: 6rem;
+  background-color: green;
+  transform: translate(0, 50%);
+}
+
+.people-figure {
   display: flex;
-  align-items: flex-end;
-  width: fit-content;
-  margin-top: -2rem;
+  gap: 1rem;
 }
 
 .question-content:nth-of-type(1) {
