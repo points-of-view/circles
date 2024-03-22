@@ -100,9 +100,8 @@
             buildPhase = ''
               mkdir -p ./dist/META-INF 
               echo "Main-Class: reader.PrintRFIDReader.PrintRFIDTags" > ./dist/META-INF/MANIFEST.MF
-              ls ./build
-              javac -cp ./vendor/zebra/lib/Symbol.RFID.API3.jar -d ./build ./PrintRFIDReader/PrintRFIDTags.java
-              jar -cmvf build/META-INF/MANIFEST.MF ./dist/reader.jar ./dist/reader/PrintRFIDReader/PrintRFIDTags.class
+              javac -cp ./vendor/zebra/lib/Symbol.RFID.API3.jar -d ./dist ./PrintRFIDReader/PrintRFIDTags.java
+              jar -cmvf dist/META-INF/MANIFEST.MF ./dist/reader.jar ./dist/reader/PrintRFIDReader/PrintRFIDTags.class
             '';
 
             installPhase = ''
@@ -112,7 +111,7 @@
               makeWrapper ${pkgs.jre}/bin/java $out/bin/reader \
                 --add-flags "-cp $out/share/vendor/zebra/lib/Symbol.RFID.API3.jar -jar $out/share/java/reader.jar" \
                 --set _JAVA_OPTIONS "-Djava.library.path=$out/share/vendor/zebra/lib/x86_64" \
-                --set LD_LIBRARY_PATH "$out/share/vendor/zebra/lib/x86_64"
+                --set LD_LIBRARY_PATH ${pkgs.lib.makeLibraryPath [ "$out/share/vendor/zebra/lib/x86_64" ]}
             '';
           };
           erasmus = craneLib.buildTauriPackage (tauriArgs // {
