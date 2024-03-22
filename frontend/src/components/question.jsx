@@ -9,58 +9,64 @@ export default function Question({
   step,
   STEPS,
 }) {
-  const [error, setError] = useState(null); // eslint-disable-line
-
-  async function startNewSession(e) { // eslint-disable-line
-    e.preventDefault();
-    const data = new FormData(e.target);
-
-    const themeKey = data.get("themeKey");
-
-    try {
-      const response = await invoke("start_session", { themeKey });
-      setSessionID(response);
-    } catch (e) {
-      if (e === "Please select a project first") {
-        resetProject();
-      }
-      setError(e);
-    }
-  }
-
-  return (
-    <div className="themeselector">
-      <div
-        className={
-          step === STEPS.themeSelector
-            ? "themeselector-instruction"
-            : STEPS.chooseThemeSplash && "themeselector-instruction--fullscreen"
-        }
-      >
-        {project.translations.chooseTheme["en"]}
-      </div>
-      <div className="themeselector-content">
-        <div className="themeselector-overlay">
-          <div className="themeselector-overlay__middletoptoast">
-            {project.translations.themeInstruction["en"]}
-          </div>
-          <div className="themeselector-overlay__righttoptoast">10</div>
-          <div className="themeselector-overlay__rightbottomtoast">
-            Logo / Info / Projectnumber
-          </div>
-        </div>
-        <div className="themeselector-themes">
-          <div className="themeselector-themes__theme">
+  if (step === STEPS.questionInstructionSplash) {
+    return (
+      <div className="questionscreen">
+        <div className="questionscreen-instruction--fullscreen">{project.translations.questionMetaInstruction[language]}</div>
+        <div className="questionscreen-overlay questionscreen-overlay--fullscreen">
+          <div className="toast questionscreen-overlay__lefttoptoast--fullscreen">
             {project.themes[0].name[language]}
           </div>
-          <div className="themeselector-themes__theme">
-            {project.themes[1].name[language]}
-          </div>
-          <div className="themeselector-themes__theme">
-            {project.themes[2].name[language]}
+        </div>
+      </div>
+    );
+  }
+  else if (step === STEPS.questionContentSplash) {
+    return (
+      <div className="questionscreen">
+        <div className="questionscreen-instruction--fullscreen">{project.themes[0].questions[0].title[language]}</div>
+        <div className="questionscreen-overlay questionscreen-overlay--fullscreen">
+          <div className="toast questionscreen-overlay__lefttoptoast--fullscreen">
+            {project.themes[0].name[language]}
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else if (step === STEPS.questionContentInteract) {
+    return (
+      <div className="questionscreen">
+        <div className="questionscreen-overlay questionscreen-overlay--maximized">
+          <div className="toast toast__stretchtop">
+            {project.themes[0].questions[0].title[language]}
+          </div>
+          <div className="toast toast__middleleft">
+            {project.themes[0].name[language]}
+          </div>
+          <div className="toast toast__middlecenter">
+            {project.translations.questionStandInstruction[language]}
+          </div>
+          <div className="toast toast__timer">
+            10
+          </div>
+          <div className="toast toast__logo">
+            POV Erasmus+
+          </div>
+        </div>
+        <div className="questionscreen-content">
+          <div className="answer answer__container">
+            <div className="answer people-amount">13</div>
+            <div className="answer question-content">{project.themes[0].questions[0].options[0].value[language]}</div>
+          </div>
+          <div className="answer answer__container">
+          <div className="answer people-amount">3</div>
+            <div className="answer question-content">{project.themes[0].questions[0].options[1].value[language]}</div>
+          </div>
+          <div className="answer answer__container">
+          <div className="answer people-amount">5</div>
+            <div className="answer question-content">{project.themes[0].questions[0].options[2].value[language]}</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }

@@ -2,67 +2,110 @@
   "name": {
     "en": "Test project"
   },
-  "availableLanguages": ["en"],
+  "availableLanguages": [
+    "en"
+  ],
   "key": "test",
   "translations": {
-    "chooseTheme": { "en": "Choose a theme of your choice"},
-    "themeInstruction": { "en": "Stand in the circle of your answer"}
+    "chooseTheme": {
+      "en": "Choose a theme of your choice"
+    },
+    "themeInstruction": {
+      "en": "Stand in the circle of your answer"
+    },
+    "questionMetaInstruction": {
+      "en": "Give an answer to the following question"
+    },
+    "questionStandInstruction": {
+      "en": "Stand in the circle of your answer"
+    }
   },
   "themes": [
     {
-      "name": { "en": "My first theme" },
+      "name": {
+        "en": "My first theme"
+      },
       "key": "theme-one",
       "questions": [
         {
-          "title": { "en": "How is your day going?" },
+          "title": {
+            "en": "How is your day going?"
+          },
           "key": "question-one",
           "options": [
             {
               "key": "question-one-option-one",
-              "value": { "en": "Great" }
+              "value": {
+                "en": "Mwah"
+              }
             },
             {
               "key": "question-one-option-two",
-              "value": { "en": "Really great!" }
+              "value": {
+                "en": "Great"
+              }
+            },
+            {
+              "key": "question-one-option-three",
+              "value": {
+                "en": "Really great!"
+              }
             }
           ]
         }
       ]
     },
     {
-      "name": { "en": "My second theme" },
+      "name": {
+        "en": "My second theme"
+      },
       "key": "theme-two",
       "questions": [
         {
-          "title": { "en": "How is your day going?" },
+          "title": {
+            "en": "How is your day going?"
+          },
           "key": "question-one",
           "options": [
             {
               "key": "question-one-option-one",
-              "value": { "en": "Great" }
+              "value": {
+                "en": "Great"
+              }
             },
             {
               "key": "question-one-option-two",
-              "value": { "en": "Really great!" }
+              "value": {
+                "en": "Really great!"
+              }
             }
           ]
         }
       ]
-    },{
-      "name": { "en": "My third theme" },
+    },
+    {
+      "name": {
+        "en": "My third theme"
+      },
       "key": "theme-three",
       "questions": [
         {
-          "title": { "en": "How is your day going?" },
+          "title": {
+            "en": "How is your day going?"
+          },
           "key": "question-one",
           "options": [
             {
               "key": "question-one-option-one",
-              "value": { "en": "Great" }
+              "value": {
+                "en": "Great"
+              }
             },
             {
               "key": "question-one-option-two",
-              "value": { "en": "Really great!" }
+              "value": {
+                "en": "Really great!"
+              }
             }
           ]
         }

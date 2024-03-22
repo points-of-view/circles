@@ -46,6 +46,7 @@ function Session({ project, resetProject, language }) {
   const STEPS = {
     questionInstructionSplash: "QUESTION_INSTRUCTION_SPLASH",
     questionContentSplash: "QUESTION_CONTENT_SPLASH",
+    questionContentInteract: "QUESTION_CONTENT_INTERACT",
   };
 
   const [step, setStep] = useState(STEPS.questionInstructionSplash);
@@ -55,10 +56,13 @@ function Session({ project, resetProject, language }) {
     <>
       <div id="control-panel">
         <button onClick={() => setStep(STEPS.questionInstructionSplash)}>
-          Choose Theme Splash
+          Question Instruction Splash
         </button>
         <button onClick={() => setStep(STEPS.questionContentSplash)}>
-          Open Theme Session
+        Question Content Splash
+        </button>
+        <button onClick={() => setStep(STEPS.questionContentInteract)}>
+        Question Content Interact
         </button>
         {sessionID && <div>Currently in session {sessionID}</div>}
       </div>
