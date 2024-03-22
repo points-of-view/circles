@@ -14,10 +14,11 @@ import com.mot.rfid.api3.RfidStatusEvents;
 import com.mot.rfid.api3.STATUS_EVENT_TYPE;
 import com.mot.rfid.api3.TagData;
 import com.mot.rfid.api3.TagDataArray;
+import com.mot.rfid.api3.TagStorageSettings;
 
 public class PrintRFIDTags {
 	RFIDReader myReader = null;
-	private boolean inventoryComplete = false;
+	public boolean inventoryComplete = false;
 	private Lock accessEventLock = new ReentrantLock();
 	private Condition accessEventCondVar = accessEventLock.newCondition();
 	private Lock inventoryStopEventLock = new ReentrantLock();
@@ -34,7 +35,6 @@ public class PrintRFIDTags {
 		while (true) {
 			try {
 				SimpleInventory();
-				break;
 			} catch (InterruptedException ie) {
 				System.out.println("Inventory interruped prematurely." + ie.getMessage());
 
@@ -60,7 +60,6 @@ public class PrintRFIDTags {
 		tagStore.clear();
 
 		myReader.Actions.Inventory.perform();
-
 		try {
 			inventoryStopEventLock.lock();
 			if (!inventoryComplete) {
@@ -77,12 +76,11 @@ public class PrintRFIDTags {
 		return myReader;
 	}
 
-	void updateTags(Boolean isAccess) {
+	void updateTags() {
 		TagDataArray oTagDataArray = myReader.Actions.getReadTagsEx(1000);
 		myTags = oTagDataArray.getTags();
 
 		if (myTags != null) {
-			if (!isAccess) {
 				for (int index = 0; index < oTagDataArray.getLength(); index++) {
 					TagData tag = myTags[index];
 					String key = String.valueOf(tag.getTagID());
@@ -90,20 +88,6 @@ public class PrintRFIDTags {
 					String peakRSSI = String.valueOf(tag.getPeakRSSI());
 					System.out.println(key + "|" + antennaId + "|" + peakRSSI);
 				}
-
-			} else {
-				for (int index = 0; index < myTags.length; index++) {
-					TagData tag = myTags[index];
-					if (tag.getMemoryBankData() != null)
-						System.out.println("TagID " + tag.getTagID() + tag.getMemoryBank().toString() + "  "
-								+ tag.getMemoryBankData());
-					else
-						System.out
-								.println("TagID " + tag.getTagID() + "Access Status:  " + tag.getOpStatus().toString());
-
-				}
-			}
-
 		}
 
 	}
@@ -114,12 +98,10 @@ public class PrintRFIDTags {
 		}
 
 		public void eventReadNotify(RfidReadEvents rre) {
-			updateTags(false);
+			updateTags();
 		}
 
 		public void eventStatusNotify(RfidStatusEvents rse) {
-			System.out.println(rse.StatusEventData.getStatusEventType().toString());
-
 			STATUS_EVENT_TYPE statusType = rse.StatusEventData.getStatusEventType();
 			if (statusType == STATUS_EVENT_TYPE.ACCESS_STOP_EVENT) {
 				try {
@@ -142,7 +124,6 @@ public class PrintRFIDTags {
 
 			} else if (statusType == STATUS_EVENT_TYPE.BUFFER_FULL_WARNING_EVENT
 					|| statusType == STATUS_EVENT_TYPE.BUFFER_FULL_EVENT) {
-				System.out.println(statusType.toString());
 			}
 
 		}
@@ -155,12 +136,26 @@ public class PrintRFIDTags {
 		myReader.setHostName(hostName);
 		myReader.setPort(port);
 		myReader.connect();
+
 		myReader.Events.setInventoryStartEvent(true);
+		myReader.Events.setInventoryStopEvent(true);
+		myReader.Events.setAccessStartEvent(true);
+		myReader.Events.setAccessStopEvent(true);
+		myReader.Events.setAntennaEvent(true);
+		myReader.Events.setGPIEvent(true);
+		myReader.Events.setBufferFullEvent(true);
+		myReader.Events.setBufferFullWarningEvent(true);
+		myReader.Events.setReaderDisconnectEvent(true);
+		myReader.Events.setReaderExceptionEvent(true);
 		myReader.Events.setTagReadEvent(true);
+		myReader.Events.setAttachTagDataWithReadEvent(false);
+                    
+                    TagStorageSettings tagStorageSettings = myReader.Config.getTagStorageSettings();
+                    tagStorageSettings.discardTagsOnInventoryStop(true);
+                    myReader.Config.setTagStorageSettings(tagStorageSettings);
+
 		myReader.Events.addEventsListener(eventsHandler);
-		System.out.println(eventsHandler);
 		StartReading();
-		System.out.println("Can't make it here"); //WIP: can't execute StartReading, only in Eclipse IDE
 
 	}
 
