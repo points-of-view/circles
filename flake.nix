@@ -91,10 +91,21 @@
       {
         packages = rec {
           default = erasmus;
+          erasmus = craneLib.buildTauriPackage (tauriArgs // {
+            pname = "erasmus";
+            version = "unstable";
+            inherit cargoArtifacts;
+            tauriConfigPath = ./main/tauri.conf.json;
+            tauriDistDir = frontend;
+          });
           reader = pkgs.stdenv.mkDerivation {
             pname = "erasmus-reader";
             version = "unstable";
-            src = pkgs.lib.cleanSource ./reader;
+            # This filters with the default `cleanSourceFilter` with one exception for `.so` files
+            src = pkgs.lib.cleanSourceWith {
+              filter = path: type: (pkgs.lib.hasSuffix "\.so" path) || (pkgs.lib.cleanSourceFilter path type);
+              src = ./reader;
+            };
             nativeBuildInputs = [ pkgs.makeWrapper pkgs.jdk ];
 
             buildPhase = ''
@@ -115,13 +126,6 @@
                 --set LD_LIBRARY_PATH ${pkgs.lib.makeLibraryPath [ "$out/share/vendor/zebra/lib/x86_64" ]}
             '';
           };
-          erasmus = craneLib.buildTauriPackage (tauriArgs // {
-            pname = "erasmus";
-            version = "unstable";
-            inherit cargoArtifacts;
-            tauriConfigPath = ./main/tauri.conf.json;
-            tauriDistDir = frontend;
-          });
         };
         devShells = rec {
           default = erasmus;
