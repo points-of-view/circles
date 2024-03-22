@@ -98,6 +98,33 @@
             tauriConfigPath = ./main/tauri.conf.json;
             tauriDistDir = frontend;
           });
+          reader = pkgs.stdenv.mkDerivation {
+            pname = "zebra-reader";
+            version = "unstable";
+            src = ./reader;
+            nativeBuildInputs = [
+              pkgs.clang
+              pkgs.cmake
+              pkgs.patchelf
+            ];
+            buildInputs = [
+              pkgs.libssh2
+              pkgs.libxml2
+              pkgs.glibc
+              pkgs.zlib
+            ];
+            configurePhase = ''
+              cmake -S . -B build
+            '';
+            buildPhase = ''
+              cmake --build build
+            '';
+            installPhase = ''
+              mkdir $out
+              cp -r $TMP/reader/build/zebra-reader $out
+              cp -r $TMP/vendor/zebra/lib/x86_64
+            '';
+          };
         };
         devShells = rec {
           default = erasmus;

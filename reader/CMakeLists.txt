@@ -8,6 +8,7 @@ add_executable(${PROJECT_NAME}
 )
 
 set(VENDOR "${CMAKE_CURRENT_SOURCE_DIR}/vendor/zebra")
+set(CMAKE_SKIP_RPATH TRUE)
 
 include_directories("${VENDOR}/lib/include/")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
