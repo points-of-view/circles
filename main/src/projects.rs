@@ -71,11 +71,11 @@ mod tests {
 
         let theme = &project.themes[0];
         assert_eq!(theme.key, "theme-one");
-        assert_eq!(theme.questions.len(), 1);
+        assert_eq!(theme.questions.len(), 2);
 
         let question = &theme.questions[0];
         assert_eq!(question.key, "question-one");
-        assert_eq!(question.options.len(), 2);
+        assert_eq!(question.options.len(), 3);
     }
 
     #[test]
