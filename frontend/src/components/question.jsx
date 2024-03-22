@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 
-export default function ThemeSelector({
+export default function Question({
   project,
   resetProject,
   language,

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import projects from "../../projects";
-import ThemeSelector from "./components/theme_selector";
+import Question from "./components/question";
 
 export default function App() {
   const [project, setProject] = useState(null);
@@ -44,26 +44,26 @@ function SelectProject({ setProject }) {
 
 function Session({ project, resetProject, language }) {
   const STEPS = {
-    chooseThemeSplash: "CHOOSE_THEME_SPLASH",
-    themeSelector: "CHOOSE_THEME_SESSION",
+    questionInstructionSplash: "QUESTION_INSTRUCTION_SPLASH",
+    questionContentSplash: "QUESTION_CONTENT_SPLASH",
   };
 
-  const [step, setStep] = useState(STEPS.chooseThemeSplash);
+  const [step, setStep] = useState(STEPS.questionInstructionSplash);
   const [sessionID, setSessionID] = useState(null);
 
   return (
     <>
       <div id="control-panel">
-        <button onClick={() => setStep(STEPS.chooseThemeSplash)}>
+        <button onClick={() => setStep(STEPS.questionInstructionSplash)}>
           Choose Theme Splash
         </button>
-        <button onClick={() => setStep(STEPS.themeSelector)}>
+        <button onClick={() => setStep(STEPS.questionContentSplash)}>
           Open Theme Session
         </button>
         {sessionID && <div>Currently in session {sessionID}</div>}
       </div>
       <div className="container">
-        <ThemeSelector
+        <Question
           project={project}
           language={language}
           resetProject={resetProject}
