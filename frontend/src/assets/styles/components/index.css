@@ -120,15 +120,15 @@
 
 .questionscreen-overlay {
   position: absolute;
-  z-index: 1;
-  display: grid;
-  justify-items: stretch;
-  height: 100%;
-  width: 100%;
   top: 0;
   left: 0;
-  padding: 2rem;
+  z-index: 1;
+  display: grid;
   gap: 1rem;
+  justify-items: stretch;
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
 }
 
 .questionscreen-overlay--fullscreen {
@@ -144,32 +144,37 @@
   display: flex;
   justify-content: center;
   width: fit-content;
+  height: fit-content;
   padding: 20px 40px;
   border-radius: var(--rounded-full);
   background-color: grey;
-  height: fit-content;
 }
 
-.toast__stretchtop{
+.toast__stretchtop {
   grid-area: 1 / 1 / 2 / 4;
   width: 100%;
 }
 
-.toast__middleleft{
+.toast__topcenter {
+  grid-area: 1 / 2 / 2 / 3;
+  justify-self: center;
+}
+
+.toast__middleleft {
   grid-area: 2 / 1 / 3 / 2;
 }
 
-.toast__middlecenter{
+.toast__middlecenter {
   grid-area: 2 / 2 / 3 / 3;
   justify-self: center;
 }
 
-.toast__timer{
+.toast__timer {
   grid-area: 3 / 2 / 4 / 3;
   justify-self: center;
 }
 
-.toast__logo{
+.toast__logo {
   grid-area: 4 / 3 / 5 / 4;
   justify-self: right;
 }
@@ -181,26 +186,48 @@
   padding: 2rem;
 }
 
-.answer {
+.circle {
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 100%;
 }
 
-.answer__container{
+.circle__container {
   flex-direction: column;
+}
+
+.circle__container--fullscreen {
+  grid-area: 1 / 2 / 2 / 3;
+  flex-direction: column;
+  place-self: end center;
+}
+
+.circle--fullscreen {
+  flex-direction: column;
+  place-self: center center;
+  width: 80vh;
+  height: 80vh;
+  background-color: purple;
+}
+
+.circle__instruction--fullscreen {
+  grid-area: 1 / 2 / 2 / 3;
+  place-self: center center;
+  width: 90vh;
+  height: 90vh;
+  background-color: darkblue;
 }
 
 .question-content {
   width: 32vw;
-  height: 33vw;
+  height: 32vw;
 }
 
-.people-amount{
-  width: fit-content;
+.people-amount {
   display: flex;
   align-items: flex-end;
+  width: fit-content;
   margin-top: -2rem;
 }
 
@@ -216,7 +243,7 @@
   background-color: green;
 }
 
-.answer__container:nth-of-type(2) {
+.circle__container:nth-of-type(2) {
   margin-top: auto;
 }
 

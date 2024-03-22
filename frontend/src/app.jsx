@@ -47,23 +47,42 @@ function Session({ project, resetProject, language }) {
     questionInstructionSplash: "QUESTION_INSTRUCTION_SPLASH",
     questionContentSplash: "QUESTION_CONTENT_SPLASH",
     questionContentInteract: "QUESTION_CONTENT_INTERACT",
+    questionContentAnswerValue: "QUESTION_CONTENT_ANSWER_VALUE",
+    questionContentAnswerDescription: "QUESTION_CONTENT_ANSWER_DESCRIPTION",
+    questionInstructionOpinion: "QUESTION_INSTRUCTION_OPINION",
   };
 
   const [step, setStep] = useState(STEPS.questionInstructionSplash);
   const [sessionID, setSessionID] = useState(null);
 
+  const handleStepChange = (event) => {
+    const selectedStep = event.target.value;
+    setStep(selectedStep);
+  };
+
   return (
     <>
       <div id="control-panel">
-        <button onClick={() => setStep(STEPS.questionInstructionSplash)}>
-          Question Instruction Splash
-        </button>
-        <button onClick={() => setStep(STEPS.questionContentSplash)}>
-        Question Content Splash
-        </button>
-        <button onClick={() => setStep(STEPS.questionContentInteract)}>
-        Question Content Interact
-        </button>
+        <select value={step} onChange={handleStepChange}>
+          <option value={STEPS.questionInstructionSplash}>
+            Question Instruction Splash
+          </option>
+          <option value={STEPS.questionContentSplash}>
+            Question Content Splash
+          </option>
+          <option value={STEPS.questionContentInteract}>
+            Question Content Interact
+          </option>
+          <option value={STEPS.questionContentAnswerValue}>
+            Question Content Answer Value
+          </option>
+          <option value={STEPS.questionContentAnswerDescription}>
+            Question Content Answer Description
+          </option>
+          <option value={STEPS.questionInstructionOpinion}>
+            Question Instruction Opinion
+          </option>
+        </select>
         {sessionID && <div>Currently in session {sessionID}</div>}
       </div>
       <div className="container">

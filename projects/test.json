@@ -18,6 +18,15 @@
     },
     "questionStandInstruction": {
       "en": "Stand in the circle of your answer"
+    },
+    "questionCorrectAnswerTitle": {
+      "en": "Correct answer"
+    },
+    "questionCorrectAnswerDescription": {
+      "en": "Did you know"
+    },
+    "questionOpinion": {
+      "en": "What’s your opinion?"
     }
   },
   "themes": [
@@ -49,6 +58,40 @@
               "key": "question-one-option-three",
               "value": {
                 "en": "Really great!"
+              }
+            }
+          ],
+          "answer": {
+            "value": {
+              "en": "Great"
+            },
+            "description": {
+              "en": "If you're doing great that's marvelous"
+            }
+          }
+        },
+        {
+          "title": {
+            "en": "The EU should recommend member states to officially recognize other gender identities besides male and female?"
+          },
+          "key": "question-two",
+          "options": [
+            {
+              "key": "question-two-option-one",
+              "value": {
+                "en": "Agree"
+              }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": {
+                "en": "Not sure"
+              }
+            },
+            {
+              "key": "question-two-option-three",
+              "value": {
+                "en": "Disagree"
               }
             }
           ]
