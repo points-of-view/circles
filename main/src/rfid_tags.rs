@@ -11,7 +11,7 @@ pub struct Tag {
     antenna: i32,
 }
 
-const JAR_PATH: &str = "src/apis/rfid_api.jar";
+const JAR_PATH: &str = "src/apis/PrintRFIDTags.jar";
 
 pub fn run_instance() -> Result<Child, String> {
     // Check if the JAR file exists
