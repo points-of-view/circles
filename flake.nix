@@ -101,7 +101,8 @@
               mkdir -p ./dist/META-INF 
               echo "Main-Class: reader.PrintRFIDReader.PrintRFIDTags" > ./dist/META-INF/MANIFEST.MF
               javac -cp ./vendor/zebra/lib/Symbol.RFID.API3.jar -d ./dist ./PrintRFIDReader/PrintRFIDTags.java
-              jar -cmvf dist/META-INF/MANIFEST.MF ./dist/reader.jar ./dist/reader/PrintRFIDReader/PrintRFIDTags.class
+              cd dist
+              jar -cmvf META-INF/MANIFEST.MF reader.jar reader/PrintRFIDReader/PrintRFIDTags.class
             '';
 
             installPhase = ''
