@@ -1,6 +1,23 @@
 # Interacting with the reader through `PrintRFIDTags.jar`
 
-`PrintRFIDTags.jar` can be run through `java -jar PrintRFIDTags.jar`
+## Setup
+
+### With Nix devshell
+
+Simply run `reader:start` to run the reader
+
+### Without nix
+
+- Make sure you have java installed
+- Set ENV var `LD_LIBRARY_PATH` to `reader/vendor/zebra/lib/x86_64`
+- Start with the following command:
+  ```
+    java -Djava.library.path="reader/vendor/zebra/lib/x86_64" \
+         -cp reader/vendor/zebra/lib/Symbol.RFID.API3.jar \
+         reader/PrintRFIDReader/PrintRFIDTags.java
+  ```
+
+## Format of output
 
 Once the instance is started correctly it returns all the read tags in the following pattern, with a newline on the end of every tag:
 
