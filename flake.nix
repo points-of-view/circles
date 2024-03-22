@@ -182,7 +182,7 @@
                 name = "reader:start";
                 help = "Boot reader service";
                 command = ''
-                  LD_LIBRARY_PATH="${pkgs.lib.makeLibraryPath [ "./reader/vendor/zebra/lib/x86_64" ]}" \
+                  LD_LIBRARY_PATH="reader/vendor/zebra/lib/x86_64" \
                   java -Djava.library.path="reader/vendor/zebra/lib/x86_64" \
                        -cp reader/vendor/zebra/lib/Symbol.RFID.API3.jar \
                        reader/PrintRFIDReader/PrintRFIDTags.java
