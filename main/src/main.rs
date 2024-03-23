@@ -4,6 +4,7 @@
 use erasmus::GlobalState;
 use std::fs;
 use tauri::Manager;
+use tauri::api::process::Command;
 
 #[tauri::command]
 fn select_project(state: tauri::State<GlobalState>, project_key: String) -> Result<(), String> {
@@ -28,6 +29,15 @@ fn main() {
 
             data_dir.push("erasmus_db.sqlite");
             let state = GlobalState::build(data_dir)?;
+
+            let output = Command::new_sidecar("reader")
+                .expect("failed to create `my-sidecar` binary command")
+                .args(app.path_resolver().resource_dir().unwrap().to_str())
+                .output()
+                .expect("Failed to spawn sidecar");
+
+            println!("out: {}", output.stdout);
+            println!("err: {}", output.stderr);
 
             app.manage(state);
             Ok(())
