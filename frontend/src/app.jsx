@@ -58,14 +58,14 @@ function Session({ project, resetProject, language }) {
     { label: "ABD", option: 3 },
     { label: "ABC", option: 1 },
     { label: "ABB", option: 1 },
-    { label: "ABA", option: 3 },
-    { label: "ABD", option: 3 },
-    { label: "ABC", option: 2 },
-    { label: "ABB", option: 1 },
-    { label: "ABA", option: 3 },
-    { label: "ABC", option: 2 },
-    { label: "ABC", option: 3 },
-    { label: "ABC", option: 1 },
+    { label: "CBA", option: 3 },
+    { label: "CBD", option: 3 },
+    { label: "CBC", option: 2 },
+    { label: "EBB", option: 1 },
+    { label: "EBA", option: 3 },
+    { label: "EBC", option: 2 },
+    { label: "GBC", option: 3 },
+    { label: "HBC", option: 1 },
   ];
 
   const [step, setStep] = useState(STEPS.questionInstructionSplash);
