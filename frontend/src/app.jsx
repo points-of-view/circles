@@ -2,6 +2,7 @@ import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import projects from "../../projects";
 import Question from "./components/question";
+import ControlPanel from "./components/control_panel";
 
 export default function App() {
   const [project, setProject] = useState(null);
@@ -52,6 +53,7 @@ function Session({ project, resetProject, language }) {
     questionInstructionOpinion: "QUESTION_INSTRUCTION_OPINION",
   };
 
+  // NOTE: This is a dummy tag object, to be replaced by actual read tags.
   const tags = [
     { label: "ABD", option: 3 },
     { label: "ABC", option: 1 },
@@ -68,49 +70,44 @@ function Session({ project, resetProject, language }) {
 
   const [step, setStep] = useState(STEPS.questionInstructionSplash);
   const [sessionID, setSessionID] = useState(null);
+  const [error, setError] = useState(null);
 
-  const handleStepChange = (event) => {
-    const selectedStep = event.target.value;
-    setStep(selectedStep);
-  };
+  async function startNewSession(e) {
+    e.preventDefault();
+    const data = new FormData(e.target);
 
+    const themeKey = data.get("themeKey");
+
+    try {
+      const response = await invoke("start_session", { themeKey });
+      setSessionID(response);
+    } catch (e) {
+      if (e === "Please select a project first") {
+        resetProject();
+      }
+      setError(e);
+    }
+  }
   return (
     <>
-      <div id="control-panel">
-        <select value={step} onChange={handleStepChange}>
-          <option value={STEPS.questionInstructionSplash}>
-            Question Instruction Splash
-          </option>
-          <option value={STEPS.questionContentSplash}>
-            Question Content Splash
-          </option>
-          <option value={STEPS.questionContentInteract}>
-            Question Content Interact
-          </option>
-          <option value={STEPS.questionContentAnswerValue}>
-            Question Content Answer Value
-          </option>
-          <option value={STEPS.questionContentAnswerDescription}>
-            Question Content Answer Description
-          </option>
-          <option value={STEPS.questionInstructionOpinion}>
-            Question Instruction Opinion
-          </option>
-        </select>
-        {sessionID && <div>Currently in session {sessionID}</div>}
-      </div>
-      <div className="container">
+      <ControlPanel
+        step={step}
+        project={project}
+        language={language}
+        setStep={setStep}
+        startNewSession={startNewSession}
+        error={error}
+        STEPS={STEPS}
+        sessionID={sessionID}
+        setSessionID={setSessionID}
+      />
         <Question
           project={project}
           language={language}
-          resetProject={resetProject}
-          sessionID={sessionID}
-          setSessionID={setSessionID}
           step={step}
           STEPS={STEPS}
           tags={tags}
         />
-      </div>
     </>
   );
 }
