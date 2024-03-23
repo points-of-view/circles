@@ -130,4 +130,21 @@ mod tests {
 
         assert!(state.start_session("theme-one".to_string()).is_err())
     }
+
+    #[test]
+    fn should_return_true_on_calling_toggle_reading() {
+        let state = GlobalState::build(":memory:".into()).unwrap();
+
+        // This test creates a new child and returns `true` (for reading)
+        assert_eq!(state.toggle_reading().is_ok(), true)
+    }
+
+    #[test]
+    fn should_return_false_on_calling_toggle_reading_twice() {
+        let state = GlobalState::build(":memory:".into()).unwrap();
+        let _ = state.toggle_reading();
+        let second_run = state.toggle_reading();
+        // This test toggles reading twice, killing the child, comparing the resulting boolean of the second run returning `false` (for reading)
+        assert_eq!(second_run, Ok(false))
+    }
 }
