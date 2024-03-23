@@ -3,7 +3,7 @@ export default function Question({ project, language, step, STEPS, tags }) {
     return (
       <div className="questionscreen">
         <div className="questionscreen-overlay questionscreen-overlay--fullscreen">
-          <div className="toast questionscreen-overlay__lefttoptoast--fullscreen">
+          <div className="overlay__item questionscreen-overlay__lefttopoverlay__item--fullscreen">
             {project.themes[0].name[language]}
           </div>
         </div>
@@ -20,7 +20,7 @@ export default function Question({ project, language, step, STEPS, tags }) {
     return (
       <div className="questionscreen-content">
         <div className="questionscreen-overlay questionscreen-overlay--fullscreen">
-          <div className="toast questionscreen-overlay__lefttoptoast--fullscreen">
+          <div className="overlay__item questionscreen-overlay__lefttopoverlay__item--fullscreen">
             {project.themes[0].name[language]}
           </div>
         </div>
@@ -35,17 +35,17 @@ export default function Question({ project, language, step, STEPS, tags }) {
     return (
       <div className="questionscreen">
         <div className="questionscreen-overlay questionscreen-overlay--maximized">
-          <div className="toast toast__stretchtop">
+          <div className="overlay__item overlay__item--stretchtop">
             {project.themes[0].questions[0].title[language]}
           </div>
-          <div className="toast toast__middleleft">
+          <div className="overlay__item overlay__item--middleleft">
             {project.themes[0].name[language]}
           </div>
-          <div className="toast toast__middlecenter">
+          <div className="overlay__item overlay__item--middlecenter">
             {project.translations.questionStandInstruction[language]}
           </div>
-          <div className="toast toast__timer">10</div>
-          <div className="toast__logo">POV Erasmus+</div>
+          <div className="overlay__item overlay__item--timer">10</div>
+          <div className="overlay__item--logo">POV Erasmus+</div>
         </div>
         <div className="questionscreen-content">
           <div className="circle circle__container">
@@ -154,10 +154,10 @@ export default function Question({ project, language, step, STEPS, tags }) {
     return (
       <div className="questionscreen">
         <div className="questionscreen-overlay questionscreen-overlay--maximized">
-          <div className="toast toast__topcenter">
+          <div className="overlay__item overlay__item--topcenter">
             {project.translations.questionCorrectAnswerTitle[language]}
           </div>
-          <div className="toast__logo">POV Erasmus+</div>
+          <div className="overlay__item--logo">POV Erasmus+</div>
         </div>
         <div className="questionscreen-content">
           <div className="circle circle__container--fullscreen">
@@ -172,10 +172,10 @@ export default function Question({ project, language, step, STEPS, tags }) {
     return (
       <div className="questionscreen">
         <div className="questionscreen-overlay questionscreen-overlay--maximized">
-          <div className="toast toast__topcenter">
+          <div className="overlay__item overlay__item--topcenter">
             {project.translations.questionCorrectAnswerTitle[language]}
           </div>
-          <div className="toast__logo">POV Erasmus+</div>
+          <div className="overlay__item--logo">POV Erasmus+</div>
         </div>
         <div className="questionscreen-content">
           <div className="circle circle__container--fullscreen">
@@ -199,7 +199,7 @@ export default function Question({ project, language, step, STEPS, tags }) {
     return (
       <div className="questionscreen">
         <div className="questionscreen-overlay questionscreen-overlay--fullscreen">
-          <div className="toast questionscreen-overlay__lefttoptoast--fullscreen">
+          <div className="overlay__item questionscreen-overlay__lefttopoverlay__item--fullscreen">
             {project.themes[0].name[language]}
           </div>
         </div>

@@ -101,13 +101,13 @@ function Session({ project, resetProject, language }) {
         sessionID={sessionID}
         setSessionID={setSessionID}
       />
-        <Question
-          project={project}
-          language={language}
-          step={step}
-          STEPS={STEPS}
-          tags={tags}
-        />
+      <Question
+        project={project}
+        language={language}
+        step={step}
+        STEPS={STEPS}
+        tags={tags}
+      />
     </>
   );
 }
