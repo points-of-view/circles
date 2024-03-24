@@ -1,14 +1,16 @@
 use serde::Serialize;
+use std::collections::HashMap;
 use std::io::{BufRead, BufReader};
 use std::process::{Child, Command, Stdio};
-use std::sync::mpsc;
+use std::sync::{mpsc, Arc};
 use std::thread;
+use std::time::{Duration, Instant};
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone, Debug)]
 pub struct Tag {
     id: String,
-    strength: i32,
-    antenna: i32,
+    strength: i8,
+    antenna: u8,
 }
 
 const JAR_PATH: &str = "src/apis/PrintRFIDTags.jar";
@@ -37,42 +39,66 @@ pub fn run_instance() -> Result<Child, String> {
     let stdout = child.stdout.take().expect("Failed to open stdout");
 
     // Channel to send output from child process to main thread
-    let (tx, rx) = mpsc::channel::<String>();
+    let (tx, rx) = mpsc::channel::<HashMap<std::string::String, Tag>>();
+
+    // HashMap to store the latest signal strength for each unique ID
+    let tag_map: Arc<std::sync::Mutex<HashMap<String, Tag>>> =
+        Arc::new(std::sync::Mutex::new(HashMap::new()));
+
+    // Starting point to measure elapsed time
+    let mut start = Instant::now();
 
     // Spawn a thread to read and print the output from the JAR file
     thread::spawn(move || {
         let stdout_reader = BufReader::new(stdout);
         for line in stdout_reader.lines() {
-            match line {
-                Ok(line) => {
-                    // Send output to main thread
-                    if let Err(_) = tx.send(line) {
-                        break; // If sending fails, break the loop
+            if let Ok(line) = line {
+                // Parse the line
+                let parts: Vec<&str> = line.split('|').collect();
+                if parts.len() == 3 {
+                    let id = parts[0].to_string();
+                    let antenna = parts[1].parse::<u8>().unwrap_or_default();
+                    let strength = parts[2].parse::<i8>().unwrap_or_default();
+
+                    // Update the hashmap with the latest signal strength
+                    let mut tag_map = tag_map.lock().unwrap();
+                    if start.elapsed() > Duration::from_millis(500) {
+                        // Send the tags through the channel
+                        if let Err(_) = tx.send(tag_map.clone()) {
+                            break;
+                        }
+                        start = Instant::now();
+                        tag_map.drain();
+                    } else {
+                        let tag = tag_map.entry(id.clone()).or_insert(Tag {
+                            id: id.clone(),
+                            strength: i8::MIN, // Initialize with minimum value
+                            antenna: 0,        // Initialize with 0
+                        });
+
+                        if strength > tag.strength {
+                            tag.strength = strength;
+                            tag.antenna = antenna;
+                        }
                     }
-                }
-                Err(err) => {
-                    eprintln!("Error: Failed to read line from stdout: {}", err);
-                    break; // Exit the loop on error
                 }
             }
         }
     });
 
     // Main thread reads output from child process
-    for line in rx {
-        println!("{}", line);
+    for tag in rx {
+        println!("{:?}", tag);
     }
     Ok(child)
 }
 
 #[cfg(test)]
 mod tests {
-    // use super::*;
+    use super::*;
 
     #[test]
-    fn should_err_if_project_does_not_exist() {
-        // let state = GlobalState::build(":memory:".into()).unwrap();
-
-        // assert!(state.select_project("faulty-project".to_string()).is_err())
+    fn should_err_if_jar_is_not_found() {
+        assert!(std::path::Path::new(&JAR_PATH).exists())
     }
 }
