@@ -64,3 +64,15 @@ pub fn run_instance() -> Result<Child, String> {
     }
     Ok(child)
 }
+
+#[cfg(test)]
+mod tests {
+    // use super::*;
+
+    #[test]
+    fn should_err_if_project_does_not_exist() {
+        // let state = GlobalState::build(":memory:".into()).unwrap();
+
+        // assert!(state.select_project("faulty-project".to_string()).is_err())
+    }
+}
