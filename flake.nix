@@ -98,6 +98,34 @@
             tauriConfigPath = ./main/tauri.conf.json;
             tauriDistDir = frontend;
           });
+          reader = pkgs.stdenv.mkDerivation {
+            pname = "erasmus-reader";
+            version = "unstable";
+            # This filters with the default `cleanSourceFilter` with one exception for `.so` files
+            src = pkgs.lib.cleanSourceWith {
+              filter = path: type: (pkgs.lib.hasSuffix "\.so" path) || (pkgs.lib.cleanSourceFilter path type);
+              src = ./reader;
+            };
+            nativeBuildInputs = [ pkgs.makeWrapper pkgs.jdk ];
+
+            buildPhase = ''
+              mkdir -p ./dist/META-INF 
+              echo "Main-Class: reader.PrintRFIDReader.PrintRFIDTags" > ./dist/META-INF/MANIFEST.MF
+              javac -cp ./vendor/zebra/lib/Symbol.RFID.API3.jar -d ./dist ./PrintRFIDReader/PrintRFIDTags.java
+              cd dist
+              jar -cmvf META-INF/MANIFEST.MF reader.jar reader/PrintRFIDReader/PrintRFIDTags.class
+            '';
+
+            installPhase = ''
+              mkdir -pv $out/share/java $out/bin
+              cp -r $TMP/source/vendor $out/share/vendor
+              cp -r $TMP/source/dist/reader.jar $out/share/java/reader.jar
+              makeWrapper ${pkgs.jre}/bin/java $out/bin/reader \
+                --add-flags "-cp $out/share/vendor/zebra/lib/Symbol.RFID.API3.jar -jar $out/share/java/reader.jar" \
+                --set _JAVA_OPTIONS "-Djava.library.path=$out/share/vendor/zebra/lib/x86_64" \
+                --set LD_LIBRARY_PATH ${pkgs.lib.makeLibraryPath [ "$out/share/vendor/zebra/lib/x86_64" ]}
+            '';
+          };
         };
         devShells = rec {
           default = erasmus;
@@ -123,7 +151,7 @@
               pkgs.sqlite
 
               # Java
-              pkgs.openjdk17
+              pkgs.jdk
             ];
             commands = [
               {
@@ -148,6 +176,16 @@
                   yarn lint:css --fix
                   cargo fmt --manifest-path main/Cargo.toml --all
                   ${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt flake.nix
+                '';
+              }
+              {
+                name = "reader:start";
+                help = "Boot reader service";
+                command = ''
+                  LD_LIBRARY_PATH="reader/vendor/zebra/lib/x86_64" \
+                  java -Djava.library.path="reader/vendor/zebra/lib/x86_64" \
+                       -cp reader/vendor/zebra/lib/Symbol.RFID.API3.jar \
+                       reader/PrintRFIDReader/PrintRFIDTags.java
                 '';
               }
             ];
