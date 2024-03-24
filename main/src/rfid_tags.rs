@@ -39,7 +39,7 @@ pub fn run_instance() -> Result<Child, String> {
     let stdout = child.stdout.take().expect("Failed to open stdout");
 
     // Channel to send output from child process to main thread
-    let (tx, rx) = mpsc::channel::<HashMap<std::string::String, Tag>>();
+    let (tx, _rx) = mpsc::channel::<HashMap<std::string::String, Tag>>();
 
     // HashMap to store the latest signal strength for each unique ID
     let tag_map: Arc<std::sync::Mutex<HashMap<String, Tag>>> =
@@ -86,10 +86,10 @@ pub fn run_instance() -> Result<Child, String> {
         }
     });
 
-    // Main thread reads output from child process
-    for tag in rx {
-        println!("{:?}", tag);
-    }
+    // // Main thread reads output from child process
+    // for tag in rx {
+    //     println!("{:?}", tag);
+    // }
     Ok(child)
 }
 
