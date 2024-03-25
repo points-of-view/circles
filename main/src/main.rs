@@ -24,6 +24,11 @@ fn main() {
                 .app_data_dir()
                 .expect("Error while getting `app_data_dir`");
 
+
+            let resource_dir = app.path_resolver().resource_dir().expect("Error while getting `resource_dir`");
+
+            println!("data_dir: {:?}, resource dir: {:?}", &data_dir, resource_dir);
+
             // Make sure the data_dir exists
             fs::create_dir_all(&data_dir)?;
 
@@ -32,7 +37,7 @@ fn main() {
 
             let output = Command::new_sidecar("reader")
                 .expect("failed to create `my-sidecar` binary command")
-                .args(app.path_resolver().resource_dir().unwrap().to_str())
+                .args([resource_dir.to_str().unwrap()])
                 .output()
                 .expect("Failed to spawn sidecar");
 
