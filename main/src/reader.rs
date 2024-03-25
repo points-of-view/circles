@@ -5,6 +5,7 @@ use tauri::{
 };
 
 const JAR_PATH: &str = "/_up_/reader/dist/reader.jar";
+const VENDOR_JAR: &str = "/Symbol.RFID.API3.jar";
 const LIBRARY_PATH: &str = "/_up_/reader/dist/vendor/zebra/lib";
 const MAIN_JAVA_CLASS: &str = "reader.PrintRFIDReader.PrintRFIDTags";
 
@@ -33,9 +34,10 @@ fn windows_command(resource_dir: &str) -> Command {
     Command::new("java").args([
         "-cp",
         &format!(
-            "{path}{lib_path}/Symbol.RFID.API3.jar;{path}{jar_path}",
+            "{path}{lib_path}{vendor_jar};{path}{jar_path}",
             path = resource_dir,
             lib_path = LIBRARY_PATH,
+            vendor_jar = VENDOR_JAR,
             jar_path = JAR_PATH
         ),
         MAIN_JAVA_CLASS,
@@ -56,9 +58,10 @@ fn unix_command(resource_dir: &str) -> Command {
         &format!("-Djava.library.path='{}'", vendor_path),
         "-cp",
         &format!(
-            "{path}{lib_path}/Symbol.RFID.API3.jar:{path}{jar_path}",
+            "{path}{lib_path}{vendor_jar}:{path}{jar_path}",
             path = resource_dir,
             lib_path = LIBRARY_PATH,
+            vendor_jar = VENDOR_JAR,
             jar_path = JAR_PATH
         ),
         MAIN_JAVA_CLASS,
