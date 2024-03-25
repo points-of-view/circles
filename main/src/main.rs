@@ -3,8 +3,8 @@
 
 use erasmus::GlobalState;
 use std::fs;
-use tauri::Manager;
 use tauri::api::process::Command;
+use tauri::Manager;
 
 #[tauri::command]
 fn select_project(state: tauri::State<GlobalState>, project_key: String) -> Result<(), String> {
