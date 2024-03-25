@@ -1,7 +1,7 @@
 {
   "build": {
-    "beforeDevCommand": "./reader/build.sh && yarn workspace frontend dev",
-    "beforeBuildCommand": "./reader/build.sh && yarn workspace frontend build",
+    "beforeDevCommand": "bash ./reader/build.sh && yarn workspace frontend dev",
+    "beforeBuildCommand": "bash ./reader/build.sh && yarn workspace frontend build",
     "devPath": "http://localhost:1420",
     "distDir": "../frontend/dist"
   },
