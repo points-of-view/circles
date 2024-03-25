@@ -1,7 +1,0 @@
-#!/bin/sh
-
-LIB_PATH=$1/_up_/reader/dist/vendor/zebra/lib
-LD_LIBRARY_PATH="$LIB_PATH/x86_64" \
-exec "java" -Djava.library.path="$LIB_PATH/x86_64" \
-       -cp $LIB_PATH/Symbol.RFID.API3.jar:$1/_up_/reader/dist/reader.jar \
-       reader.PrintRFIDReader.PrintRFIDTags

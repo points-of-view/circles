@@ -1,5 +1,6 @@
 pub mod database;
 pub mod projects;
+pub mod reader;
 
 use database::{create_session, setup_database};
 use diesel::prelude::*;

@@ -14,11 +14,7 @@
       "all": false,
       "shell": {
         "all": false,
-        "open": true,
-        "sidecar": true,
-        "scope": [
-          { "name": "../bin/reader", "sidecar": true }
-        ]
+        "open": true
       }
     },
     "bundle": {
@@ -31,9 +27,6 @@
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
-      ],
-      "externalBin": [
-        "../bin/reader"
       ],
       "resources": [
         "../reader/dist/**/*"
