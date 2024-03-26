@@ -19,17 +19,23 @@ pub fn spawn_reader(
         .expect("Error while getting `resource_dir`");
     let resource_dir = resource_path.to_str().unwrap();
 
-    #[cfg(target_os = "windows")]
-    let command = windows_command(resource_dir);
+    if env::var("MOCK_RFID_READER").is_ok() {
+        return spawn_mock_command();
+    }
 
-    #[cfg(not(target_os = "windows"))]
-    let command = unix_command(resource_dir);
-
-    println!("{:?}", command);
     command.spawn().unwrap()
 }
 
-#[cfg(target_os = "windows")]
+fn spawn_mock_command() -> (Receiver<CommandEvent>, CommandChild) {
+    let (_rx, child) = Command::new("echo").args(["MOCK READER"]).spawn().unwrap();
+    // NOTE: We create are own channel, so that we don't receive the actual output from the command we just spawned.
+    // Instead we can use this channel to send some generated data
+    // TODO: Our mock implementation is not yet sending any messages. We should generate some random responses
+    let (_tx, rx) = channel(1);
+    
+    (rx, child)
+}
+
 fn windows_command(resource_dir: &str) -> Command {
     Command::new("java").args([
         "-cp",
