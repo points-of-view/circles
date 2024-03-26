@@ -690,6 +690,7 @@ version = "0.0.0"
 dependencies = [
  "diesel",
  "diesel_migrations",
+ "dunce",
  "include_dir",
  "libsqlite3-sys",
  "serde",
