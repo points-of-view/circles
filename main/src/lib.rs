@@ -5,7 +5,9 @@ pub mod reader;
 use database::{create_session, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
+use reader::spawn_reader;
 use std::{error::Error, path::PathBuf, sync::Mutex};
+use tauri::{api::process::CommandChild, AppHandle};
 
 pub struct CurrentSession {
     pub session_id: i32,
@@ -16,6 +18,7 @@ pub struct GlobalState {
     pub database_connection: Mutex<SqliteConnection>,
     pub current_project: Mutex<Option<Project>>,
     pub current_session: Mutex<Option<CurrentSession>>,
+    pub reader_handle: Mutex<Option<CommandChild>>,
 }
 
 impl GlobalState {
@@ -26,6 +29,7 @@ impl GlobalState {
             database_connection: Mutex::new(connection),
             current_project: Mutex::new(None),
             current_session: Mutex::new(None),
+            reader_handle: Mutex::new(None),
         };
 
         Ok(state)
@@ -68,6 +72,20 @@ impl GlobalState {
         .into();
 
         Ok(session.id)
+    }
+
+    pub fn start_reading<R: tauri::Runtime>(
+        &self,
+        app_handle: &AppHandle<R>,
+    ) -> Result<(), String> {
+        let mut lock = self.reader_handle.lock().unwrap();
+        if let Some(child) = lock.take() {
+            child.kill().unwrap();
+        }
+
+        let (_rx, child) = spawn_reader(&app_handle);
+        *lock = Some(child);
+        Ok(())
     }
 }
 
