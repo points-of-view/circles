@@ -1,7 +1,7 @@
 #!/bin/sh
 echo "Building reader app"
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE}" )" &> /dev/null && pwd )
+SCRIPT_DIR=$( cd -- "$( dirname -- $BASH_SOURCE )" &> /dev/null && pwd )
 
 mkdir -p $SCRIPT_DIR/dist/META-INF 
 echo "Main-Class: reader.PrintRFIDReader.PrintRFIDTags" > $SCRIPT_DIR/dist/META-INF/MANIFEST.MF
