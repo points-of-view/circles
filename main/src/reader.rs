@@ -15,7 +15,7 @@ pub fn spawn_reader(resource_path: PathBuf) -> (Receiver<CommandEvent>, CommandC
     }
 
     let command = if cfg!(all(target_os = "linux", target_arch = "x86_64")) {
-       linux_command(resource_path)
+        linux_command(resource_path)
     } else if cfg!(target_os = "windows") {
         windows_command(resource_path)
     } else {

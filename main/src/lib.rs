@@ -137,6 +137,5 @@ mod tests {
         assert!(state.start_reading("/".into()).is_ok());
         let lock = state.reader_handle.lock().unwrap();
         assert!(lock.is_some());
-                
     }
 }
