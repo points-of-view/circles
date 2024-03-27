@@ -3,26 +3,18 @@ use std::{collections::HashMap, env, path::PathBuf};
 use tauri::{
     api::process::{Command, CommandChild, CommandEvent},
     async_runtime::{channel, Receiver},
-    AppHandle,
 };
 
 const MAIN_JAVA_CLASS: &str = "reader.PrintRFIDReader.PrintRFIDTags";
 
 // NOTE: We should create a mock method for this, so that development can work without a physical reader
-pub fn spawn_reader<R: tauri::Runtime>(
-    app: &AppHandle<R>,
-) -> (Receiver<CommandEvent>, CommandChild) {
-    let resource_path = app
-        .path_resolver()
-        .resource_dir()
-        .expect("Error while getting `resource_dir`");
-
+pub fn spawn_reader(resource_path: PathBuf) -> (Receiver<CommandEvent>, CommandChild) {
     if env::var("MOCK_RFID_READER").is_ok() {
         return spawn_mock_command();
     }
 
     let command = if cfg!(all(target_os = "linux", target_arch = "x86_64")) {
-        linux_command(resource_path)
+       linux_command(resource_path)
     } else if cfg!(target_os = "windows") {
         windows_command(resource_path)
     } else {
