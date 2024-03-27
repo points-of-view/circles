@@ -224,6 +224,7 @@
                 eval = "$PRJ_DATA_DIR/erasmus.sqlite";
               }
               {
+                # Some linkers look at `LIBRARY_PATH` instead of `LD_LIBRARY_PATH`, so we mirror this variable
                 name = "LIBRARY_PATH";
                 eval = "$LD_LIBRARY_PATH";
               }
