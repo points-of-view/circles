@@ -15,7 +15,7 @@ If you don't want to (or can't) use an actual RFID Reader, set an environment va
 
 > [!NOTE]
 > When not using Nix to manage your environment:
-> * Make sure you have rust, node, and the diesel-cli installed.
+> * Make sure you have rust, node, java, and the diesel-cli installed.
 > * Make sure you have the necessary environment variables set. See [`flake.nix`](./flake.nix) for details.
 
 ### Tests
