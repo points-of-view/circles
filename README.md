@@ -11,7 +11,7 @@ Once you have nix installed, you can run `nix develop` or use [direnv](https://d
 * Install dependencies with `yarn install`
 * Run the app with `yarn tauri dev`
 
-If you don't want to (or can't) use an actual RFID Reader, set an environment variable `MOCK_RFID_READER=1` to fake output from the reader.
+If you don't want to (or can't) use an actual RFID reader, set an environment variable `MOCK_RFID_READER=1` to skip this process.
 
 > [!NOTE]
 > When not using Nix to manage your environment:
