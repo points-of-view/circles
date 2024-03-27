@@ -77,4 +77,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
       - name: Build
+        env:
+          LD_LIBRARY_PATH: "reader/vendor/zebra/lib/x86_64:$LD_LIBRARY_PATH"
         run: yarn tauri build --verbose
