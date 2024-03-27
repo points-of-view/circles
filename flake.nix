@@ -130,7 +130,7 @@
         devShells = rec {
           default = erasmus;
           erasmus = pkgs.devshell.mkShell {
-            imports = ["${inputs.devshell}/extra/language/c.nix"];
+            imports = [ "${inputs.devshell}/extra/language/c.nix" ];
             name = "erasmus";
             packages = [
               # Nix related packaged
