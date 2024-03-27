@@ -34,9 +34,9 @@
           pname = "erasmus-frontend";
           version = "unstable";
 
-          src = pkgs.lib.cleanSource ./src;
+          src = pkgs.lib.cleanSource ./frontend;
 
-          packageJSON = ./src/package.json;
+          packageJSON = ./frontend/package.json;
           yarnLock = ./yarn.lock;
 
           buildPhase = ''
@@ -130,6 +130,7 @@
         devShells = rec {
           default = erasmus;
           erasmus = pkgs.devshell.mkShell {
+            imports = ["${inputs.devshell}/extra/language/c.nix"];
             name = "erasmus";
             packages = [
               # Nix related packaged
@@ -153,6 +154,31 @@
               # Java
               pkgs.jdk
             ];
+            language.c = {
+              includes = pkgs.lib.optionals pkgs.stdenv.isLinux [
+                pkgs.atk
+                pkgs.webkitgtk
+                pkgs.gtk3
+                pkgs.cairo
+                pkgs.gdk-pixbuf
+                pkgs.glib
+                pkgs.dbus
+                pkgs.libsoup
+                pkgs.pango
+                pkgs.harfbuzz
+                pkgs.zlib
+              ];
+              libraries = pkgs.lib.optionals pkgs.stdenv.isLinux [
+                pkgs.webkitgtk
+                pkgs.gtk3
+                pkgs.gdk-pixbuf
+                pkgs.glib
+                pkgs.dbus
+                pkgs.openssl_3
+                pkgs.librsvg
+                pkgs.zlib
+              ];
+            };
             commands = [
               {
                 name = "lint:check";
@@ -197,6 +223,10 @@
               {
                 name = "DATABASE_URL";
                 eval = "$PRJ_DATA_DIR/erasmus.sqlite";
+              }
+              {
+                name = "LIBRARY_PATH";
+                eval = "$LD_LIBRARY_PATH";
               }
             ];
           };
