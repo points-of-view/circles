@@ -171,7 +171,6 @@
               libraries = pkgs.lib.optionals pkgs.stdenv.isLinux [
                 pkgs.webkitgtk
                 pkgs.gtk3
-                pkgs.gdk-pixbuf
                 pkgs.glib
                 pkgs.dbus
                 pkgs.openssl_3
