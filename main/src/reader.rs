@@ -31,7 +31,10 @@ pub fn spawn_reader(resource_path: PathBuf) -> (Receiver<CommandEvent>, CommandC
 
 fn spawn_mock_command() -> (Receiver<CommandEvent>, CommandChild) {
     #[cfg(target_os = "windows")]
-    let (_rx, child) = Command::new("cmd").args(["echo MOCK READER"]).spawn().unwrap();
+    let (_rx, child) = Command::new("cmd")
+        .args(["echo MOCK READER"])
+        .spawn()
+        .unwrap();
     #[cfg(not(target_os = "windows"))]
     let (_rx, child) = Command::new("echo").args(["MOCK READER"]).spawn().unwrap();
     // NOTE: We create are own channel, so that we don't receive the actual output from the command we just spawned.
