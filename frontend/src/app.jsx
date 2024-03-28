@@ -34,7 +34,6 @@ function SelectProject({ setProject }) {
       <input type="text" name="projectKey" id="projectKey" required />
       <button type="submit">Open project</button>
       {error && <span>{error}</span>}
-      <Option label={"Optie 1"}/>
     </form>
   );
 }
@@ -70,6 +69,7 @@ function Session({ project, resetProject, language }) {
       </form>
 
       {sessionID && <div>Currently in session {sessionID}</div>}
+      <Option label={"Optie 1"} tags={3}/>
     </div>
   );
 }
