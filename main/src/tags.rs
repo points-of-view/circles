@@ -1,9 +1,13 @@
+use rand::{seq::SliceRandom, thread_rng, Rng};
 use std::fmt::{Display, Formatter};
 
 const MAX_STRENGTH: i8 = -30;
 const MIN_STRENGTH: i8 = -80;
 const MAX_ANTENNA: u8 = 8;
 const MIN_ANTENNA: u8 = 1;
+const MOCK_RFID_TAGS: [&str; 9] = [
+    "abc123", "abc456", "abc789", "def123", "def456", "def789", "ghi123", "ghi456", "ghi789",
+];
 
 #[derive(Debug)]
 pub struct Tag {
@@ -90,6 +94,14 @@ impl Tag {
     }
 }
 
+pub fn create_mock_tag() -> String {
+    let mut rng = thread_rng();
+    let tag_id = MOCK_RFID_TAGS.choose(&mut rng).unwrap();
+    let antenna = rng.gen_range(MIN_ANTENNA..MAX_ANTENNA);
+    let strength = rng.gen_range(MIN_STRENGTH..MAX_STRENGTH);
+    format!("{}|{}|{}", tag_id, antenna, strength)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -148,5 +160,12 @@ mod tests {
         let result = Tag::from_reader("abc123|1|-81".into());
 
         assert!(result.is_err_and(|x| x.kind == ParseErrorKind::IncorrectStrength));
+    }
+
+    #[test]
+    fn should_parse_random_tag() {
+        let result = Tag::from_reader(create_mock_tag());
+
+        assert!(result.is_ok())
     }
 }

@@ -1,8 +1,10 @@
 use dunce::simplified;
+use std::thread::sleep;
+use std::time::{Duration, Instant};
 use std::{collections::HashMap, env, path::PathBuf};
 use tauri::{
     api::process::{Command, CommandChild, CommandEvent},
-    async_runtime::{channel, Receiver},
+    async_runtime::{channel, spawn, Receiver},
 };
 
 const MAIN_JAVA_CLASS: &str = "reader.PrintRFIDReader.PrintRFIDTags";
@@ -39,8 +41,18 @@ fn spawn_mock_command() -> (Receiver<CommandEvent>, CommandChild) {
     let (_rx, child) = Command::new("echo").args(["MOCK READER"]).spawn().unwrap();
     // NOTE: We create are own channel, so that we don't receive the actual output from the command we just spawned.
     // Instead we can use this channel to send some generated data
-    // TODO: Our mock implementation is not yet sending any messages. We should generate some random responses
-    let (_tx, rx) = channel(1);
+    let (tx, rx) = channel(1);
+
+    // We send a random tag every 100MS
+    let interval = Duration::from_millis(100);
+    let mut next_time = Instant::now() + interval;
+    spawn(async move {
+        loop {
+            let _ = tx.send(CommandEvent::Stdout(create_mock_tag())).await;
+            sleep(next_time - Instant::now());
+            next_time += interval;
+        }
+    });
 
     (rx, child)
 }
