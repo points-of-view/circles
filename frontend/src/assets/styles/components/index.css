@@ -1,3 +1,29 @@
 .page {
   width: 100%;
 }
+
+.option {
+  display: flex;
+  border-radius: 50%;
+  background-color: #040422;
+  width: auto;
+  color: var(--color-white)
+}
+
+.option__container{
+  flex: 1 0 auto;
+  display: flex;
+}
+
+.option__container:before {
+  content:'';
+  float:left;
+  padding-top:100%;
+}
+
+.option__content{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}

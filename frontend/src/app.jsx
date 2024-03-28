@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import projects from "../../projects";
+import Option from "./components/option";
 
 export default function App() {
   const [project, setProject] = useState(null);
@@ -33,6 +34,7 @@ function SelectProject({ setProject }) {
       <input type="text" name="projectKey" id="projectKey" required />
       <button type="submit">Open project</button>
       {error && <span>{error}</span>}
+      <Option label={"Optie 1"}/>
     </form>
   );
 }
