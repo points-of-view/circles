@@ -2,7 +2,9 @@
   width: 100%;
 }
 
-.option {
+.option{
+  flex: 1 0 auto;
+  display: flex;
   display: flex;
   border-radius: 50%;
   background-color: #040422;
@@ -10,20 +12,16 @@
   color: var(--color-white)
 }
 
-.option__container{
-  flex: 1 0 auto;
-  display: flex;
-}
-
-.option__container:before {
+.option:before {
   content:'';
   float:left;
   padding-top:100%;
 }
 
-.option__content{
+.option__label{
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
+  font-size: var(--text-lg);
 }

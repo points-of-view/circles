@@ -1,11 +1,22 @@
-export default function Option({ label }) {
+export default function Option({ label, tags }) {
     return (
         <div className="option">
-            <div className="option__container">
-                <div className="option__content">
-                    {label}
-                </div>
+            {tags != 0 && <div className="option__amount">
+                {tags}
+            </div>}
+            <div className="option__label">
+                {label}
             </div>
+            <div className="option__silhouettes">
+                {tags
+                  .for((index, label) => (
+                    <Shape
+                      key={label}
+                      shape={"figure"}
+                      className="people-figure"
+                    />
+                  ))}
+              </div>
         </div>
     )
 }
