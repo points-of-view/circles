@@ -25,16 +25,16 @@
   --color-grey-light: hsl(var(--hsl-grey-light));
 
   /* Fonts */
-  --font-family: "CUSTOM_FONT", ui-sans-serif, system-ui, -apple-system,
+  --font-family: "Manrope", ui-sans-serif, system-ui, -apple-system,
     blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans",
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "Noto Color Emoji";
   --text-xs: 0.675rem;
   --text-sm: 0.875rem;
   --text-md: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
+  --text-lg: 2rem;
+  --text-xl: 3rem;
+  --text-2xl: 4rem;
 
   /* Border radius */
   --rounded-sm: 2px;
