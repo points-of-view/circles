@@ -48,4 +48,9 @@
   --screen-lg: 1024px;
   --screen-xl: 1280px;
   --screen-2xl: 1536px;
+
+  /* Option colors */
+  --option-color-1: green;
+  --option-color-2: pink;
+  --option-color-3: orange;
 }

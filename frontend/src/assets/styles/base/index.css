@@ -4,4 +4,5 @@
 /* Base settings that should always apply */
 html {
   font-family: var(--font-family);
+  color: var(--color-white);
 }
