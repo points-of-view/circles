@@ -6,7 +6,7 @@ pub mod tags;
 use database::{create_session, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
-use reader::{handle_reader_event, spawn_reader};
+use reader::{handle_reader_event, command::spawn_reader};
 use std::{error::Error, path::PathBuf, sync::Mutex};
 use tauri::{
     api::process::CommandChild,
