@@ -11,9 +11,11 @@ Once you have nix installed, you can run `nix develop` or use [direnv](https://d
 * Install dependencies with `yarn install`
 * Run the app with `yarn tauri dev`
 
+If you don't want to (or can't) use an actual RFID reader, set an environment variable `MOCK_RFID_READER=1` to skip this process.
+
 > [!NOTE]
 > When not using Nix to manage your environment:
-> * Make sure you have rust, node, and the diesel-cli installed.
+> * Make sure you have rust, node, java, and the diesel-cli installed.
 > * Make sure you have the necessary environment variables set. See [`flake.nix`](./flake.nix) for details.
 
 ### Tests

@@ -1,10 +1,13 @@
 pub mod database;
 pub mod projects;
+pub mod reader;
 
 use database::{create_session, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
+use reader::spawn_reader;
 use std::{error::Error, path::PathBuf, sync::Mutex};
+use tauri::api::process::CommandChild;
 
 pub struct CurrentSession {
     pub session_id: i32,
@@ -15,6 +18,7 @@ pub struct GlobalState {
     pub database_connection: Mutex<SqliteConnection>,
     pub current_project: Mutex<Option<Project>>,
     pub current_session: Mutex<Option<CurrentSession>>,
+    pub reader_handle: Mutex<Option<CommandChild>>,
 }
 
 impl GlobalState {
@@ -25,6 +29,7 @@ impl GlobalState {
             database_connection: Mutex::new(connection),
             current_project: Mutex::new(None),
             current_session: Mutex::new(None),
+            reader_handle: Mutex::new(None),
         };
 
         Ok(state)
@@ -68,11 +73,23 @@ impl GlobalState {
 
         Ok(session.id)
     }
+
+    pub fn start_reading(&self, resource_path: PathBuf) -> Result<(), String> {
+        let mut lock = self.reader_handle.lock().unwrap();
+        if let Some(child) = lock.take() {
+            child.kill().unwrap();
+        }
+
+        let (_rx, child) = spawn_reader(resource_path);
+        *lock = Some(child);
+        Ok(())
+    }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::env;
 
     #[test]
     fn should_return_okay_if_project_exists() {
@@ -109,5 +126,16 @@ mod tests {
         let state = GlobalState::build(":memory:".into()).unwrap();
 
         assert!(state.start_session("theme-one".to_string()).is_err())
+    }
+
+    #[test]
+    fn should_return_ok_when_starting_reader() {
+        // Make sure we don't call the actual reader code
+        env::set_var("MOCK_RFID_READER", "1");
+        let state = GlobalState::build(":memory:".into()).unwrap();
+
+        assert!(state.start_reading("/".into()).is_ok());
+        let lock = state.reader_handle.lock().unwrap();
+        assert!(lock.is_some());
     }
 }

@@ -6,8 +6,20 @@ use std::fs;
 use tauri::Manager;
 
 #[tauri::command]
-fn select_project(state: tauri::State<GlobalState>, project_key: String) -> Result<(), String> {
-    state.select_project(project_key)
+fn select_project(
+    state: tauri::State<GlobalState>,
+    app_handle: tauri::AppHandle,
+    project_key: String,
+) -> Result<(), String> {
+    state.select_project(project_key)?;
+
+    // NOTE: We resolve the resource_path here instead of in the final method
+    // This way we don't have to create an AppHandle in testing
+    let resource_path = app_handle
+        .path_resolver()
+        .resource_dir()
+        .expect("Error while getting `resource_dir`");
+    state.start_reading(resource_path)
 }
 
 #[tauri::command]

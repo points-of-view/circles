@@ -34,9 +34,9 @@
           pname = "erasmus-frontend";
           version = "unstable";
 
-          src = pkgs.lib.cleanSource ./src;
+          src = pkgs.lib.cleanSource ./frontend;
 
-          packageJSON = ./src/package.json;
+          packageJSON = ./frontend/package.json;
           yarnLock = ./yarn.lock;
 
           buildPhase = ''
@@ -129,76 +129,109 @@
         };
         devShells = rec {
           default = erasmus;
-          erasmus = pkgs.devshell.mkShell {
-            name = "erasmus";
-            packages = [
-              # Nix related packaged
-              pkgs.nixpkgs-fmt
+          erasmus = pkgs.devshell.mkShell
+            {
+              imports = pkgs.lib.optionals pkgs.stdenv.isLinux [ "${inputs.devshell}/extra/language/c.nix" ];
+              name = "erasmus";
+              packages = [
+                # Nix related packaged
+                pkgs.nixpkgs-fmt
 
-              # Node
-              pkgs.nodejs_20
-              pkgs.yarn
+                # Node
+                pkgs.nodejs_20
+                pkgs.yarn
 
-              # Rust
-              pkgs.rustc
-              pkgs.cargo
-              pkgs.rustfmt
-              pkgs.rust-analyzer
-              pkgs.clippy
-              pkgs.diesel-cli
+                # Rust
+                pkgs.rustc
+                pkgs.cargo
+                pkgs.rustfmt
+                pkgs.rust-analyzer
+                pkgs.clippy
+                pkgs.diesel-cli
 
-              # SQLite
-              pkgs.sqlite
+                # SQLite
+                pkgs.sqlite
 
-              # Java
-              pkgs.jdk
-            ];
-            commands = [
-              {
-                name = "lint:check";
-                category = "Linting";
-                help = "Check for linting errors";
-                command = ''
-                  set +e
-                  yarn lint:js
-                  yarn lint:css
-                  cargo fmt --manifest-path main/Cargo.toml --all -- --check
-                  ${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt --check flake.nix
-                '';
-              }
-              {
-                name = "lint:fix";
-                category = "Linting";
-                help = "Fix linting errors";
-                command = ''
-                  set +e
-                  yarn lint:js --fix
-                  yarn lint:css --fix
-                  cargo fmt --manifest-path main/Cargo.toml --all
-                  ${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt flake.nix
-                '';
-              }
-              {
-                name = "reader:start";
-                help = "Boot reader service";
-                command = ''
-                  LD_LIBRARY_PATH="reader/vendor/zebra/lib/x86_64" \
-                  java -Djava.library.path="reader/vendor/zebra/lib/x86_64" \
-                       -cp reader/vendor/zebra/lib/Symbol.RFID.API3.jar \
-                       reader/PrintRFIDReader/PrintRFIDTags.java
-                '';
-              }
-            ];
-            env = [
-              {
-                name = "DIESEL_CONFIG_FILE";
-                value = "main/diesel.toml";
-              }
-              {
-                name = "DATABASE_URL";
-                eval = "$PRJ_DATA_DIR/erasmus.sqlite";
-              }
-            ];
+                # Java
+                pkgs.jdk
+              ];
+              commands = [
+                {
+                  name = "lint:check";
+                  category = "Linting";
+                  help = "Check for linting errors";
+                  command = ''
+                    set +e
+                    yarn lint:js
+                    yarn lint:css
+                    cargo fmt --manifest-path main/Cargo.toml --all -- --check
+                    ${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt --check flake.nix
+                  '';
+                }
+                {
+                  name = "lint:fix";
+                  category = "Linting";
+                  help = "Fix linting errors";
+                  command = ''
+                    set +e
+                    yarn lint:js --fix
+                    yarn lint:css --fix
+                    cargo fmt --manifest-path main/Cargo.toml --all
+                    ${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt flake.nix
+                  '';
+                }
+                {
+                  name = "reader:start";
+                  help = "Boot reader service";
+                  command = ''
+                    LD_LIBRARY_PATH="reader/vendor/zebra/lib/x86_64" \
+                    java -Djava.library.path="reader/vendor/zebra/lib/x86_64" \
+                         -cp reader/vendor/zebra/lib/Symbol.RFID.API3.jar \
+                         reader/PrintRFIDReader/PrintRFIDTags.java
+                  '';
+                }
+              ];
+              env = [
+                {
+                  name = "DIESEL_CONFIG_FILE";
+                  value = "main/diesel.toml";
+                }
+                {
+                  name = "DATABASE_URL";
+                  eval = "$PRJ_DATA_DIR/erasmus.sqlite";
+                }
+                {
+                  # Some linkers look at `LIBRARY_PATH` instead of `LD_LIBRARY_PATH`, so we mirror this variable
+                  name = "LIBRARY_PATH";
+                  eval = "$LD_LIBRARY_PATH";
+                }
+              ];
+
+            } // pkgs.lib.optionalAttrs pkgs.stdenv.isLinux {
+            language.c = {
+              includes = [
+                pkgs.atk
+                pkgs.webkitgtk
+                pkgs.gtk3
+                pkgs.cairo
+                pkgs.gdk-pixbuf
+                pkgs.glib
+                pkgs.dbus
+                pkgs.libsoup
+                pkgs.pango
+                pkgs.harfbuzz
+                pkgs.zlib
+              ];
+              libraries = [
+                pkgs.webkitgtk
+                pkgs.gtk3
+                pkgs.glib
+                pkgs.dbus
+                pkgs.openssl_3
+                pkgs.librsvg
+                pkgs.zlib
+              ];
+            };
           };
         };
       }

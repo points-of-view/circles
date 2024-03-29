@@ -28,6 +28,7 @@ dist-ssr
 
 # Cargo builds and excecutables
 target/*
+main/target/*
 
 # Zebra Reader automaticaly generated log file
 169.254.156.114_0.txt
