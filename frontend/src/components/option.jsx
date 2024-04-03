@@ -1,12 +1,9 @@
 import Shape from "./shape";
 
-export default function Option({ label, amount = 0, option }) {
+export default function Option({ label, amount = 0 }) {
   return (
     <div
       className="option"
-      style={{
-        "--option-color": `var(--option-color-${option.key})`,
-      }}
     >
       <div className="option__amount">{amount}</div>
       <div className="option__content">
