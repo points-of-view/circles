@@ -69,9 +69,9 @@ function Session({ project, resetProject, language }) {
       </form>
 
       {sessionID && <div>Currently in session {sessionID}</div>}
-      <Option label={"Optie 1"} amount={25} option={1}/>
-      <Option label={"Optie 2"} amount={3} option={2}/>
-      <Option label={"Optie 3"} amount={0} option={3}/>
+      <Option label={"Optie 1"} amount={25} option={1} />
+      <Option label={"Optie 2"} amount={3} option={2} />
+      <Option label={"Optie 3"} amount={0} option={3} />
     </div>
   );
 }
