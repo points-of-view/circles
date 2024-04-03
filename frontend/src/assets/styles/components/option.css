@@ -27,7 +27,7 @@
     font-size: var(--text-lg);
   }
   
-  .option__silhouettes {
+  .option__figure-container {
     display: flex;
     flex-flow: wrap;
     justify-content: center;

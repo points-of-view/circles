@@ -12,9 +12,9 @@ export default function Option({ label, amount = 0, option }) {
       <div className="option__content" >
         <div className="option__label">{label}</div>
         {amount != 0 && (
-          <div className="option__silhouettes">
-            {[...Array(amount)].map((i, e) => (
-              <Shape key={e} shape={"figure"} className="figure" />
+          <div className="option__figure-container">
+            {[...Array(amount)].map((value, index) => (
+              <Shape key={index} shape={"figure"}/>
             ))}
           </div>
         )}
