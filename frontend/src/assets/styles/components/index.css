@@ -57,7 +57,7 @@
   margin: 0px auto -3rem;
   width: 6rem;
   height: 6rem;
-  border-radius: 50%;
+  border-radius: var(--rounded-full);
   background-color: green;
   font-size: var(--text-lg);
   font-weight: 700;
