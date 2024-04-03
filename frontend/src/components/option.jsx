@@ -9,17 +9,15 @@ export default function Option({ label, amount = 0, option }) {
       }}
     >
       <div className="option__amount">{amount}</div>
-      <div className="option__container">
-        <div className="option__content" >
-          <div className="option__label">{label}</div>
-          {amount != 0 && (
-            <div className="option__silhouettes">
-              {[...Array(amount)].map((i, e) => (
-                <Shape key={e} shape={"figure"} className="figure" />
-              ))}
-            </div>
-          )}
-        </div>
+      <div className="option__content" >
+        <div className="option__label">{label}</div>
+        {amount != 0 && (
+          <div className="option__silhouettes">
+            {[...Array(amount)].map((i, e) => (
+              <Shape key={e} shape={"figure"} className="figure" />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
