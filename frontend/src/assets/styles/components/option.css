@@ -20,7 +20,6 @@
   
   .option__container::before {
     content: "";
-    float: left;
     padding-top: 100%;
   }
   
