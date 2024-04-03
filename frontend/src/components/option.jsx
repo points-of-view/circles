@@ -8,7 +8,7 @@ export default function Option({ label, amount = 0, option }) {
         "--option-color": `var(--option-color-${option.key})`,
       }}
     >
-      {amount != 0 && <div className="option__amount">{amount}</div>}
+      <div className="option__amount">{amount}</div>
       <div className="option__container">
         <div
           className={
