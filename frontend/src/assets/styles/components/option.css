@@ -22,21 +22,18 @@
     content: "";
     padding-top: 100%;
   }
-  
-  .option__label {
-    font-size: var(--text-lg);
-  }
-  
+
   .option__content {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: center;
-  }
-  
-  .option__content--showamount {
     flex-direction: column;
     gap: 2rem;
+  }
+  
+  .option__label {
+    font-size: var(--text-lg);
   }
   
   .option__silhouettes {
