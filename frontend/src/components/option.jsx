@@ -11,11 +11,7 @@ export default function Option({ label, amount = 0, option }) {
       <div className="option__amount">{amount}</div>
       <div className="option__container">
         <div
-          className={
-            amount != 0
-              ? "option__content option__content--showamount"
-              : "option__content"
-          }
+          className="option__content option__content--showamount"
         >
           <div className="option__label">{label}</div>
           {amount != 0 && (
