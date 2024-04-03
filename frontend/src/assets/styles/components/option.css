@@ -1,13 +1,16 @@
 .option__content {
-  flex: 1 0 auto;
   display: flex;
-  border-radius: var(--rounded-full);
-  width: 100%;
-  aspect-ratio: 1;
-  align-items: center;
-  justify-content: center;
+  flex: 1 0 auto;
   flex-direction: column;
   gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  /* Set the border thickness of the gradient */
+  border: 10px solid transparent;
+  border-radius: var(--rounded-full);
+
   /* Create gradient all over the element */
   background-image: conic-gradient(
     from 0deg at 50% 43.79%,
@@ -15,12 +18,13 @@
     var(--option-color-1) 135deg,
     #040422 360deg
   );
+
   /* Make sure the gradient fills the whole element (and edges) */
   background-origin: border-box;
+
   /* Set the background color of the element with a box-shadow because background-color would be overwritten by background-image */
   box-shadow: inset 0 100vw var(--color-primary);
-  /* Set the border thickness of the gradient */
-  border: 10px solid transparent;
+  aspect-ratio: 1;
 }
 
 .option__label {
@@ -30,22 +34,23 @@
 .option__figure-container {
   display: flex;
   flex-flow: wrap;
-  justify-content: center;
   gap: 1.5rem;
+  justify-content: center;
   max-width: 75%;
 }
 
 .option__amount {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0px auto -3rem;
   width: 6rem;
   height: 6rem;
+  margin: 0 auto -3rem;
+  font-weight: 700;
+  font-size: var(--text-lg);
   border-radius: var(--rounded-full);
   background-color: green;
-  font-size: var(--text-lg);
-  font-weight: 700;
-  position: relative;
+
   /* transform: translate(0, 50%); */
 }
