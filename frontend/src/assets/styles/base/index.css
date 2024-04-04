@@ -3,5 +3,6 @@
 
 /* Base settings that should always apply */
 html {
+  color: var(--color-white);
   font-family: var(--font-family);
 }
