@@ -1,0 +1,69 @@
+.optionsview {
+  display: flex;
+  justify-content: space-between;
+  height: 80vh;
+  margin: 0 8vw;
+  gap: 1rem;
+}
+
+.option:first-child {
+  align-self: flex-start;
+
+  .option__content {
+    background-image: conic-gradient(
+      from 0deg at 50% 43.79%,
+      var(--option-color-1) 0deg,
+      var(--option-color-1) 135deg,
+      #040422 360deg
+    );
+  }
+
+  .option__amount {
+    background-color: var(--option-color-1);
+  }
+}
+
+.option:last-child {
+  align-self: flex-start;
+
+  .option__content {
+    /* Create gradient all over the element */
+    background-image: conic-gradient(
+      from 0deg at 50% 43.79%,
+      var(--option-color-3) 0deg,
+      var(--option-color-3) 135deg,
+      #040422 360deg
+    );
+  }
+
+  .option__amount {
+    background-color: var(--option-color-3);
+  }
+}
+
+.option:not(:first-child):not(:last-child) {
+  align-self: flex-end;
+
+  .option__content {
+    background-image: conic-gradient(
+      from 0deg at 50% 43.79%,
+      var(--option-color-2) 0deg,
+      var(--option-color-2) 135deg,
+      #040422 360deg
+    );
+  }
+
+  .option__amount {
+    background-color: var(--option-color-2);
+  }
+}
+
+/* In case of 5 options, move the 2 child to the center */
+.option:nth-child(2):nth-last-child(4) {
+  align-self: center;
+}
+
+/* In case of 5 options, move the 4 child to the center */
+.option:nth-child(4):nth-last-child(2) {
+  align-self: center;
+}

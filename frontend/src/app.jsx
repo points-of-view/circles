@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import projects from "../../projects";
-import OptionView from "./components/optionview";
+import OptionsView from "./components/optionsview";
 
 export default function App() {
   const [project, setProject] = useState(null);
@@ -69,7 +69,7 @@ function Session({ project, resetProject, language }) {
       </form>
 
       {sessionID && <div>Currently in session {sessionID}</div>}
-      <OptionView />
+      <OptionsView />
     </div>
   );
 }

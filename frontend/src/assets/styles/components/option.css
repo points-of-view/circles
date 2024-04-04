@@ -11,16 +11,8 @@
   width: 100%;
 
   /* Set the border thickness of the gradient */
-  border: 10px solid transparent;
+  border: 12px solid transparent;
   border-radius: var(--rounded-full);
-
-  /* Create gradient all over the element */
-  background-image: conic-gradient(
-    from 0deg at 50% 43.79%,
-    var(--option-color-1) 0deg,
-    var(--option-color-1) 135deg,
-    #040422 360deg
-  );
 
   /* Make sure the gradient fills the whole element (and edges) */
   background-origin: border-box;
@@ -31,7 +23,10 @@
 }
 
 .option__label {
+  max-width: 75%;
   font-size: var(--text-lg);
+  text-align: center;
+  overflow-wrap: break-word;
 }
 
 .option__figure-container {
@@ -40,6 +35,7 @@
   gap: 15px;
   justify-content: center;
   max-width: 75%;
+  max-height: 50%;
 }
 
 .option__amount {
@@ -49,9 +45,8 @@
   align-items: center;
   width: 6rem;
   height: 6rem;
-  margin: 0 auto -3rem;
+  margin: 0 auto -2.5rem;
   font-weight: 700;
   font-size: var(--text-lg);
   border-radius: var(--rounded-full);
-  background-color: green;
 }
