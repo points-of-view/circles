@@ -1,6 +1,27 @@
 .optionview{
   display: flex;
-  width: 100%;
   justify-content: space-between;
-  
+  height: 80vh;
+  margin: 0 8vw;
+  gap: 1rem;
+}
+
+.option:first-child {
+  align-self: flex-start;
+}
+
+.option:last-child {
+  align-self: flex-start;
+}
+
+.option:not(:first-child):not(:last-child) {
+  align-self: flex-end;
+}
+
+.option:nth-child(2):nth-last-child(4) {
+  align-self: center;
+}
+
+.option:nth-child(4):nth-last-child(2) {
+  align-self: center;
 }

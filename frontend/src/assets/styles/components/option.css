@@ -37,7 +37,7 @@
 .option__figure-container {
   display: flex;
   flex-flow: wrap;
-  gap: 1.5rem;
+  gap: 15px;
   justify-content: center;
   max-width: 75%;
 }
