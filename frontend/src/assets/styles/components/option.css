@@ -59,3 +59,13 @@
   border-radius: var(--rounded-full);
   background-color: var(--option-color);
 }
+
+.option--big {
+  .option__content {
+    border: 15px solid transparent;
+  }
+
+  .option__label {
+    font-size: var(--text-xl);
+  }
+}
