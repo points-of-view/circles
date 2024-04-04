@@ -1,9 +1,9 @@
 .optionsview {
   display: flex;
+  gap: 1rem;
   justify-content: space-between;
   height: 80vh;
   margin: 0 8vw;
-  gap: 1rem;
 }
 
 .option:first-child {
@@ -41,7 +41,7 @@
   }
 }
 
-.option:not(:first-child):not(:last-child) {
+.option:not(:first-child, :last-child) {
   align-self: flex-end;
 
   .option__content {
