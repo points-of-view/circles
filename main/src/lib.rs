@@ -1,13 +1,17 @@
 pub mod database;
 pub mod projects;
 pub mod reader;
+pub mod tags;
 
 use database::{create_session, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
-use reader::spawn_reader;
+use reader::{command::spawn_reader, handle_reader_event};
 use std::{error::Error, path::PathBuf, sync::Mutex};
-use tauri::api::process::CommandChild;
+use tauri::{
+    api::process::CommandChild,
+    async_runtime::{spawn, JoinHandle},
+};
 
 pub struct CurrentSession {
     pub session_id: i32,
@@ -18,7 +22,7 @@ pub struct GlobalState {
     pub database_connection: Mutex<SqliteConnection>,
     pub current_project: Mutex<Option<Project>>,
     pub current_session: Mutex<Option<CurrentSession>>,
-    pub reader_handle: Mutex<Option<CommandChild>>,
+    pub reader_handle: Mutex<Option<(CommandChild, JoinHandle<()>)>>,
 }
 
 impl GlobalState {
@@ -76,12 +80,20 @@ impl GlobalState {
 
     pub fn start_reading(&self, resource_path: PathBuf) -> Result<(), String> {
         let mut lock = self.reader_handle.lock().unwrap();
-        if let Some(child) = lock.take() {
+        if let Some((child, handle)) = lock.take() {
+            // We first abort reading data
+            handle.abort();
+            // And then kill the child
             child.kill().unwrap();
         }
 
-        let (_rx, child) = spawn_reader(resource_path);
-        *lock = Some(child);
+        let (mut rx, child) = spawn_reader(resource_path);
+        let handle = spawn(async move {
+            while let Some(event) = rx.recv().await {
+                handle_reader_event(event)
+            }
+        });
+        *lock = Some((child, handle));
         Ok(())
     }
 }

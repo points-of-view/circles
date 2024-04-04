@@ -1,87 +1,60 @@
-use dunce::simplified;
-use std::{collections::HashMap, env, path::PathBuf};
-use tauri::{
-    api::process::{Command, CommandChild, CommandEvent},
-    async_runtime::{channel, Receiver},
-};
+pub mod command;
+use crate::tags::Tag;
+use std::fmt::{Display, Formatter};
+use tauri::api::process::CommandEvent;
 
-const MAIN_JAVA_CLASS: &str = "reader.PrintRFIDReader.PrintRFIDTags";
+#[derive(Debug, PartialEq)]
+pub enum ReaderErrorKind {
+    Unknown,
+}
 
-// NOTE: We spawn a slightly different command for different OSes/architectures
-// Since this code is platform specific, it is hard to test. Make sure you validate any changes on actual devices
-pub fn spawn_reader(resource_path: PathBuf) -> (Receiver<CommandEvent>, CommandChild) {
-    if env::var("MOCK_RFID_READER").is_ok() {
-        return spawn_mock_command();
+#[derive(Debug)]
+pub struct ReaderError {
+    pub kind: ReaderErrorKind,
+    message: String,
+}
+
+impl Display for ReaderError {
+    fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
+        match self.kind {
+            ReaderErrorKind::Unknown => write!(
+                f,
+                "Encountered an unexpected error in the reader. Message: {}",
+                self.message
+            ),
+        }
     }
+}
 
-    let command = if cfg!(all(target_os = "linux", target_arch = "x86_64")) {
-        linux_command(resource_path)
-    } else if cfg!(target_os = "windows") {
-        windows_command(resource_path)
-    } else {
-        panic!(
-            "`spawn_reader` can not be called on {arch}-{os}. The java SDK and underlying native libraries are only supported on windows and linux. Use `MOCK_RFID_READER=1` to mock the reader output",
-            arch = env::consts::ARCH,
-            os = env::consts::OS
-        )
+pub fn handle_reader_event(event: CommandEvent) {
+    match event {
+        CommandEvent::Stdout(line) => handle_reader_stdout(line),
+        CommandEvent::Stderr(error) => handle_reader_error(error),
+        CommandEvent::Error(error) => handle_reader_error(error),
+        CommandEvent::Terminated(payload) => {
+            todo!("Reader was terminated with payload {:?}", payload)
+        }
+        // NOTE: We don't expect any other CommandEvents to occur. For now, we'll just panic and print them
+        event => todo!("An unexpected CommandEvent occured: {:#?}", event),
+    }
+}
+
+fn handle_reader_stdout(line: String) {
+    match Tag::from_reader(line) {
+        Ok(tag) => println!("{:?}", tag),
+        Err(err) => {
+            // We print faulty tags in development (so we can learn from them)
+            // In production these get ignored
+            #[cfg(debug_assertions)]
+            println!("{:?}", err)
+        }
+    }
+}
+
+fn handle_reader_error(error: String) {
+    let err = ReaderError {
+        kind: ReaderErrorKind::Unknown,
+        message: error,
     };
-
-    command.spawn().unwrap()
-}
-
-fn spawn_mock_command() -> (Receiver<CommandEvent>, CommandChild) {
-    #[cfg(target_os = "windows")]
-    let (_rx, child) = Command::new("cmd")
-        .args(["echo MOCK READER"])
-        .spawn()
-        .unwrap();
-    #[cfg(not(target_os = "windows"))]
-    let (_rx, child) = Command::new("echo").args(["MOCK READER"]).spawn().unwrap();
-    // NOTE: We create are own channel, so that we don't receive the actual output from the command we just spawned.
-    // Instead we can use this channel to send some generated data
-    // TODO: Our mock implementation is not yet sending any messages. We should generate some random responses
-    let (_tx, rx) = channel(1);
-
-    (rx, child)
-}
-
-fn windows_command(resource_path: PathBuf) -> Command {
-    let vendor_jar = resource_path.join(r"_up_\reader\dist\vendor\zebra\lib\Symbol.RFID.API3.jar");
-    let reader_jar = resource_path.join(r"_up_\reader\dist\reader.jar");
-
-    // We need to simplify these paths, and remove any optional UNC prefix (`//?`), since java can't resolve this
-    let simplified_vendor_jar = simplified(&vendor_jar.as_path());
-    let simplified_reader_jar = simplified(&reader_jar.as_path());
-
-    Command::new("java").args([
-        "-cp",
-        &format!(
-            "{};{}",
-            simplified_vendor_jar.to_string_lossy(),
-            simplified_reader_jar.to_string_lossy()
-        ),
-        MAIN_JAVA_CLASS,
-    ])
-}
-
-fn linux_command(resource_path: PathBuf) -> Command {
-    let library_path = resource_path.join("_up_/reader/dist/vendor/zebra/lib/x86_64");
-    let vendor_jar = resource_path.join("_up_/reader/dist/vendor/zebra/lib/Symbol.RFID.API3.jar");
-    let reader_jar = resource_path.join("_up_/reader/dist/reader.jar");
-
-    let envs: HashMap<String, String> = HashMap::from([(
-        "LD_LIBRARY_PATH".into(),
-        library_path.to_string_lossy().into_owned(),
-    )]);
-
-    Command::new("java").envs(envs).args([
-        &format!("-Djava.library.path='{}'", library_path.to_string_lossy()),
-        "-cp",
-        &format!(
-            "{}:{}",
-            vendor_jar.to_string_lossy(),
-            reader_jar.to_string_lossy()
-        ),
-        MAIN_JAVA_CLASS,
-    ])
+    eprintln!("{:?}", err)
 }
