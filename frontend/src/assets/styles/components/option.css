@@ -37,6 +37,11 @@
   overflow-wrap: break-word;
 }
 
+.option__description {
+  font-size: var(--text-md);
+  text-align: center;
+}
+
 .option__figure-container {
   display: flex;
   flex-flow: wrap;
