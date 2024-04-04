@@ -51,6 +51,4 @@
   font-size: var(--text-lg);
   border-radius: var(--rounded-full);
   background-color: green;
-
-  /* transform: translate(0, 50%); */
 }
