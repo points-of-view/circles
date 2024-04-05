@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import clsx from "clsx";
 
 export default function Option({ className = "",
   label,
@@ -8,14 +8,16 @@ export default function Option({ className = "",
   showDescription = false,
 }) {
   return (
-    <div className={clsx("option", { "option--big" : big }) }>
+    <div className={clsx("option", { "option--big": big })}>
       {!big && <div className="option__amount">{amount}</div>}
       <div className="option__content">
         {!showDescription ? (
           <div className="option__label">{label}</div>
         ) : (
-          <div className="option__description" dangerouslySetInnerHTML={{__html:description}}> 
-          </div>
+          <div
+            className="option__description"
+            dangerouslySetInnerHTML={{ __html: description }}
+          ></div>
         )}
         {!big && amount !== 0 && (
           <div className="option__figure-container">
