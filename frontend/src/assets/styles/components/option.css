@@ -10,6 +10,10 @@
   align-items: center;
   width: 100%;
 
+  /* Set the border thickness of the gradient */
+  border: 12px solid transparent;
+  border-radius: var(--rounded-full);
+
   /* Create gradient all over the element */
   background-image: conic-gradient(
     from 0deg at 50% 43.79%,
@@ -17,10 +21,6 @@
     var(--option-color) 135deg,
     #040422 360deg
   );
-
-  /* Set the border thickness of the gradient */
-  border: 12px solid transparent;
-  border-radius: var(--rounded-full);
 
   /* Make sure the gradient fills the whole element (and edges) */
   background-origin: border-box;
