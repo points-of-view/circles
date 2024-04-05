@@ -67,7 +67,7 @@
 
 .option--big {
   .option__content {
-    border: 15px solid transparent;
+    border-width: 15px;
   }
 
   .option__label {
