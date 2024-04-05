@@ -8,23 +8,17 @@
 
 .options-view__option:first-child {
   align-self: flex-start;
+  --option-color: green;
+}
+
 .options-view__option:last-child {
   align-self: flex-start;
+  --option-color: orange;
+}
+
 .options-view__option:not(:first-child, :last-child) {
   align-self: flex-end;
-
-  .option__content {
-    background-image: conic-gradient(
-      from 0deg at 50% 43.79%,
-      var(--option-color-2) 0deg,
-      var(--option-color-2) 135deg,
-      #040422 360deg
-    );
-  }
-
-  .option__amount {
-    background-color: var(--option-color-2);
-  }
+  --option-color: hotpink;
 }
 
 /* In case of 5 options, move the 2nd and 4th child to the center */
