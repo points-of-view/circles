@@ -14,11 +14,7 @@ export default function Option({ className = "",
         {!showDescription ? (
           <div className="option__label">{label}</div>
         ) : (
-          <div className="option__description">
-            Did you know
-            <br />
-            <br />
-            {description}
+          <div className="option__description" dangerouslySetInnerHTML={{__html:description}}> 
           </div>
         )}
         {!big && amount !== 0 && (
