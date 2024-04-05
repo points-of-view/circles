@@ -1,4 +1,4 @@
-.optionsview {
+.options-view {
   display: flex;
   gap: 1rem;
   justify-content: space-between;
@@ -58,12 +58,8 @@
   }
 }
 
-/* In case of 5 options, move the 2 child to the center */
-.option:nth-child(2):nth-last-child(4) {
-  align-self: center;
-}
-
-/* In case of 5 options, move the 4 child to the center */
+/* In case of 5 options, move the 2nd and 4th child to the center */
+.option:nth-child(2):nth-last-child(4),
 .option:nth-child(4):nth-last-child(2) {
   align-self: center;
 }
