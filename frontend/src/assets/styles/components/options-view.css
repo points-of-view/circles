@@ -6,42 +6,11 @@
   margin: 0 8vw;
 }
 
-.option:first-child {
+.options-view__option:first-child {
   align-self: flex-start;
-
-  .option__content {
-    background-image: conic-gradient(
-      from 0deg at 50% 43.79%,
-      var(--option-color-1) 0deg,
-      var(--option-color-1) 135deg,
-      #040422 360deg
-    );
-  }
-
-  .option__amount {
-    background-color: var(--option-color-1);
-  }
-}
-
-.option:last-child {
+.options-view__option:last-child {
   align-self: flex-start;
-
-  .option__content {
-    /* Create gradient all over the element */
-    background-image: conic-gradient(
-      from 0deg at 50% 43.79%,
-      var(--option-color-3) 0deg,
-      var(--option-color-3) 135deg,
-      #040422 360deg
-    );
-  }
-
-  .option__amount {
-    background-color: var(--option-color-3);
-  }
-}
-
-.option:not(:first-child, :last-child) {
+.options-view__option:not(:first-child, :last-child) {
   align-self: flex-end;
 
   .option__content {
@@ -59,7 +28,7 @@
 }
 
 /* In case of 5 options, move the 2nd and 4th child to the center */
-.option:nth-child(2):nth-last-child(4),
-.option:nth-child(4):nth-last-child(2) {
+.options-view__option:nth-child(2):nth-last-child(4),
+.options-view__option:nth-child(4):nth-last-child(2) {
   align-self: center;
 }
