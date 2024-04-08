@@ -2,23 +2,20 @@ import clsx from "clsx";
 
 export default function Option({ className = "",
   label,
-  description,
   amount = 0,
   big = false,
-  showDescription = false,
+  showDescriptionLayout = false,
 }) {
   return (
     <div className={clsx("option", { "option--big": big })}>
       {!big && <div className="option__amount">{amount}</div>}
       <div className="option__content">
-        {!showDescription ? (
-          <div className="option__label">{label}</div>
-        ) : (
-          <div
-            className="option__description"
-            dangerouslySetInnerHTML={{ __html: description }}
-          ></div>
-        )}
+        <div
+          className={clsx("option__label", {
+            "option__label--description": showDescriptionLayout,
+          })}
+          dangerouslySetInnerHTML={{ __html: label }}
+        ></div>
         {!big && amount !== 0 && (
           <div className="option__figure-container">
               {[...Array(amount)].map((value, index) => (
