@@ -1,6 +1,7 @@
 pub mod command;
 use crate::tags::Tag;
 use std::collections::HashMap;
+use std::sync::Arc;
 use std::time::Instant;
 use std::vec::Drain;
 use std::{
@@ -9,7 +10,7 @@ use std::{
 };
 use tauri::{
     api::process::CommandEvent,
-    async_runtime::{spawn, JoinHandle, Receiver},
+    async_runtime::{spawn, JoinHandle, Receiver, Sender},
 };
 
 const REFRESH_INTERVAL: u64 = 500;
@@ -39,7 +40,10 @@ impl Display for ReaderError {
     }
 }
 
-pub fn handle_reader_events(mut rx: Receiver<CommandEvent>) -> JoinHandle<()> {
+pub fn handle_reader_events(
+    mut rx: Receiver<CommandEvent>,
+    sender: Arc<tauri::async_runtime::Mutex<Sender<TagsMap>>>,
+) -> JoinHandle<()> {
     spawn(async move {
         let mut tags: Vec<Tag> = vec![];
         let interval = Duration::from_millis(REFRESH_INTERVAL);
@@ -48,6 +52,8 @@ pub fn handle_reader_events(mut rx: Receiver<CommandEvent>) -> JoinHandle<()> {
             handle_reader_event(event, &mut tags);
             if last_update.elapsed() > interval {
                 let new_map = reduce_tags_to_map(tags.drain(..));
+                let lock = sender.lock().await;
+                lock.send(new_map).await.unwrap();
                 last_update = Instant::now();
             }
         }

@@ -6,11 +6,16 @@ pub mod tags;
 use database::{create_session, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
-use reader::{command::spawn_reader, handle_reader_event};
-use std::{error::Error, path::PathBuf, sync::Mutex};
+use reader::{command::spawn_reader, handle_reader_events, TagsMap};
+use std::{
+    error::Error,
+    path::PathBuf,
+    sync::{Arc, Mutex},
+};
+use tags::Tag;
 use tauri::{
     api::process::CommandChild,
-    async_runtime::{spawn, JoinHandle},
+    async_runtime::{JoinHandle, Sender},
 };
 
 pub struct CurrentSession {
@@ -78,7 +83,11 @@ impl GlobalState {
         Ok(session.id)
     }
 
-    pub fn start_reading(&self, resource_path: PathBuf) -> Result<(), String> {
+    pub fn start_reading(
+        &self,
+        resource_path: PathBuf,
+        sender: Arc<tauri::async_runtime::Mutex<Sender<TagsMap>>>,
+    ) -> Result<(), String> {
         let mut lock = self.reader_handle.lock().unwrap();
         if let Some((child, handle)) = lock.take() {
             // We first abort reading data
@@ -87,12 +96,8 @@ impl GlobalState {
             child.kill().unwrap();
         }
 
-        let (mut rx, child) = spawn_reader(resource_path);
-        let handle = spawn(async move {
-            while let Some(event) = rx.recv().await {
-                handle_reader_event(event)
-            }
-        });
+        let (rx, child) = spawn_reader(resource_path);
+        let handle = handle_reader_events(rx, sender);
         *lock = Some((child, handle));
         Ok(())
     }

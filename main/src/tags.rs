@@ -1,4 +1,5 @@
 use rand::{seq::SliceRandom, thread_rng, Rng};
+use serde;
 use std::fmt::{Display, Formatter};
 
 const MAX_STRENGTH: i8 = -30;
@@ -9,7 +10,7 @@ const MOCK_RFID_TAGS: [&str; 9] = [
     "abc123", "abc456", "abc789", "def123", "def456", "def789", "ghi123", "ghi456", "ghi789",
 ];
 
-#[derive(Debug)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct Tag {
     pub id: String,
     pub strength: i8,
