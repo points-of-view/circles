@@ -7,8 +7,8 @@ use database::{create_session, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
 use reader::{command::spawn_reader, handle_reader_events};
-use tags::TagsMap;
 use std::{error::Error, path::PathBuf, sync::Arc};
+use tags::TagsMap;
 use tauri::{
     api::process::CommandChild,
     async_runtime::{JoinHandle, Sender},

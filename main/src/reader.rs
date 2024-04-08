@@ -13,7 +13,6 @@ use tauri::{
 
 const REFRESH_INTERVAL: u64 = 500;
 
-
 #[derive(Debug, PartialEq)]
 pub enum ReaderErrorKind {
     Unknown,
@@ -88,4 +87,31 @@ fn handle_reader_error(error: String) {
         message: error,
     };
     eprintln!("{:?}", err)
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::tags::create_mock_tag;
+
+    use super::*;
+
+    #[test]
+    fn should_add_correct_tag_to_vector() {
+        let mut vec: Vec<Tag> = vec![];
+
+        let event = CommandEvent::Stdout(create_mock_tag());
+        handle_reader_event(event, &mut vec);
+
+        assert_eq!(1, vec.len());
+    }
+
+    #[test]
+    fn should_ignore_incorrect_tags() {
+        let mut vec: Vec<Tag> = vec![];
+
+        let event = CommandEvent::Stdout(String::from("incorrect tag"));
+        handle_reader_event(event, &mut vec);
+
+        assert_eq!(0, vec.len());
+    }
 }

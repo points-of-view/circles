@@ -1,6 +1,10 @@
 use rand::{seq::SliceRandom, thread_rng, Rng};
 use serde;
-use std::{collections::HashMap, fmt::{Display, Formatter}, vec::Drain};
+use std::{
+    collections::HashMap,
+    fmt::{Display, Formatter},
+    vec::Drain,
+};
 
 const MAX_STRENGTH: i8 = -30;
 const MIN_STRENGTH: i8 = -80;
@@ -117,7 +121,8 @@ pub struct TagsMap(HashMap<String, Tag>);
 impl TagsMap {
     pub fn from(tags: Drain<'_, Tag>) -> Self {
         tags.fold(TagsMap(HashMap::new()), |mut acc, new_tag| {
-            acc.0.entry(new_tag.id.clone())
+            acc.0
+                .entry(new_tag.id.clone())
                 .and_modify(|old_tag: &mut Tag| {
                     // If there is a current tag, we update this if the new one has a stronger signal
                     if old_tag.strength < new_tag.strength.clone() {
@@ -126,7 +131,7 @@ impl TagsMap {
                 })
                 // If there isn't a new tag, we insert it
                 .or_insert(new_tag.clone());
-    
+
             acc
         })
     }
