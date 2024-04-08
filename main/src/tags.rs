@@ -107,14 +107,6 @@ pub fn create_mock_tag() -> String {
     format!("{}|{}|{}", tag_id, antenna, strength)
 }
 
-#[cfg(test)]
-impl Tag {
-    // To help tests, we add a `Tag::random()` method
-    pub fn random() -> Tag {
-        Self::from_reader(create_mock_tag()).unwrap()
-    }
-}
-
 #[derive(serde::Serialize, Clone)]
 pub struct TagsMap(HashMap<String, Tag>);
 
