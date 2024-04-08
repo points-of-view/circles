@@ -7,12 +7,7 @@ use database::{create_session, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
 use reader::{command::spawn_reader, handle_reader_events, TagsMap};
-use std::{
-    error::Error,
-    path::PathBuf,
-    sync::{Arc, Mutex},
-};
-use tags::Tag;
+use std::{error::Error, path::PathBuf, sync::Arc};
 use tauri::{
     api::process::CommandChild,
     async_runtime::{JoinHandle, Sender},
@@ -24,10 +19,10 @@ pub struct CurrentSession {
 }
 
 pub struct GlobalState {
-    pub database_connection: Mutex<SqliteConnection>,
-    pub current_project: Mutex<Option<Project>>,
-    pub current_session: Mutex<Option<CurrentSession>>,
-    pub reader_handle: Mutex<Option<(CommandChild, JoinHandle<()>)>>,
+    pub database_connection: std::sync::Mutex<SqliteConnection>,
+    pub current_project: std::sync::Mutex<Option<Project>>,
+    pub current_session: std::sync::Mutex<Option<CurrentSession>>,
+    pub reader_handle: std::sync::Mutex<Option<(CommandChild, JoinHandle<()>)>>,
 }
 
 impl GlobalState {
@@ -35,10 +30,10 @@ impl GlobalState {
         let connection = setup_database(&database_location)?;
 
         let state = GlobalState {
-            database_connection: Mutex::new(connection),
-            current_project: Mutex::new(None),
-            current_session: Mutex::new(None),
-            reader_handle: Mutex::new(None),
+            database_connection: std::sync::Mutex::new(connection),
+            current_project: std::sync::Mutex::new(None),
+            current_session: std::sync::Mutex::new(None),
+            reader_handle: std::sync::Mutex::new(None),
         };
 
         Ok(state)
