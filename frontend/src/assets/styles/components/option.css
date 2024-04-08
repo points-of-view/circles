@@ -1,6 +1,9 @@
+.option {
+  flex: 1 1 0px;
+}
+
 .option__content {
   display: flex;
-  flex: 1 0 auto;
   flex-direction: column;
   gap: 2rem;
   justify-content: center;
@@ -8,14 +11,14 @@
   width: 100%;
 
   /* Set the border thickness of the gradient */
-  border: 10px solid transparent;
+  border: 12px solid transparent;
   border-radius: var(--rounded-full);
 
   /* Create gradient all over the element */
   background-image: conic-gradient(
     from 0deg at 50% 43.79%,
-    var(--option-color-1) 0deg,
-    var(--option-color-1) 135deg,
+    var(--option-color) 0deg,
+    var(--option-color) 135deg,
     #040422 360deg
   );
 
@@ -28,15 +31,19 @@
 }
 
 .option__label {
+  max-width: 75%;
   font-size: var(--text-lg);
+  text-align: center;
+  overflow-wrap: break-word;
 }
 
 .option__figure-container {
   display: flex;
   flex-flow: wrap;
-  gap: 1.5rem;
+  gap: 15px;
   justify-content: center;
   max-width: 75%;
+  max-height: 50%;
 }
 
 .option__amount {
@@ -46,9 +53,9 @@
   align-items: center;
   width: 6rem;
   height: 6rem;
-  margin: 0 auto -3rem;
+  margin: 0 auto -2.5rem;
   font-weight: 700;
   font-size: var(--text-lg);
   border-radius: var(--rounded-full);
-  background-color: green;
+  background-color: var(--option-color);
 }
