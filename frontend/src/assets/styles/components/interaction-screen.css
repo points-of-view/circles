@@ -19,7 +19,7 @@
   justify-self: center;
   min-width: 70%;
   text-align: center;
-  word-break: break-all;
+  word-break: break-word;
   border: 5px solid transparent;
   border-radius: var(--rounded-full);
 
@@ -62,10 +62,10 @@
 
 .squircle {
   display: flex;
-  gap: 20px;
+  gap: 1.25rem;
   justify-content: center;
   align-items: center;
-  padding: 20px 40px;
+  padding: 1.25rem 2.5rem;
   border-radius: var(--rounded-full);
   background-color: var(--color-primary);
 }
