@@ -19,9 +19,7 @@ export function InteractionScreen({ title, description, theme }) {
         </svg>
         {description}
       </div>
-      <div className="interaction-screen__option-view">
       <OptionsView />
-      </div>
       <div className="interaction-screen__theme squircle">{theme}</div>
       <div className="interaction-screen__logo">
         <svg
