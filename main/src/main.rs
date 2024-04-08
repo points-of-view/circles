@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use erasmus::{reader::TagsMap, GlobalState};
+use erasmus::{tags::TagsMap, GlobalState};
 use std::{fs, sync::Arc};
 use tauri::{
     async_runtime::{channel, spawn, Sender},
