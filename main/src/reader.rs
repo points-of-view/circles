@@ -91,9 +91,8 @@ fn handle_reader_error(error: String) {
 
 #[cfg(test)]
 mod tests {
-    use crate::tags::create_mock_tag;
-
     use super::*;
+    use crate::tags::create_mock_tag;
 
     #[test]
     fn should_add_correct_tag_to_vector() {

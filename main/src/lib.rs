@@ -101,10 +101,9 @@ impl GlobalState {
 
 #[cfg(test)]
 mod tests {
-    use tauri::async_runtime::channel;
-
     use super::*;
     use std::env;
+    use tauri::async_runtime::channel;
 
     #[test]
     fn should_return_okay_if_project_exists() {
