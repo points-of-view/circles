@@ -1,0 +1,31 @@
+.options-view {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  height: 80vh;
+  margin: 0 8vw;
+}
+
+.options-view__option:first-child {
+  --option-color: green;
+
+  align-self: flex-start;
+}
+
+.options-view__option:last-child {
+  --option-color: orange;
+
+  align-self: flex-start;
+}
+
+.options-view__option:not(:first-child, :last-child) {
+  --option-color: hotpink;
+
+  align-self: flex-end;
+}
+
+/* In case of 5 options, move the 2nd and 4th child to the center */
+.options-view__option:nth-child(2):nth-last-child(4),
+.options-view__option:nth-child(4):nth-last-child(2) {
+  align-self: center;
+}
