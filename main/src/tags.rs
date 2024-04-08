@@ -103,6 +103,14 @@ pub fn create_mock_tag() -> String {
 }
 
 #[cfg(test)]
+impl Tag {
+    // To help tests, we add a `Tag::random()` method
+    pub fn random() -> Tag {
+        Self::from_reader(create_mock_tag()).unwrap()
+    }
+}
+
+#[cfg(test)]
 mod tests {
     use super::*;
 
