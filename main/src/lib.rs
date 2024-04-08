@@ -100,6 +100,8 @@ impl GlobalState {
 
 #[cfg(test)]
 mod tests {
+    use tauri::async_runtime::channel;
+
     use super::*;
     use std::env;
 
@@ -145,8 +147,14 @@ mod tests {
         // Make sure we don't call the actual reader code
         env::set_var("MOCK_RFID_READER", "1");
         let state = GlobalState::build(":memory:".into()).unwrap();
+        let (fake_sender, _) = channel::<TagsMap>(1);
 
-        assert!(state.start_reading("/".into()).is_ok());
+        assert!(state
+            .start_reading(
+                "/".into(),
+                Arc::new(tauri::async_runtime::Mutex::new(fake_sender))
+            )
+            .is_ok());
         let lock = state.reader_handle.lock().unwrap();
         assert!(lock.is_some());
     }
