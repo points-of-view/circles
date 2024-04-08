@@ -1,4 +1,4 @@
-import Option from "./option";
+import OptionsView from "./optionsview";
 
 export function InteractionScreen({ title, description, theme }) {
   return (
@@ -20,9 +20,7 @@ export function InteractionScreen({ title, description, theme }) {
         {description}
       </div>
       <div className="interaction-screen__option-view">
-        <Option label={"Optie 1"} amount={25} />
-        <Option label={"Optie 2"} amount={3} />
-        <Option label={"Optie 3"} amount={0} />
+      <OptionsView />
       </div>
       <div className="interaction-screen__theme squircle">{theme}</div>
       <div className="interaction-screen__logo">
