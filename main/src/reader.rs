@@ -1,7 +1,17 @@
 pub mod command;
-use crate::tags::Tag;
-use std::fmt::{Display, Formatter};
-use tauri::api::process::CommandEvent;
+use crate::tags::{Tag, TagsMap};
+use std::sync::Arc;
+use std::time::Instant;
+use std::{
+    fmt::{Display, Formatter},
+    time::Duration,
+};
+use tauri::{
+    api::process::CommandEvent,
+    async_runtime::{spawn, JoinHandle, Receiver, Sender},
+};
+
+const REFRESH_INTERVAL: u64 = 500;
 
 #[derive(Debug, PartialEq)]
 pub enum ReaderErrorKind {
@@ -26,9 +36,29 @@ impl Display for ReaderError {
     }
 }
 
-pub fn handle_reader_event(event: CommandEvent) {
+pub fn handle_reader_events(
+    mut rx: Receiver<CommandEvent>,
+    sender: Arc<tauri::async_runtime::Mutex<Sender<TagsMap>>>,
+) -> JoinHandle<()> {
+    spawn(async move {
+        let mut tags: Vec<Tag> = vec![];
+        let interval = Duration::from_millis(REFRESH_INTERVAL);
+        let mut last_update = Instant::now();
+        while let Some(event) = rx.recv().await {
+            handle_reader_event(event, &mut tags);
+            if last_update.elapsed() > interval {
+                let new_map = TagsMap::from(tags.drain(..));
+                let lock = sender.lock().await;
+                lock.send(new_map).await.unwrap();
+                last_update = Instant::now();
+            }
+        }
+    })
+}
+
+fn handle_reader_event(event: CommandEvent, tags: &mut Vec<Tag>) {
     match event {
-        CommandEvent::Stdout(line) => handle_reader_stdout(line),
+        CommandEvent::Stdout(line) => handle_reader_stdout(line, tags),
         CommandEvent::Stderr(error) => handle_reader_error(error),
         CommandEvent::Error(error) => handle_reader_error(error),
         CommandEvent::Terminated(payload) => {
@@ -39,9 +69,9 @@ pub fn handle_reader_event(event: CommandEvent) {
     }
 }
 
-fn handle_reader_stdout(line: String) {
+fn handle_reader_stdout(line: String, tags: &mut Vec<Tag>) {
     match Tag::from_reader(line) {
-        Ok(tag) => println!("{:?}", tag),
+        Ok(tag) => tags.push(tag),
         Err(err) => {
             // We print faulty tags in development (so we can learn from them)
             // In production these get ignored
@@ -57,4 +87,30 @@ fn handle_reader_error(error: String) {
         message: error,
     };
     eprintln!("{:?}", err)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::tags::create_mock_tag;
+
+    #[test]
+    fn should_add_correct_tag_to_vector() {
+        let mut vec: Vec<Tag> = vec![];
+
+        let event = CommandEvent::Stdout(create_mock_tag());
+        handle_reader_event(event, &mut vec);
+
+        assert_eq!(1, vec.len());
+    }
+
+    #[test]
+    fn should_ignore_incorrect_tags() {
+        let mut vec: Vec<Tag> = vec![];
+
+        let event = CommandEvent::Stdout(String::from("incorrect tag"));
+        handle_reader_event(event, &mut vec);
+
+        assert_eq!(0, vec.len());
+    }
 }

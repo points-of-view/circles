@@ -1,5 +1,10 @@
 use rand::{seq::SliceRandom, thread_rng, Rng};
-use std::fmt::{Display, Formatter};
+use serde;
+use std::{
+    collections::HashMap,
+    fmt::{Display, Formatter},
+    vec::Drain,
+};
 
 const MAX_STRENGTH: i8 = -30;
 const MIN_STRENGTH: i8 = -80;
@@ -9,7 +14,7 @@ const MOCK_RFID_TAGS: [&str; 9] = [
     "abc123", "abc456", "abc789", "def123", "def456", "def789", "ghi123", "ghi456", "ghi789",
 ];
 
-#[derive(Debug)]
+#[derive(Debug, Clone, serde::Serialize)]
 pub struct Tag {
     pub id: String,
     pub strength: i8,
@@ -102,6 +107,28 @@ pub fn create_mock_tag() -> String {
     format!("{}|{}|{}", tag_id, antenna, strength)
 }
 
+#[derive(serde::Serialize, Clone)]
+pub struct TagsMap(HashMap<String, Tag>);
+
+impl TagsMap {
+    pub fn from(tags: Drain<'_, Tag>) -> Self {
+        tags.fold(TagsMap(HashMap::new()), |mut acc, new_tag| {
+            acc.0
+                .entry(new_tag.id.clone())
+                .and_modify(|old_tag: &mut Tag| {
+                    // If there is a current tag, we update this if the new one has a stronger signal
+                    if old_tag.strength < new_tag.strength.clone() {
+                        *old_tag = new_tag.clone();
+                    }
+                })
+                // If there isn't a new tag, we insert it
+                .or_insert(new_tag.clone());
+
+            acc
+        })
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -167,5 +194,48 @@ mod tests {
         let result = Tag::from_reader(create_mock_tag());
 
         assert!(result.is_ok())
+    }
+
+    #[test]
+    fn should_create_map_from_vector() {
+        let tag = Tag {
+            id: String::from("abc123"),
+            antenna: 1,
+            strength: -30,
+        };
+        let mut tags = vec![tag];
+
+        let map = TagsMap::from(tags.drain(..));
+
+        assert_eq!(1, map.0.keys().len());
+        assert_eq!(map.0.contains_key("abc123"), true);
+        assert_eq!(map.0["abc123"].antenna, 1);
+    }
+
+    #[test]
+    fn should_keep_strongest_of_two_tokens() {
+        let tag1 = Tag {
+            id: String::from("abc123"),
+            antenna: 2,
+            strength: -35,
+        };
+        let tag2 = Tag {
+            id: String::from("abc123"),
+            antenna: 1,
+            strength: -30,
+        };
+        let tag3 = Tag {
+            id: String::from("abc123"),
+            antenna: 1,
+            strength: -65,
+        };
+        let mut tags = vec![tag1, tag2, tag3];
+
+        let map = TagsMap::from(tags.drain(..));
+
+        assert_eq!(1, map.0.keys().len());
+        assert_eq!(map.0.contains_key("abc123"), true);
+        assert_eq!(map.0["abc123"].antenna, 1);
+        assert_eq!(map.0["abc123"].strength, -30);
     }
 }

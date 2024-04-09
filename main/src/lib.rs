@@ -6,11 +6,12 @@ pub mod tags;
 use database::{create_session, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
-use reader::{command::spawn_reader, handle_reader_event};
-use std::{error::Error, path::PathBuf, sync::Mutex};
+use reader::{command::spawn_reader, handle_reader_events};
+use std::{error::Error, path::PathBuf, sync::Arc};
+use tags::TagsMap;
 use tauri::{
     api::process::CommandChild,
-    async_runtime::{spawn, JoinHandle},
+    async_runtime::{JoinHandle, Sender},
 };
 
 pub struct CurrentSession {
@@ -19,10 +20,10 @@ pub struct CurrentSession {
 }
 
 pub struct GlobalState {
-    pub database_connection: Mutex<SqliteConnection>,
-    pub current_project: Mutex<Option<Project>>,
-    pub current_session: Mutex<Option<CurrentSession>>,
-    pub reader_handle: Mutex<Option<(CommandChild, JoinHandle<()>)>>,
+    pub database_connection: std::sync::Mutex<SqliteConnection>,
+    pub current_project: std::sync::Mutex<Option<Project>>,
+    pub current_session: std::sync::Mutex<Option<CurrentSession>>,
+    pub reader_handle: std::sync::Mutex<Option<(CommandChild, JoinHandle<()>)>>,
 }
 
 impl GlobalState {
@@ -30,10 +31,10 @@ impl GlobalState {
         let connection = setup_database(&database_location)?;
 
         let state = GlobalState {
-            database_connection: Mutex::new(connection),
-            current_project: Mutex::new(None),
-            current_session: Mutex::new(None),
-            reader_handle: Mutex::new(None),
+            database_connection: std::sync::Mutex::new(connection),
+            current_project: std::sync::Mutex::new(None),
+            current_session: std::sync::Mutex::new(None),
+            reader_handle: std::sync::Mutex::new(None),
         };
 
         Ok(state)
@@ -78,7 +79,11 @@ impl GlobalState {
         Ok(session.id)
     }
 
-    pub fn start_reading(&self, resource_path: PathBuf) -> Result<(), String> {
+    pub fn start_reading(
+        &self,
+        resource_path: PathBuf,
+        sender: Arc<tauri::async_runtime::Mutex<Sender<TagsMap>>>,
+    ) -> Result<(), String> {
         let mut lock = self.reader_handle.lock().unwrap();
         if let Some((child, handle)) = lock.take() {
             // We first abort reading data
@@ -87,12 +92,8 @@ impl GlobalState {
             child.kill().unwrap();
         }
 
-        let (mut rx, child) = spawn_reader(resource_path);
-        let handle = spawn(async move {
-            while let Some(event) = rx.recv().await {
-                handle_reader_event(event)
-            }
-        });
+        let (rx, child) = spawn_reader(resource_path);
+        let handle = handle_reader_events(rx, sender);
         *lock = Some((child, handle));
         Ok(())
     }
@@ -102,6 +103,7 @@ impl GlobalState {
 mod tests {
     use super::*;
     use std::env;
+    use tauri::async_runtime::channel;
 
     #[test]
     fn should_return_okay_if_project_exists() {
@@ -145,8 +147,14 @@ mod tests {
         // Make sure we don't call the actual reader code
         env::set_var("MOCK_RFID_READER", "1");
         let state = GlobalState::build(":memory:".into()).unwrap();
+        let (fake_sender, _) = channel::<TagsMap>(1);
 
-        assert!(state.start_reading("/".into()).is_ok());
+        assert!(state
+            .start_reading(
+                "/".into(),
+                Arc::new(tauri::async_runtime::Mutex::new(fake_sender))
+            )
+            .is_ok());
         let lock = state.reader_handle.lock().unwrap();
         assert!(lock.is_some());
     }
