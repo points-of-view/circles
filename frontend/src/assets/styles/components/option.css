@@ -37,6 +37,11 @@
   overflow-wrap: break-word;
 }
 
+.option__label--description {
+  font-size: var(--text-md);
+  text-align: center;
+}
+
 .option__figure-container {
   display: flex;
   flex-flow: wrap;
@@ -58,4 +63,14 @@
   font-size: var(--text-lg);
   border-radius: var(--rounded-full);
   background-color: var(--option-color);
+}
+
+.option--big {
+  .option__content {
+    border-width: 15px;
+  }
+
+  .option__label {
+    font-size: var(--text-xl);
+  }
 }
