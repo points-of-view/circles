@@ -1,5 +1,6 @@
 .option {
   flex: 1 1 0px;
+  position: relative;
 }
 
 .option__content {
@@ -47,15 +48,16 @@
 }
 
 .option__amount {
-  position: relative;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 6rem;
   height: 6rem;
-  margin: 0 auto -2.5rem;
   font-weight: 700;
   font-size: var(--text-lg);
   border-radius: var(--rounded-full);
   background-color: var(--option-color);
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
