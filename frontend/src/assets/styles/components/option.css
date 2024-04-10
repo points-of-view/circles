@@ -1,7 +1,7 @@
 .option {
-  flex: 1 1 0px;
   position: relative;
   z-index: 1;
+  flex: 1 1 0px;
 }
 
 .option__content {
@@ -50,6 +50,7 @@
 
 .option__amount {
   position: absolute;
+  left: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,6 +60,5 @@
   font-size: var(--text-lg);
   border-radius: var(--rounded-full);
   background-color: var(--option-color);
-  left: 50%;
   transform: translate(-50%, -50%);
 }

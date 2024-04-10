@@ -5,9 +5,9 @@
   place-items: center stretch;
   justify-content: center;
   width: 100%;
+  height: 100vh;
   padding: 2rem;
   background-color: blue;
-  height: 100vh;
 }
 
 .interaction-screen__title {
@@ -34,8 +34,8 @@
 
 .interaction-screen__theme {
   position: fixed;
-  bottom: 2rem;
   left: 2rem;
+  bottom: 2rem;
 }
 
 .interaction-screen__logo {
