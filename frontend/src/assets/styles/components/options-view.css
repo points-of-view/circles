@@ -3,7 +3,6 @@
   gap: 1rem;
   justify-content: space-between;
   height: 80vh;
-  margin: 0 8vw;
 }
 
 .options-view__option:first-child {
