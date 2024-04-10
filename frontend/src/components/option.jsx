@@ -8,7 +8,7 @@ export default function Option({
   showDescriptionLayout = false,
 }) {
   return (
-    <div className={clsx("option " + className, { "option--big": big })}>
+    <div className={clsx("option", className, { "option--big": big })}>
       {!big && <div className="option__amount">{amount}</div>}
       <div className="option__content">
         <div
