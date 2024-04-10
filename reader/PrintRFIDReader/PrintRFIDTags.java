@@ -25,7 +25,7 @@ public class PrintRFIDTags {
 	private Condition inventoryStopCondVar = inventoryStopEventLock.newCondition();
 
 	public static Hashtable<String, Long> tagStore = null;
-	public String hostName = "169.254.156.114";
+	public String hostName = "fx9600739c72";
 	public int port = 5084;
 	private EventsHandler eventsHandler = new EventsHandler();
 
