@@ -1,6 +1,5 @@
 pub mod command;
 use crate::tags::{Tag, TagsMap};
-use std::sync::Arc;
 use std::time::Instant;
 use std::{
     fmt::{Display, Formatter},
@@ -8,7 +7,8 @@ use std::{
 };
 use tauri::{
     api::process::CommandEvent,
-    async_runtime::{spawn, JoinHandle, Receiver, Sender},
+    async_runtime::{spawn, JoinHandle, Receiver},
+    AppHandle, Manager,
 };
 
 const REFRESH_INTERVAL: u64 = 500;
@@ -36,9 +36,9 @@ impl Display for ReaderError {
     }
 }
 
-pub fn handle_reader_events(
+pub fn handle_reader_events<R: tauri::Runtime>(
     mut rx: Receiver<CommandEvent>,
-    sender: Arc<tauri::async_runtime::Mutex<Sender<TagsMap>>>,
+    handle: AppHandle<R>,
 ) -> JoinHandle<()> {
     spawn(async move {
         let mut tags: Vec<Tag> = vec![];
@@ -48,8 +48,7 @@ pub fn handle_reader_events(
             handle_reader_event(event, &mut tags);
             if last_update.elapsed() > interval {
                 let new_map = TagsMap::from(tags.drain(..));
-                let lock = sender.lock().await;
-                lock.send(new_map).await.unwrap();
+                handle.emit_all("updated-tags", new_map).unwrap();
                 last_update = Instant::now();
             }
         }

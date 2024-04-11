@@ -7,11 +7,11 @@ use database::{create_session, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
 use reader::{command::spawn_reader, handle_reader_events};
-use std::{error::Error, path::PathBuf, sync::Arc};
-use tags::TagsMap;
+use std::{error::Error, path::PathBuf};
 use tauri::{
     api::process::CommandChild,
-    async_runtime::{JoinHandle, Sender},
+    async_runtime::JoinHandle,
+    AppHandle,
 };
 
 pub struct CurrentSession {
@@ -79,10 +79,10 @@ impl GlobalState {
         Ok(session.id)
     }
 
-    pub fn start_reading(
+    pub fn start_reading<R: tauri::Runtime>(
         &self,
         resource_path: PathBuf,
-        sender: Arc<tauri::async_runtime::Mutex<Sender<TagsMap>>>,
+        app_handle: AppHandle<R>,
     ) -> Result<(), String> {
         let mut lock = self.reader_handle.lock().unwrap();
         if let Some((child, handle)) = lock.take() {
@@ -93,7 +93,7 @@ impl GlobalState {
         }
 
         let (rx, child) = spawn_reader(resource_path);
-        let handle = handle_reader_events(rx, sender);
+        let handle = handle_reader_events(rx, app_handle);
         *lock = Some((child, handle));
         Ok(())
     }
@@ -103,7 +103,7 @@ impl GlobalState {
 mod tests {
     use super::*;
     use std::env;
-    use tauri::async_runtime::channel;
+    use tauri::{async_runtime::channel, Manager};
 
     #[test]
     fn should_return_okay_if_project_exists() {
@@ -147,13 +147,10 @@ mod tests {
         // Make sure we don't call the actual reader code
         env::set_var("MOCK_RFID_READER", "1");
         let state = GlobalState::build(":memory:".into()).unwrap();
-        let (fake_sender, _) = channel::<TagsMap>(1);
+        let mock_app = tauri::test::mock_app();
 
         assert!(state
-            .start_reading(
-                "/".into(),
-                Arc::new(tauri::async_runtime::Mutex::new(fake_sender))
-            )
+            .start_reading("/".into(), mock_app.app_handle(),)
             .is_ok());
         let lock = state.reader_handle.lock().unwrap();
         assert!(lock.is_some());
