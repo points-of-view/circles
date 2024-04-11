@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use erasmus::GlobalState;
+use circles::GlobalState;
 use std::fs;
 use tauri::Manager;
 
@@ -38,7 +38,7 @@ fn main() {
             // Make sure the data_dir exists
             fs::create_dir_all(&data_dir)?;
 
-            data_dir.push("erasmus_db.sqlite");
+            data_dir.push("circles_db.sqlite");
 
             // Setup global state and channels for communication
             let state = GlobalState::build(data_dir)?;
