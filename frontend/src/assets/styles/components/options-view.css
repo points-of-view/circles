@@ -3,6 +3,7 @@
   flex-grow: 1;
   gap: 1rem;
   justify-content: space-between;
+  width: 100%;
 }
 
 .options-view__option:first-child {
