@@ -31,15 +31,11 @@ function Session({ project, resetProject, language }) {
   const [, setReaderError] = useState(null);
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
-  const [step, setStep] = useState(PHASES.pickTheme);
-  const [themes, setThemes] = useState([]);
+  const [phase, setPhase] = useState(PHASES.pickTheme);
+  const [themesIndexes, setThemesIndexes] = useState([]);
+  const [chosenTheme, setChosenTheme] = useState(null);
 
-  async function startNewSession(e) {
-    e.preventDefault();
-    const data = new FormData(e.target);
-
-    const themeKey = data.get("themeKey");
-
+  async function startNewSession(themeKey) {
     try {
       const response = await invoke("start_session", { themeKey });
       setSessionID(response);
@@ -86,16 +82,25 @@ function Session({ project, resetProject, language }) {
 
   function shuffleThemes(amountOfThemes) {
     let myArray = [];
-    setThemes([]);
+    setThemesIndexes([]);
     while (myArray.length < amountOfThemes) {
       let newRandomInt = Math.floor(Math.random() * project.themes.length);
       if (!myArray.includes(newRandomInt)) {
         myArray.push(newRandomInt);
-        setThemes((oldArray) => [
+        setThemesIndexes((oldArray) => [
           ...oldArray,
-          project.themes[newRandomInt].name[language],
+          newRandomInt,
         ]);
       }
+    }
+  }
+
+  function importThemeCopy() {
+    if (chosenTheme !== null) {
+      return project.themes.find(item => item.key === chosenTheme);
+    }
+    else {
+      return project.themes.find(item => item.key === "theme-one")
     }
   }
 
@@ -103,33 +108,41 @@ function Session({ project, resetProject, language }) {
     <>
       {import.meta.env.VITE_DEV_MODE && (
         <ControlPanel
-          step={step}
-          setStep={setStep}
+          phase={phase}
+          setPhase={setPhase}
           project={project}
           language={language}
           startNewSession={startNewSession}
           error={error}
           sessionID={sessionID}
           setSessionID={setSessionID}
+          setChosenTheme={setChosenTheme}
+          options={phase === PHASES.pickTheme ? themesIndexes : phase === PHASES.showQuestion ? importThemeCopy().questions[0].options.map(a => a.value[language]) : importThemeCopy().questions[1].options.map(a => a.value[language])}
         />
       )}
-      {step === PHASES.pickTheme ? (
+      {phase === PHASES.pickTheme ? (
         <InteractionScreen
-          title={"title"}
-          description={"description"}
-          options={themes}
-          step={step}
+          title={"Choose a theme of your choice"}
+          description={"Stand in the circle of your answer"}
+          options={themesIndexes.map(a => project.themes[a].name[language])}
+          phase={phase}
           shuffleThemes={shuffleThemes}
         />
-      ) : (
+      ) : (phase === PHASES.showQuestion ? (
         <InteractionScreen
-          title={"title"}
-          description={"description"}
-          theme={"theme"}
-          step={step}
-          options={themes}
+          title={importThemeCopy().questions[0].title[language]}
+          description={"Stand in the circle of your answer"}
+          options={importThemeCopy().questions[0].options.map(a => a.value[language])}
+          theme={importThemeCopy().name[language]}
+          phase={phase}
         />
-      )}
+      ) : <InteractionScreen
+        title={importThemeCopy().questions[1].title[language]}
+        description={"Stand in the circle of your answer"}
+        options={importThemeCopy().questions[1].options.map(a => a.value[language])}
+        theme={importThemeCopy().name[language]}
+        phase={phase}
+      />)}
     </>
   );
 }

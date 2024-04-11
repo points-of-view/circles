@@ -7,13 +7,13 @@ export function InteractionScreen({
   theme = false,
   options,
   shuffleThemes = false,
-  step,
+  phase,
 }) {
   useEffect(() => {
     if (shuffleThemes) {
       shuffleThemes(3);
     }
-  }, [step]);
+  }, [phase]);
 
   return (
     <div className="interaction-screen">
