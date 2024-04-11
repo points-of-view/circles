@@ -1,7 +1,7 @@
-# Erasmus
+# Circles
 
 ## Setup
-It's recommended to use nix when working on erasmus, this will ensure that you have all the necessary dependencies and that we all use the same version of dependencies.
+It's recommended to use nix when working on circles, this will ensure that you have all the necessary dependencies and that we all use the same version of dependencies.
 
 Refer to the [the nixos documentation](https://nixos.org/download#nix-install-macos) setup nix.
 

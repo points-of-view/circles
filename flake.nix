@@ -1,5 +1,5 @@
 {
-  description = "A flake to run erasmus";
+  description = "A flake to run circles";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     flake-utils.url = "github:numtide/flake-utils";
@@ -31,7 +31,7 @@
         craneLib = inputs.crane.lib.${system};
 
         frontend = pkgs.mkYarnPackage {
-          pname = "erasmus-frontend";
+          pname = "circles-frontend";
           version = "unstable";
 
           src = pkgs.lib.cleanSource ./frontend;
@@ -90,16 +90,16 @@
       in
       {
         packages = rec {
-          default = erasmus;
-          erasmus = craneLib.buildTauriPackage (tauriArgs // {
-            pname = "erasmus";
+          default = circles;
+          circles = craneLib.buildTauriPackage (tauriArgs // {
+            pname = "circles";
             version = "unstable";
             inherit cargoArtifacts;
             tauriConfigPath = ./main/tauri.conf.json;
             tauriDistDir = frontend;
           });
           reader = pkgs.stdenv.mkDerivation {
-            pname = "erasmus-reader";
+            pname = "circles-reader";
             version = "unstable";
             # This filters with the default `cleanSourceFilter` with one exception for `.so` files
             src = pkgs.lib.cleanSourceWith {
@@ -128,11 +128,11 @@
           };
         };
         devShells = rec {
-          default = erasmus;
-          erasmus = pkgs.devshell.mkShell
+          default = circles;
+          circles = pkgs.devshell.mkShell
             {
               imports = pkgs.lib.optionals pkgs.stdenv.isLinux [ "${inputs.devshell}/extra/language/c.nix" ];
-              name = "erasmus";
+              name = "circles";
               packages = [
                 # Nix related packaged
                 pkgs.nixpkgs-fmt
@@ -198,7 +198,7 @@
                 }
                 {
                   name = "DATABASE_URL";
-                  eval = "$PRJ_DATA_DIR/erasmus.sqlite";
+                  eval = "$PRJ_DATA_DIR/circles.sqlite";
                 }
                 {
                   # Some linkers look at `LIBRARY_PATH` instead of `LD_LIBRARY_PATH`, so we mirror this variable
