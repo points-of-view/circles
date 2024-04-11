@@ -8,6 +8,7 @@ use tauri::Manager;
 #[tauri::command]
 fn select_project(
     state: tauri::State<GlobalState>,
+    tags_channel: tauri::State<Arc<tauri::async_runtime::Mutex<Sender<TagsMap>>>>,
     app_handle: tauri::AppHandle,
     project_key: String,
 ) -> Result<(), String> {
@@ -19,7 +20,7 @@ fn select_project(
         .path_resolver()
         .resource_dir()
         .expect("Error while getting `resource_dir`");
-    state.start_reading(resource_path, app_handle)
+    state.start_reading(resource_path, app_handle, errors_channel.inner().clone())
 }
 
 #[tauri::command]
@@ -42,7 +43,19 @@ fn main() {
 
             // Setup global state and channels for communication
             let state = GlobalState::build(data_dir)?;
+            let (errors_channel_tx, mut errors_channel_rx) = channel::<ReaderError>(1);
+
+            // NOTE: Our channel needs to be wrapped in a Mutex from `tauri::async_runtime`
+            // The Mutex from `std::sync` cannot be used in an `await` context
+            app.manage(Arc::new(tauri::async_runtime::Mutex::new(errors_channel_tx)));
             app.manage(state);
+
+            let handle = app.handle();
+            spawn(async move {
+                while let Some(error) = errors_channel_rx.recv().await {
+                    handle.emit_all("reader-error", error).unwrap();
+                }
+            });
 
             Ok(())
         })
