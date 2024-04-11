@@ -3,6 +3,13 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { listen } from "@tauri-apps/api/event";
 import { InteractionScreen } from "./components/interaction-screen";
 import { SelectProject } from "./components/select_project";
+import ControlPanel from "./components/control-panel";
+
+export const PHASES = {
+  pickTheme: "pickTheme",
+  showQuestion: "showQuestion", 
+  showOpinionQuestion: "showOpinionQuestion" 
+};
 
 export default function App() {
   const [project, setProject] = useState(null);
@@ -20,6 +27,7 @@ function Session({ project, resetProject, language }) {
   const [, setReaderError] = useState(null);
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
+  const [step, setStep] = useState(PHASES.questionInstructionSplash);
 
   async function startNewSession(e) {
     e.preventDefault();
@@ -73,14 +81,17 @@ function Session({ project, resetProject, language }) {
 
   return (
     <div>
-      {project.name[language]}
-      <form action="" onSubmit={startNewSession}>
-        <input type="text" name="themeKey" id="themeKey" required />
-        <button type="submit">Start new session</button>
-        {error && <span>{error}</span>}
-      </form>
-
-      {sessionID && <div>Currently in session {sessionID}</div>}
+      {import.meta.env.VITE_DEV_MODE &&
+      <ControlPanel
+        step={step}
+        setStep={setStep}
+        project={project}
+        language={language}
+        startNewSession={startNewSession}
+        error={error}
+        sessionID={sessionID}
+        setSessionID={setSessionID}
+      />}
       <InteractionScreen
         title={"title"}
         description={"description"}
