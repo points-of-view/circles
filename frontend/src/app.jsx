@@ -78,10 +78,6 @@ function Session({ project, resetProject, language }) {
 
     document.addEventListener("keydown", handleKeyDown);
 
-    if (step === PHASES.pickTheme) {
-      shuffleThemes(3);
-    }
-
     // Don't forget to clean up
     return function cleanup() {
       document.removeEventListener("keydown", handleKeyDown);
@@ -90,6 +86,7 @@ function Session({ project, resetProject, language }) {
 
   function shuffleThemes(amountOfThemes) {
     let myArray = [];
+    setThemes([]);
     while (myArray.length < amountOfThemes) {
       let newRandomInt = Math.floor(Math.random() * project.themes.length);
       if (!myArray.includes(newRandomInt)) {
@@ -121,12 +118,15 @@ function Session({ project, resetProject, language }) {
           title={"title"}
           description={"description"}
           options={themes}
+          step={step}
+          shuffleThemes={shuffleThemes}
         />
       ) : (
         <InteractionScreen
           title={"title"}
           description={"description"}
           theme={"theme"}
+          step={step}
           options={themes}
         />
       )}

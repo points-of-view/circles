@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import OptionsView from "./optionsview";
 
 export function InteractionScreen({
@@ -5,7 +6,15 @@ export function InteractionScreen({
   description,
   theme = false,
   options,
+  shuffleThemes = false,
+  step,
 }) {
+  useEffect(() => {
+    if (shuffleThemes) {
+      shuffleThemes(3);
+    }
+  }, [step]);
+
   return (
     <div className="interaction-screen">
       <div className="interaction-screen__title squircle">{title}</div>
