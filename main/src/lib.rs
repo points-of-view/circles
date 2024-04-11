@@ -8,11 +8,7 @@ use diesel::prelude::*;
 use projects::{Project, Theme};
 use reader::{command::spawn_reader, handle_reader_events};
 use std::{error::Error, path::PathBuf};
-use tauri::{
-    api::process::CommandChild,
-    async_runtime::JoinHandle,
-    AppHandle,
-};
+use tauri::{api::process::CommandChild, async_runtime::JoinHandle, AppHandle};
 
 pub struct CurrentSession {
     pub session_id: i32,
