@@ -79,7 +79,6 @@ impl GlobalState {
         &self,
         resource_path: PathBuf,
         app_handle: AppHandle<R>,
-        errors_sender: Arc<tauri::async_runtime::Mutex<Sender<ReaderError>>>,
     ) -> Result<(), String> {
         let mut lock = self.reader_handle.lock().unwrap();
         if let Some((child, handle)) = lock.take() {
@@ -90,7 +89,7 @@ impl GlobalState {
         }
 
         let (rx, child) = spawn_reader(resource_path);
-        let handle = handle_reader_events(rx, app_handle, errors_sender);
+        let handle = handle_reader_events(rx, app_handle);
         *lock = Some((child, handle));
         Ok(())
     }
@@ -100,7 +99,6 @@ impl GlobalState {
 mod tests {
     use super::*;
     use std::env;
-    use tauri::{async_runtime::channel, Manager};
 
     #[test]
     fn should_return_okay_if_project_exists() {
@@ -145,15 +143,8 @@ mod tests {
         env::set_var("MOCK_RFID_READER", "1");
         let state = GlobalState::build(":memory:".into()).unwrap();
         let mock_app = tauri::test::mock_app();
-        let (errors_sender, _) = channel::<ReaderError>(1);
 
-        assert!(state
-            .start_reading(
-                "/".into(),
-                mock_app.handle(),
-                Arc::new(tauri::async_runtime::Mutex::new(errors_sender))
-            )
-            .is_ok());
+        assert!(state.start_reading("/".into(), mock_app.handle()).is_ok());
         let lock = state.reader_handle.lock().unwrap();
         assert!(lock.is_some());
     }

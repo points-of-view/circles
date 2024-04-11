@@ -4,11 +4,10 @@ use std::time::Instant;
 use std::{
     fmt::{Display, Formatter},
     time::Duration,
-    sync::Arc
 };
 use tauri::{
     api::process::CommandEvent,
-    async_runtime::{spawn, JoinHandle, Receiver, Sender},
+    async_runtime::{spawn, JoinHandle, Receiver},
     AppHandle, Manager,
 };
 
@@ -40,7 +39,6 @@ impl Display for ReaderError {
 pub fn handle_reader_events<R: tauri::Runtime>(
     mut rx: Receiver<CommandEvent>,
     handle: AppHandle<R>,
-    errors_sender: Arc<tauri::async_runtime::Mutex<Sender<ReaderError>>>,
 ) -> JoinHandle<()> {
     spawn(async move {
         let mut tags: Vec<Tag> = vec![];
@@ -49,10 +47,7 @@ pub fn handle_reader_events<R: tauri::Runtime>(
         while let Some(event) = rx.recv().await {
             match handle_reader_event(event, &mut tags) {
                 Ok(()) => (),
-                Err(err) => {
-                    let lock = errors_sender.lock().await;
-                    lock.send(err).await.unwrap();
-                }
+                Err(err) => handle.emit_all("reader-error", err).unwrap(),
             }
             if last_update.elapsed() > interval {
                 let new_map = TagsMap::from(tags.drain(..));
@@ -112,8 +107,9 @@ mod tests {
         let mut vec: Vec<Tag> = vec![];
 
         let event = CommandEvent::Stdout(create_mock_tag());
-        handle_reader_event(event, &mut vec);
+        let result = handle_reader_event(event, &mut vec);
 
+        assert!(result.is_ok());
         assert_eq!(1, vec.len());
     }
 
@@ -122,8 +118,9 @@ mod tests {
         let mut vec: Vec<Tag> = vec![];
 
         let event = CommandEvent::Stdout(String::from("incorrect tag"));
-        handle_reader_event(event, &mut vec);
+        let result = handle_reader_event(event, &mut vec);
 
+        assert!(result.is_ok());
         assert_eq!(0, vec.len());
     }
 

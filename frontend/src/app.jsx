@@ -41,6 +41,7 @@ function SelectProject({ setProject }) {
 
 function Session({ project, resetProject, language }) {
   const [, setTagsMap] = useState({});
+  const [, setReaderError] = useState(null);
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
 
@@ -64,6 +65,14 @@ function Session({ project, resetProject, language }) {
   useEffect(() => {
     const unlisten = listen("updated-tags", ({ payload }) =>
       setTagsMap(payload),
+    );
+
+    return () => unlisten.then((fn) => fn());
+  }, []);
+
+  useEffect(() => {
+    const unlisten = listen("reader-error", ({ payload }) =>
+      setReaderError(payload),
     );
 
     return () => unlisten.then((fn) => fn());
