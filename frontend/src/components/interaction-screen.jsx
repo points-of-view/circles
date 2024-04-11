@@ -1,6 +1,6 @@
 import OptionsView from "./optionsview";
 
-export function InteractionScreen({ title, description, theme }) {
+export function InteractionScreen({ title, description, theme = false, options }) {
   return (
     <div className="interaction-screen">
       <div className="interaction-screen__title squircle">{title}</div>
@@ -19,8 +19,8 @@ export function InteractionScreen({ title, description, theme }) {
         </svg>
         {description}
       </div>
-      <OptionsView />
-      <div className="interaction-screen__theme squircle">{theme}</div>
+      <OptionsView options={options} />
+      {theme && <div className="interaction-screen__theme squircle">{theme}</div>}
       <div className="interaction-screen__logo">
         <svg
           width="91"
