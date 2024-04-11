@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { listen } from "@tauri-apps/api/event";
 import { InteractionScreen } from "./components/interaction-screen";
@@ -52,6 +52,23 @@ function Session({ project, resetProject, language }) {
     );
 
     return () => unlisten.then((fn) => fn());
+  }, []);
+
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (e.keyCode === 39) {
+        console.log("proceed")
+      } else if (e.keyCode === 37) {
+        console.log("previous")
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Don't forget to clean up
+    return function cleanup() {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
   }, []);
 
   return (
