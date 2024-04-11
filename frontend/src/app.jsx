@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
+import { listen } from "@tauri-apps/api/event";
 import projects from "../../projects";
 import { InteractionScreen } from "./components/interaction-screen";
 
@@ -39,6 +40,7 @@ function SelectProject({ setProject }) {
 }
 
 function Session({ project, resetProject, language }) {
+  const [, setTagsMap] = useState({});
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
 
@@ -58,6 +60,14 @@ function Session({ project, resetProject, language }) {
       setError(e);
     }
   }
+
+  useEffect(() => {
+    const unlisten = listen("updated-tags", ({ payload }) =>
+      setTagsMap(payload),
+    );
+
+    return () => unlisten.then((fn) => fn());
+  }, []);
 
   return (
     <div>
