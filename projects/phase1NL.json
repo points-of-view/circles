@@ -1,0 +1,399 @@
+{
+  "name": {
+    "nl": "Testing Phase 1 - Nederlandstalige Copy"
+  },
+  "availableLanguages": ["nl"],
+  "key": "phase1NL",
+  "themes": [
+    {
+      "name": { "nl": "Migratie" },
+      "key": "theme-one",
+      "questions": [
+        {
+          "title": { "nl": "Hoeveel mensen vroegen in 2023 asiel aan in de EU?" },
+          "key": "question-one",
+          "didYouKnow": "In 2023 introduceerde de EU een solidariteitsmechanisme waarbij landen met minder immigranten, immigranten opnemen uit landen met meer immigranten.",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "nl": "Tussen 100.000 en 500.000" }
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "nl": "Tussen 500.000 en één miljoen" }
+            },
+            {
+              "key": "question-one-option-three",
+              "value": { "nl": "Meer dan één miljoen" },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": { "nl": "Elk EU-land moet een minimumaantal asielzoekers opnemen, evenredig met zijn bevolking" },
+          "key": "question-two",
+          "options": [
+            {
+              "key": "question-two-option-one",
+              "value": { "nl": "Niet akkoord" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "nl": "Niet zeker" }
+            },
+            {
+              "key": "question-two-option-three",
+              "value": { "nl": "Akkoord" }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": { "nl": "AI" },
+      "key": "theme-two",
+      "questions": [
+        {
+          "title": { "nl": "Staat de EU het gebruik van live gezichtsherkenningstechnologie in de openbare ruimte toe?" },
+          "key": "question-one",
+          "didYouKnow": "De EU AI Act van 2024 verbiedt het gebruik van live gezichtsherkenningstechnologie in de openbare ruimte, behalve voor zeer specifieke wetshandhavingsdoeleinden, zoals het vinden van ontvoerde slachtoffers of vermoedelijke ernstige criminelen.",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "nl": "Nee" }
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "nl": "In een aantal gevallen" },
+              "correct": true
+            },
+            {
+              "key": "question-one-option-three",
+              "value": { "nl": "Ja" }
+            }
+          ]
+        },
+        {
+          "title": { "nl": "De EU zou flexibeler moeten zijn in het gebruik van live gezichtsherkenning in de openbare ruimte en zou het eventueel vaker moeten toestaan" },
+          "key": "question-two",
+          "options": [
+            {
+              "key": "question-two-option-one",
+              "value": { "nl": "Niet akkoord" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "nl": "Niet zeker" }
+            },
+            {
+              "key": "question-two-option-three",
+              "value": { "nl": "Akkoord" }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": { "nl": "Klimaat " },
+      "key": "theme-three",
+      "questions": [
+        {
+          "title": { "nl": "Tegen welk jaar wil de EU klimaatneutraliteit bereiken door alle CO₂-uitstoot te compenseren met maatregelen ter bescherming van het klimaat?" },
+          "key": "question-one",
+          "didYouKnow": "De EU Klimaatwet van 2021 stelt dat de EU tegen 2050 klimaatneutraliteit wil bereiken. De EU wil van Europa het eerste klimaatneutrale continent maken.   ",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "nl": "Tegen 2030" }
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "nl": "Tegen 2040" }
+            },
+            {
+              "key": "question-one-option-three",
+              "value": { "nl": "Tegen 2050" },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": { "nl": "EU-landen moeten een boete krijgen als ze niet genoeg inspanningen leveren om hun CO₂-uitstoot te verminderen" },
+          "key": "question-two",
+          "options": [
+            {
+              "key": "question-two-option-one",
+              "value": { "nl": "Niet akkoord" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "nl": "Niet zeker" }
+            },
+            {
+              "key": "question-two-option-three",
+              "value": { "nl": "Akkoord" }
+            }
+          ]
+        }
+      ]
+    },{
+      "name": { "nl": "Gender" },
+      "key": "theme-four",
+      "questions": [
+        {
+          "title": { "nl": "In hoeveel EU-landen kan je kiezen voor een 'X' in plaats van 'man' of 'vrouw' op je nationale identiteitskaart?" },
+          "key": "question-one",
+          "didYouKnow": "Malta en Denemarken staan een 'X' toe i.p.v. 'man' of 'vrouw'. Andere landen overwegen om geslachtsaanduidingen op nationale identititeitskaarten te verwijderen. Er is geen EU-wetgeving op dit vlak.",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "nl": "2" },
+              "correct": true
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "nl": "5" }
+            },
+            {
+              "key": "question-one-option-three",
+              "value": { "nl": "10" }
+            }
+          ]
+        },
+        {
+          "title": { "nl": "De EU moet haar lidstaten aanmoedigen om officieel andere genderidentiteiten dan man en vrouw te erkennen" },
+          "key": "question-two",
+          "options": [
+            {
+              "key": "question-two-option-one",
+              "value": { "nl": "Niet akkoord" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "nl": "Niet zeker" }
+            },
+            {
+              "key": "question-two-option-three",
+              "value": { "nl": "Akkoord" }
+            }
+          ]
+        }
+      ]
+    },{
+      "name": { "nl": "Militaire dienstplicht" },
+      "key": "theme-five",
+      "questions": [
+        {
+          "title": { "nl": "Hoeveel EU-landen hebben een vorm van militaire dienstplicht?" },
+          "key": "question-one",
+          "didYouKnow": "Litouwen, Denemarken, Zweden, Cyprus, Finland, Letland, Oostenrijk, Griekenland en Estland hebben een vorm van dienstplicht. Momenteel is er geen Europees leger. Elke lidstaat is verantwoordelijk voor zijn eigen leger.",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "nl": "Geen" }
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "nl": "3" }
+            },
+            {
+              "key": "question-one-option-three",
+              "value": { "nl": "9" },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": { "nl": "De EU moet een gemeenschappelijk Europees leger bouwen" },
+          "key": "question-two",
+          "options": [
+            {
+              "key": "question-two-option-one",
+              "value": { "nl": "Niet akkoord" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "nl": "Niet zeker" }
+            },
+            {
+              "key": "question-two-option-three",
+              "value": { "nl": "Akkoord" }
+            }
+          ]
+        }
+      ]
+    },{
+      "name": { "nl": "Mobiliteit" },
+      "key": "theme-six",
+      "questions": [
+        {
+          "title": { "nl": "Vanaf welk jaar wordt de verkoop van auto's en bestelwagens die CO₂ uitstoten verboden in de EU?" },
+          "key": "question-one",
+          "didYouKnow": "In 2023 besloot de EU dat vanaf 2035 geen nieuwe diesel- en benzinewagens meer verkocht mogen worden in de EU. Dit betekent dat alle nieuwe wagens vanaf 2035 elektrische voertuigen moeten zijn.",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "nl": "Vanaf 2025" }
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "nl": "Vanaf 2030" }
+            },
+            {
+              "key": "question-one-option-three",
+              "value": { "nl": "Vanaf 2035" },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": { "nl": "2035 is een redelijke timing voor een totale omschakeling naar elektrische auto's en bestelwagens" },
+          "key": "question-two",
+          "options": [
+            {
+              "key": "question-two-option-one",
+              "value": { "nl": "Niet akkoord" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "nl": "Niet zeker" }
+            },
+            {
+              "key": "question-two-option-three",
+              "value": { "nl": "Akkoord" }
+            }
+          ]
+        }
+      ]
+    },{
+      "name": { "nl": "Sociale media" },
+      "key": "theme-seven",
+      "questions": [
+        {
+          "title": { "nl": "Hoeveel procent van de Europeanen wordt vaak geconfronteerd met valse informatie wanneer ze online gaan? " },
+          "key": "question-one",
+          "didYouKnow": "Sinds 2024 verplicht de EU grote techbedrijven en online platformen zoals Tiktok en Facebook om illegale inhoud op te sporen en te verwijderen. Er was heel wat discussie voor deze wet werd goedgekeurd.",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "nl": "Ongeveer 10%" }
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "nl": "Ongeveer 20%" }
+            },
+            {
+              "key": "question-one-option-three",
+              "value": { "nl": "Ongeveer 30%" },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": { "nl": "De EU moet online platformen zelf laten beslissen hoe ze omgaan met schadelijke inhoud" },
+          "key": "question-two",
+          "options": [
+            {
+              "key": "question-two-option-one",
+              "value": { "nl": "Niet akkoord" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "nl": "Niet zeker" }
+            },
+            {
+              "key": "question-two-option-three",
+              "value": { "nl": "Akkoord" }
+            }
+          ]
+        }
+      ]
+    },{
+      "name": { "nl": "Grenscontroles" },
+      "key": "theme-eight",
+      "questions": [
+        {
+          "title": { "nl": "Wat is de naam van het EU document dat het recht op vrij verkeer van personen in de EU vastlegt?" },
+          "key": "question-one",
+          "didYouKnow": "Er zijn 27 Europese landen die onder het Schengengebied vallen. Iedereen die in het Schengengebied woont of grenscontroles aan de grenzen van het Schengengebied heeft doorstaan, mag zonder verdere grenscontroles vrij tussen deze landen reizen.",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "nl": "Het Verdrag van Maastricht" }
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "nl": "Het Akkoord van Schengen" },
+              "correct": true
+            },
+            {
+              "key": "question-one-option-three",
+              "value": { "nl": "Het Verdrag van Brussel" }
+            }
+          ]
+        },
+        {
+          "title": { "nl": "Er moeten opnieuw interne grenscontroles komen tussen de EU-landen die tot het Schengengebied behoren" },
+          "key": "question-two",
+          "options": [
+            {
+              "key": "question-two-option-one",
+              "value": { "nl": "Niet akkoord" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "nl": "Niet zeker" }
+            },
+            {
+              "key": "question-two-option-three",
+              "value": { "nl": "Akkoord" }
+            }
+          ]
+        }
+      ]
+    },{
+      "name": { "nl": "Europees stemrecht" },
+      "key": "theme-nine",
+      "questions": [
+        {
+          "title": { "nl": "De volgende Europese verkiezingen vinden plaats op 9 juni 2024. Wat is de jongste leeftijd waarop sommige jongeren in de EU kunnen deelnemen aan de Europese verkiezingen?" },
+          "key": "question-one",
+          "didYouKnow": "All EU-landen kiezen zelf de leeftijd waarop jongeren kunnen beginnen stemmen bij de Europese verkiezingen. In Oostenrijk, België, Duitsland en Malta kun je stemmen vanaf 16 jaar, in Griekenland vanaf 17 jaar, en in de overige landen vanaf 18 jaar.",
+          "options": [
+            {
+              "key": "question-one-option-one",
+              "value": { "nl": "15" }
+            },
+            {
+              "key": "question-one-option-two",
+              "value": { "nl": "16" },
+              "correct": true
+            },
+            {
+              "key": "question-one-option-three",
+              "value": { "nl": "17" }
+            }
+          ]
+        },
+        {
+          "title": { "nl": "Alle EU-landen moeten de minimumleeftijd om te kunnen stemmen bij de Europese verkiezingen op 16 jaar zetten" },
+          "key": "question-two",
+          "options": [
+            {
+              "key": "question-two-option-one",
+              "value": { "nl": "Niet akkoord" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "nl": "Niet zeker" }
+            },
+            {
+              "key": "question-two-option-three",
+              "value": { "nl": "Akkoord" }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
