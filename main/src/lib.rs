@@ -99,7 +99,6 @@ impl GlobalState {
 mod tests {
     use super::*;
     use std::env;
-    use tauri::{async_runtime::channel, Manager};
 
     #[test]
     fn should_return_okay_if_project_exists() {
@@ -145,9 +144,7 @@ mod tests {
         let state = GlobalState::build(":memory:".into()).unwrap();
         let mock_app = tauri::test::mock_app();
 
-        assert!(state
-            .start_reading("/".into(), mock_app.app_handle(),)
-            .is_ok());
+        assert!(state.start_reading("/".into(), mock_app.handle()).is_ok());
         let lock = state.reader_handle.lock().unwrap();
         assert!(lock.is_some());
     }
