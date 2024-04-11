@@ -51,9 +51,6 @@ fn spawn_mock_command() -> (Receiver<CommandEvent>, CommandChild) {
     spawn(async move {
         loop {
             let _ = tx.send(CommandEvent::Stdout(create_mock_tag())).await;
-            let _ = tx
-                .send(CommandEvent::Stderr(String::from("Some error occurs")))
-                .await;
             sleep(next_time - Instant::now());
             next_time += interval;
         }
