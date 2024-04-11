@@ -1,4 +1,6 @@
 .option {
+  position: relative;
+  z-index: 1;
   flex: 1 1 0px;
 }
 
@@ -52,17 +54,18 @@
 }
 
 .option__amount {
-  position: relative;
+  position: absolute;
+  left: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 6rem;
   height: 6rem;
-  margin: 0 auto -2.5rem;
   font-weight: 700;
   font-size: var(--text-lg);
   border-radius: var(--rounded-full);
   background-color: var(--option-color);
+  transform: translate(-50%, -50%);
 }
 
 .option--big {
