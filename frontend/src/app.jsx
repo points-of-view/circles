@@ -87,20 +87,16 @@ function Session({ project, resetProject, language }) {
       let newRandomInt = Math.floor(Math.random() * project.themes.length);
       if (!myArray.includes(newRandomInt)) {
         myArray.push(newRandomInt);
-        setThemesIndexes((oldArray) => [
-          ...oldArray,
-          newRandomInt,
-        ]);
+        setThemesIndexes((oldArray) => [...oldArray, newRandomInt]);
       }
     }
   }
 
   function importThemeCopy() {
     if (chosenTheme !== null) {
-      return project.themes.find(item => item.key === chosenTheme);
-    }
-    else {
-      return project.themes.find(item => item.key === "theme-one")
+      return project.themes.find((item) => item.key === chosenTheme);
+    } else {
+      return project.themes.find((item) => item.key === "theme-one");
     }
   }
 
@@ -117,32 +113,48 @@ function Session({ project, resetProject, language }) {
           sessionID={sessionID}
           setSessionID={setSessionID}
           setChosenTheme={setChosenTheme}
-          options={phase === PHASES.pickTheme ? themesIndexes : phase === PHASES.showQuestion ? importThemeCopy().questions[0].options.map(a => a.value[language]) : importThemeCopy().questions[1].options.map(a => a.value[language])}
+          options={
+            phase === PHASES.pickTheme
+              ? themesIndexes
+              : phase === PHASES.showQuestion
+                ? importThemeCopy().questions[0].options.map(
+                    (a) => a.value[language],
+                  )
+                : importThemeCopy().questions[1].options.map(
+                    (a) => a.value[language],
+                  )
+          }
         />
       )}
       {phase === PHASES.pickTheme ? (
         <InteractionScreen
           title={"Choose a theme of your choice"}
           description={"Stand in the circle of your answer"}
-          options={themesIndexes.map(a => project.themes[a].name[language])}
+          options={themesIndexes.map((a) => project.themes[a].name[language])}
           phase={phase}
           shuffleThemes={shuffleThemes}
         />
-      ) : (phase === PHASES.showQuestion ? (
+      ) : phase === PHASES.showQuestion ? (
         <InteractionScreen
           title={importThemeCopy().questions[0].title[language]}
           description={"Stand in the circle of your answer"}
-          options={importThemeCopy().questions[0].options.map(a => a.value[language])}
+          options={importThemeCopy().questions[0].options.map(
+            (a) => a.value[language],
+          )}
           theme={importThemeCopy().name[language]}
           phase={phase}
         />
-      ) : <InteractionScreen
-        title={importThemeCopy().questions[1].title[language]}
-        description={"Stand in the circle of your answer"}
-        options={importThemeCopy().questions[1].options.map(a => a.value[language])}
-        theme={importThemeCopy().name[language]}
-        phase={phase}
-      />)}
+      ) : (
+        <InteractionScreen
+          title={importThemeCopy().questions[1].title[language]}
+          description={"Stand in the circle of your answer"}
+          options={importThemeCopy().questions[1].options.map(
+            (a) => a.value[language],
+          )}
+          theme={importThemeCopy().name[language]}
+          phase={phase}
+        />
+      )}
     </>
   );
 }

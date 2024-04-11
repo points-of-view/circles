@@ -9,7 +9,7 @@ export default function ControlPanel({
   language,
   sessionID,
   options,
-  setChosenTheme
+  setChosenTheme,
 }) {
   const handlePhaseChange = (event) => {
     const selectedPhase = event.target.value;
@@ -41,11 +41,25 @@ export default function ControlPanel({
           </option>
         ))}
       </select>
-      <select id="select-option" value={"default"} onChange={handleOptionChange}>
-        <option value="default" disabled> -- select an option -- </option>
+      <select
+        id="select-option"
+        value={"default"}
+        onChange={handleOptionChange}
+      >
+        <option value="default" disabled>
+          {" "}
+          -- select an option --{" "}
+        </option>
         {Object.entries(options).map(([key, value]) => (
-          <option key={key} value={phase === PHASES.pickTheme ? project.themes[value].key : value}>
-            {phase === PHASES.pickTheme ? project.themes[value].name[language] : value}
+          <option
+            key={key}
+            value={
+              phase === PHASES.pickTheme ? project.themes[value].key : value
+            }
+          >
+            {phase === PHASES.pickTheme
+              ? project.themes[value].name[language]
+              : value}
           </option>
         ))}
       </select>
