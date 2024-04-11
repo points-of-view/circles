@@ -7,8 +7,8 @@ import ControlPanel from "./components/control-panel";
 
 export const PHASES = {
   pickTheme: "pickTheme",
-  showQuestion: "showQuestion", 
-  showOpinionQuestion: "showOpinionQuestion" 
+  showQuestion: "showQuestion",
+  showOpinionQuestion: "showOpinionQuestion",
 };
 
 export default function App() {
@@ -16,7 +16,11 @@ export default function App() {
   const language = project?.availableLanguages[0];
 
   return project ? (
-    <Session project={project} language={language} resetProject={() => setProject(null)} />
+    <Session
+      project={project}
+      language={language}
+      resetProject={() => setProject(null)}
+    />
   ) : (
     <SelectProject setProject={setProject} language={language} />
   );
@@ -66,13 +70,13 @@ function Session({ project, resetProject, language }) {
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.keyCode === 39) {
-        console.log("proceed")
+        console.log("proceed"); // eslint-disable-line
       } else if (e.keyCode === 37) {
-        console.log("previous")
+        console.log("previous"); // eslint-disable-line
       }
     }
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     if (step === PHASES.pickTheme) {
       shuffleThemes(3);
@@ -80,8 +84,8 @@ function Session({ project, resetProject, language }) {
 
     // Don't forget to clean up
     return function cleanup() {
-      document.removeEventListener('keydown', handleKeyDown);
-    }
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   function shuffleThemes(amountOfThemes) {
@@ -90,14 +94,17 @@ function Session({ project, resetProject, language }) {
       let newRandomInt = Math.floor(Math.random() * project.themes.length);
       if (!myArray.includes(newRandomInt)) {
         myArray.push(newRandomInt);
-        setThemes(oldArray => [...oldArray, project.themes[newRandomInt].name[language]]);
+        setThemes((oldArray) => [
+          ...oldArray,
+          project.themes[newRandomInt].name[language],
+        ]);
       }
     }
   }
 
   return (
     <>
-      {import.meta.env.VITE_DEV_MODE &&
+      {import.meta.env.VITE_DEV_MODE && (
         <ControlPanel
           step={step}
           setStep={setStep}
@@ -107,17 +114,22 @@ function Session({ project, resetProject, language }) {
           error={error}
           sessionID={sessionID}
           setSessionID={setSessionID}
-        />}
-      {step === PHASES.pickTheme ? (<InteractionScreen
-        title={"title"}
-        description={"description"}
-        options={themes}
-      />) : (<InteractionScreen
-        title={"title"}
-        description={"description"}
-        theme={"theme"}
-        options={themes}
-      />)}
+        />
+      )}
+      {step === PHASES.pickTheme ? (
+        <InteractionScreen
+          title={"title"}
+          description={"description"}
+          options={themes}
+        />
+      ) : (
+        <InteractionScreen
+          title={"title"}
+          description={"description"}
+          theme={"theme"}
+          options={themes}
+        />
+      )}
     </>
   );
 }
