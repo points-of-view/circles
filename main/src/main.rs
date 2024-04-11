@@ -1,17 +1,13 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use erasmus::{tags::TagsMap, GlobalState};
-use std::{fs, sync::Arc};
-use tauri::{
-    async_runtime::{channel, spawn, Sender},
-    Manager,
-};
+use erasmus::GlobalState;
+use std::fs;
+use tauri::Manager;
 
 #[tauri::command]
 fn select_project(
     state: tauri::State<GlobalState>,
-    tags_channel: tauri::State<Arc<tauri::async_runtime::Mutex<Sender<TagsMap>>>>,
     app_handle: tauri::AppHandle,
     project_key: String,
 ) -> Result<(), String> {
@@ -23,7 +19,7 @@ fn select_project(
         .path_resolver()
         .resource_dir()
         .expect("Error while getting `resource_dir`");
-    state.start_reading(resource_path, tags_channel.inner().clone())
+    state.start_reading(resource_path, app_handle)
 }
 
 #[tauri::command]
@@ -46,19 +42,7 @@ fn main() {
 
             // Setup global state and channels for communication
             let state = GlobalState::build(data_dir)?;
-            let (tags_channel_tx, mut tags_channel_rx) = channel::<TagsMap>(1);
-
-            // NOTE: Our channel needs to be wrapped in a Mutex from `tauri::async_runtime`
-            // The Mutex from `std::sync` cannot be used in an `await` context
-            app.manage(Arc::new(tauri::async_runtime::Mutex::new(tags_channel_tx)));
             app.manage(state);
-
-            let handle = app.handle();
-            spawn(async move {
-                while let Some(map) = tags_channel_rx.recv().await {
-                    handle.emit_all("updated-tags", map).unwrap();
-                }
-            });
 
             Ok(())
         })
