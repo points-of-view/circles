@@ -8,7 +8,7 @@ export default function OptionsView({ options }) {
           key={index}
           className="options-view__option"
           label={value}
-          amount={index}
+          amount={0}
         />
       ))}
     </div>
