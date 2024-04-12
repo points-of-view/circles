@@ -146,7 +146,7 @@ function Session({ project, resetProject, language }) {
           options={importThemeCopy().questions[0].options.map(
             (a) => a.value[language],
           )}
-          theme={importThemeCopy().name[language]}
+          themeName={importThemeCopy().name[language]}
           phase={phase}
         />
       )}
@@ -157,7 +157,7 @@ function Session({ project, resetProject, language }) {
           options={importThemeCopy().questions[1].options.map(
             (a) => a.value[language],
           )}
-          theme={importThemeCopy().name[language]}
+          themeName={importThemeCopy().name[language]}
           phase={phase}
         />
       )}

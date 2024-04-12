@@ -4,16 +4,9 @@ import OptionsView from "./optionsview";
 export function InteractionScreen({
   title,
   description,
-  theme = false,
-  options,
-  shuffleThemes = false,
-  phase,
+  themeName = null,
+  options
 }) {
-  useEffect(() => {
-    if (shuffleThemes) {
-      shuffleThemes(3);
-    }
-  }, [phase]);
 
   return (
     <div className="interaction-screen">
@@ -34,8 +27,8 @@ export function InteractionScreen({
         {description}
       </div>
       <OptionsView options={options} />
-      {theme && (
-        <div className="interaction-screen__theme squircle">{theme}</div>
+      {themeName && (
+        <div className="interaction-screen__theme squircle">{themeName}</div>
       )}
       <div className="interaction-screen__logo">
         <svg
