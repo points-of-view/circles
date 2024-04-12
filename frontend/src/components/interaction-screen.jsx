@@ -1,13 +1,11 @@
-import { useEffect } from "react";
 import OptionsView from "./optionsview";
 
 export function InteractionScreen({
   title,
   description,
   themeName = null,
-  options
+  options,
 }) {
-
   return (
     <div className="interaction-screen">
       <div className="interaction-screen__title squircle">{title}</div>
