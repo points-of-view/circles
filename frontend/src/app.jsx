@@ -63,6 +63,11 @@ function Session({ project, resetProject, language }) {
   }
 
   useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  useEffect(() => {
     const unlisten = listen("updated-tags", ({ payload }) =>
       setTagsMap(payload),
     );
@@ -77,6 +82,14 @@ function Session({ project, resetProject, language }) {
 
     return () => unlisten.then((fn) => fn());
   }, []);
+  
+  function handleKeyDown(e) {
+    if (e.code === "ArrowRight") {
+      console.log("proceed"); // eslint-disable-line
+    } else if (e.code === "ArrowLeft") {
+      console.log("previous"); // eslint-disable-line
+    }
+  }
 
   return (
     <div>
