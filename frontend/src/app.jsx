@@ -80,6 +80,12 @@ function Session({ project, resetProject, language }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (shuffleThemes && phase === PHASES.pickTheme) {
+      shuffleThemes(3);
+    }
+  }, [phase]);
+
   function shuffleThemes(amountOfThemes) {
     let myArray = [];
     setThemesIndexes([]);
@@ -96,7 +102,7 @@ function Session({ project, resetProject, language }) {
     if (chosenTheme !== null) {
       return project.themes.find((item) => item.key === chosenTheme);
     } else {
-      return project.themes.find((item) => item.key === "theme-one");
+      return project.themes.find((item) => item.key === "migration");
     }
   }
 
@@ -118,23 +124,22 @@ function Session({ project, resetProject, language }) {
               ? themesIndexes
               : phase === PHASES.showQuestion
                 ? importThemeCopy().questions[0].options.map(
-                    (a) => a.value[language],
-                  )
+                  (a) => a.value[language],
+                )
                 : importThemeCopy().questions[1].options.map(
-                    (a) => a.value[language],
-                  )
+                  (a) => a.value[language],
+                )
           }
         />
       )}
-      {phase === PHASES.pickTheme ? (
+      {phase === PHASES.pickTheme && (
         <InteractionScreen
           title={"Choose a theme of your choice"}
           description={"Stand in the circle of your answer"}
           options={themesIndexes.map((a) => project.themes[a].name[language])}
-          phase={phase}
-          shuffleThemes={shuffleThemes}
         />
-      ) : phase === PHASES.showQuestion ? (
+      )}
+      {phase === PHASES.showQuestion && (
         <InteractionScreen
           title={importThemeCopy().questions[0].title[language]}
           description={"Stand in the circle of your answer"}
@@ -144,7 +149,8 @@ function Session({ project, resetProject, language }) {
           theme={importThemeCopy().name[language]}
           phase={phase}
         />
-      ) : (
+      )}
+      {phase === PHASES.showOpinionQuestion && (
         <InteractionScreen
           title={importThemeCopy().questions[1].title[language]}
           description={"Stand in the circle of your answer"}
