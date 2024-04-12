@@ -120,15 +120,9 @@ function Session({ project, resetProject, language }) {
           setSessionID={setSessionID}
           setChosenTheme={setChosenTheme}
           options={
-            phase === PHASES.pickTheme
-              ? themesIndexes
-              : phase === PHASES.showQuestion
-                ? importThemeCopy().questions[0].options.map(
-                  (a) => a.value[language],
-                )
-                : importThemeCopy().questions[1].options.map(
-                  (a) => a.value[language],
-                )
+            phase === PHASES.pickTheme && themesIndexes ||
+            phase === PHASES.showQuestion && importThemeCopy().questions[0].options.map((a) => a.value[language]) ||
+            phase === PHASES.showOpinionQuestion && importThemeCopy().questions[1].options.map((a) => a.value[language])
           }
         />
       )}
