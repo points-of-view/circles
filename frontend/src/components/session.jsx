@@ -4,6 +4,7 @@ import { InteractionScreen } from "./interaction-screen";
 import ControlPanel from "./control-panel";
 import { listen } from "@tauri-apps/api/event";
 import { PHASES } from "../app";
+import shuffle from "../utils/shuffle";
 
 export default function Session({ project, resetProject, language }) {
   const [, setTagsMap] = useState({});
@@ -60,22 +61,12 @@ export default function Session({ project, resetProject, language }) {
   }, []);
 
   useEffect(() => {
-    if (shuffleThemes && phase === PHASES.pickTheme) {
-      shuffleThemes(3);
+    if (phase === PHASES.pickTheme) {
+      setThemesIndexes(
+        shuffle([...Array(project.themes.length).keys()]).slice(0, 3),
+      );
     }
   }, [phase]);
-
-  function shuffleThemes(amountOfThemes) {
-    let myArray = [];
-    setThemesIndexes([]);
-    while (myArray.length < amountOfThemes) {
-      let newRandomInt = Math.floor(Math.random() * project.themes.length);
-      if (!myArray.includes(newRandomInt)) {
-        myArray.push(newRandomInt);
-        setThemesIndexes((oldArray) => [...oldArray, newRandomInt]);
-      }
-    }
-  }
 
   function importThemeCopy() {
     if (chosenTheme !== null) {
