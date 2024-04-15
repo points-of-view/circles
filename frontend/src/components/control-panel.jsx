@@ -1,46 +1,28 @@
-import { PHASES } from "../app";
-
 export default function ControlPanel({
   phase,
-  setPhase,
   project,
+  language,
   startNewSession,
   error,
-  language,
   sessionID,
+  setChosenThemeKey,
+  goToNextPhase,
   options,
-  setChosenTheme,
 }) {
-  const handlePhaseChange = (event) => {
-    const selectedPhase = event.target.value;
-    setPhase(selectedPhase);
-  };
-
   const handleOptionChange = (event) => {
     const selectedOption = event.target.value;
-    if (phase === PHASES.pickTheme) {
+    if (phase === 0) {
       startNewSession(selectedOption);
-      setChosenTheme(selectedOption);
-      setPhase(PHASES.showQuestion);
-    } else if (phase === PHASES.showQuestion) {
-      setPhase(PHASES.showOpinionQuestion);
-    } else if (phase === PHASES.showOpinionQuestion) {
-      setChosenTheme(null);
-      setPhase(PHASES.pickTheme);
+      setChosenThemeKey(selectedOption);
+      goToNextPhase();
+    } else {
+      goToNextPhase();
     }
   };
 
   return (
     <div className="control-panel">
       <p>Project name: {project.name[language]}</p>
-      <label htmlFor="select-phases">Choose a phase:</label>
-      <select id="select-phases" value={phase} onChange={handlePhaseChange}>
-        {Object.entries(PHASES).map(([key, value]) => (
-          <option key={key} value={value}>
-            {value}
-          </option>
-        ))}
-      </select>
       <select
         id="select-option"
         value={"default"}
@@ -50,16 +32,9 @@ export default function ControlPanel({
           {" "}
           -- select an option --{" "}
         </option>
-        {Object.entries(options).map(([key, value]) => (
-          <option
-            key={key}
-            value={
-              phase === PHASES.pickTheme ? project.themes[value].key : value
-            }
-          >
-            {phase === PHASES.pickTheme
-              ? project.themes[value].name[language]
-              : value}
+        {Object.entries(options).map(([key, content]) => (
+          <option key={key} value={content.key}>
+            {content.name ? content.name[language] : content.value[language]}
           </option>
         ))}
       </select>

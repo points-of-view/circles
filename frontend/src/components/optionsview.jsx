@@ -3,11 +3,11 @@ import Option from "./option";
 export default function OptionsView({ options }) {
   return (
     <div className="options-view interaction-screen__option-view">
-      {options.map((value, index) => (
+      {options.map((key) => (
         <Option
-          key={index}
+          key={key}
           className="options-view__option"
-          label={value}
+          label={key}
           amount={0}
         />
       ))}
