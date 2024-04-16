@@ -13,7 +13,10 @@ const MAIN_JAVA_CLASS: &str = "reader.PrintRFIDReader.PrintRFIDTags";
 
 // NOTE: We spawn a slightly different command for different OSes/architectures
 // Since this code is platform specific, it is hard to test. Make sure you validate any changes on actual devices
-pub fn spawn_reader(resource_path: PathBuf, hostname: String) -> (Receiver<CommandEvent>, CommandChild) {
+pub fn spawn_reader(
+    resource_path: PathBuf,
+    hostname: String,
+) -> (Receiver<CommandEvent>, CommandChild) {
     if env::var("MOCK_RFID_READER").is_ok() {
         return spawn_mock_command();
     }

@@ -101,8 +101,8 @@ impl GlobalState {
                 let (rx, child) = spawn_reader(resource_path, hostname.clone());
                 let handle = handle_reader_events(rx, app_handle);
                 *lock = Some((child, handle));
-                return Ok(())
-            },
+                return Ok(());
+            }
             None => Err(String::from("HOSTNAME_NOT_SET")),
         }
     }
