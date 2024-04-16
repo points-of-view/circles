@@ -25,8 +25,6 @@ public class PrintRFIDTags {
 	private Condition inventoryStopCondVar = inventoryStopEventLock.newCondition();
 
 	public static Hashtable<String, Long> tagStore = null;
-	// NOTE: Static hostname for reader #1. Format: reader + first 6 characters of mac-adress
-	public String hostName = "fx9600"+"739c72";
 	public int port = 5084;
 	private EventsHandler eventsHandler = new EventsHandler();
 
@@ -38,7 +36,6 @@ public class PrintRFIDTags {
 				SimpleInventory();
 			} catch (InterruptedException ie) {
 				System.out.println("Inventory interruped prematurely." + ie.getMessage());
-
 			} catch (InvalidUsageException iue) {
 				System.out.println("Invalid usage.Reason: " + iue.getMessage());
 			} catch (OperationFailureException opex) {
@@ -48,7 +45,7 @@ public class PrintRFIDTags {
 		}
 	}
 
-	public PrintRFIDTags() throws InvalidUsageException, OperationFailureException {
+	public PrintRFIDTags(String hostName) throws InvalidUsageException, OperationFailureException {
 		myReader = new RFIDReader();
 
 		// Hash table to hold the tag data
@@ -132,7 +129,7 @@ public class PrintRFIDTags {
 
 	public void connectToReader(String readerHostName, int readerPort)
 			throws InvalidUsageException, OperationFailureException {
-		hostName = readerHostName;
+		String hostName = readerHostName;
 		port = readerPort;
 		myReader.setHostName(hostName);
 		myReader.setPort(port);
@@ -157,13 +154,17 @@ public class PrintRFIDTags {
 
 		myReader.Events.addEventsListener(eventsHandler);
 		StartReading();
-
 	}
 
 	public static void main(String[] args)
 			throws InterruptedException, InvalidUsageException, OperationFailureException {
-		@SuppressWarnings("unused")
-		PrintRFIDTags rfidBase;
-		rfidBase = new PrintRFIDTags();
+		if (args.length == 1) {
+			@SuppressWarnings("unused")
+			PrintRFIDTags rfidBase;
+			rfidBase = new PrintRFIDTags(args[0]);
+		} else {
+			System.err.println("Please provide the hostname of the reader");
+      System.exit(64);
+		}
 	}
 }

@@ -10,7 +10,9 @@ fn select_project(
     state: tauri::State<GlobalState>,
     app_handle: tauri::AppHandle,
     project_key: String,
+    hostname: String,
 ) -> Result<(), String> {
+    state.set_hostname(hostname);
     state.select_project(project_key)?;
 
     // NOTE: We resolve the resource_path here instead of in the final method

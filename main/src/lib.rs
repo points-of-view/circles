@@ -17,6 +17,7 @@ pub struct CurrentSession {
 
 pub struct GlobalState {
     pub database_connection: std::sync::Mutex<SqliteConnection>,
+    pub hostname: std::sync::Mutex<Option<String>>,
     pub current_project: std::sync::Mutex<Option<Project>>,
     pub current_session: std::sync::Mutex<Option<CurrentSession>>,
     pub reader_handle: std::sync::Mutex<Option<(CommandChild, JoinHandle<()>)>>,
@@ -28,12 +29,18 @@ impl GlobalState {
 
         let state = GlobalState {
             database_connection: std::sync::Mutex::new(connection),
+            hostname: std::sync::Mutex::new(None),
             current_project: std::sync::Mutex::new(None),
             current_session: std::sync::Mutex::new(None),
             reader_handle: std::sync::Mutex::new(None),
         };
 
         Ok(state)
+    }
+
+    pub fn set_hostname(&self, hostname: String) {
+        let mut lock = self.hostname.lock().unwrap();
+        *lock = Some(hostname);
     }
 
     pub fn select_project(&self, project_key: String) -> Result<(), String> {
@@ -88,10 +95,16 @@ impl GlobalState {
             child.kill().unwrap();
         }
 
-        let (rx, child) = spawn_reader(resource_path);
-        let handle = handle_reader_events(rx, app_handle);
-        *lock = Some((child, handle));
-        Ok(())
+        let option = self.hostname.lock().unwrap().clone();
+        match option {
+            Some(hostname) => {
+                let (rx, child) = spawn_reader(resource_path, hostname.clone());
+                let handle = handle_reader_events(rx, app_handle);
+                *lock = Some((child, handle));
+                return Ok(())
+            },
+            None => Err(String::from("HOSTNAME_NOT_SET")),
+        }
     }
 }
 
