@@ -49,7 +49,7 @@ export default function Session({ project, resetProject, language }) {
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [chosenTheme, phase]);
 
   useEffect(() => {
     if (phase === 0) {
