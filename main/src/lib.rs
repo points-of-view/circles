@@ -155,6 +155,7 @@ mod tests {
         // Make sure we don't call the actual reader code
         env::set_var("MOCK_RFID_READER", "1");
         let state = GlobalState::build(":memory:".into()).unwrap();
+        state.set_hostname(String::from("abc123"));
         let mock_app = tauri::test::mock_app();
 
         assert!(state.start_reading("/".into(), mock_app.handle()).is_ok());
