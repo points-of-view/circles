@@ -53,6 +53,7 @@ export default function Session({ project, resetProject, language }) {
 
   useEffect(() => {
     if (phase === 0) {
+      setChosenThemeKey(null);
       setThemes(shuffle(project.themes));
     }
   }, [phase]);
