@@ -57,6 +57,10 @@ export default function Session({ project, resetProject, language }) {
     }
   }, [phase]);
 
+  useEffect(() => {
+    if (chosenTheme) goToNextPhase();
+  }, [chosenTheme]);
+
   function goToNextPhase() {
     if (chosenTheme === undefined && phase === 0) {
       throw new Error("A theme should be chosen when going to phase != 0");
@@ -64,12 +68,14 @@ export default function Session({ project, resetProject, language }) {
     setPhase(chosenTheme.questions[phase] === undefined ? 0 : phase + 1);
   }
 
-  function handleKeyDown(e) {
-    if (e.code === "ArrowRight") {
+  function handleKeyDown(event) {
+    if (event.code === "ArrowRight") {
       if (phase === 0) {
-        setChosenThemeKey(themes[0].key);
+        const newTheme = themes[0].key;
+        setChosenThemeKey(newTheme);
+      } else {
+        goToNextPhase();
       }
-      goToNextPhase();
     }
   }
 
