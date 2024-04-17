@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { listen } from "@tauri-apps/api/event";
-import projects from "../../projects";
 import { InteractionScreen } from "./components/interaction-screen";
+import { SelectProject } from "./components/select_project";
 
 export default function App() {
   const [project, setProject] = useState(null);
@@ -12,30 +12,6 @@ export default function App() {
     <Session project={project} resetProject={() => setProject(null)} />
   ) : (
     <SelectProject setProject={setProject} language={language} />
-  );
-}
-
-function SelectProject({ setProject }) {
-  const [error, setError] = useState(null);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    const projectKey = data.get("projectKey");
-    try {
-      await invoke("select_project", { projectKey });
-      setProject(projects[projectKey]);
-    } catch (e) {
-      setError(e);
-    }
-  }
-
-  return (
-    <form action="" onSubmit={handleSubmit}>
-      <input type="text" name="projectKey" id="projectKey" required />
-      <button type="submit">Open project</button>
-      {error && <span>{error}</span>}
-    </form>
   );
 }
 

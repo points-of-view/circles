@@ -13,15 +13,18 @@ const MAIN_JAVA_CLASS: &str = "reader.PrintRFIDReader.PrintRFIDTags";
 
 // NOTE: We spawn a slightly different command for different OSes/architectures
 // Since this code is platform specific, it is hard to test. Make sure you validate any changes on actual devices
-pub fn spawn_reader(resource_path: PathBuf) -> (Receiver<CommandEvent>, CommandChild) {
+pub fn spawn_reader(
+    resource_path: PathBuf,
+    hostname: String,
+) -> (Receiver<CommandEvent>, CommandChild) {
     if env::var("MOCK_RFID_READER").is_ok() {
         return spawn_mock_command();
     }
 
     let command = if cfg!(all(target_os = "linux", target_arch = "x86_64")) {
-        linux_command(resource_path)
+        linux_command(resource_path, hostname)
     } else if cfg!(target_os = "windows") {
-        windows_command(resource_path)
+        windows_command(resource_path, hostname)
     } else {
         panic!(
             "`spawn_reader` can not be called on {arch}-{os}. The java SDK and underlying native libraries are only supported on windows and linux. Use `MOCK_RFID_READER=1` to mock the reader output",
@@ -59,7 +62,7 @@ fn spawn_mock_command() -> (Receiver<CommandEvent>, CommandChild) {
     (rx, child)
 }
 
-fn windows_command(resource_path: PathBuf) -> Command {
+fn windows_command(resource_path: PathBuf, hostname: String) -> Command {
     let vendor_jar = resource_path.join(r"_up_\reader\dist\vendor\zebra\lib\Symbol.RFID.API3.jar");
     let reader_jar = resource_path.join(r"_up_\reader\dist\reader.jar");
 
@@ -75,10 +78,11 @@ fn windows_command(resource_path: PathBuf) -> Command {
             simplified_reader_jar.to_string_lossy()
         ),
         MAIN_JAVA_CLASS,
+        &hostname,
     ])
 }
 
-fn linux_command(resource_path: PathBuf) -> Command {
+fn linux_command(resource_path: PathBuf, hostname: String) -> Command {
     let library_path = resource_path.join("_up_/reader/dist/vendor/zebra/lib/x86_64");
     let vendor_jar = resource_path.join("_up_/reader/dist/vendor/zebra/lib/Symbol.RFID.API3.jar");
     let reader_jar = resource_path.join("_up_/reader/dist/reader.jar");
@@ -97,5 +101,6 @@ fn linux_command(resource_path: PathBuf) -> Command {
             reader_jar.to_string_lossy()
         ),
         MAIN_JAVA_CLASS,
+        &hostname,
     ])
 }
