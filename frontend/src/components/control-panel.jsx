@@ -14,7 +14,7 @@ export default function ControlPanel({
     if (phase === 0) {
       startNewSession(selectedOption);
       setChosenThemeKey(selectedOption);
-      goToNextPhase();
+      () => goToNextPhase();
     } else {
       goToNextPhase();
     }
