@@ -6,19 +6,19 @@
 }
 
 .options-view__option:first-child {
-  --option-color: green;
+  --option-color: var(--color-accent-green);
 
   align-self: flex-start;
 }
 
 .options-view__option:last-child {
-  --option-color: orange;
+  --option-color: var(--color-accent-orange);
 
   align-self: flex-start;
 }
 
 .options-view__option:not(:first-child, :last-child) {
-  --option-color: hotpink;
+  --option-color: var(--color-accent-pink);
 
   align-self: flex-end;
 }
