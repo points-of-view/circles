@@ -6,3 +6,9 @@ html {
   color: var(--color-white);
   font-family: var(--font-family);
 }
+
+@font-face {
+  font-family: Manrope;
+  src: url("../../fonts/Manrope/Manrope-VariableFont_wght.ttf");
+  font-display: block;
+}
