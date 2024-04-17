@@ -3,6 +3,9 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { listen } from "@tauri-apps/api/event";
 import { InteractionScreen } from "./components/interaction-screen";
 import { SelectProject } from "./components/select_project";
+import ErrorScreen from "./components/error-screen";
+
+var errorLog = [];
 
 export default function App() {
   const [project, setProject] = useState(null);
@@ -17,7 +20,8 @@ export default function App() {
 
 function Session({ project, resetProject, language }) {
   const [, setTagsMap] = useState({});
-  const [, setReaderError] = useState(null);
+  const [readerError, setReaderError] = useState(null);
+  const [errorList, setErrorList] = useState([]);
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
 
@@ -47,15 +51,18 @@ function Session({ project, resetProject, language }) {
   }, []);
 
   useEffect(() => {
-    const unlisten = listen("reader-error", ({ payload }) =>
-      setReaderError(payload),
-    );
+    const unlisten = listen("reader-error", ({ payload }) => {
+      setReaderError(payload);
+      errorLog.push(payload);
+      setErrorList(errorLog);
+    });
 
     return () => unlisten.then((fn) => fn());
   }, []);
 
   return (
     <div>
+      {readerError && <ErrorScreen errorList={errorList} />}
       {project.name[language]}
       <form action="" onSubmit={startNewSession}>
         <input type="text" name="themeKey" id="themeKey" required />
