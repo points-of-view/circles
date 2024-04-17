@@ -89,7 +89,7 @@ fn linux_command(resource_path: PathBuf) -> Command {
     )]);
 
     Command::new("java").envs(envs).args([
-        &format!("-Djava.library.path='{}'", library_path.to_string_lossy()),
+        &format!("-Djava.library.path={}", library_path.to_string_lossy()),
         "-cp",
         &format!(
             "{}:{}",
