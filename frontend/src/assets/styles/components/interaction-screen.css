@@ -32,6 +32,12 @@
   box-shadow: inset 0 100vw var(--color-primary);
 }
 
+.interaction-screen__title--big {
+  flex-grow: 1;
+  background-image: unset;
+  aspect-ratio: 1;
+}
+
 .interaction-screen__theme {
   position: fixed;
   left: 2rem;
