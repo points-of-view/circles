@@ -1,9 +1,9 @@
 pub mod command;
 use crate::tags::{Tag, TagsMap};
-use std::time::Instant;
 use std::{
     fmt::{Display, Formatter},
-    time::Duration,
+    net,
+    time::{Duration, Instant},
 };
 use tauri::{
     api::process::CommandEvent,
@@ -15,6 +15,8 @@ const REFRESH_INTERVAL: u64 = 500;
 
 #[derive(Debug, PartialEq, Clone, serde::Serialize)]
 pub enum ReaderErrorKind {
+    IncorrectHostname(String),
+    CouldNotConnect(String),
     Unknown,
 }
 
@@ -26,13 +28,94 @@ pub struct ReaderError {
 
 impl Display for ReaderError {
     fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
-        match self.kind {
+        match &self.kind {
+            ReaderErrorKind::IncorrectHostname(hostname) => write!(
+                f,
+                "Hostname {} is incorrect. Original error: {}",
+                hostname,
+                self.message
+            ),
+            ReaderErrorKind::CouldNotConnect(hostname) => write!(
+                f,
+                "Could not connect to hostname {}. Original error: {}",
+                hostname,
+                self.message
+            ),
             ReaderErrorKind::Unknown => write!(
                 f,
                 "Encountered an unexpected error in the reader. Message: {}",
                 self.message
             ),
         }
+    }
+}
+
+enum ReaderConnectionType {
+    Hostname,
+    LinkLocal,
+}
+
+pub struct Reader {
+    hostname: String,
+    connection_type: ReaderConnectionType,
+}
+
+impl Reader {
+    pub fn new(hostname: String) -> Result<Self, ReaderError> {
+        if hostname.len() != 12 {
+            return Err(ReaderError { kind: ReaderErrorKind::IncorrectHostname(hostname.clone()), message: format!("This should be exactly 12 characters, but was {}", hostname.len()) })
+        }
+ 
+        let mut reader = Reader { 
+            hostname,
+            connection_type: ReaderConnectionType::Hostname,
+        };
+        reader.try_connect()?;
+        Ok(reader)
+    }
+
+    /// Try to connect to the reader.
+    /// 
+    /// We first try the hostname and check if we can connect that way.
+    /// If the hostname is unavailable, we fall back on the LinkLocal ipv4.
+    fn try_connect(&mut self) -> Result<(), ReaderError> {
+        if let Ok(_) = net::TcpStream::connect(&self.hostname) {
+            return Ok(());
+        }
+
+        self.connection_type = ReaderConnectionType::LinkLocal;
+        let socket = net::SocketAddr::new(self.hostname_as_ip()?, 5084);
+
+        match net::TcpStream::connect_timeout(&socket, Duration::from_secs(2)) {
+            Ok(_) => Ok(()),
+            Err(err) => {
+                Err(ReaderError {
+                    kind: ReaderErrorKind::CouldNotConnect(self.hostname.clone()),
+                    message: err.to_string(),
+                })
+            }
+        }
+    }
+    
+
+    /// Convert the hostname to a LinkLocal IPv4 address.
+    ///
+    /// If the hostname is not available, the reader will try to assign itself an IP address.
+    /// This IP can be calculated by converting the last two chunks of the mac address from hexadecimal to decimal
+    fn hostname_as_ip(&self) -> Result<net::IpAddr, ReaderError> {
+        let Ok(third_element) = u8::from_str_radix(&self.hostname[8..10], 16) else {
+            return Err(ReaderError {
+                kind: ReaderErrorKind::IncorrectHostname(self.hostname.clone()),
+                message: String::from("Could not convert mac address to IP")
+            })
+        };
+        let Ok(fourth_element) = u8::from_str_radix(&self.hostname[10..12], 16) else {
+            return Err(ReaderError {
+                kind: ReaderErrorKind::IncorrectHostname(self.hostname.clone()),
+                message: String::from("Could not convert mac address to IP")
+            })
+        };
+        Ok(net::IpAddr::from([169u8, 254u8, third_element, fourth_element]))
     }
 }
 
