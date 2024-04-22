@@ -80,11 +80,14 @@ impl GlobalState {
         hostname: String,
         app_handle: AppHandle<R>,
     ) -> Result<(), ReaderError> {
-        let mut reader = LLRPReader::new(hostname)?;
-
-        reader.start_reading(app_handle)?;
-
         let mut lock = self.reader.lock().unwrap();
+        // If the user refreshes we *might* already have a reader that is connected 
+        if let Some(reader) = lock.take() {
+            drop(reader);
+        }
+
+        let mut reader = LLRPReader::new(hostname)?;
+        reader.start_reading(app_handle)?;
         *lock = Some(reader);
         Ok(())
     }
@@ -96,6 +99,11 @@ impl GlobalState {
         } else {
             Ok(())
         }
+    }
+
+    pub fn drop_reader(&self) {
+        let mut lock = self.reader.lock().unwrap();
+        lock.take();
     }
 }
 

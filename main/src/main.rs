@@ -25,8 +25,14 @@ fn start_session(state: tauri::State<GlobalState>, theme_key: String) -> Result<
     state.start_session(theme_key)
 }
 
+#[tauri::command]
+fn close_connection(state: tauri::State<GlobalState>) -> () {
+    state.drop_reader();
+}
+
+
 fn main() {
-    let app = tauri::Builder::default()
+    tauri::Builder::default()
         .setup(|app| {
             let mut data_dir = app
                 .path_resolver()
@@ -44,15 +50,7 @@ fn main() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![select_project, start_session])
-        .build(tauri::generate_context!())
-        .expect("error while building tauri application");
-
-    app.run(|app_handle, event| match event {
-        tauri::RunEvent::Exit { .. } => {
-            let state = app_handle.state::<GlobalState>();
-            state.stop_reading(false).expect("Could not stop reader");
-        }
-        _ => {}
-    })
+        .invoke_handler(tauri::generate_handler![select_project, start_session, close_connection])
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
 }
