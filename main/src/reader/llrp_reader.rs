@@ -258,8 +258,12 @@ impl LLRPReader {
 impl Drop for LLRPReader {
     fn drop(&mut self) {
         // When dropping, we don't actually care for the responses
-        let _ = self.stop_reading(false);
-        let _ = self.write_message(Message::CloseConnection(messages::CloseConnection {}));
+        if self.handle.is_some() {
+            let _ = self.stop_reading(false);
+        }
+        if self.stream.is_some() {
+            let _ = self.write_message(Message::CloseConnection(messages::CloseConnection {}));
+        }
     }
 }
 
