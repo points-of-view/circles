@@ -50,7 +50,7 @@ impl LLRPReader {
         app_handle: AppHandle<R>,
     ) -> Result<(), ReaderError> {
         // Just in case we are already reading, we should try to stop
-        self.stop_reading()?;
+        self.stop_reading(true)?;
 
         // Actually start
         self.write_message(Message::StartRospec(messages::StartRospec {
@@ -63,7 +63,7 @@ impl LLRPReader {
         Ok(())
     }
 
-    pub fn stop_reading(&mut self) -> Result<(), ReaderError> {
+    pub fn stop_reading(&mut self, await_confirmation: bool) -> Result<(), ReaderError> {
         if let Some(handle) = self.handle.take() {
             handle.abort();
         };
@@ -71,7 +71,9 @@ impl LLRPReader {
         self.write_message(Message::StopRospec(messages::StopRospec {
             ro_spec_id: DEFAULT_ROSPEC_ID,
         }))?;
-        self.await_message::<messages::StopRospecResponse>()?;
+        if await_confirmation {
+            self.await_message::<messages::StopRospecResponse>()?;
+        }
         Ok(())
     }
 }

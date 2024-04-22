@@ -1,11 +1,8 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use circles::{
-    reader::{LLRPReader, Reader},
-    GlobalState,
-};
-use std::fs;
+use circles::GlobalState;
+use std::{env, fs};
 use tauri::Manager;
 
 #[tauri::command]
@@ -15,28 +12,12 @@ fn select_project(
     project_key: String,
     hostname: String,
 ) -> Result<(), String> {
-    state.set_hostname(hostname.clone());
     state.select_project(project_key)?;
-
-    let reader = match LLRPReader::new(hostname) {
-        Ok(reader) => reader,
-        Err(err) => return Err(err.to_string()),
-    };
-
-    reader.start_reading();
-    reader.stop_reading();
-
-    println!("{:#?}", &reader);
-
-    Ok(())
-
-    // // NOTE: We resolve the resource_path here instead of in the final method
-    // // This way we don't have to create an AppHandle in testing
-    // let resource_path = app_handle
-    //     .path_resolver()
-    //     .resource_dir()
-    //     .expect("Error while getting `resource_dir`");
-    // state.start_reading(resource_path, app_handle)
+    if let Err(err) = state.start_reading(hostname, app_handle) {
+        Err(err.to_string())
+    } else {
+        Ok(())
+    }
 }
 
 #[tauri::command]
@@ -45,7 +26,7 @@ fn start_session(state: tauri::State<GlobalState>, theme_key: String) -> Result<
 }
 
 fn main() {
-    tauri::Builder::default()
+    let app = tauri::Builder::default()
         .setup(|app| {
             let mut data_dir = app
                 .path_resolver()
@@ -64,6 +45,14 @@ fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![select_project, start_session])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while building tauri application");
+
+    app.run(|app_handle, event| match event {
+        tauri::RunEvent::Exit { .. } => {
+            let state = app_handle.state::<GlobalState>();
+            state.stop_reading(false).expect("Could not stop reader");
+        },
+        _ => {},
+    })
 }
