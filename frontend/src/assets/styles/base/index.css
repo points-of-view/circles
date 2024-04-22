@@ -4,8 +4,8 @@
 /* Base settings that should always apply */
 html {
   color: var(--color-white);
-  font-family: var(--font-family);
   font-weight: 600;
+  font-family: var(--font-family);
 }
 
 @font-face {
