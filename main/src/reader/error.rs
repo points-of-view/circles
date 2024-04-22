@@ -4,6 +4,7 @@ use std::fmt::{Display, Formatter};
 pub enum ReaderErrorKind {
     IncorrectHostname(String),
     CouldNotConnect(String),
+    LostConnection,
     Unknown,
 }
 
@@ -26,6 +27,7 @@ impl Display for ReaderError {
                 "Could not connect to hostname {}. Original error: {}",
                 hostname, self.message
             ),
+            ReaderErrorKind::LostConnection => write!(f, "Connection with the reader was lost!"),
             ReaderErrorKind::Unknown => write!(
                 f,
                 "Encountered an unexpected error in the reader. Message: {}",
