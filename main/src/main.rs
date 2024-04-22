@@ -1,7 +1,10 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use circles::GlobalState;
+use circles::{
+    reader::{LLRPReader, Reader},
+    GlobalState,
+};
 use std::fs;
 use tauri::Manager;
 
@@ -12,16 +15,28 @@ fn select_project(
     project_key: String,
     hostname: String,
 ) -> Result<(), String> {
-    state.set_hostname(hostname);
+    state.set_hostname(hostname.clone());
     state.select_project(project_key)?;
 
-    // NOTE: We resolve the resource_path here instead of in the final method
-    // This way we don't have to create an AppHandle in testing
-    let resource_path = app_handle
-        .path_resolver()
-        .resource_dir()
-        .expect("Error while getting `resource_dir`");
-    state.start_reading(resource_path, app_handle)
+    let reader = match LLRPReader::new(hostname) {
+        Ok(reader) => reader,
+        Err(err) => return Err(err.to_string()),
+    };
+
+    reader.start_reading();
+    reader.stop_reading();
+
+    println!("{:#?}", &reader);
+
+    Ok(())
+
+    // // NOTE: We resolve the resource_path here instead of in the final method
+    // // This way we don't have to create an AppHandle in testing
+    // let resource_path = app_handle
+    //     .path_resolver()
+    //     .resource_dir()
+    //     .expect("Error while getting `resource_dir`");
+    // state.start_reading(resource_path, app_handle)
 }
 
 #[tauri::command]
