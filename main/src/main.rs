@@ -30,7 +30,6 @@ fn close_connection(state: tauri::State<GlobalState>) -> () {
     state.drop_reader();
 }
 
-
 fn main() {
     tauri::Builder::default()
         .setup(|app| {
@@ -50,7 +49,11 @@ fn main() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![select_project, start_session, close_connection])
+        .invoke_handler(tauri::generate_handler![
+            select_project,
+            start_session,
+            close_connection
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

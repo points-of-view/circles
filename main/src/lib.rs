@@ -81,7 +81,7 @@ impl GlobalState {
         app_handle: AppHandle<R>,
     ) -> Result<(), ReaderError> {
         let mut lock = self.reader.lock().unwrap();
-        // If the user refreshes we *might* already have a reader that is connected 
+        // If the user refreshes we *might* already have a reader that is connected
         if let Some(reader) = lock.take() {
             drop(reader);
         }
@@ -110,7 +110,6 @@ impl GlobalState {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::env;
 
     #[test]
     fn should_return_okay_if_project_exists() {
@@ -148,17 +147,4 @@ mod tests {
 
         assert!(state.start_session("theme-one".to_string()).is_err())
     }
-
-    // #[test]
-    // fn should_return_ok_when_starting_reader() {
-    //     // Make sure we don't call the actual reader code
-    //     env::set_var("MOCK_RFID_READER", "1");
-    //     let state = GlobalState::build(":memory:".into()).unwrap();
-    //     state.set_hostname(String::from("abc123"));
-    //     let mock_app = tauri::test::mock_app();
-
-    //     assert!(state.start_reading("/".into(), mock_app.handle()).is_ok());
-    //     let lock = state.reader_handle.lock().unwrap();
-    //     assert!(lock.is_some());
-    // }
 }

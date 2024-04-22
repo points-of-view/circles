@@ -16,8 +16,6 @@ use tauri::{
 
 use crate::tags::{Tag, TagsMap};
 
-// GENERAL NOTE: For a good overview of the LLRP spec, see [this document](https://gs1go2.azureedge.net/cdn/ff/7aZwEHsz5I8MM-lbIcvFNwjL9OFcGGZgBU_hAjJttEE/1416474591/public/docs/epc/llrp_1_1-standard-20101013.pdf).
-
 const DEFAULT_ROSPEC_ID: u32 = 1234;
 const REFRESH_INTERVAL: u64 = 500;
 

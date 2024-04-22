@@ -38,7 +38,8 @@ pub fn construct_default_rospec() -> parameters::ROSpec {
           custom: Vec::new(),
       })],
       ro_report_spec: Some(parameters::ROReportSpec {
-          // NOTE: The spec defines trigger based on N amount of milliseconds, but our readers doesn't accept these
+          // NOTE: The llrp crate includes mre options, but these options were added in version 1.1.0 of the LLRP spec
+          // The Zebra FX9600 that we use only supports version 1.0.1 of the spec.
           ro_report_trigger:
               enumerations::ROReportTriggerType::Upon_N_Tags_Or_End_Of_AISpec_Or_End_Of_RFSurveySpec,
           n: 1,

@@ -16,6 +16,12 @@ use super::{
 
 const DEFAULT_PORT: u16 = 5084;
 
+/// Interact with an LLRP-compatible RFID-reader
+///
+/// ## LLRP standard
+/// For more info and the full documention, see [this site](https://www.gs1.org/standards/epc-rfid/llrp/1-1-0).
+/// Note that the device we use (a Zebra FX9600) only support version 1.0.0 or 1.0.1 of the standard and we
+/// cannot use feature from version 1.0.0
 #[derive(Debug)]
 pub struct LLRPReader {
     hostname: String,
@@ -253,7 +259,7 @@ impl Drop for LLRPReader {
     fn drop(&mut self) {
         // When dropping, we don't actually care for the responses
         let _ = self.stop_reading(false);
-        let _ = self.write_message(Message::CloseConnection(messages::CloseConnection { }));
+        let _ = self.write_message(Message::CloseConnection(messages::CloseConnection {}));
     }
 }
 
@@ -264,7 +270,11 @@ mod tests {
 
     #[test]
     fn should_convert_hostname_to_ip() {
-        let reader = LLRPReader { hostname: "fx9600749620".to_string(), stream: None, handle: None };
+        let reader = LLRPReader {
+            hostname: "fx9600749620".to_string(),
+            stream: None,
+            handle: None,
+        };
         let ipv4 = reader.hostname_as_ip();
 
         assert!(ipv4.is_ok());
@@ -273,9 +283,15 @@ mod tests {
 
     #[test]
     fn should_return_err_if_hostname_cannot_convert() {
-        let reader = LLRPReader { hostname: "fx960074XX20".to_string(), stream: None, handle: None };
+        let reader = LLRPReader {
+            hostname: "fx960074XX20".to_string(),
+            stream: None,
+            handle: None,
+        };
         let ipv4 = reader.hostname_as_ip();
 
-        assert!(ipv4.is_err_and(|err| err.kind == ReaderErrorKind::IncorrectHostname("fx960074XX20".to_string())));
+        assert!(ipv4.is_err_and(
+            |err| err.kind == ReaderErrorKind::IncorrectHostname("fx960074XX20".to_string())
+        ));
     }
 }
