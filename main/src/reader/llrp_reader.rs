@@ -1,5 +1,5 @@
 use llrp::{
-    choices, enumerations,
+    enumerations,
     messages::{self, Message},
     parameters, BinaryMessage, LLRPMessage,
 };
@@ -7,20 +7,24 @@ use std::{
     net::{self, TcpStream},
     time::Duration,
 };
+use tauri::{async_runtime::JoinHandle, AppHandle};
 
-use super::{Reader, ReaderError, ReaderErrorKind};
+use super::{
+    handle_reader_input, rospec::construct_default_rospec, ReaderError, ReaderErrorKind,
+    DEFAULT_ROSPEC_ID,
+};
 
 const DEFAULT_PORT: u16 = 5084;
-const DEFAULT_ROSPEC_ID: u32 = 1234;
 
 #[derive(Debug)]
 pub struct LLRPReader {
     hostname: String,
     stream: Option<TcpStream>,
+    handle: Option<JoinHandle<()>>,
 }
 
-impl Reader for LLRPReader {
-    fn new(hostname: String) -> Result<Box<Self>, ReaderError> {
+impl LLRPReader {
+    pub fn new(hostname: String) -> Result<Self, ReaderError> {
         if hostname.len() != 12 {
             return Err(ReaderError {
                 kind: ReaderErrorKind::IncorrectHostname(hostname.clone()),
@@ -34,13 +38,17 @@ impl Reader for LLRPReader {
         let mut reader = LLRPReader {
             hostname,
             stream: None,
+            handle: None,
         };
         reader.connect()?;
         reader.prepare()?;
-        Ok(Box::new(reader))
+        Ok(reader)
     }
 
-    fn start_reading(&self) -> Result<(), ReaderError> {
+    pub fn start_reading<R: tauri::Runtime>(
+        &mut self,
+        app_handle: AppHandle<R>,
+    ) -> Result<(), ReaderError> {
         // Just in case we are already reading, we should try to stop
         self.stop_reading()?;
 
@@ -48,27 +56,22 @@ impl Reader for LLRPReader {
         self.write_message(Message::StartRospec(messages::StartRospec {
             ro_spec_id: DEFAULT_ROSPEC_ID,
         }))?;
-        for _ in 0..10 {
-            match llrp::read_message(self.stream.as_ref().unwrap()) {
-                Ok(message) => {
-                    println!("{:?}", message.to_dynamic_message().unwrap());
-                }
-                Err(err) => {
-                    return Err(ReaderError {
-                        kind: ReaderErrorKind::Unknown,
-                        message: err.to_string(),
-                    })
-                }
-            };
-        }
+
+        let stream = self.stream.as_ref().unwrap().try_clone().unwrap();
+        let handle = handle_reader_input::<R>(stream, app_handle);
+        self.handle = Some(handle);
         Ok(())
     }
 
-    fn stop_reading(&self) -> Result<(), ReaderError> {
+    pub fn stop_reading(&mut self) -> Result<(), ReaderError> {
+        if let Some(handle) = self.handle.take() {
+            handle.abort();
+        };
+
         self.write_message(Message::StopRospec(messages::StopRospec {
             ro_spec_id: DEFAULT_ROSPEC_ID,
         }))?;
-        let message = self.await_message::<messages::StopRospecResponse>();
+        self.await_message::<messages::StopRospecResponse>()?;
         Ok(())
     }
 }
@@ -137,10 +140,8 @@ impl LLRPReader {
     }
 
     fn write_message(&self, message: Message) -> Result<(), ReaderError> {
-        // NOTE: The message id can be a random u32 - it is returned in the appropriate response
-        // But for now, we don't care about these responses
+        // NOTE: The message id can be a random u32 - it is returned in the matching response
         // We can unwrap here, since `from_dynamic_message` doesn't ever fail
-        println!("writing: {:?}", &message);
         let message = BinaryMessage::from_dynamic_message(20, &message).unwrap();
         match llrp::write_message(self.stream.as_ref().unwrap(), message) {
             Ok(_) => Ok(()),
@@ -242,64 +243,5 @@ impl LLRPReader {
             m.status.status_code == enumerations::StatusCode::M_Success
         })?;
         Ok(())
-    }
-}
-
-fn construct_default_rospec() -> parameters::ROSpec {
-    parameters::ROSpec {
-        ro_spec_id: DEFAULT_ROSPEC_ID,
-        priority: 0,
-        current_state: enumerations::ROSpecState::Disabled, // Setting this to `Inactive` or `Active` results in an error from our reader
-        ro_boundary_spec: parameters::ROBoundarySpec {
-            ro_spec_start_trigger: parameters::ROSpecStartTrigger {
-                ro_spec_start_trigger_type: enumerations::ROSpecStartTriggerType::Null,
-                periodic_trigger_value: None,
-                gpi_trigger_value: None,
-            },
-            ro_spec_stop_trigger: parameters::ROSpecStopTrigger {
-                ro_spec_stop_trigger_type: enumerations::ROSpecStopTriggerType::Null,
-                // We have to pass a duration, but this value is ignored since out trigger type isn't `Duration`
-                duration_trigger_value: 0,
-                gpi_trigger_value: None,
-            },
-        },
-        spec_parameter: vec![choices::SpecParameter::AISpec(parameters::AISpec {
-            antenna_ids: vec![1, 2, 3],
-            ai_spec_stop_trigger: parameters::AISpecStopTrigger {
-                ai_spec_stop_trigger_type: enumerations::AISpecStopTriggerType::Null,
-                // We have to pass a duration, but this value is ignored since out trigger type isn't `Duration`
-                duration_trigger: 0,
-                gpi_trigger_value: None,
-                tag_observation_trigger: None,
-            },
-            inventory_parameter_spec: vec![parameters::InventoryParameterSpec {
-                inventory_parameter_spec_id: 1,
-                protocol_id: enumerations::AirProtocols::EPCGlobalClass1Gen2,
-                antenna_configuration: Vec::new(),
-                custom: Vec::new(),
-            }],
-            custom: Vec::new(),
-        })],
-        ro_report_spec: Some(parameters::ROReportSpec {
-            // NOTE: The spec defines trigger based on N amount of milliseconds, but our readers doesn't accept these
-            ro_report_trigger:
-                enumerations::ROReportTriggerType::Upon_N_Tags_Or_End_Of_AISpec_Or_End_Of_RFSurveySpec,
-            n: 1,
-            tag_report_content_selector: parameters::TagReportContentSelector {
-                enable_ro_spec_id: false,
-                enable_spec_index: false,
-                enable_inventory_parameter_spec_id: false,
-                enable_antenna_id: true,
-                enable_channel_index: false,
-                enable_peak_rssi: true,
-                enable_first_seen_timestamp: true,
-                enable_last_seen_timestamp: true,
-                enable_tag_seen_count: true,
-                enable_access_spec_id: false,
-                reserved: 0, // Unclear what this param is for
-                air_protocol_epc_memory_selector: Vec::new(),
-            },
-            custom: Vec::new(),
-        }),
     }
 }
