@@ -6,7 +6,7 @@ use std::{
     vec::Drain,
 };
 
-const MAX_STRENGTH: i8 = -30;
+const MAX_STRENGTH: i8 = 0;
 const MIN_STRENGTH: i8 = -80;
 const MAX_ANTENNA: u16 = 8;
 const MIN_ANTENNA: u16 = 1;
@@ -154,7 +154,7 @@ mod tests {
 
     #[test]
     fn should_err_if_strength_is_out_of_bounds() {
-        let result = Tag::build("abc123".into(), 1, -29);
+        let result = Tag::build("abc123".into(), 1, 1);
 
         assert!(result.is_err_and(|x| x.kind == TagErrorKind::IncorrectStrength));
 
