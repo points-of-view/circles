@@ -1,4 +1,3 @@
-pub mod command;
 mod llrp_reader;
 use crate::tags::{Tag, TagsMap};
 pub use llrp_reader::LLRPReader;
