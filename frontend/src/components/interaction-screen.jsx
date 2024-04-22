@@ -2,13 +2,49 @@ import { useState } from "react";
 import OptionsView from "./optionsview";
 import clsx from "clsx";
 
+const TITLE_DELAY = 1_000;
+
 export function InteractionScreen({
   title,
   description,
   themeName = null,
   options,
+  phase,
+  chosenTheme
 }) {
-  const [bigTitle] = useState(true);
+  const [bigTitle, setBigTitle] = useState(true);
+  const [bigOption, setBigOption] = useState(true);
+  const [chosenOption, setChosenOption] = useState("AI");
+  const [step, setStep] = useState(0);
+
+  switch (step) {
+    case 0:
+      setTimeout(() => setStep(1), TITLE_DELAY);
+      break;
+    case 1:
+      if (phase === 0) {
+        setBigTitle(false);
+        setStep(2);
+        break;
+      } else {
+        console.log(phase)
+        title = "test";
+        setTimeout(() => setStep(3), TITLE_DELAY);
+        break;
+      }
+    case 2:
+      console.log("Start countdown timer here");
+      setTimeout(() => setStep(3), TITLE_DELAY);
+      break;
+    case 3:
+      if (chosenTheme) {
+        // setBigOption(true)
+      }
+      break;
+    default:
+      console.log(step)
+  }
+
   return (
     <div className="interaction-screen">
       <div
@@ -18,7 +54,7 @@ export function InteractionScreen({
       >
         {title}
       </div>
-      {!bigTitle && (
+      {!bigTitle && !bigOption && (
         <div className="interaction-screen__description squircle">
           <svg
             width="38"
@@ -35,7 +71,7 @@ export function InteractionScreen({
           {description}
         </div>
       )}
-      {!bigTitle && <OptionsView options={options} />}
+      {!bigTitle && <OptionsView options={options} chosenOption={chosenOption} />}
       {!bigTitle && themeName && (
         <div className="interaction-screen__theme squircle">{themeName}</div>
       )}
