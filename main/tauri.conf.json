@@ -1,7 +1,7 @@
 {
   "build": {
-    "beforeDevCommand": "bash ./reader/build.sh && yarn workspace frontend dev",
-    "beforeBuildCommand": "bash ./reader/build.sh && yarn workspace frontend build",
+    "beforeDevCommand": "yarn workspace frontend dev",
+    "beforeBuildCommand": "yarn workspace frontend build",
     "devPath": "http://localhost:1420",
     "distDir": "../frontend/dist"
   },
@@ -27,9 +27,6 @@
         "icons/128x128@2x.png",
         "icons/icon.icns",
         "icons/icon.ico"
-      ],
-      "resources": [
-        "../reader/dist/**/*"
       ]
     },
     "security": {
