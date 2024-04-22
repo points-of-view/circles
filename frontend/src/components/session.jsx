@@ -104,6 +104,8 @@ export default function Session({ project, resetProject, language }) {
           title={translate("choose_a_theme", language)}
           description={translate("stand_in_circle", language)}
           options={themes.slice(0, 3).map((a) => a.name[language])}
+          phase={phase}
+          chosenTheme={chosenTheme}
         />
       ) : (
         <InteractionScreen
