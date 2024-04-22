@@ -9,6 +9,7 @@ html {
 
 @font-face {
   font-family: Manrope;
-  src: url("../../fonts/Manrope/Manrope-VariableFont_wght.ttf");
+  font-weight: 600;
+  src: url("../../fonts/Manrope/Manrope-VariableFont_wght.ttf") format("truetype-variations");
   font-display: block;
 }
