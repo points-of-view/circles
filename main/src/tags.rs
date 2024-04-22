@@ -2,14 +2,14 @@ use rand::{seq::SliceRandom, thread_rng, Rng};
 use serde;
 use std::{
     collections::HashMap,
-    fmt::{Display, Formatter},
+    fmt::{Debug, Display, Formatter},
     vec::Drain,
 };
 
 const MAX_STRENGTH: i8 = -30;
 const MIN_STRENGTH: i8 = -80;
-const MAX_ANTENNA: u8 = 8;
-const MIN_ANTENNA: u8 = 1;
+const MAX_ANTENNA: u16 = 8;
+const MIN_ANTENNA: u16 = 1;
 const MOCK_RFID_TAGS: [&str; 9] = [
     "abc123", "abc456", "abc789", "def123", "def456", "def789", "ghi123", "ghi456", "ghi789",
 ];
@@ -18,78 +18,47 @@ const MOCK_RFID_TAGS: [&str; 9] = [
 pub struct Tag {
     pub id: String,
     pub strength: i8,
-    pub antenna: u8,
+    pub antenna: u16,
 }
 
 #[derive(Debug)]
-pub struct ParseError {
-    pub kind: ParseErrorKind,
-    line: String,
+pub struct TagError {
+    pub kind: TagErrorKind,
     value: String,
 }
 
 #[derive(Debug, PartialEq)]
-pub enum ParseErrorKind {
+pub enum TagErrorKind {
     Incomplete,
     IncorrectAntenna,
     IncorrectStrength,
 }
 
-impl Display for ParseError {
+impl Display for TagError {
     fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
         match self.kind {
-            ParseErrorKind::Incomplete => write!(f, "Line did not have expected parts, we require exactly 3, but found {}. (Full line: {})", self.value, self.line),
-            ParseErrorKind::IncorrectAntenna => write!(f, "Line did not have a correct antenna, value should be between {} and {}, but was {}. (Full line: {})", MIN_ANTENNA, MAX_ANTENNA, self.value, self.line),
-            ParseErrorKind::IncorrectStrength => write!(f, "Line did not have a correct strength, value should be between {} and {}, but was {}. (Full line: {})", MIN_STRENGTH, MAX_STRENGTH, self.value, self.line),
+            TagErrorKind::Incomplete => write!(f, "Line did not have expected parts, we require exactly 3, but found {}.", self.value),
+            TagErrorKind::IncorrectAntenna => write!(f, "Line did not have a correct antenna, value should be between {} and {}, but was {}.", MIN_ANTENNA, MAX_ANTENNA, self.value),
+            TagErrorKind::IncorrectStrength => write!(f, "Line did not have a correct strength, value should be between {} and {}, but was {}.", MIN_STRENGTH, MAX_STRENGTH, self.value),
         }
     }
 }
 
 impl Tag {
-    pub fn from_reader(line: String) -> Result<Tag, ParseError> {
-        let parts: Vec<&str> = line.split('|').collect();
-        if parts.len() != 3 {
-            return Err(ParseError {
-                kind: ParseErrorKind::Incomplete,
-                line: line.to_owned(),
-                value: parts.len().to_string(),
+    pub fn build(id: String, antenna: u16, strength: i8) -> Result<Tag, TagError> {
+        if antenna < MIN_ANTENNA || antenna > MAX_ANTENNA {
+            return Err(TagError {
+                kind: TagErrorKind::IncorrectAntenna,
+                value: antenna.to_string(),
             });
         }
-        let id = parts[0].to_string();
-        let antenna = match parts[1].parse() {
-            Ok(value) => {
-                if value >= MIN_ANTENNA && value <= MAX_ANTENNA {
-                    value
-                } else {
-                    return Err(ParseError {
-                        kind: ParseErrorKind::IncorrectAntenna,
-                        line: line.to_owned(),
-                        value: parts[1].to_string(),
-                    });
-                }
-            }
-            Err(_) => {
-                return Err(ParseError {
-                    kind: ParseErrorKind::IncorrectAntenna,
-                    line: line.to_owned(),
-                    value: parts[1].to_string(),
-                });
-            }
-        };
-        let strength = match parts[2].parse() {
-            Ok(value) => {
-                if value >= MIN_STRENGTH && value <= MAX_STRENGTH {
-                    value
-                } else {
-                    return Err(ParseError {
-                        kind: ParseErrorKind::IncorrectStrength,
-                        line: line.to_owned(),
-                        value: parts[2].to_string(),
-                    });
-                }
-            }
-            Err(_) => MIN_STRENGTH,
-        };
+
+        if strength < MIN_STRENGTH || strength > MAX_STRENGTH {
+            return Err(TagError {
+                kind: TagErrorKind::IncorrectStrength,
+                value: strength.to_string(),
+            });
+        }
 
         Ok(Tag {
             id,
@@ -97,17 +66,41 @@ impl Tag {
             strength,
         })
     }
+
+    #[cfg(test)]
+    pub fn random() -> Tag {
+        let mut rng = thread_rng();
+        let id = MOCK_RFID_TAGS.choose(&mut rng).unwrap().to_string();
+        let antenna = rng.gen_range(MIN_ANTENNA..MAX_ANTENNA);
+        let strength = rng.gen_range(MIN_STRENGTH..MAX_STRENGTH);
+        Tag {
+            id,
+            antenna,
+            strength,
+        }
+    }
 }
 
-pub fn create_mock_tag() -> String {
-    let mut rng = thread_rng();
-    let tag_id = MOCK_RFID_TAGS.choose(&mut rng).unwrap();
-    let antenna = rng.gen_range(MIN_ANTENNA..MAX_ANTENNA);
-    let strength = rng.gen_range(MIN_STRENGTH..MAX_STRENGTH);
-    format!("{}|{}|{}", tag_id, antenna, strength)
+impl Tag {
+    pub fn from_report_data(
+        tag_report_data: llrp::parameters::TagReportData,
+    ) -> Result<Tag, TagError> {
+        let id_bytes = match tag_report_data.epc_parameter.clone() {
+            llrp::choices::EPCParameter::EPCData(data) => data.epc.bytes,
+            llrp::choices::EPCParameter::EPC_96(data) => data.to_vec(),
+        };
+        let id = id_bytes
+            .iter()
+            .map(|byte| format!("{:02X?}", byte))
+            .collect();
+        let antenna = tag_report_data.antenna_id.unwrap();
+        let strength = tag_report_data.peak_rssi.unwrap();
+
+        Self::build(id, antenna, strength)
+    }
 }
 
-#[derive(serde::Serialize, Clone)]
+#[derive(serde::Serialize, Clone, Debug)]
 pub struct TagsMap(HashMap<String, Tag>);
 
 impl TagsMap {
@@ -131,69 +124,43 @@ impl TagsMap {
 
 #[cfg(test)]
 mod tests {
+    use crate::reader::construct_tag_report;
+
     use super::*;
 
     #[test]
     fn should_create_tag_from_line() {
-        let result = Tag::from_reader("abc123|1|-31".into());
+        let tag_report = construct_tag_report(1, -30);
+        let result = Tag::from_report_data(tag_report);
 
         assert!(result.is_ok());
         let tag = result.unwrap();
 
-        assert_eq!("abc123", tag.id);
-        assert_eq!(-31, tag.strength);
+        assert_eq!("000000000000000000000000", tag.id);
+        assert_eq!(-30, tag.strength);
         assert_eq!(1, tag.antenna);
     }
 
     #[test]
-    fn should_err_if_line_is_incomplete() {
-        let result = Tag::from_reader("abc123|1".into());
-
-        assert!(result.is_err_and(|x| x.kind == ParseErrorKind::Incomplete));
-    }
-
-    #[test]
     fn should_err_if_antenna_is_unexpected_value() {
-        let result = Tag::from_reader("abc123|abc|-31".into());
+        let result = Tag::build("abc123".into(), 0, -31);
 
-        assert!(result.is_err_and(|x| x.kind == ParseErrorKind::IncorrectAntenna));
+        assert!(result.is_err_and(|x| x.kind == TagErrorKind::IncorrectAntenna));
 
-        let result = Tag::from_reader("abc123|0|-31".into());
+        let result = Tag::build("abc123".into(), 9, -31);
 
-        assert!(result.is_err_and(|x| x.kind == ParseErrorKind::IncorrectAntenna));
-
-        let result = Tag::from_reader("abc123|9|-31".into());
-
-        assert!(result.is_err_and(|x| x.kind == ParseErrorKind::IncorrectAntenna));
-    }
-
-    #[test]
-    fn should_set_min_strength_if_unexpected_value() {
-        let result = Tag::from_reader("abc123|1|anc".into());
-
-        assert!(result.is_ok());
-
-        let tag = result.unwrap();
-
-        assert!(tag.strength == MIN_STRENGTH);
+        assert!(result.is_err_and(|x| x.kind == TagErrorKind::IncorrectAntenna));
     }
 
     #[test]
     fn should_err_if_strength_is_out_of_bounds() {
-        let result = Tag::from_reader("abc123|1|-29".into());
+        let result = Tag::build("abc123".into(), 1, -29);
 
-        assert!(result.is_err_and(|x| x.kind == ParseErrorKind::IncorrectStrength));
+        assert!(result.is_err_and(|x| x.kind == TagErrorKind::IncorrectStrength));
 
-        let result = Tag::from_reader("abc123|1|-81".into());
+        let result = Tag::build("abc123".into(), 1, -81);
 
-        assert!(result.is_err_and(|x| x.kind == ParseErrorKind::IncorrectStrength));
-    }
-
-    #[test]
-    fn should_parse_random_tag() {
-        let result = Tag::from_reader(create_mock_tag());
-
-        assert!(result.is_ok())
+        assert!(result.is_err_and(|x| x.kind == TagErrorKind::IncorrectStrength));
     }
 
     #[test]
