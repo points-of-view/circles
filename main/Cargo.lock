@@ -308,6 +308,7 @@ dependencies = [
  "dunce",
  "include_dir",
  "libsqlite3-sys",
+ "llrp",
  "rand 0.8.5",
  "serde",
  "serde_json",
@@ -710,6 +711,12 @@ dependencies = [
  "libc",
  "windows-sys 0.52.0",
 ]
+
+[[package]]
+name = "error-chain"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d9435d864e017c3c6afeac1654189b06cdb491cf2ff73dbf0d73b0f292f42ff8"
 
 [[package]]
 name = "fastrand"
@@ -1511,6 +1518,28 @@ name = "linux-raw-sys"
 version = "0.4.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "01cda141df6706de531b6c46c3a33ecca755538219bd484262fa09410c13539c"
+
+[[package]]
+name = "llrp"
+version = "0.1.0"
+source = "git+https://github.com/mchesser/llrp-rs#fa96d4d1f4f08d2aa7067e26ce9e431435811454"
+dependencies = [
+ "byteorder",
+ "llrp-codegen",
+]
+
+[[package]]
+name = "llrp-codegen"
+version = "0.1.0"
+source = "git+https://github.com/mchesser/llrp-rs#fa96d4d1f4f08d2aa7067e26ce9e431435811454"
+dependencies = [
+ "heck 0.3.3",
+ "proc-macro2",
+ "quote",
+ "serde",
+ "serde-xml-rs",
+ "syn 1.0.109",
+]
 
 [[package]]
 name = "lock_api"
@@ -2376,6 +2405,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3fb1c873e1b9b056a4dc4c0c198b24c3ffa059243875552b2bd0933b1aee4ce2"
 dependencies = [
  "serde_derive",
+]
+
+[[package]]
+name = "serde-xml-rs"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "27d98dfc234faa8532d66c837de56bf4276a259a43dd10ef96feb2fb7ab333b1"
+dependencies = [
+ "error-chain",
+ "log",
+ "serde",
+ "xml-rs",
 ]
 
 [[package]]
@@ -3865,3 +3906,9 @@ dependencies = [
  "linux-raw-sys",
  "rustix",
 ]
+
+[[package]]
+name = "xml-rs"
+version = "0.8.20"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "791978798f0597cfc70478424c2b4fdc2b7a8024aaff78497ef00f24ef674193"

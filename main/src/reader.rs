@@ -1,8 +1,12 @@
 pub mod command;
 use crate::tags::{Tag, TagsMap};
+use llrp::{
+    enumerations::ConnectionAttemptStatusType, messages::*, parameters::ConnectionAttemptEvent,
+    BinaryMessage, LLRPMessage,
+};
 use std::{
     fmt::{Display, Formatter},
-    net,
+    net::{self, TcpStream},
     time::{Duration, Instant},
 };
 use tauri::{
@@ -12,6 +16,7 @@ use tauri::{
 };
 
 const REFRESH_INTERVAL: u64 = 500;
+const DEFAULT_PORT: u16 = 5084;
 
 #[derive(Debug, PartialEq, Clone, serde::Serialize)]
 pub enum ReaderErrorKind {
@@ -32,14 +37,12 @@ impl Display for ReaderError {
             ReaderErrorKind::IncorrectHostname(hostname) => write!(
                 f,
                 "Hostname {} is incorrect. Original error: {}",
-                hostname,
-                self.message
+                hostname, self.message
             ),
             ReaderErrorKind::CouldNotConnect(hostname) => write!(
                 f,
                 "Could not connect to hostname {}. Original error: {}",
-                hostname,
-                self.message
+                hostname, self.message
             ),
             ReaderErrorKind::Unknown => write!(
                 f,
@@ -50,53 +53,75 @@ impl Display for ReaderError {
     }
 }
 
-enum ReaderConnectionType {
-    Hostname,
-    LinkLocal,
-}
-
+#[derive(Debug)]
 pub struct Reader {
     hostname: String,
-    connection_type: ReaderConnectionType,
+    stream: Option<TcpStream>,
 }
 
 impl Reader {
     pub fn new(hostname: String) -> Result<Self, ReaderError> {
         if hostname.len() != 12 {
-            return Err(ReaderError { kind: ReaderErrorKind::IncorrectHostname(hostname.clone()), message: format!("This should be exactly 12 characters, but was {}", hostname.len()) })
+            return Err(ReaderError {
+                kind: ReaderErrorKind::IncorrectHostname(hostname.clone()),
+                message: format!(
+                    "This should be exactly 12 characters, but was {}",
+                    hostname.len()
+                ),
+            });
         }
- 
-        let mut reader = Reader { 
+
+        let mut reader = Reader {
             hostname,
-            connection_type: ReaderConnectionType::Hostname,
+            stream: None,
         };
-        reader.try_connect()?;
+        reader.connect()?;
         Ok(reader)
     }
 
-    /// Try to connect to the reader.
-    /// 
+    /// Connect to the reader.
+    ///
     /// We first try the hostname and check if we can connect that way.
     /// If the hostname is unavailable, we fall back on the LinkLocal ipv4.
-    fn try_connect(&mut self) -> Result<(), ReaderError> {
-        if let Ok(_) = net::TcpStream::connect(&self.hostname) {
-            return Ok(());
+    fn connect(&mut self) -> Result<(), ReaderError> {
+        self.stream = match net::TcpStream::connect(format!("{}:{}", self.hostname, DEFAULT_PORT)) {
+            Ok(stream) => Some(stream),
+            Err(_) => None,
+        };
+
+        if self.stream.is_none() {
+            self.stream = match net::TcpStream::connect(net::SocketAddr::new(
+                self.hostname_as_ip()?,
+                DEFAULT_PORT,
+            )) {
+                Ok(stream) => Some(stream),
+                Err(err) => {
+                    return Err(ReaderError {
+                        kind: ReaderErrorKind::CouldNotConnect(self.hostname.clone()),
+                        message: err.to_string(),
+                    })
+                }
+            };
         }
 
-        self.connection_type = ReaderConnectionType::LinkLocal;
-        let socket = net::SocketAddr::new(self.hostname_as_ip()?, 5084);
-
-        match net::TcpStream::connect_timeout(&socket, Duration::from_secs(2)) {
-            Ok(_) => Ok(()),
-            Err(err) => {
-                Err(ReaderError {
-                    kind: ReaderErrorKind::CouldNotConnect(self.hostname.clone()),
-                    message: err.to_string(),
-                })
-            }
+        // Wait for the first message to confirm that we are connected
+        let message = self.parse_message::<ReaderEventNotification>()?;
+        match Some(ConnectionAttemptEvent {
+            status: ConnectionAttemptStatusType::Success,
+        }) == message
+            .reader_event_notification_data
+            .connection_attempt_event
+        {
+            true => Ok(()),
+            false => Err(ReaderError {
+                kind: ReaderErrorKind::Unknown,
+                message: format!(
+                    "Reader event did not contain a succesfull connection, but a {:?}",
+                    message.reader_event_notification_data
+                ),
+            }),
         }
     }
-    
 
     /// Convert the hostname to a LinkLocal IPv4 address.
     ///
@@ -106,16 +131,60 @@ impl Reader {
         let Ok(third_element) = u8::from_str_radix(&self.hostname[8..10], 16) else {
             return Err(ReaderError {
                 kind: ReaderErrorKind::IncorrectHostname(self.hostname.clone()),
-                message: String::from("Could not convert mac address to IP")
-            })
+                message: String::from("Could not convert mac address to IP"),
+            });
         };
         let Ok(fourth_element) = u8::from_str_radix(&self.hostname[10..12], 16) else {
             return Err(ReaderError {
                 kind: ReaderErrorKind::IncorrectHostname(self.hostname.clone()),
-                message: String::from("Could not convert mac address to IP")
-            })
+                message: String::from("Could not convert mac address to IP"),
+            });
         };
-        Ok(net::IpAddr::from([169u8, 254u8, third_element, fourth_element]))
+        Ok(net::IpAddr::from([
+            169u8,
+            254u8,
+            third_element,
+            fourth_element,
+        ]))
+    }
+
+    fn write_message(&self, message: Message) -> Result<(), ReaderError> {
+        // We can unwrap here, since `from_dynamic_message` doesn't ever fail
+        let message = BinaryMessage::from_dynamic_message(20, &message).unwrap();
+        match llrp::write_message(self.stream.as_ref().unwrap(), message) {
+            Ok(_) => Ok(()),
+            Err(err) => Err(ReaderError {
+                kind: ReaderErrorKind::Unknown,
+                message: format!("Error writing: {:?}", err.to_string()),
+            }),
+        }
+    }
+
+    fn parse_message<T: LLRPMessage>(&self) -> Result<T, ReaderError> {
+        let message = match llrp::read_message(self.stream.as_ref().unwrap()) {
+            Ok(message) => message,
+            Err(err) => {
+                return Err(ReaderError {
+                    kind: ReaderErrorKind::Unknown,
+                    message: err.to_string(),
+                })
+            }
+        };
+
+        println!("{:#?}", message);
+
+        match message.to_message::<T>() {
+            Ok(message) => Ok(message),
+            Err(err) => {
+                return Err(ReaderError {
+                    kind: ReaderErrorKind::Unknown,
+                    message: format!(
+                        "Message was not of the expected kind, but was {:?}",
+                        message.to_dynamic_message()
+                    ),
+                })
+            }
+        }
     }
 }
 
