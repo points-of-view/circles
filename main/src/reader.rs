@@ -30,8 +30,14 @@ pub fn handle_reader_input<R: tauri::Runtime>(
         let interval = Duration::from_millis(REFRESH_INTERVAL);
         let mut last_update = Instant::now();
         while let Ok(message) = llrp::read_message(&stream) {
-            let message = message.to_dynamic_message().unwrap();
-            handle_new_message(message, &mut tags);
+            match message.to_dynamic_message() {
+                Ok(m) => handle_new_message(m, &mut tags),
+                Err(err) => {
+                    #[cfg(debug_assertions)]
+                    println!("Could not decode message. {}", err)
+                }
+            }
+            
             if last_update.elapsed() > interval {
                 let new_map = TagsMap::from(tags.drain(..));
                 app_handle.emit_all("updated-tags", new_map).unwrap();
