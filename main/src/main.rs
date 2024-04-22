@@ -2,7 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use circles::GlobalState;
-use std::{env, fs};
+use std::fs;
 use tauri::Manager;
 
 #[tauri::command]
