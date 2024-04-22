@@ -8,33 +8,33 @@
 :root {
   /* HSL values */
   --hsl-white: 0 0% 100%;
-  --hsl-black: 0 0% 0%;
-  --hsl-primary: 241, 80%, 7%;
-  --hsl-secondary: 240 70% 26%;
   --hsl-grey: 0 0% 50%;
   --hsl-grey-light: 0 0% 30%;
-  --hsl-blue-dark: 263 100% 19%;
+  --hsl-black: 0 0% 0%;
   --hsl-blue-light: 240 72% 47%;
-  --hsl-orange: 22 100% 51%;
-  --hsl-pink: 342 73% 67%;
-  --hsl-yellow: 49 100% 30%;
+  --hsl-blue: 240 70% 26%;
+  --hsl-blue-dark: 241, 80%, 7%;
+  --hsl-blue-extra-dark: 263 100% 19%;
   --hsl-green: 120 100% 34%;
+  --hsl-pink: 342 73% 67%;
+  --hsl-orange: 22 100% 51%;
+  --hsl-yellow: 49 100% 30%;
   --hsl-red: 0 69% 48%;
 
   /* Colours */
   --color-white: hsl(var(--hsl-white));
-  --color-black: hsl(var(--hsl-black));
-  --color-primary: hsl(var(--hsl-primary));
-  --color-secondary: hsl(var(--hsl-secondary));
-  --color-accent-green: hsl(var(--hsl-green));
-  --color-accent-pink: hsl(var(--hsl-pink));
-  --color-accent-orange: hsl(var(--hsl-orange));
   --color-grey: hsl(var(--hsl-grey));
   --color-grey-light: hsl(var(--hsl-grey-light));
-  --color-blue-dark: hsl(var(--hsl-blue-dark));
+  --color-black: hsl(var(--hsl-black));
   --color-blue-light: hsl(var(--hsl-blue-light));
+  --color-blue: hsl(var(--hsl-blue));
+  --color-blue-dark: hsl(var(--hsl-blue-dark));
+  --color-blue-extra-dark: hsl(var(--hsl-blue-extra-dark));
+  --color-green: hsl(var(--hsl-green));
+  --color-pink: hsl(var(--hsl-pink));
+  --color-orange: hsl(var(--hsl-orange));
   --color-yellow: hsl(var(--hsl-yellow));
-  --color-error: hsl(var(--hsl-red));
+  --color-red: hsl(var(--hsl-red));
 
   /* Fonts */
   --font-family: "Manrope", ui-sans-serif, system-ui, -apple-system,
@@ -62,34 +62,34 @@
   --screen-2xl: 1536px;
 
   /* Gradients */
-  --squircle-gradient: linear-gradient(
+  --dark-to-blue-gradient: linear-gradient(
     90deg,
-    var(--color-primary) 0%,
-    var(--color-secondary) 100%
+    var(--color-blue-dark) 0%,
+    var(--color-blue) 100%
   );
-  --blue-gradient: linear-gradient(
+  --dark-to-light-blue-gradient: linear-gradient(
     180deg,
-    var(--color-primary) 0%,
+    var(--color-blue-dark) 0%,
     var(--color-blue-light) 100%
   );
   --orange-gradient: linear-gradient(
     180deg,
-    var(--color-primary) 0%,
-    var(--color-accent-orange) 100%
+    var(--color-blue-dark) 0%,
+    var(--color-orange) 100%
   );
   --pink-gradient: linear-gradient(
     180deg,
-    var(--color-primary) 0%,
-    var(--color-accent-pink) 100%
+    var(--color-blue-dark) 0%,
+    var(--color-pink) 100%
   );
   --yellow-gradient: linear-gradient(
     180deg,
-    var(--color-primary) 0%,
+    var(--color-blue-dark) 0%,
     var(--color-yellow) 100%
   );
   --green-gradient: linear-gradient(
     180deg,
-    var(--color-primary) 0%,
-    var(--color-accent-green) 100%
+    var(--color-blue-dark) 0%,
+    var(--color-green) 100%
   );
 }

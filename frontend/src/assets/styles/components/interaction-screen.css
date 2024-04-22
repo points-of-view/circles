@@ -7,7 +7,7 @@
   width: 100%;
   height: 100vh;
   padding: 2rem;
-  background-color: var(--color-primary);
+  background-color: var(--color-blue-dark);
 }
 
 .squircle {
@@ -17,14 +17,14 @@
   align-items: center;
   padding: 1.25rem 2.5rem;
   border-radius: var(--rounded-full);
-  background: var(--squircle-gradient);
+  background: var(--dark-to-blue-gradient);
 }
 
 .interaction-screen__title {
   justify-self: center;
   text-align: center;
   word-break: break-word;
-  border: 5px solid var(--color-accent-orange);
+  border: 5px solid var(--color-orange);
   border-radius: var(--rounded-full);
 }
 
