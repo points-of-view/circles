@@ -1,7 +1,7 @@
 use llrp::{
     enumerations,
     messages::{self, Message},
-    parameters, BinaryMessage, LLRPMessage,
+    parameters, LLRPMessage,
 };
 use std::{
     net::{self, TcpStream},
@@ -10,8 +10,10 @@ use std::{
 use tauri::{async_runtime::JoinHandle, AppHandle};
 
 use super::{
-    handle_reader_input, rospec::construct_default_rospec, ReaderError, ReaderErrorKind,
-    DEFAULT_ROSPEC_ID,
+    handle_reader_input,
+    messages::{parse_message_and, write_message},
+    rospec::construct_default_rospec,
+    ReaderError, ReaderErrorKind, DEFAULT_ROSPEC_ID, REFRESH_INTERVAL,
 };
 
 const DEFAULT_PORT: u16 = 5084;
@@ -149,56 +151,14 @@ impl LLRPReader {
     }
 
     fn write_message(&self, message: Message) -> Result<(), ReaderError> {
-        // NOTE: The message id can be a random u32 - it is returned in the matching response
-        // We can unwrap here, since `from_dynamic_message` doesn't ever fail
-        let message = BinaryMessage::from_dynamic_message(20, &message).unwrap();
-        match llrp::write_message(self.stream.as_ref().unwrap(), message) {
-            Ok(_) => Ok(()),
-            Err(err) => Err(ReaderError {
-                kind: ReaderErrorKind::Unknown,
-                message: format!("Error writing: {:?}", err.to_string()),
-            }),
-        }
+        write_message(self.stream.as_ref().unwrap(), message, None)
     }
 
     fn parse_message_and<T: LLRPMessage>(
         &self,
         closure: fn(message: &T) -> bool,
     ) -> Result<T, ReaderError> {
-        let binary_message = match llrp::read_message(self.stream.as_ref().unwrap()) {
-            Ok(message) => message,
-            Err(err) => {
-                return Err(ReaderError {
-                    kind: ReaderErrorKind::Unknown,
-                    message: err.to_string(),
-                })
-            }
-        };
-
-        let message = match binary_message.to_message::<T>() {
-            Ok(message) => message,
-            Err(err) => {
-                return Err(ReaderError {
-                    kind: ReaderErrorKind::Unknown,
-                    message: format!(
-                        "Message was not of the expected kind, but was {:?}. Original error: {}",
-                        binary_message.to_dynamic_message(),
-                        err.to_string()
-                    ),
-                })
-            }
-        };
-
-        match closure(&message) {
-            true => Ok(message),
-            false => Err(ReaderError {
-                kind: ReaderErrorKind::Unknown,
-                message: format!(
-                    "Message did not pass closure check. Full message: {:?}",
-                    binary_message.to_dynamic_message(),
-                ),
-            }),
-        }
+        parse_message_and(self.stream.as_ref().unwrap(), closure)
     }
 
     fn parse_message<T: LLRPMessage>(&self) -> Result<T, ReaderError> {
@@ -230,6 +190,27 @@ impl LLRPReader {
     }
 
     fn prepare(&self) -> Result<(), ReaderError> {
+        // Set reader config to emit keepalive messages
+        self.write_message(Message::SetReaderConfig(messages::SetReaderConfig {
+            reset_to_factory_default: true,
+            reserved: 0, // Unclear what this field is for
+            reader_event_notification_spec: None,
+            antenna_properties: Vec::new(),
+            antenna_configuration: Vec::new(),
+            ro_report_spec: None,
+            access_report_spec: None,
+            keepalive_spec: Some(parameters::KeepaliveSpec {
+                keepalive_trigger_type: enumerations::KeepaliveTriggerType::Periodic,
+                periodic_trigger_value: REFRESH_INTERVAL / 2,
+            }),
+            gpo_write_data: Vec::new(),
+            gpi_port_current_state: Vec::new(),
+            events_and_reports: None,
+            custom: Vec::new(),
+        }))?;
+        self.await_message_and::<messages::SetReaderConfigResponse>(|m| {
+            m.status.status_code == enumerations::StatusCode::M_Success
+        })?;
         // Remove all existing ro_specs in the reader. ro_spec_id `0` means all ro_spec's should be deleted
         self.write_message(Message::DeleteRospec(messages::DeleteRospec {
             ro_spec_id: 0,

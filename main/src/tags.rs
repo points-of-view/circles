@@ -128,7 +128,7 @@ impl TagsMap {
 
 #[cfg(test)]
 mod tests {
-    use crate::reader::construct_tag_report;
+    use crate::reader::messages::construct_tag_report;
 
     use super::*;
 

@@ -54,7 +54,7 @@ pub fn construct_default_rospec() -> parameters::ROSpec {
               enable_last_seen_timestamp: true,
               enable_tag_seen_count: true,
               enable_access_spec_id: false,
-              reserved: 0, // Unclear what this param is for
+              reserved: 0, // Unclear what this field is for
               air_protocol_epc_memory_selector: Vec::new(),
           },
           custom: Vec::new(),
