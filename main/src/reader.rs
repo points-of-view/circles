@@ -1,9 +1,6 @@
 pub mod command;
 use crate::tags::{Tag, TagsMap};
-use llrp::{
-    enumerations::ConnectionAttemptStatusType, messages::*, parameters::ConnectionAttemptEvent,
-    BinaryMessage, LLRPMessage,
-};
+use llrp::{choices::*, enumerations::*, messages::*, parameters::*, BinaryMessage, LLRPMessage};
 use std::{
     fmt::{Display, Formatter},
     net::{self, TcpStream},
@@ -17,6 +14,7 @@ use tauri::{
 
 const REFRESH_INTERVAL: u64 = 500;
 const DEFAULT_PORT: u16 = 5084;
+const DEFAULT_ROSPEC_ID: u32 = 1234;
 
 #[derive(Debug, PartialEq, Clone, serde::Serialize)]
 pub enum ReaderErrorKind {
@@ -76,6 +74,7 @@ impl Reader {
             stream: None,
         };
         reader.connect()?;
+        reader.prepare()?;
         Ok(reader)
     }
 
@@ -90,10 +89,10 @@ impl Reader {
         };
 
         if self.stream.is_none() {
-            self.stream = match net::TcpStream::connect(net::SocketAddr::new(
-                self.hostname_as_ip()?,
-                DEFAULT_PORT,
-            )) {
+            self.stream = match net::TcpStream::connect_timeout(
+                &net::SocketAddr::new(self.hostname_as_ip()?, DEFAULT_PORT),
+                Duration::from_secs(5),
+            ) {
                 Ok(stream) => Some(stream),
                 Err(err) => {
                     return Err(ReaderError {
@@ -104,23 +103,14 @@ impl Reader {
             };
         }
 
-        // Wait for the first message to confirm that we are connected
-        let message = self.parse_message::<ReaderEventNotification>()?;
-        match Some(ConnectionAttemptEvent {
-            status: ConnectionAttemptStatusType::Success,
-        }) == message
-            .reader_event_notification_data
-            .connection_attempt_event
-        {
-            true => Ok(()),
-            false => Err(ReaderError {
-                kind: ReaderErrorKind::Unknown,
-                message: format!(
-                    "Reader event did not contain a succesfull connection, but a {:?}",
-                    message.reader_event_notification_data
-                ),
-            }),
-        }
+        // Wait for the first ReaderEventNotification and confirm that we are connected
+        self.await_message_and::<ReaderEventNotification>(|m: &ReaderEventNotification| {
+            m.reader_event_notification_data.connection_attempt_event
+                == Some(ConnectionAttemptEvent {
+                    status: ConnectionAttemptStatusType::Success,
+                })
+        })?;
+        Ok(())
     }
 
     /// Convert the hostname to a LinkLocal IPv4 address.
@@ -149,7 +139,10 @@ impl Reader {
     }
 
     fn write_message(&self, message: Message) -> Result<(), ReaderError> {
+        // NOTE: The message id can be a random u32 - it is returned in the appropriate response
+        // But for now, we don't care about these responses
         // We can unwrap here, since `from_dynamic_message` doesn't ever fail
+        println!("writing: {:?}", &message);
         let message = BinaryMessage::from_dynamic_message(20, &message).unwrap();
         match llrp::write_message(self.stream.as_ref().unwrap(), message) {
             Ok(_) => Ok(()),
@@ -160,8 +153,11 @@ impl Reader {
         }
     }
 
-    fn parse_message<T: LLRPMessage>(&self) -> Result<T, ReaderError> {
-        let message = match llrp::read_message(self.stream.as_ref().unwrap()) {
+    fn parse_message_and<T: LLRPMessage>(
+        &self,
+        closure: fn(message: &T) -> bool,
+    ) -> Result<T, ReaderError> {
+        let binary_message = match llrp::read_message(self.stream.as_ref().unwrap()) {
             Ok(message) => message,
             Err(err) => {
                 return Err(ReaderError {
@@ -171,20 +167,173 @@ impl Reader {
             }
         };
 
-        println!("{:#?}", message);
-
-        match message.to_message::<T>() {
-            Ok(message) => Ok(message),
+        let message = match binary_message.to_message::<T>() {
+            Ok(message) => message,
             Err(err) => {
                 return Err(ReaderError {
                     kind: ReaderErrorKind::Unknown,
                     message: format!(
-                        "Message was not of the expected kind, but was {:?}",
-                        message.to_dynamic_message()
+                        "Message was not of the expected kind, but was {:?}. Original error: {}",
+                        binary_message.to_dynamic_message(),
+                        err.to_string()
                     ),
                 })
             }
+        };
+
+        match closure(&message) {
+            true => Ok(message),
+            false => Err(ReaderError {
+                kind: ReaderErrorKind::Unknown,
+                message: format!(
+                    "Message did not pass closure check. Full message: {:?}",
+                    binary_message.to_dynamic_message(),
+                ),
+            }),
         }
+    }
+
+    fn parse_message<T: LLRPMessage>(&self) -> Result<T, ReaderError> {
+        self.parse_message_and(|_| true)
+    }
+
+    fn await_message_and<T: LLRPMessage>(
+        &self,
+        closure: fn(message: &T) -> bool,
+    ) -> Result<T, ReaderError> {
+        let message = loop {
+            match self.parse_message::<T>() {
+                Ok(message) => break message,
+                Err(_) => (),
+            }
+        };
+
+        match closure(&message) {
+            true => Ok(message),
+            false => Err(ReaderError {
+                kind: ReaderErrorKind::Unknown,
+                message: String::from("Message did not pass closure check."),
+            }),
+        }
+    }
+
+    fn await_message<T: LLRPMessage>(&self) -> Result<T, ReaderError> {
+        self.await_message_and(|_| true)
+    }
+
+    fn prepare(&self) -> Result<(), ReaderError> {
+        // Remove all existing ro_specs in the reader. ro_spec_id `0` means all ro_spec's should be deleted
+        self.write_message(Message::DeleteRospec(DeleteRospec { ro_spec_id: 0 }))?;
+        self.await_message_and::<DeleteRospecResponse>(|m: &DeleteRospecResponse| {
+            m.status.status_code == StatusCode::M_Success
+        })?;
+        // Add our new ro_spec
+        self.write_message(Message::AddRospec(AddRospec {
+            ro_spec: construct_default_rospec(),
+        }))?;
+        self.await_message_and::<AddRospecResponse>(|m: &AddRospecResponse| {
+            m.status.status_code == StatusCode::M_Success
+        })?;
+        // Enable our new ro_spec
+        self.write_message(Message::EnableRospec(EnableRospec {
+            ro_spec_id: DEFAULT_ROSPEC_ID,
+        }))?;
+        self.await_message_and::<EnableRospecResponse>(|m: &EnableRospecResponse| {
+            m.status.status_code == StatusCode::M_Success
+        })?;
+        Ok(())
+    }
+
+    pub fn start_reading(&self) -> Result<(), ReaderError> {
+        // Just in case we are already reading, we should try to stop
+        self.stop_reading()?;
+
+        // Actually start
+        self.write_message(Message::StartRospec(StartRospec {
+            ro_spec_id: DEFAULT_ROSPEC_ID,
+        }))?;
+        for _ in 0..10 {
+            match llrp::read_message(self.stream.as_ref().unwrap()) {
+                Ok(message) => {
+                    println!("{:?}", message.to_dynamic_message().unwrap());
+                }
+                Err(err) => {
+                    return Err(ReaderError {
+                        kind: ReaderErrorKind::Unknown,
+                        message: err.to_string(),
+                    })
+                }
+            };
+        }
+        Ok(())
+    }
+
+    pub fn stop_reading(&self) -> Result<(), ReaderError> {
+        self.write_message(Message::StopRospec(StopRospec {
+            ro_spec_id: DEFAULT_ROSPEC_ID,
+        }))?;
+        let message = self.await_message::<StopRospecResponse>();
+        println!("{:#?}", message);
+        Ok(())
+    }
+}
+
+fn construct_default_rospec() -> ROSpec {
+    ROSpec {
+        ro_spec_id: DEFAULT_ROSPEC_ID,
+        priority: 0,
+        current_state: ROSpecState::Disabled, // Setting this to `Inactive` or `Active` results in an error from our reader
+        ro_boundary_spec: ROBoundarySpec {
+            ro_spec_start_trigger: ROSpecStartTrigger {
+                ro_spec_start_trigger_type: ROSpecStartTriggerType::Null,
+                periodic_trigger_value: None,
+                gpi_trigger_value: None,
+            },
+            ro_spec_stop_trigger: ROSpecStopTrigger {
+                ro_spec_stop_trigger_type: ROSpecStopTriggerType::Null,
+                // We have to pass a duration, but this value is ignored since out trigger type isn't `Duration`
+                duration_trigger_value: 0,
+                gpi_trigger_value: None,
+            },
+        },
+        spec_parameter: vec![SpecParameter::AISpec(AISpec {
+            antenna_ids: vec![1, 2, 3],
+            ai_spec_stop_trigger: AISpecStopTrigger {
+                ai_spec_stop_trigger_type: AISpecStopTriggerType::Null,
+                // We have to pass a duration, but this value is ignored since out trigger type isn't `Duration`
+                duration_trigger: 0,
+                gpi_trigger_value: None,
+                tag_observation_trigger: None,
+            },
+            inventory_parameter_spec: vec![InventoryParameterSpec {
+                inventory_parameter_spec_id: 1,
+                protocol_id: AirProtocols::EPCGlobalClass1Gen2,
+                antenna_configuration: Vec::new(),
+                custom: Vec::new(),
+            }],
+            custom: Vec::new(),
+        })],
+        ro_report_spec: Some(ROReportSpec {
+            // NOTE: The spec defines trigger based on N amount of milliseconds, but our readers doesn't accept these
+            ro_report_trigger:
+                ROReportTriggerType::Upon_N_Tags_Or_End_Of_AISpec_Or_End_Of_RFSurveySpec,
+            n: 1,
+            tag_report_content_selector: TagReportContentSelector {
+                enable_ro_spec_id: false,
+                enable_spec_index: false,
+                enable_inventory_parameter_spec_id: false,
+                enable_antenna_id: true,
+                enable_channel_index: false,
+                enable_peak_rssi: true,
+                enable_first_seen_timestamp: true,
+                enable_last_seen_timestamp: true,
+                enable_tag_seen_count: true,
+                enable_access_spec_id: false,
+                reserved: 0, // Unclear what this param is for
+                air_protocol_epc_memory_selector: Vec::new(),
+            },
+            custom: Vec::new(),
+        }),
     }
 }
 
