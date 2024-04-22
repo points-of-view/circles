@@ -120,6 +120,7 @@ impl LLRPReader {
     ///
     /// If the hostname is not available, the reader will try to assign itself an IP address.
     /// This IP can be calculated by converting the last two chunks of the mac address from hexadecimal to decimal
+    /// See [this manual p.50 for details](https://www.zebra.com/content/dam/zebra_new_ia/en-us/manuals/rfid/fxseries-ig-en.pdf)
     fn hostname_as_ip(&self) -> Result<net::IpAddr, ReaderError> {
         let Ok(third_element) = u8::from_str_radix(&self.hostname[8..10], 16) else {
             return Err(ReaderError {
@@ -245,5 +246,28 @@ impl LLRPReader {
             m.status.status_code == enumerations::StatusCode::M_Success
         })?;
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::net::Ipv4Addr;
+
+    #[test]
+    fn should_convert_hostname_to_ip() {
+        let reader = LLRPReader { hostname: "fx9600749620".to_string(), stream: None, handle: None };
+        let ipv4 = reader.hostname_as_ip();
+
+        assert!(ipv4.is_ok());
+        assert_eq!(Ipv4Addr::new(169, 254, 150, 32), ipv4.unwrap())
+    }
+
+    #[test]
+    fn should_return_err_if_hostname_cannot_convert() {
+        let reader = LLRPReader { hostname: "fx960074XX20".to_string(), stream: None, handle: None };
+        let ipv4 = reader.hostname_as_ip();
+
+        assert!(ipv4.is_err_and(|err| err.kind == ReaderErrorKind::IncorrectHostname("fx960074XX20".to_string())));
     }
 }
