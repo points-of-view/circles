@@ -37,7 +37,7 @@ pub fn handle_reader_input<R: tauri::Runtime>(
                     println!("Could not decode message. {}", err)
                 }
             }
-            
+
             if last_update.elapsed() > interval {
                 let new_map = TagsMap::from(tags.drain(..));
                 app_handle.emit_all("updated-tags", new_map).unwrap();

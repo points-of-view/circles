@@ -52,7 +52,7 @@ fn main() {
         tauri::RunEvent::Exit { .. } => {
             let state = app_handle.state::<GlobalState>();
             state.stop_reading(false).expect("Could not stop reader");
-        },
-        _ => {},
+        }
+        _ => {}
     })
 }

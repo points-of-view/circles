@@ -89,7 +89,7 @@ impl GlobalState {
         Ok(())
     }
 
-    pub fn stop_reading(&self, await_confirmation: bool)-> Result<(), ReaderError> {
+    pub fn stop_reading(&self, await_confirmation: bool) -> Result<(), ReaderError> {
         let mut lock = self.reader.lock().unwrap();
         if let Some(reader) = &mut *lock {
             reader.stop_reading(await_confirmation)
