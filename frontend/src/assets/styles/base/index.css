@@ -5,6 +5,7 @@
 html {
   color: var(--color-white);
   font-family: var(--font-family);
+  font-weight: 600;
 }
 
 @font-face {

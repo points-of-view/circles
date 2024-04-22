@@ -10,11 +10,10 @@
   --hsl-white: 0 0% 100%;
   --hsl-grey: 0 0% 50%;
   --hsl-grey-light: 0 0% 30%;
-  --hsl-black: 0 0% 0%;
+  --hsl-black: 241 80% 7%;
   --hsl-blue-light: 240 72% 47%;
   --hsl-blue: 240 70% 26%;
-  --hsl-blue-dark: 241, 80%, 7%;
-  --hsl-blue-extra-dark: 263 100% 19%;
+  --hsl-purple-blue: 263 100% 19%;
   --hsl-green: 120 100% 34%;
   --hsl-pink: 342 73% 67%;
   --hsl-orange: 22 100% 51%;
@@ -28,7 +27,6 @@
   --color-black: hsl(var(--hsl-black));
   --color-blue-light: hsl(var(--hsl-blue-light));
   --color-blue: hsl(var(--hsl-blue));
-  --color-blue-dark: hsl(var(--hsl-blue-dark));
   --color-blue-extra-dark: hsl(var(--hsl-blue-extra-dark));
   --color-green: hsl(var(--hsl-green));
   --color-pink: hsl(var(--hsl-pink));
@@ -41,12 +39,12 @@
     blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans",
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "Noto Color Emoji";
-  --text-xs: 16px;
-  --text-sm: 20px;
-  --text-md: 32px;
-  --text-lg: 40px;
-  --text-xl: 48px;
-  --text-2xl: 76px;
+  --text-xs: 1rem;
+  --text-sm: 1.25rem;
+  --text-md: 2rem;
+  --text-lg: 2.5rem;
+  --text-xl: 3rem;
+  --text-2xl: 4.75rem;
 
   /* Border radius */
   --rounded-sm: 2px;
@@ -62,34 +60,34 @@
   --screen-2xl: 1536px;
 
   /* Gradients */
-  --dark-to-blue-gradient: linear-gradient(
+  --blue-gradient: linear-gradient(
     90deg,
-    var(--color-blue-dark) 0%,
+    var(--color-black) 0%,
     var(--color-blue) 100%
   );
-  --dark-to-light-blue-gradient: linear-gradient(
+  --blue-light-gradient: linear-gradient(
     180deg,
-    var(--color-blue-dark) 0%,
+    var(--color-black) 0%,
     var(--color-blue-light) 100%
   );
   --orange-gradient: linear-gradient(
     180deg,
-    var(--color-blue-dark) 0%,
+    var(--color-black) 0%,
     var(--color-orange) 100%
   );
   --pink-gradient: linear-gradient(
     180deg,
-    var(--color-blue-dark) 0%,
+    var(--color-black) 0%,
     var(--color-pink) 100%
   );
   --yellow-gradient: linear-gradient(
     180deg,
-    var(--color-blue-dark) 0%,
+    var(--color-black) 0%,
     var(--color-yellow) 100%
   );
   --green-gradient: linear-gradient(
     180deg,
-    var(--color-blue-dark) 0%,
+    var(--color-black) 0%,
     var(--color-green) 100%
   );
 }
