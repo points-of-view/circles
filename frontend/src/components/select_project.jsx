@@ -33,6 +33,9 @@ export function SelectProject({ setProject }) {
           type="text"
           name="hostname"
           id="hostname"
+          placeholder="fx9600123456"
+          minLength={12}
+          maxLength={12}
           required
           defaultValue={previousHostname}
         />

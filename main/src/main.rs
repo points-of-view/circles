@@ -12,16 +12,12 @@ fn select_project(
     project_key: String,
     hostname: String,
 ) -> Result<(), String> {
-    state.set_hostname(hostname);
     state.select_project(project_key)?;
-
-    // NOTE: We resolve the resource_path here instead of in the final method
-    // This way we don't have to create an AppHandle in testing
-    let resource_path = app_handle
-        .path_resolver()
-        .resource_dir()
-        .expect("Error while getting `resource_dir`");
-    state.start_reading(resource_path, app_handle)
+    if let Err(err) = state.start_reading(hostname, app_handle) {
+        Err(err.to_string())
+    } else {
+        Ok(())
+    }
 }
 
 #[tauri::command]
@@ -29,8 +25,13 @@ fn start_session(state: tauri::State<GlobalState>, theme_key: String) -> Result<
     state.start_session(theme_key)
 }
 
+#[tauri::command]
+fn close_connection(state: tauri::State<GlobalState>) -> () {
+    state.drop_reader();
+}
+
 fn main() {
-    tauri::Builder::default()
+    let app = tauri::Builder::default()
         .setup(|app| {
             let mut data_dir = app
                 .path_resolver()
@@ -48,7 +49,20 @@ fn main() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![select_project, start_session])
-        .run(tauri::generate_context!())
+        .invoke_handler(tauri::generate_handler![
+            select_project,
+            start_session,
+            close_connection
+        ])
+        .build(tauri::generate_context!())
         .expect("error while running tauri application");
+
+    // Make sure we fully drop the reader when exiting
+    app.run(|app_handle, event| match event {
+        tauri::RunEvent::Exit { .. } => {
+            let state = app_handle.state::<GlobalState>();
+            state.drop_reader();
+        }
+        _ => {}
+    })
 }

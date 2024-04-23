@@ -1,142 +1,86 @@
-pub mod command;
-use crate::tags::{Tag, TagsMap};
-use std::time::Instant;
+pub mod error;
+mod llrp_reader;
+pub mod messages;
+mod rospec;
+
+pub use error::{ReaderError, ReaderErrorKind};
+use llrp::messages::Message;
+pub use llrp_reader::LLRPReader;
 use std::{
-    fmt::{Display, Formatter},
-    time::Duration,
+    net::TcpStream,
+    sync::mpsc::{channel, Sender},
+    time::{Duration, Instant},
 };
-use tauri::{
-    api::process::CommandEvent,
-    async_runtime::{spawn, JoinHandle, Receiver},
-    AppHandle, Manager,
-};
+use tauri::{AppHandle, Manager};
 
-const REFRESH_INTERVAL: u64 = 500;
+use crate::tags::{Tag, TagsMap};
 
-#[derive(Debug, PartialEq, Clone, serde::Serialize)]
-pub enum ReaderErrorKind {
-    Unknown,
-}
+use self::messages::handle_new_message;
 
-#[derive(Debug, Clone, serde::Serialize)]
-pub struct ReaderError {
-    pub kind: ReaderErrorKind,
-    message: String,
-}
+const DEFAULT_ROSPEC_ID: u32 = 1234;
+const REFRESH_INTERVAL: u32 = 500;
+const RECV_TIMEOUT: Duration = Duration::from_millis(100);
 
-impl Display for ReaderError {
-    fn fmt(&self, f: &mut Formatter) -> std::fmt::Result {
-        match self.kind {
-            ReaderErrorKind::Unknown => write!(
-                f,
-                "Encountered an unexpected error in the reader. Message: {}",
-                self.message
-            ),
-        }
-    }
-}
-
-pub fn handle_reader_events<R: tauri::Runtime>(
-    mut rx: Receiver<CommandEvent>,
-    handle: AppHandle<R>,
-) -> JoinHandle<()> {
-    spawn(async move {
+pub fn handle_reader_input<R: tauri::Runtime>(
+    stream: TcpStream,
+    app_handle: AppHandle<R>,
+) -> tauri::async_runtime::JoinHandle<()> {
+    tauri::async_runtime::spawn(async move {
+        let (tx, rx) = channel::<Message>();
         let mut tags: Vec<Tag> = vec![];
-        let interval = Duration::from_millis(REFRESH_INTERVAL);
         let mut last_update = Instant::now();
-        while let Some(event) = rx.recv().await {
-            match handle_reader_event(event, &mut tags) {
-                Ok(()) => (),
-                Err(err) => handle.emit_all("reader-error", err).unwrap(),
+        let mut last_alive = Instant::now();
+        let update_interval = Duration::from_millis(REFRESH_INTERVAL.into());
+        let alive_interval = Duration::from_millis((REFRESH_INTERVAL * 4).into());
+
+        // Since reading from a TcpStream is blocking, we do this in a subthread.
+        // The messages get send to this thread, so we loop regardless of new messages.
+        receive_messages(stream.try_clone().unwrap(), tx);
+        loop {
+            if let Ok(message) = rx.recv_timeout(RECV_TIMEOUT) {
+                handle_new_message(message, &mut tags, &stream);
+                last_alive = Instant::now();
             }
-            if last_update.elapsed() > interval {
+
+            if last_update.elapsed() > update_interval {
                 let new_map = TagsMap::from(tags.drain(..));
-                handle.emit_all("updated-tags", new_map).unwrap();
+                app_handle.emit_all("updated-tags", new_map).unwrap();
                 last_update = Instant::now();
+            }
+
+            if last_alive.elapsed() > alive_interval {
+                // If we are not alive for our interval, we assume the connection has failed
+                // In that case we break from our loop, so an error is sent.
+                app_handle
+                    .emit_all(
+                        "reader-error",
+                        ReaderError {
+                            kind: ReaderErrorKind::LostConnection,
+                            message: String::from(""),
+                        },
+                    )
+                    .unwrap();
+                break;
             }
         }
     })
 }
 
-fn handle_reader_event(event: CommandEvent, tags: &mut Vec<Tag>) -> Result<(), ReaderError> {
-    match event {
-        CommandEvent::Stdout(line) => handle_reader_stdout(line, tags),
-        CommandEvent::Stderr(error) => handle_reader_error(error)?,
-        CommandEvent::Error(error) => handle_reader_error(error)?,
-        CommandEvent::Terminated(payload) => {
-            todo!("Reader was terminated with payload {:?}", payload)
+fn receive_messages(stream: TcpStream, sender: Sender<Message>) -> std::thread::JoinHandle<()> {
+    std::thread::spawn(move || {
+        while let Ok(message) = llrp::read_message(&stream) {
+            let res = match message.to_dynamic_message() {
+                Ok(m) => sender.send(m),
+                Err(err) => Ok({
+                    #[cfg(debug_assertions)]
+                    println!("Could not decode message. {}", err)
+                }),
+            };
+            // If sending fails, this probably means that our parent-thread has quit as well.
+            // In that case we just stop here and let this thread finish.
+            if res.is_err() {
+                break;
+            }
         }
-        // NOTE: We don't expect any other CommandEvents to occur. For now, we'll just panic and print them
-        event => todo!("An unexpected CommandEvent occured: {:#?}", event),
-    }
-    Ok(())
-}
-
-fn handle_reader_stdout(line: String, tags: &mut Vec<Tag>) {
-    match Tag::from_reader(line) {
-        Ok(tag) => tags.push(tag),
-        Err(err) => {
-            // We print faulty tags in development (so we can learn from them)
-            // In production these get ignored
-            #[cfg(debug_assertions)]
-            println!("{:?}", err)
-        }
-    }
-}
-
-fn handle_reader_error(error: String) -> Result<(), ReaderError> {
-    let err = ReaderError {
-        kind: ReaderErrorKind::Unknown,
-        message: error,
-    };
-
-    // While developing, we print the error to stderr so it is easier to identify
-    #[cfg(debug_assertions)]
-    eprintln!("{:?}", &err);
-
-    Err(err)
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use crate::tags::create_mock_tag;
-
-    #[test]
-    fn should_add_correct_tag_to_vector() {
-        let mut vec: Vec<Tag> = vec![];
-
-        let event = CommandEvent::Stdout(create_mock_tag());
-        let result = handle_reader_event(event, &mut vec);
-
-        assert!(result.is_ok());
-        assert_eq!(1, vec.len());
-    }
-
-    #[test]
-    fn should_ignore_incorrect_tags() {
-        let mut vec: Vec<Tag> = vec![];
-
-        let event = CommandEvent::Stdout(String::from("incorrect tag"));
-        let result = handle_reader_event(event, &mut vec);
-
-        assert!(result.is_ok());
-        assert_eq!(0, vec.len());
-    }
-
-    #[test]
-    fn should_turn_unexpected_error_into_unknown() {
-        let message = "Some weird unhandled error! Scary stuff";
-        let mut vec: Vec<Tag> = vec![];
-
-        let event = CommandEvent::Stderr(String::from(message));
-        let result = handle_reader_event(event, &mut vec);
-
-        assert!(result.is_err_and(|x| x.kind == ReaderErrorKind::Unknown));
-
-        let event = CommandEvent::Error(String::from(message));
-        let result = handle_reader_event(event, &mut vec);
-
-        assert!(result.is_err_and(|x| x.kind == ReaderErrorKind::Unknown));
-    }
+    })
 }
