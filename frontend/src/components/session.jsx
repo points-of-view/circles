@@ -109,7 +109,7 @@ export default function Session({ project, resetProject, language }) {
         />
       ) : (
         <InteractionScreen
-          title={chosenTheme.questions[phase - 1].title[language]}
+          title={translate("give_an_answer", language)}
           description={translate("stand_in_circle", language)}
           options={chosenTheme.questions[phase - 1].options.map(
             (a) => a.value[language],

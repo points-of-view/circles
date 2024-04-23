@@ -1,8 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OptionsView from "./optionsview";
 import clsx from "clsx";
+import translate from "../locales";
 
 const TITLE_DELAY = 1_000;
+
+const STEPS = {
+  showAnimationStart: "showAnimationStart",
+  showBigTitle: "showBigTitle",
+  showBigQuestion: "showBigQuestion",
+  showMainInteractionScreen: "showMainInteractionScreen",
+  showBigOption: "showBigOption",
+  showFact: "showFact",
+  showAnimationEnd: "showAnimationEnd",
+}
 
 export function InteractionScreen({
   title,
@@ -13,37 +24,55 @@ export function InteractionScreen({
   chosenTheme
 }) {
   const [bigTitle, setBigTitle] = useState(true);
-  const [bigOption, setBigOption] = useState(true);
+  const [bigOption, setBigOption] = useState(false);
   const [chosenOption, setChosenOption] = useState("AI");
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(STEPS.showBigTitle);
 
-  switch (step) {
-    case 0:
-      setTimeout(() => setStep(1), TITLE_DELAY);
-      break;
-    case 1:
-      if (phase === 0) {
-        setBigTitle(false);
-        setStep(2);
-        break;
-      } else {
-        console.log(phase)
-        title = "test";
-        setTimeout(() => setStep(3), TITLE_DELAY);
-        break;
-      }
-    case 2:
-      console.log("Start countdown timer here");
-      setTimeout(() => setStep(3), TITLE_DELAY);
-      break;
-    case 3:
-      if (chosenTheme) {
-        // setBigOption(true)
-      }
-      break;
-    default:
-      console.log(step)
+  let transitionToNextStep;
+
+  function startTransitionTo(stepID) {
+    // if (transitionToNextStep !== undefined && typeof this.transitionToNextStep === "number") {
+    //   clearTimeout(transitionToNextStep);
+    // }
+    transitionToNextStep = setTimeout(() => setStep(stepID), TITLE_DELAY);
   }
+
+  useEffect(() => {
+    switch (step) {
+      case STEPS.showBigTitle:
+        if (phase === 0) {
+          startTransitionTo(STEPS.showMainInteractionScreen)
+        } else {
+          startTransitionTo(STEPS.showBigQuestion)
+        }
+        break;
+      case STEPS.showBigQuestion:
+        title = chosenTheme.questions[phase - 1].title[language]
+        break;
+      case STEPS.showMainInteractionScreen:
+        setBigTitle(false);
+        break;
+      case STEPS.showBigOption:
+        setBigOption(true);
+        if (phase === 0) {
+          startTransitionTo(STEPS.showTransitionEnd);
+        } else {
+          if ("er is een weetje") {
+            title = translate("did_you_know", language) + chosenTheme.questions[phase - 1].explanation
+          } else {
+
+          }
+        }
+        break;
+      case 3:
+        if (chosenTheme) {
+          // setBigOption(true)
+        }
+        break;
+      default:
+        console.log("step has no correct value", step)
+    }
+  }, [step]);
 
   return (
     <div className="interaction-screen">
