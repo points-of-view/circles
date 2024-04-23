@@ -8,33 +8,43 @@
 :root {
   /* HSL values */
   --hsl-white: 0 0% 100%;
-  --hsl-black: 0 0% 0%;
-  --hsl-primary: 241, 80%, 7%;
-  --hsl-secondary: 0 0% 100%;
-  --hsl-accent: 0 0% 0%;
   --hsl-grey: 0 0% 50%;
   --hsl-grey-light: 0 0% 30%;
+  --hsl-black: 241 80% 7%;
+  --hsl-blue-light: 240 72% 47%;
+  --hsl-blue: 240 70% 26%;
+  --hsl-purple: 263 100% 19%;
+  --hsl-green: 120 100% 34%;
+  --hsl-pink: 342 73% 67%;
+  --hsl-orange: 22 100% 51%;
+  --hsl-yellow: 49 100% 30%;
+  --hsl-red: 0 69% 48%;
 
   /* Colours */
   --color-white: hsl(var(--hsl-white));
-  --color-black: hsl(var(--hsl-black));
-  --color-primary: hsl(var(--hsl-primary));
-  --color-secondary: hsl(var(--hsl-secondary));
-  --color-accent: hsl(var(--hsl-accent));
   --color-grey: hsl(var(--hsl-grey));
   --color-grey-light: hsl(var(--hsl-grey-light));
+  --color-black: hsl(var(--hsl-black));
+  --color-blue-light: hsl(var(--hsl-blue-light));
+  --color-blue: hsl(var(--hsl-blue));
+  --color-purple: hsl(var(--hsl-purple));
+  --color-green: hsl(var(--hsl-green));
+  --color-pink: hsl(var(--hsl-pink));
+  --color-orange: hsl(var(--hsl-orange));
+  --color-yellow: hsl(var(--hsl-yellow));
+  --color-red: hsl(var(--hsl-red));
 
   /* Fonts */
   --font-family: "Manrope", ui-sans-serif, system-ui, -apple-system,
     blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans",
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     "Noto Color Emoji";
-  --text-xs: 0.675rem;
-  --text-sm: 0.875rem;
-  --text-md: 1.2rem;
-  --text-lg: 2rem;
+  --text-xs: 1rem;
+  --text-sm: 1.25rem;
+  --text-md: 2rem;
+  --text-lg: 2.5rem;
   --text-xl: 3rem;
-  --text-2xl: 4rem;
+  --text-2xl: 4.75rem;
 
   /* Border radius */
   --rounded-sm: 2px;
@@ -49,8 +59,35 @@
   --screen-xl: 1280px;
   --screen-2xl: 1536px;
 
-  /* Option colors */
-  --option-color-1: green;
-  --option-color-2: pink;
-  --option-color-3: orange;
+  /* Gradients */
+  --blue-gradient: linear-gradient(
+    90deg,
+    var(--color-black) 0%,
+    var(--color-blue) 100%
+  );
+  --blue-light-gradient: linear-gradient(
+    180deg,
+    var(--color-black) 0%,
+    var(--color-blue-light) 100%
+  );
+  --orange-gradient: linear-gradient(
+    180deg,
+    var(--color-black) 0%,
+    var(--color-orange) 100%
+  );
+  --pink-gradient: linear-gradient(
+    180deg,
+    var(--color-black) 0%,
+    var(--color-pink) 100%
+  );
+  --yellow-gradient: linear-gradient(
+    180deg,
+    var(--color-black) 0%,
+    var(--color-yellow) 100%
+  );
+  --green-gradient: linear-gradient(
+    180deg,
+    var(--color-black) 0%,
+    var(--color-green) 100%
+  );
 }
