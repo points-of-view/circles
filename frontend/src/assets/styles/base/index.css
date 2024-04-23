@@ -11,7 +11,7 @@ html {
 @font-face {
   font-weight: 200 800;
   font-family: Manrope;
-  src: url("../../fonts/Manrope/Manrope-VariableFont_wght.ttf")
+  src: url("../fonts/Manrope/Manrope-VariableFont_wght.ttf")
     format("truetype-variations");
   font-display: block;
 }
