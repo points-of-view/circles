@@ -99,20 +99,6 @@ export default function Session({ project, resetProject, language }) {
         break;
       case STEPS.showMainInteractionScreen:
         setDescription(translate("stand_in_circle", language));
-        if (
-          phase === 0 ||
-          (chosenTheme !== undefined &&
-            chosenTheme.questions[phase - 1].options.some(
-              (el) => el.correct === true,
-            ))
-        ) {
-          startTransitionTo(STEPS.showBigOption);
-        } else {
-          startTransitionTo(STEPS.showAnimationEnd);
-        }
-        if (phase === 0) {
-          setChosenThemeKey(themes[0].key);
-        }
         break;
       case STEPS.showBigOption:
         if (phase === 0) {
@@ -149,11 +135,17 @@ export default function Session({ project, resetProject, language }) {
 
   function handleKeyDown(event) {
     if (event.code === "ArrowRight") {
-      if (phase === 0) {
-        const newTheme = themes[0].key;
-        setChosenThemeKey(newTheme);
+      if (
+        phase === 0 ||
+        (chosenTheme !== undefined &&
+          chosenTheme.questions[phase - 1].options.some(
+            (el) => el.correct === true,
+          ))
+      ) {
+        setChosenThemeKey(themes[0].key);
+        setStep(STEPS.showBigOption);
       } else {
-        goToNextPhase();
+        setStep(STEPS.showAnimationEnd);
       }
     }
   }
