@@ -30,6 +30,8 @@
 
 .interaction-screen__title--big {
   flex-grow: 1;
+  font-size: var(--text-xl);
+  border: unset;
   background-image: unset;
   aspect-ratio: 1;
 }

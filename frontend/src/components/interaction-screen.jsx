@@ -1,91 +1,30 @@
-import { useEffect, useState } from "react";
 import OptionsView from "./optionsview";
 import clsx from "clsx";
+import { STEPS } from "./session";
 import translate from "../locales";
-
-const TITLE_DELAY = 5_000;
-
-const STEPS = {
-  showAnimationStart: "showAnimationStart",
-  showBigTitle: "showBigTitle",
-  showBigQuestion: "showBigQuestion",
-  showMainInteractionScreen: "showMainInteractionScreen",
-  showBigOption: "showBigOption",
-  showFact: "showFact",
-  showAnimationEnd: "showAnimationEnd",
-}
 
 export function InteractionScreen({
   title,
   description,
-  themeName = null,
-  options,
+  themeOptions,
   phase,
   language,
-  chosenTheme
+  chosenTheme,
+  step,
 }) {
-  const [bigTitle, setBigTitle] = useState(true);
-  const [bigOption, setBigOption] = useState(false);
-  const [chosenOption, setChosenOption] = useState("Sociale media");
-  const [step, setStep] = useState(STEPS.showBigTitle);
-
-  let transitionToNextStep;
-
-  function startTransitionTo(stepID) {
-    transitionToNextStep = setTimeout(() => setStep(stepID), TITLE_DELAY);
-  }
-
-  useEffect(() => {
-    console.log(step)
-    switch (step) {
-      case STEPS.showBigTitle:
-        setBigOption(false);
-        setBigTitle(true);
-        if (phase === 0) {
-          startTransitionTo(STEPS.showMainInteractionScreen)
-        } else {
-          startTransitionTo(STEPS.showBigQuestion)
-        }
-        break;
-      case STEPS.showBigQuestion:
-        title = chosenTheme.questions[phase - 1].title[language]
-        break;
-      case STEPS.showMainInteractionScreen:
-        setBigTitle(false);
-        startTransitionTo(STEPS.showBigOption)
-        break;
-      case STEPS.showBigOption:
-        setBigOption(true);
-        if (phase === 0) {
-          // startTransitionTo(STEPS.showTransitionEnd);
-        } else {
-          if (chosenTheme.questions[phase - 1].explanation) {
-            title = translate("did_you_know", language) + chosenTheme.questions[phase - 1].explanation
-          } else {
-            console.log("no explanation found", chosenTheme.questions[phase - 1])
-          }
-        }
-        break;
-      case 3:
-        if (chosenTheme) {
-          // setBigOption(true)
-        }
-        break;
-      default:
-        console.log("step has no correct value", step)
-    }
-  }, [step]);
+  // const [chosenOption, setChosenOption] = useState("Sociale media");
 
   return (
     <div className="interaction-screen">
       <div
         className={clsx("interaction-screen__title squircle", {
-          "interaction-screen__title--big": bigTitle,
+          "interaction-screen__title--big":
+            step === STEPS.showBigTitle || step === STEPS.showBigQuestion,
         })}
       >
         {title}
       </div>
-      {!bigTitle && !bigOption && (
+      {step === STEPS.showMainInteractionScreen && (
         <div className="interaction-screen__description squircle">
           <svg
             width="38"
@@ -102,9 +41,42 @@ export function InteractionScreen({
           {description}
         </div>
       )}
-      {step === STEPS.showBigOption ? <OptionsView chosenOption={chosenOption} /> : !bigTitle && <OptionsView options={options} />}
-      {!bigTitle && themeName && (
-        <div className="interaction-screen__theme squircle">{themeName}</div>
+      {step === STEPS.showMainInteractionScreen && phase === 0 && (
+        <OptionsView options={themeOptions} />
+      )}
+      {step === STEPS.showMainInteractionScreen && phase !== 0 && (
+        <OptionsView
+          options={chosenTheme.questions[phase - 1].options.map(
+            (a) => a.value[language],
+          )}
+        />
+      )}
+      {step === STEPS.showBigOption && phase === 0 && (
+        <OptionsView options={chosenTheme.name[language]} />
+      )}
+      {step === STEPS.showBigOption && phase !== 0 && (
+        <OptionsView
+          options={
+            chosenTheme.questions[phase - 1].options.find(
+              (el) => el.correct === true,
+            )?.value[language]
+          }
+        />
+      )}
+      {step === STEPS.showFact && (
+        <OptionsView
+          options={
+            translate("did_you_know", language) +
+            "<br><br>" +
+            chosenTheme.questions[phase - 1].explanation[language]
+          }
+          showDescriptionLayout
+        />
+      )}
+      {phase !== 0 && (
+        <div className="interaction-screen__theme squircle">
+          {chosenTheme.name[language]}
+        </div>
       )}
       <div className="interaction-screen__logo">
         <svg
