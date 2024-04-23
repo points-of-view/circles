@@ -12,7 +12,7 @@ export default function Session({ project, resetProject, language }) {
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
   const [phase, setPhase] = useState(0);
-  const [themes, setThemes] = useState(shuffle(project.themes));
+  const [themes, setThemes] = useState(project.themes);
   const [chosenThemeKey, setChosenThemeKey] = useState(null);
 
   const chosenTheme = project.themes.find(
