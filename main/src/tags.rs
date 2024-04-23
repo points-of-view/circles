@@ -1,3 +1,4 @@
+use rand::{seq::SliceRandom, thread_rng, Rng};
 use serde;
 use std::{
     collections::HashMap,
@@ -5,15 +6,11 @@ use std::{
     vec::Drain,
 };
 
-#[cfg(test)]
-use rand::{seq::SliceRandom, thread_rng, Rng};
-
 const MAX_STRENGTH: i8 = 0;
 const MIN_STRENGTH: i8 = -80;
 const MAX_ANTENNA: u16 = 8;
 const MIN_ANTENNA: u16 = 1;
 
-#[cfg(test)]
 const MOCK_RFID_TAGS: [&str; 9] = [
     "abc123", "abc456", "abc789", "def123", "def456", "def789", "ghi123", "ghi456", "ghi789",
 ];
@@ -71,7 +68,6 @@ impl Tag {
         })
     }
 
-    #[cfg(test)]
     pub fn random() -> Tag {
         let mut rng = thread_rng();
         let id = MOCK_RFID_TAGS.choose(&mut rng).unwrap().to_string();

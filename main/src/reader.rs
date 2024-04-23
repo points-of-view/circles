@@ -1,11 +1,13 @@
 pub mod error;
 mod llrp_reader;
 pub mod messages;
+mod mock_reader;
 mod rospec;
 
 pub use error::{ReaderError, ReaderErrorKind};
 use llrp::messages::Message;
 pub use llrp_reader::LLRPReader;
+pub use mock_reader::MockReader;
 use std::{
     net::TcpStream,
     sync::mpsc::{channel, Sender},
@@ -20,6 +22,42 @@ use self::messages::handle_new_message;
 const DEFAULT_ROSPEC_ID: u32 = 1234;
 const REFRESH_INTERVAL: u32 = 500;
 const RECV_TIMEOUT: Duration = Duration::from_millis(100);
+
+#[derive(Debug)]
+pub enum Reader {
+    LLRPReader(LLRPReader),
+    MockReader(MockReader),
+}
+
+impl Reader {
+    pub fn start_reading<R: tauri::Runtime>(
+        &mut self,
+        app_handle: AppHandle<R>,
+    ) -> Result<(), ReaderError> {
+        match self {
+            Reader::LLRPReader(reader) => reader.start_reading(app_handle),
+            Reader::MockReader(reader) => reader.start_reading(app_handle),
+        }
+    }
+
+    pub fn stop_reading(&mut self, await_confirmation: bool) -> Result<(), ReaderError> {
+        match self {
+            Reader::LLRPReader(reader) => reader.stop_reading(await_confirmation),
+            Reader::MockReader(reader) => reader.stop_reading(await_confirmation),
+        }
+    }
+}
+
+pub trait ReaderProtocol {
+    fn new(hostname: String) -> Result<Self, ReaderError>
+    where
+        Self: Sized;
+    fn start_reading<R: tauri::Runtime>(
+        &mut self,
+        app_handle: AppHandle<R>,
+    ) -> Result<(), ReaderError>;
+    fn stop_reading(&mut self, await_confirmation: bool) -> Result<(), ReaderError>;
+}
 
 pub fn handle_reader_input<R: tauri::Runtime>(
     stream: TcpStream,
