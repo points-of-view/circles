@@ -4,6 +4,7 @@ import { InteractionScreen } from "./interaction-screen";
 import ControlPanel from "./control-panel";
 import { listen } from "@tauri-apps/api/event";
 import shuffle from "../utils/shuffle";
+import translate from "../locales";
 
 export default function Session({ project, resetProject, language }) {
   const [, setTagsMap] = useState({});
@@ -100,14 +101,14 @@ export default function Session({ project, resetProject, language }) {
       )}
       {phase === 0 ? (
         <InteractionScreen
-          title={"Choose a theme of your choice"}
-          description={"Stand in the circle of your answer"}
+          title={translate("choose_a_theme", language)}
+          description={translate("stand_in_circle", language)}
           options={themes.slice(0, 3).map((a) => a.name[language])}
         />
       ) : (
         <InteractionScreen
           title={chosenTheme.questions[phase - 1].title[language]}
-          description={"Stand in the circle of your answer"}
+          description={translate("stand_in_circle", language)}
           options={chosenTheme.questions[phase - 1].options.map(
             (a) => a.value[language],
           )}
