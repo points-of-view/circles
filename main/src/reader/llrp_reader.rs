@@ -4,6 +4,7 @@ use llrp::{
     parameters, LLRPMessage,
 };
 use std::{
+    io::Write,
     net::{self, TcpStream},
     time::Duration,
 };
@@ -121,6 +122,9 @@ impl LLRPReader {
                     })
             },
         )?;
+
+        // Just in case the reader is holding on to some old reports, we try to flush the stream
+        let _ = self.stream.as_ref().unwrap().flush();
         Ok(())
     }
 
@@ -155,18 +159,19 @@ impl LLRPReader {
     }
 
     fn parse_message_and<T: LLRPMessage>(
-        &self,
+        &mut self,
         closure: fn(message: &T) -> bool,
     ) -> Result<T, ReaderError> {
-        parse_message_and(self.stream.as_ref().unwrap(), closure)
+        let stream = self.stream.as_mut().unwrap();
+        parse_message_and(stream, closure)
     }
 
-    fn parse_message<T: LLRPMessage>(&self) -> Result<T, ReaderError> {
+    fn parse_message<T: LLRPMessage>(&mut self) -> Result<T, ReaderError> {
         self.parse_message_and(|_| true)
     }
 
     fn await_message_and<T: LLRPMessage>(
-        &self,
+        &mut self,
         closure: fn(message: &T) -> bool,
     ) -> Result<T, ReaderError> {
         let message = loop {
@@ -185,11 +190,11 @@ impl LLRPReader {
         }
     }
 
-    fn await_message<T: LLRPMessage>(&self) -> Result<T, ReaderError> {
+    fn await_message<T: LLRPMessage>(&mut self) -> Result<T, ReaderError> {
         self.await_message_and(|_| true)
     }
 
-    fn prepare(&self) -> Result<(), ReaderError> {
+    fn prepare(&mut self) -> Result<(), ReaderError> {
         // Set reader config to emit keepalive messages
         self.write_message(Message::SetReaderConfig(messages::SetReaderConfig {
             reset_to_factory_default: true,

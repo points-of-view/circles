@@ -31,7 +31,7 @@ fn close_connection(state: tauri::State<GlobalState>) -> () {
 }
 
 fn main() {
-    tauri::Builder::default()
+    let app = tauri::Builder::default()
         .setup(|app| {
             let mut data_dir = app
                 .path_resolver()
@@ -54,6 +54,15 @@ fn main() {
             start_session,
             close_connection
         ])
-        .run(tauri::generate_context!())
+        .build(tauri::generate_context!())
         .expect("error while running tauri application");
+
+    // Make sure we fully drop the reader when exiting
+    app.run(|app_handle, event| match event {
+        tauri::RunEvent::Exit { .. } => {
+            let state = app_handle.state::<GlobalState>();
+            state.drop_reader();
+        }
+        _ => {}
+    })
 }

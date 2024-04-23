@@ -1,7 +1,10 @@
 use crate::tags::Tag;
 
 use super::{ReaderError, ReaderErrorKind};
-use llrp::{messages::Message, BinaryMessage, LLRPMessage};
+use llrp::{
+    messages::{Keepalive, Message},
+    BinaryMessage, LLRPMessage,
+};
 use std::io;
 
 pub fn write_message<W: io::Write>(
@@ -36,13 +39,7 @@ pub fn handle_new_message<S: io::Write>(message: Message, tags: &mut Vec<Tag>, s
                 }
             }
         }
-        Message::Keepalive(_) => {
-            let _ = write_message(
-                stream,
-                llrp::messages::Message::KeepaliveAck(llrp::messages::KeepaliveAck {}),
-                None,
-            );
-        }
+        Message::Keepalive(_) => respond_to_keepalive(stream),
         // We can just ignore other messages for now, but print them in development
         other_message => {
             #[cfg(debug_assertions)]
@@ -51,22 +48,20 @@ pub fn handle_new_message<S: io::Write>(message: Message, tags: &mut Vec<Tag>, s
     }
 }
 
-pub fn parse_message_and<S: io::Read, T: LLRPMessage>(
-    stream: S,
+pub fn parse_message_and<S, T: LLRPMessage>(
+    mut stream: S,
     closure: fn(message: &T) -> bool,
 ) -> Result<T, ReaderError>
 where
-    S:,
+    S: io::Read + io::Write,
+    for<'a> &'a mut S: io::Read,
 {
-    let binary_message = match llrp::read_message(stream) {
-        Ok(message) => message,
-        Err(err) => {
-            return Err(ReaderError {
-                kind: ReaderErrorKind::Unknown,
-                message: err.to_string(),
-            })
-        }
-    };
+    let binary_message = read_message(&mut stream)?;
+
+    match &binary_message.to_message::<Keepalive>() {
+        Ok(_) => respond_to_keepalive(stream),
+        Err(_) => (),
+    }
 
     let message = match binary_message.to_message::<T>() {
         Ok(message) => message,
@@ -92,6 +87,26 @@ where
             ),
         }),
     }
+}
+
+fn read_message<S: io::Read>(stream: S) -> Result<BinaryMessage, ReaderError> {
+    match llrp::read_message(stream) {
+        Ok(message) => Ok(message),
+        Err(err) => {
+            return Err(ReaderError {
+                kind: ReaderErrorKind::Unknown,
+                message: err.to_string(),
+            })
+        }
+    }
+}
+
+fn respond_to_keepalive<S: io::Write>(stream: S) {
+    let _ = write_message(
+        stream,
+        llrp::messages::Message::KeepaliveAck(llrp::messages::KeepaliveAck {}),
+        None,
+    );
 }
 
 #[cfg(test)]
