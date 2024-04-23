@@ -3,7 +3,7 @@ import OptionsView from "./optionsview";
 import clsx from "clsx";
 import translate from "../locales";
 
-const TITLE_DELAY = 1_000;
+const TITLE_DELAY = 2_000;
 
 const STEPS = {
   showAnimationStart: "showAnimationStart",
@@ -25,19 +25,17 @@ export function InteractionScreen({
 }) {
   const [bigTitle, setBigTitle] = useState(true);
   const [bigOption, setBigOption] = useState(false);
-  const [chosenOption, setChosenOption] = useState("AI");
+  const [chosenOption, setChosenOption] = useState("Sociale media");
   const [step, setStep] = useState(STEPS.showBigTitle);
 
   let transitionToNextStep;
 
   function startTransitionTo(stepID) {
-    // if (transitionToNextStep !== undefined && typeof this.transitionToNextStep === "number") {
-    //   clearTimeout(transitionToNextStep);
-    // }
     transitionToNextStep = setTimeout(() => setStep(stepID), TITLE_DELAY);
   }
 
   useEffect(() => {
+    console.log(step)
     switch (step) {
       case STEPS.showBigTitle:
         if (phase === 0) {
