@@ -12,7 +12,7 @@
         {
           "title": { "nl": "Hoeveel mensen vroegen in 2023 asiel aan in de EU?" },
           "key": "question-asylum-2023",
-          "explanation": "In 2023 introduceerde de EU een solidariteitsmechanisme waarbij landen met minder immigranten, immigranten opnemen uit landen met meer immigranten.",
+          "explanation": { "nl": "In 2023 introduceerde de EU een solidariteitsmechanisme waarbij landen met minder immigranten, immigranten opnemen uit landen met meer immigranten."},
           "options": [
             {
               "key": "question-asylum-2023-option-one",
@@ -56,7 +56,7 @@
         {
           "title": { "nl": "Staat de EU het gebruik van live gezichtsherkenningstechnologie in de openbare ruimte toe?" },
           "key": "question-live-facial-recognition",
-          "explanation": "De EU AI Act van 2024 verbiedt het gebruik van live gezichtsherkenningstechnologie in de openbare ruimte, behalve voor zeer specifieke wetshandhavingsdoeleinden, zoals het vinden van ontvoerde slachtoffers of vermoedelijke ernstige criminelen.",
+          "explanation": { "nl": "De EU AI Act van 2024 verbiedt het gebruik van live gezichtsherkenningstechnologie in de openbare ruimte, behalve voor zeer specifieke wetshandhavingsdoeleinden, zoals het vinden van ontvoerde slachtoffers of vermoedelijke ernstige criminelen."},
           "options": [
             {
               "key": "question-live-facial-recognition-option-no",
@@ -100,7 +100,7 @@
         {
           "title": { "nl": "Tegen welk jaar wil de EU klimaatneutraliteit bereiken door alle CO₂-uitstoot te compenseren met maatregelen ter bescherming van het klimaat?" },
           "key": "question-climate-neutrality",
-          "explanation": "De EU Klimaatwet van 2021 stelt dat de EU tegen 2050 klimaatneutraliteit wil bereiken. De EU wil van Europa het eerste klimaatneutrale continent maken.   ",
+          "explanation": { "nl": "De EU Klimaatwet van 2021 stelt dat de EU tegen 2050 klimaatneutraliteit wil bereiken. De EU wil van Europa het eerste klimaatneutrale continent maken."},
           "options": [
             {
               "key": "question-climate-neutrality-option-one",
@@ -143,7 +143,7 @@
         {
           "title": { "nl": "In hoeveel EU-landen kan je kiezen voor een 'X' in plaats van 'man' of 'vrouw' op je nationale identiteitskaart?" },
           "key": "question-x-id-card",
-          "explanation": "Malta en Denemarken staan een 'X' toe i.p.v. 'man' of 'vrouw'. Andere landen overwegen om geslachtsaanduidingen op nationale identititeitskaarten te verwijderen. Er is geen EU-wetgeving op dit vlak.",
+          "explanation": { "nl": "Malta en Denemarken staan een 'X' toe i.p.v. 'man' of 'vrouw'. Andere landen overwegen om geslachtsaanduidingen op nationale identititeitskaarten te verwijderen. Er is geen EU-wetgeving op dit vlak."},
           "options": [
             {
               "key": "question-x-id-card-option-one",
@@ -186,7 +186,7 @@
         {
           "title": { "nl": "Hoeveel EU-landen hebben een vorm van militaire dienstplicht?" },
           "key": "question-mandatory-military-service",
-          "explanation": "Litouwen, Denemarken, Zweden, Cyprus, Finland, Letland, Oostenrijk, Griekenland en Estland hebben een vorm van dienstplicht. Momenteel is er geen Europees leger. Elke lidstaat is verantwoordelijk voor zijn eigen leger.",
+          "explanation": { "nl": "Litouwen, Denemarken, Zweden, Cyprus, Finland, Letland, Oostenrijk, Griekenland en Estland hebben een vorm van dienstplicht. Momenteel is er geen Europees leger. Elke lidstaat is verantwoordelijk voor zijn eigen leger."},
           "options": [
             {
               "key": "question-mandatory-military-service-option-one",
@@ -229,7 +229,7 @@
         {
           "title": { "nl": "Vanaf welk jaar wordt de verkoop van auto's en bestelwagens die CO₂ uitstoten verboden in de EU?" },
           "key": "question-ban-emissive-cars",
-          "explanation": "In 2023 besloot de EU dat vanaf 2035 geen nieuwe diesel- en benzinewagens meer verkocht mogen worden in de EU. Dit betekent dat alle nieuwe wagens vanaf 2035 elektrische voertuigen moeten zijn.",
+          "explanation": { "nl": "In 2023 besloot de EU dat vanaf 2035 geen nieuwe diesel- en benzinewagens meer verkocht mogen worden in de EU. Dit betekent dat alle nieuwe wagens vanaf 2035 elektrische voertuigen moeten zijn."},
           "options": [
             {
               "key": "question-ban-emissive-cars-option-one",
@@ -272,7 +272,7 @@
         {
           "title": { "nl": "Hoeveel procent van de Europeanen wordt vaak geconfronteerd met valse informatie wanneer ze online gaan? " },
           "key": "question-confronted-with-false-information",
-          "explanation": "Sinds 2024 verplicht de EU grote techbedrijven en online platformen zoals Tiktok en Facebook om illegale inhoud op te sporen en te verwijderen. Er was heel wat discussie voor deze wet werd goedgekeurd.",
+          "explanation": { "nl": "Sinds 2024 verplicht de EU grote techbedrijven en online platformen zoals Tiktok en Facebook om illegale inhoud op te sporen en te verwijderen. Er was heel wat discussie voor deze wet werd goedgekeurd."},
           "options": [
             {
               "key": "question-confronted-with-false-information-option-one",
@@ -315,7 +315,7 @@
         {
           "title": { "nl": "Wat is de naam van het EU document dat het recht op vrij verkeer van personen in de EU vastlegt?" },
           "key": "question-free-traffic-of-persons",
-          "explanation": "Er zijn 27 Europese landen die onder het Schengengebied vallen. Iedereen die in het Schengengebied woont of grenscontroles aan de grenzen van het Schengengebied heeft doorstaan, mag zonder verdere grenscontroles vrij tussen deze landen reizen.",
+          "explanation": { "nl": "Er zijn 27 Europese landen die onder het Schengengebied vallen. Iedereen die in het Schengengebied woont of grenscontroles aan de grenzen van het Schengengebied heeft doorstaan, mag zonder verdere grenscontroles vrij tussen deze landen reizen."},
           "options": [
             {
               "key": "question-free-traffic-of-persons-option-one",
@@ -358,7 +358,7 @@
         {
           "title": { "nl": "De volgende Europese verkiezingen vinden plaats op 9 juni 2024. Wat is de jongste leeftijd waarop sommige jongeren in de EU kunnen deelnemen aan de Europese verkiezingen?" },
           "key": "question-youngest-participation-age",
-          "explanation": "All EU-landen kiezen zelf de leeftijd waarop jongeren kunnen beginnen stemmen bij de Europese verkiezingen. In Oostenrijk, België, Duitsland en Malta kun je stemmen vanaf 16 jaar, in Griekenland vanaf 17 jaar, en in de overige landen vanaf 18 jaar.",
+          "explanation": { "nl": "All EU-landen kiezen zelf de leeftijd waarop jongeren kunnen beginnen stemmen bij de Europese verkiezingen. In Oostenrijk, België, Duitsland en Malta kun je stemmen vanaf 16 jaar, in Griekenland vanaf 17 jaar, en in de overige landen vanaf 18 jaar."},
           "options": [
             {
               "key": "question-youngest-participation-age-option-one",
