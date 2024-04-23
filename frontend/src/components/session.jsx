@@ -105,6 +105,7 @@ export default function Session({ project, resetProject, language }) {
           description={translate("stand_in_circle", language)}
           options={themes.slice(0, 3).map((a) => a.name[language])}
           phase={phase}
+          language={language}
           chosenTheme={chosenTheme}
         />
       ) : (
@@ -115,6 +116,7 @@ export default function Session({ project, resetProject, language }) {
             (a) => a.value[language],
           )}
           themeName={chosenTheme.name[language]}
+          language={language}
           phase={phase}
         />
       )}

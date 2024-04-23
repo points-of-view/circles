@@ -1,17 +1,16 @@
 import Option from "./option";
 
 export default function OptionsView({ options, chosenOption }) {
-  console.log(chosenOption)
-  console.log(options.find((key) => (key === chosenOption)))
   return (
     <div className="options-view interaction-screen__option-view">
-      {chosenOption ? options.find((key) =>
+      {chosenOption ?
         <Option
-          key={key === chosenOption}
+          key={chosenOption}
           className="options-view__option"
-          label={key === chosenOption}
+          label={chosenOption}
           amount={0}
-        />)
+          big
+        />
       : options.map((key) => (
           <Option
             key={key}

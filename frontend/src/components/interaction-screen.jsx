@@ -3,7 +3,7 @@ import OptionsView from "./optionsview";
 import clsx from "clsx";
 import translate from "../locales";
 
-const TITLE_DELAY = 2_000;
+const TITLE_DELAY = 5_000;
 
 const STEPS = {
   showAnimationStart: "showAnimationStart",
@@ -21,6 +21,7 @@ export function InteractionScreen({
   themeName = null,
   options,
   phase,
+  language,
   chosenTheme
 }) {
   const [bigTitle, setBigTitle] = useState(true);
@@ -38,6 +39,8 @@ export function InteractionScreen({
     console.log(step)
     switch (step) {
       case STEPS.showBigTitle:
+        setBigOption(false);
+        setBigTitle(true);
         if (phase === 0) {
           startTransitionTo(STEPS.showMainInteractionScreen)
         } else {
@@ -49,16 +52,17 @@ export function InteractionScreen({
         break;
       case STEPS.showMainInteractionScreen:
         setBigTitle(false);
+        startTransitionTo(STEPS.showBigOption)
         break;
       case STEPS.showBigOption:
         setBigOption(true);
         if (phase === 0) {
-          startTransitionTo(STEPS.showTransitionEnd);
+          // startTransitionTo(STEPS.showTransitionEnd);
         } else {
-          if ("er is een weetje") {
+          if (chosenTheme.questions[phase - 1].explanation) {
             title = translate("did_you_know", language) + chosenTheme.questions[phase - 1].explanation
           } else {
-
+            console.log("no explanation found", chosenTheme.questions[phase - 1])
           }
         }
         break;
@@ -98,7 +102,7 @@ export function InteractionScreen({
           {description}
         </div>
       )}
-      {!bigTitle && <OptionsView options={options} chosenOption={chosenOption} />}
+      {step === STEPS.showBigOption ? <OptionsView chosenOption={chosenOption} /> : !bigTitle && <OptionsView options={options} />}
       {!bigTitle && themeName && (
         <div className="interaction-screen__theme squircle">{themeName}</div>
       )}
