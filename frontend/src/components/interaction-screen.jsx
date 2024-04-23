@@ -12,8 +12,6 @@ export function InteractionScreen({
   chosenTheme,
   step,
 }) {
-  // const [chosenOption, setChosenOption] = useState("Sociale media");
-
   return (
     <div className="interaction-screen">
       <div
