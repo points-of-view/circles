@@ -1,25 +1,29 @@
-import { useState } from "react";
 import OptionsView from "./optionsview";
 import clsx from "clsx";
+import { STEPS } from "./session";
+import translate from "../locales";
 
 export function InteractionScreen({
   title,
   description,
-  themeName = null,
-  options,
-  tagsMap,
+  themeOptions,
+  phase,
+  language,
+  chosenTheme,
+  step,
+  tagsMap
 }) {
-  const [bigTitle] = useState(false);
   return (
     <div className="interaction-screen">
       <div
         className={clsx("interaction-screen__title squircle", {
-          "interaction-screen__title--big": bigTitle,
+          "interaction-screen__title--big":
+            step === STEPS.showBigTitle || step === STEPS.showBigQuestion,
         })}
       >
         {title}
       </div>
-      {!bigTitle && (
+      {step === STEPS.showMainInteractionScreen && (
         <div className="interaction-screen__description squircle">
           <svg
             width="38"
@@ -36,12 +40,42 @@ export function InteractionScreen({
           {description}
         </div>
       )}
-      {!bigTitle && <OptionsView
-        options={options}
-        tagsMap={tagsMap}
-      />}
-      {!bigTitle && themeName && (
-        <div className="interaction-screen__theme squircle">{themeName}</div>
+      {step === STEPS.showMainInteractionScreen && phase === 0 && (
+        <OptionsView tagsMap={tagsMap} options={themeOptions} />
+      )}
+      {step === STEPS.showMainInteractionScreen && phase !== 0 && (
+        <OptionsView
+          tagsMap={tagsMap} options={chosenTheme.questions[phase - 1].options.map(
+            (a) => a.value[language],
+          )}
+        />
+      )}
+      {step === STEPS.showBigOption && phase === 0 && (
+        <OptionsView tagsMap={tagsMap} options={chosenTheme.name[language]} />
+      )}
+      {step === STEPS.showBigOption && phase !== 0 && (
+        <OptionsView
+          tagsMap={tagsMap} options={
+            chosenTheme.questions[phase - 1].options.find(
+              (el) => el.correct === true,
+            )?.value[language]
+          }
+        />
+      )}
+      {step === STEPS.showFact && (
+        <OptionsView
+          tagsMap={tagsMap} options={
+            translate("did_you_know", language) +
+            "<br><br>" +
+            chosenTheme.questions[phase - 1].explanation[language]
+          }
+          showDescriptionLayout
+        />
+      )}
+      {phase !== 0 && (
+        <div className="interaction-screen__theme squircle">
+          {chosenTheme.name[language]}
+        </div>
       )}
       <div className="interaction-screen__logo">
         <svg

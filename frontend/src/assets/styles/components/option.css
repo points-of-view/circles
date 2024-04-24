@@ -40,7 +40,7 @@
 }
 
 .option__label--description {
-  font-size: var(--text-md);
+  font-size: var(--text-md) !important;
   text-align: center;
 }
 
@@ -70,6 +70,8 @@
 
 .option--big {
   .option__content {
+    width: 80vh;
+    margin: auto;
     border-width: 15px;
   }
 
