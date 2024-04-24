@@ -4,7 +4,7 @@ export default function OptionsView({ options, tagsMap, showDescriptionLayout = 
   return (
     <div className="options-view interaction-screen__option-view">
       {Array.isArray(options) ? (
-        options.map((key) => (
+        options.map((key, index) => (
           <Option
             key={key}
             className="options-view__option"
@@ -16,7 +16,6 @@ export default function OptionsView({ options, tagsMap, showDescriptionLayout = 
         <Option
           key={options}
           className="options-view__option"
-          amount={tagsMap[index + 1]}
           label={options}
           showDescriptionLayout={showDescriptionLayout}
           big

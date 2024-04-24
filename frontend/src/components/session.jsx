@@ -6,7 +6,7 @@ import { listen } from "@tauri-apps/api/event";
 import shuffle from "../utils/shuffle";
 import translate from "../locales";
 
-const TITLE_DELAY = 5_000;
+const TITLE_DELAY = 10_000;
 
 export const STEPS = {
   showAnimationStart: "showAnimationStart",
