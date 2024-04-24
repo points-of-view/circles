@@ -7,7 +7,7 @@ import shuffle from "../utils/shuffle";
 import translate from "../locales";
 
 export default function Session({ project, resetProject, language }) {
-  const [, setTagsMap] = useState({});
+  const [tagsMap, setTagsMap] = useState({});
   const [, setReaderError] = useState(null);
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
@@ -32,9 +32,18 @@ export default function Session({ project, resetProject, language }) {
   }
 
   useEffect(() => {
-    const unlisten = listen("updated-tags", ({ payload }) =>
-      setTagsMap(payload),
-    );
+    const unlisten = listen("updated-tags", ({ payload }) => {
+      console.log(payload)
+      const counts = Object.values(payload).reduce(
+        (acc, cur) => {
+          acc[cur.antenna]++;
+          return acc;
+        },
+        { 1: 0, 2: 0, 3: 0 },
+      );
+      console.log(counts)
+      setTagsMap(counts);
+    });
 
     return () => unlisten.then((fn) => fn());
   }, []);
@@ -104,6 +113,7 @@ export default function Session({ project, resetProject, language }) {
           title={translate("choose_a_theme", language)}
           description={translate("stand_in_circle", language)}
           options={themes.slice(0, 3).map((a) => a.name[language])}
+          tagsMap={tagsMap}
         />
       ) : (
         <InteractionScreen
@@ -114,6 +124,7 @@ export default function Session({ project, resetProject, language }) {
           )}
           themeName={chosenTheme.name[language]}
           phase={phase}
+          tagsMap={tagsMap}
         />
       )}
     </>

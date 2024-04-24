@@ -7,8 +7,9 @@ export function InteractionScreen({
   description,
   themeName = null,
   options,
+  tagsMap,
 }) {
-  const [bigTitle] = useState(true);
+  const [bigTitle] = useState(false);
   return (
     <div className="interaction-screen">
       <div
@@ -35,7 +36,10 @@ export function InteractionScreen({
           {description}
         </div>
       )}
-      {!bigTitle && <OptionsView options={options} />}
+      {!bigTitle && <OptionsView
+        options={options}
+        tagsMap={tagsMap}
+      />}
       {!bigTitle && themeName && (
         <div className="interaction-screen__theme squircle">{themeName}</div>
       )}
