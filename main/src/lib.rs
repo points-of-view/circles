@@ -6,8 +6,8 @@ pub mod tags;
 use database::{create_session, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
-use reader::{LLRPReader, ReaderError};
-use std::{error::Error, path::PathBuf};
+use reader::{LLRPReader, MockReader, Reader, ReaderError, ReaderProtocol};
+use std::{env, error::Error, path::PathBuf};
 use tauri::AppHandle;
 
 pub struct CurrentSession {
@@ -19,7 +19,7 @@ pub struct GlobalState {
     pub database_connection: std::sync::Mutex<SqliteConnection>,
     pub current_project: std::sync::Mutex<Option<Project>>,
     pub current_session: std::sync::Mutex<Option<CurrentSession>>,
-    pub reader: std::sync::Mutex<Option<LLRPReader>>,
+    pub reader: std::sync::Mutex<Option<Reader>>,
 }
 
 impl GlobalState {
@@ -86,7 +86,11 @@ impl GlobalState {
             drop(reader);
         }
 
-        let mut reader = LLRPReader::new(hostname)?;
+        let mut reader = match env::var("MOCK_RFID_READER") {
+            Ok(_) => Reader::MockReader(MockReader::new(hostname)?),
+            Err(_) => Reader::LLRPReader(LLRPReader::new(hostname)?),
+        };
+
         reader.start_reading(app_handle)?;
         *lock = Some(reader);
         Ok(())

@@ -14,7 +14,7 @@ use super::{
     handle_reader_input,
     messages::{parse_message_and, write_message},
     rospec::construct_default_rospec,
-    ReaderError, ReaderErrorKind, DEFAULT_ROSPEC_ID, REFRESH_INTERVAL,
+    ReaderError, ReaderErrorKind, ReaderProtocol, DEFAULT_ROSPEC_ID, REFRESH_INTERVAL,
 };
 
 const DEFAULT_PORT: u16 = 5084;
@@ -32,8 +32,8 @@ pub struct LLRPReader {
     handle: Option<JoinHandle<()>>,
 }
 
-impl LLRPReader {
-    pub fn new(hostname: String) -> Result<Self, ReaderError> {
+impl ReaderProtocol for LLRPReader {
+    fn new(hostname: String) -> Result<Self, ReaderError> {
         if hostname.len() != 12 {
             return Err(ReaderError {
                 kind: ReaderErrorKind::IncorrectHostname(hostname.clone()),
@@ -54,7 +54,7 @@ impl LLRPReader {
         Ok(reader)
     }
 
-    pub fn start_reading<R: tauri::Runtime>(
+    fn start_reading<R: tauri::Runtime>(
         &mut self,
         app_handle: AppHandle<R>,
     ) -> Result<(), ReaderError> {
@@ -72,7 +72,7 @@ impl LLRPReader {
         Ok(())
     }
 
-    pub fn stop_reading(&mut self, await_confirmation: bool) -> Result<(), ReaderError> {
+    fn stop_reading(&mut self, await_confirmation: bool) -> Result<(), ReaderError> {
         if let Some(handle) = self.handle.take() {
             handle.abort();
         };
