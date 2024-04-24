@@ -20,7 +20,7 @@ use crate::tags::{Tag, TagsMap};
 use self::messages::handle_new_message;
 
 const DEFAULT_ROSPEC_ID: u32 = 1234;
-const REFRESH_INTERVAL: u32 = 500;
+const REFRESH_INTERVAL: u32 = 200;
 const RECV_TIMEOUT: Duration = Duration::from_millis(100);
 
 #[derive(Debug)]
@@ -66,10 +66,11 @@ pub fn handle_reader_input<R: tauri::Runtime>(
     tauri::async_runtime::spawn(async move {
         let (tx, rx) = channel::<Message>();
         let mut tags: Vec<Tag> = vec![];
+        let mut previous_maps: Vec<TagsMap> = Vec::with_capacity(10);
         let mut last_update = Instant::now();
         let mut last_alive = Instant::now();
         let update_interval = Duration::from_millis(REFRESH_INTERVAL.into());
-        let alive_interval = Duration::from_millis((REFRESH_INTERVAL * 4).into());
+        let alive_interval = Duration::from_millis((REFRESH_INTERVAL * 10).into());
 
         // Since reading from a TcpStream is blocking, we do this in a subthread.
         // The messages get send to this thread, so we loop regardless of new messages.
@@ -81,8 +82,18 @@ pub fn handle_reader_input<R: tauri::Runtime>(
             }
 
             if last_update.elapsed() > update_interval {
+                // Create a map from the tags we just saw
                 let new_map = TagsMap::from(tags.drain(..));
-                app_handle.emit_all("updated-tags", new_map).unwrap();
+
+                // Remove first item (if needed) and push new map
+                if previous_maps.len() >= 10 {
+                    previous_maps.drain(0..1);
+                }
+                previous_maps.push(new_map);
+
+                // Create a map from the collection of maps
+                let total_map = TagsMap::from(&previous_maps);
+                app_handle.emit_all("updated-tags", total_map).unwrap();
                 last_update = Instant::now();
             }
 
