@@ -1,29 +1,17 @@
 import Option from "./option";
 
-export default function OptionsView({
-  options,
-  showDescriptionLayout = false,
-}) {
+export default function OptionsView({ options }) {
   return (
     <div className="options-view interaction-screen__option-view">
-      {Array.isArray(options) ? (
-        options.map((key) => (
-          <Option
-            key={key}
-            className="options-view__option"
-            label={key}
-            amount={0}
-          />
-        ))
-      ) : (
+      {options.list.map((key) => (
         <Option
-          key={options}
+          key={key}
           className="options-view__option"
-          label={options}
-          showDescriptionLayout={showDescriptionLayout}
-          big
+          label={key}
+          showDescriptionLayout={options.showDescriptionLayout}
+          big={options.list.length === 1}
         />
-      )}
+      ))}
     </div>
   );
 }
