@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use circles::GlobalState;
+use circles::{tags::TagsMap, GlobalState};
 use std::fs;
 use tauri::Manager;
 
@@ -23,6 +23,15 @@ fn select_project(
 #[tauri::command]
 fn start_session(state: tauri::State<GlobalState>, theme_key: String) -> Result<i32, String> {
     state.start_session(theme_key)
+}
+
+#[tauri::command]
+async fn save_step_results(
+    state: tauri::State<'_, GlobalState>,
+    current_step: String,
+    tags_map: TagsMap,
+) -> Result<(), String> {
+    state.save_step_results(current_step, tags_map)
 }
 
 #[tauri::command]
@@ -52,7 +61,8 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             select_project,
             start_session,
-            close_connection
+            close_connection,
+            save_step_results
         ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application");

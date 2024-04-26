@@ -15,7 +15,7 @@ const MOCK_RFID_TAGS: [&str; 9] = [
     "abc123", "abc456", "abc789", "def123", "def456", "def789", "ghi123", "ghi456", "ghi789",
 ];
 
-#[derive(Debug, Clone, serde::Serialize)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 pub struct Tag {
     pub id: String,
     pub strength: i8,
@@ -100,7 +100,7 @@ impl Tag {
     }
 }
 
-#[derive(serde::Serialize, Clone, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 pub struct TagsMap(HashMap<String, Tag>);
 
 impl From<Drain<'_, Tag>> for TagsMap {

@@ -3,13 +3,15 @@ pub mod projects;
 pub mod reader;
 pub mod tags;
 
-use database::{create_session, setup_database};
+use database::{create_session, save_step_results, setup_database};
 use diesel::prelude::*;
 use projects::{Project, Theme};
 use reader::{LLRPReader, MockReader, Reader, ReaderError, ReaderProtocol};
 use std::{env, error::Error, path::PathBuf};
+use tags::TagsMap;
 use tauri::AppHandle;
 
+#[derive(Clone)]
 pub struct CurrentSession {
     pub session_id: i32,
     pub theme: Theme,
@@ -94,6 +96,23 @@ impl GlobalState {
         reader.start_reading(app_handle)?;
         *lock = Some(reader);
         Ok(())
+    }
+
+    pub fn save_step_results(&self, current_step: String, tags_map: TagsMap) -> Result<(), String> {
+        let mut connection = self.database_connection.lock().unwrap();
+        let current_session = self.current_session.lock().unwrap();
+
+        if current_session.is_some() {
+            save_step_results(
+                &mut *connection,
+                &current_session.as_ref().unwrap().session_id,
+                &current_step,
+                tags_map,
+            )?;
+            Ok(())
+        } else {
+            Err(String::from("No current session"))
+        }
     }
 
     pub fn stop_reading(&self, await_confirmation: bool) -> Result<(), ReaderError> {
