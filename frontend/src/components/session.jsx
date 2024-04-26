@@ -7,13 +7,11 @@ import shuffle from "../utils/shuffle";
 import translate from "../locales";
 
 export const STEPS = {
-  showAnimationStart: "showAnimationStart",
   showBigTitle: "showBigTitle",
   showBigQuestion: "showBigQuestion",
   showMainInteractionScreen: "showMainInteractionScreen",
   showBigOption: "showBigOption",
   showFact: "showFact",
-  showAnimationEnd: "showAnimationEnd",
 };
 
 export default function Session({ project, resetProject, language }) {
@@ -25,8 +23,11 @@ export default function Session({ project, resetProject, language }) {
   const [step, setStep] = useState(STEPS.showBigTitle);
   const [themes, setThemes] = useState(project.themes);
   const [chosenTheme, setChosenTheme] = useState(null);
-  const [registeredAnswersInBackend, setRegisteredAnswersInBackend] =
-    useState(false);
+
+  let registeredAnswersInBackend = false;
+
+  const currentQuestion =
+    chosenTheme !== null && chosenTheme.questions[phase - 1];
 
   const title = {
     ...((phase === 0 &&
@@ -43,16 +44,14 @@ export default function Session({ project, resetProject, language }) {
         }) ||
       ((step === STEPS.showBigQuestion ||
         step === STEPS.showMainInteractionScreen) && {
-        value: chosenTheme.questions[phase - 1].title[language],
+        value: currentQuestion.title[language],
       }) ||
       (phase !== 0 &&
         step === STEPS.showBigOption &&
         chosenTheme.questions[phase - 1].explanation && {
           value: translate("correct_answer", language),
         })),
-
-    ...((step === STEPS.showBigTitle && { showBigTitle: true }) ||
-      (step === STEPS.showBigQuestion && { showBigTitle: true })),
+    showBigTitle: [STEPS.showBigTitle, STEPS.showBigQuestion].includes(step),
   };
 
   const description = {
@@ -71,22 +70,20 @@ export default function Session({ project, resetProject, language }) {
       (step === STEPS.showBigOption &&
         phase !== 0 && {
           list: [
-            chosenTheme.questions[phase - 1].options.find(
-              (el) => el.correct === true,
-            )?.value[language],
+            currentQuestion.options.find((el) => el.correct === true)?.value[
+              language
+            ],
           ],
         }) ||
       (step === STEPS.showMainInteractionScreen &&
         phase !== 0 && {
-          list: chosenTheme.questions[phase - 1].options.map(
-            (a) => a.value[language],
-          ),
+          list: currentQuestion.options.map((a) => a.value[language]),
         }) ||
       (step === STEPS.showFact && {
         list: [
           translate("did_you_know", language) +
             "<br><br>" +
-            chosenTheme.questions[phase - 1].explanation[language],
+            currentQuestion.explanation[language],
         ],
         showDescriptionLayout: true,
       })),
@@ -115,10 +112,9 @@ export default function Session({ project, resetProject, language }) {
   async function saveAnswers() {
     try {
       await invoke("save_step_results", {
-        currentStep: chosenTheme.questions[phase - 1].key,
+        currentStep: currentQuestion.key,
         tagsMap,
       });
-      setRegisteredAnswersInBackend(true);
     } catch (e) {
       throw new Error(
         "The answers couldn't be saved to the backend. Error:",
@@ -179,29 +175,29 @@ export default function Session({ project, resetProject, language }) {
         if (phase === 0) {
           setChosenTheme(themes[0]);
           setStep(STEPS.showBigOption);
-        } else if (chosenTheme.questions[phase - 1].type === "quiz") {
+        } else if (currentQuestion.type === "quiz") {
           setStep(STEPS.showBigOption);
-        } else if (chosenTheme.questions[phase - 1].type === "opinion") {
+        } else if (currentQuestion.type === "opinion") {
           if (registeredAnswersInBackend === false) {
             saveAnswers();
-          } else {
+            registeredAnswersInBackend = true;
+          } else if (registeredAnswersInBackend === true) {
             goToNextPhase();
+            registeredAnswersInBackend = false;
           }
         }
         break;
       case STEPS.showBigOption:
         if (phase === 0) {
+          startNewSession(chosenTheme.key);
           goToNextPhase();
         } else {
-          if (chosenTheme.questions[phase - 1].explanation) {
+          if (currentQuestion.explanation) {
             setStep(STEPS.showFact);
           }
         }
         break;
       case STEPS.showFact:
-        goToNextPhase();
-        break;
-      case STEPS.showAnimationEnd:
         goToNextPhase();
         break;
     }
@@ -210,11 +206,8 @@ export default function Session({ project, resetProject, language }) {
   function goToPreviousStep() {
     switch (step) {
       case STEPS.showBigTitle:
-        if (phase === 1) {
-          setPhase(0);
-          setStep(STEPS.showMainInteractionScreen);
-        } else if (phase > 1) {
-          setPhase(phase - 1);
+        if (phase > 0) {
+          setPhase((currentPhase) => currentPhase - 1);
           setStep(STEPS.showMainInteractionScreen);
         }
         break;
@@ -225,7 +218,7 @@ export default function Session({ project, resetProject, language }) {
         if (phase === 0) {
           setStep(STEPS.showBigTitle);
         } else if (registeredAnswersInBackend) {
-          setRegisteredAnswersInBackend(false);
+          registeredAnswersInBackend = false;
         } else {
           setStep(STEPS.showBigQuestion);
         }
@@ -256,19 +249,16 @@ export default function Session({ project, resetProject, language }) {
           sessionID={sessionID}
           goToNextPhase={goToNextPhase}
           options={
-            (phase === 0 && themes.slice(0, 3)) ||
-            chosenTheme.questions[phase - 1].options
+            (phase === 0 && themes.slice(0, 3)) || currentQuestion.options
           }
         />
       )}
       <InteractionScreen
-        content={{
-          title,
-          description,
-          options,
-          themeName,
-          logo,
-        }}
+        title={title}
+        description={description}
+        options={options}
+        themeName={themeName}
+        logo={logo}
       />
     </>
   );

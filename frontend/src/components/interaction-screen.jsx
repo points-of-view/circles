@@ -1,19 +1,25 @@
 import OptionsView from "./optionsview";
 import clsx from "clsx";
 
-export function InteractionScreen({ content }) {
+export function InteractionScreen({
+  title,
+  description,
+  options,
+  themeName,
+  logo,
+}) {
   return (
     <div className="interaction-screen">
-      {content.title.value && (
+      {title.value && (
         <div
           className={clsx("interaction-screen__title squircle", {
-            "interaction-screen__title--big": content.title.showBigTitle,
+            "interaction-screen__title--big": title.showBigTitle,
           })}
         >
-          {content.title.value}
+          {title.value}
         </div>
       )}
-      {content.description.value && (
+      {description.value && (
         <div className="interaction-screen__description squircle">
           <svg
             width="38"
@@ -27,18 +33,16 @@ export function InteractionScreen({ content }) {
               fill="currentColor"
             />
           </svg>
-          {content.description.value}
+          {description.value}
         </div>
       )}
-      {content.options.list && content.options.list.length > 0 && (
-        <OptionsView options={content.options} />
-      )}
-      {content.themeName.value && (
+      {options.list && <OptionsView options={options} />}
+      {themeName.value && (
         <div className="interaction-screen__theme squircle">
-          {content.themeName.value}
+          {themeName.value}
         </div>
       )}
-      {content.logo.show && (
+      {logo.show && (
         <div className="interaction-screen__logo">
           <svg
             width="91"
