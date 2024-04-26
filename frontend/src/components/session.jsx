@@ -17,7 +17,7 @@ export const STEPS = {
 };
 
 export default function Session({ project, resetProject, language }) {
-  const [, setTagsMap] = useState({});
+  const [tagsMap, setTagsMap] = useState({});
   const [, setReaderError] = useState(null);
   const [error, setError] = useState(null);
   const [sessionID, setSessionID] = useState(null);
@@ -25,6 +25,8 @@ export default function Session({ project, resetProject, language }) {
   const [step, setStep] = useState(STEPS.showBigTitle);
   const [themes, setThemes] = useState(project.themes);
   const [chosenTheme, setChosenTheme] = useState(null);
+  const [registeredAnswersInBackend, setRegisteredAnswersInBackend] =
+    useState(false);
 
   const title = {
     ...((phase === 0 &&
@@ -110,6 +112,21 @@ export default function Session({ project, resetProject, language }) {
     }
   }
 
+  async function saveAnswers() {
+    try {
+      await invoke("save_step_results", {
+        currentStep: chosenTheme.questions[phase - 1].key,
+        tagsMap,
+      });
+      setRegisteredAnswersInBackend(true);
+    } catch (e) {
+      throw new Error(
+        "The answers couldn't be saved to the backend. Error:",
+        e,
+      );
+    }
+  }
+
   useEffect(() => {
     const unlisten = listen("updated-tags", ({ payload }) =>
       setTagsMap(payload),
@@ -164,8 +181,12 @@ export default function Session({ project, resetProject, language }) {
           setStep(STEPS.showBigOption);
         } else if (chosenTheme.questions[phase - 1].type === "quiz") {
           setStep(STEPS.showBigOption);
-        } else {
-          goToNextPhase();
+        } else if (chosenTheme.questions[phase - 1].type === "opinion") {
+          if (registeredAnswersInBackend === false) {
+            saveAnswers();
+          } else {
+            goToNextPhase();
+          }
         }
         break;
       case STEPS.showBigOption:
@@ -201,8 +222,13 @@ export default function Session({ project, resetProject, language }) {
         setStep(STEPS.showBigTitle);
         break;
       case STEPS.showMainInteractionScreen:
-        if (phase === 0) setStep(STEPS.showBigTitle);
-        else setStep(STEPS.showBigQuestion);
+        if (phase === 0) {
+          setStep(STEPS.showBigTitle);
+        } else if (registeredAnswersInBackend) {
+          setRegisteredAnswersInBackend(false);
+        } else {
+          setStep(STEPS.showBigQuestion);
+        }
         break;
       case STEPS.showBigOption:
         setStep(STEPS.showMainInteractionScreen);
