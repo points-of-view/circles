@@ -103,23 +103,37 @@ impl Tag {
 #[derive(serde::Serialize, Clone, Debug)]
 pub struct TagsMap(HashMap<String, Tag>);
 
-impl TagsMap {
-    pub fn from(tags: Drain<'_, Tag>) -> Self {
-        tags.fold(TagsMap(HashMap::new()), |mut acc, new_tag| {
-            acc.0
-                .entry(new_tag.id.clone())
-                .and_modify(|old_tag: &mut Tag| {
-                    // If there is a current tag, we update this if the new one has a stronger signal
-                    if old_tag.strength < new_tag.strength.clone() {
-                        *old_tag = new_tag.clone();
-                    }
-                })
-                // If there isn't a new tag, we insert it
-                .or_insert(new_tag.clone());
-
-            acc
-        })
+impl From<Drain<'_, Tag>> for TagsMap {
+    fn from(tags: Drain<'_, Tag>) -> Self {
+        tags.fold(TagsMap(HashMap::new()), add_tag_to_map)
     }
+}
+
+impl From<&Vec<Self>> for TagsMap {
+    fn from(maps: &Vec<Self>) -> Self {
+        maps.into_iter()
+            .map(|m| {
+                m.0.values()
+                    .map(|value| value.clone())
+                    .collect::<Vec<Tag>>()
+            })
+            .flatten()
+            .fold(TagsMap(HashMap::new()), add_tag_to_map)
+    }
+}
+
+fn add_tag_to_map(mut map: TagsMap, new_tag: Tag) -> TagsMap {
+    map.0
+        .entry(new_tag.id.clone())
+        .and_modify(|old_tag: &mut Tag| {
+            // If there is a current tag, we update this if the new one has a stronger signal
+            if old_tag.strength < new_tag.strength.clone() {
+                *old_tag = new_tag.clone();
+            }
+        })
+        // If there isn't a new tag, we insert it
+        .or_insert(new_tag.clone());
+    map
 }
 
 #[cfg(test)]
