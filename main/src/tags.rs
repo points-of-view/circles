@@ -1,7 +1,7 @@
 use rand::{seq::SliceRandom, thread_rng, Rng};
 use serde;
 use std::{
-    collections::HashMap,
+    collections::{hash_map::Values, HashMap},
     fmt::{Debug, Display, Formatter},
     vec::Drain,
 };
@@ -15,7 +15,7 @@ const MOCK_RFID_TAGS: [&str; 9] = [
     "abc123", "abc456", "abc789", "def123", "def456", "def789", "ghi123", "ghi456", "ghi789",
 ];
 
-#[derive(Debug, Clone, serde::Serialize)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 pub struct Tag {
     pub id: String,
     pub strength: i8,
@@ -100,7 +100,7 @@ impl Tag {
     }
 }
 
-#[derive(serde::Serialize, Clone, Debug)]
+#[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 pub struct TagsMap(HashMap<String, Tag>);
 
 impl From<Drain<'_, Tag>> for TagsMap {
@@ -134,6 +134,17 @@ fn add_tag_to_map(mut map: TagsMap, new_tag: Tag) -> TagsMap {
         // If there isn't a new tag, we insert it
         .or_insert(new_tag.clone());
     map
+}
+
+impl TagsMap {
+    pub fn values(&self) -> Values<'_, String, Tag> {
+        self.0.values()
+    }
+
+    pub fn random(size: usize) -> Self {
+        let mut tags = vec![Tag::random(); size];
+        Self::from(tags.drain(..))
+    }
 }
 
 #[cfg(test)]

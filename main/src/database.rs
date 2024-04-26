@@ -1,7 +1,10 @@
 pub mod models;
 pub mod schema;
 
-use crate::database::models::{Answer, Session, Step};
+use crate::{
+    database::models::{Answer, Session, Step},
+    tags::TagsMap,
+};
 use diesel::{prelude::*, sqlite::Sqlite};
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use std::{error::Error, path};
@@ -68,6 +71,35 @@ pub fn create_answer(
         .returning(Answer::as_returning())
         .get_result(connection)
         .expect("Error saving answer")
+}
+
+pub fn save_step_results(
+    connection: &mut SqliteConnection,
+    session_id: &i32,
+    current_step: &str,
+    tags_map: TagsMap,
+) -> Result<(Step, usize), String> {
+    use crate::database::schema::answers;
+
+    let step = create_step(connection, session_id, current_step);
+    let records: Vec<_> = tags_map
+        .values()
+        .map(|tag| {
+            (
+                answers::step_id.eq(step.id),
+                answers::option_key.eq(tag.antenna.to_string()),
+                answers::token_key.eq(&tag.id),
+            )
+        })
+        .collect();
+
+    match diesel::insert_into(answers::table)
+        .values(records)
+        .execute(connection)
+    {
+        Ok(answers) => Ok((step, answers)),
+        Err(err) => Err(err.to_string()),
+    }
 }
 
 fn run_migrations(
@@ -142,6 +174,29 @@ mod tests {
 
             // Every test should create a new in-memory DB, so this id is always 1
             assert_eq!(answer.id, 1);
+
+            Ok(())
+        })
+    }
+
+    #[test]
+    fn can_create_step_and_answers() {
+        let mut connection = test_db();
+
+        connection.test_transaction::<_, Error, _>(|conn| {
+            let session = create_session(conn, "testProject", "eco");
+
+            let map = TagsMap::random(10);
+            let expected_len = &map.values().len();
+            let result = save_step_results(conn, &session.id, "my-question", map);
+
+            assert!(result.is_ok());
+
+            let (step, answers_count) = result.unwrap();
+            // Every test should create a new in-memory DB, so this id is always 1
+            assert_eq!(step.id, 1);
+            assert_eq!(step.question_key, "my-question");
+            assert_eq!(&answers_count, expected_len);
 
             Ok(())
         })
