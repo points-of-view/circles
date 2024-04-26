@@ -3,7 +3,7 @@
     "nl": "Testing Phase 1 - Nederlandstalige Copy"
   },
   "availableLanguages": ["nl"],
-  "key": "phase1NL",
+  "key": "phase1bel",
   "themes": [
     {
       "name": { "nl": "Migratie" },
