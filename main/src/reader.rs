@@ -22,6 +22,7 @@ use self::messages::handle_new_message;
 const DEFAULT_ROSPEC_ID: u32 = 1234;
 const REFRESH_INTERVAL: u32 = 200;
 const RECV_TIMEOUT: Duration = Duration::from_millis(100);
+const KEEP_OLD_MAPS: usize = 15; // At a refresh interval of 200ms, this is 3 secs of data
 
 #[derive(Debug)]
 pub enum Reader {
@@ -86,7 +87,7 @@ pub fn handle_reader_input<R: tauri::Runtime>(
                 let new_map = TagsMap::from(tags.drain(..));
 
                 // Remove first item (if needed) and push new map
-                if previous_maps.len() >= 10 {
+                if previous_maps.len() >= KEEP_OLD_MAPS {
                     previous_maps.drain(0..1);
                 }
                 previous_maps.push(new_map);
