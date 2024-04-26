@@ -44,7 +44,7 @@
     "updater": {
       "active": true,
       "endpoints": [
-        "https://releases.myapp.com/{{target}}/{{arch}}/{{current_version}}"
+        "https://tree-projects.s3.eu-central-1.amazonaws.com/circles/update.json"
       ],
       "dialog": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEY2QTU2N0U1QzdDMEEyQjcKUldTM29zREg1V2VsOXRNMXIvbmZJbjRCSTZDQ1B5czZKekQrcDkwOThSYy9ENjVwaDAwcC9SZmIK"
