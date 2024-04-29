@@ -6,21 +6,27 @@
   width: 100%;
 }
 
-.options-view__option:first-child {
+.options-view__option--green {
   --option-color: var(--color-green);
+}
 
+.options-view__option--pink {
+  --option-color: var(--color-pink);
+}
+
+.options-view__option--orange {
+  --option-color: var(--color-orange);
+}
+
+.options-view__option:first-child {
   align-self: flex-start;
 }
 
 .options-view__option:last-child {
-  --option-color: var(--color-orange);
-
   align-self: flex-start;
 }
 
 .options-view__option:not(:first-child, :last-child) {
-  --option-color: var(--color-pink);
-
   align-self: flex-end;
 }
 

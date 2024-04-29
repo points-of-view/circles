@@ -1,14 +1,24 @@
 import Option from "./option";
+import clsx from "clsx";
 
-export default function OptionsView({ options }) {
+export default function OptionsView({
+  options,
+  showDescriptionLayout,
+  tagCount,
+}) {
   return (
     <div className="options-view interaction-screen__option-view">
-      {options.map((key) => (
+      {options.map((option, index) => (
         <Option
-          key={key}
-          className="options-view__option"
-          label={key}
-          amount={0}
+          key={option.value}
+          className={clsx(
+            "options-view__option",
+            option.color && `options-view__option--${option.color}`,
+          )}
+          label={option.value}
+          showDescriptionLayout={showDescriptionLayout}
+          big={options.length === 1}
+          amount={tagCount[index + 1]}
         />
       ))}
     </div>

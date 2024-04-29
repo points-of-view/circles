@@ -70,10 +70,12 @@
 
 .option--big {
   .option__content {
+    width: 80vh;
+    margin: auto;
     border-width: 15px;
   }
 
-  .option__label {
+  .option__label:not(.option__label--description) {
     font-size: var(--text-xl);
   }
 }

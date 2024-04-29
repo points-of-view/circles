@@ -1,10 +1,10 @@
 {
   "stand_in_circle": "Go stand in the circle of your answer",
   "choose_a_theme": "Choose a theme",
-  "give_an_answer": "KNOWLEDGE QUESTION - FORMAL Give an answer to the following question ",
-  "quiz_question": "KNOWLEDGE QUESTION - INFORMAL Let's start with a quiz question!",
+  "give_an_answer": "Give an answer to the following question ",
+  "quiz_question": "Let's start with a quiz question!",
   "did_you_know": "Did you know...?",
-  "whats_your_opinion": "OPINION - FORMAL What's your opinion on this?",
-  "how_do_you_feel_about": "OPINION - INFORMAL How do you feel about this?",
+  "whats_your_opinion": "What's your opinion on this?",
+  "how_do_you_feel_about": "How do you feel about this?",
   "correct_answer": "Correct answer"
 }
