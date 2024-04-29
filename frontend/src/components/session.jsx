@@ -47,6 +47,7 @@ export default function Session({ project, resetProject, language }) {
     step,
   );
   const showDescriptionLayout = step === STEPS.showFact;
+  const showBackgroundElements = step !== STEPS.showMainInteractionScreen;
   const title = (() => {
     if (phase === 0 && step !== STEPS.showBigOption) {
       return translate("choose_a_theme", language);
@@ -288,6 +289,7 @@ export default function Session({ project, resetProject, language }) {
         title={title}
         showBigTitle={showBigTitle}
         showDescriptionLayout={showDescriptionLayout}
+        showBackgroundElements={showBackgroundElements}
         description={description}
         options={options}
         themeName={themeName}

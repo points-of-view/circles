@@ -9,6 +9,7 @@ export function InteractionScreen({
   showLogo,
   showBigTitle,
   showDescriptionLayout,
+  showBackgroundElements,
   tagCount,
 }) {
   return (
@@ -104,11 +105,15 @@ export function InteractionScreen({
         </div>
       )}
       <div className="interaction-screen__background">
-        <div className="ball ball--blue"></div>
-        <div className="ball ball--orange"></div>
-        <div className="ball ball--pink"></div>
-        <div className="ball ball--green"></div>
-        <div className="ball ball--yellow"></div>
+        {showBackgroundElements && (
+          <>
+            <div className="ball ball--blue"></div>
+            <div className="ball ball--orange"></div>
+            <div className="ball ball--pink"></div>
+            <div className="ball ball--green"></div>
+            <div className="ball ball--yellow"></div>
+          </>
+        )}
       </div>
     </div>
   );
