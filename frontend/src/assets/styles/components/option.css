@@ -76,7 +76,7 @@
     border-width: 15px;
   }
 
-  .option__label:not(.option__label--description) {
-    font-size: var(--text-xl);
+  .option__label {
+    font-size: var(--text-2xl);
   }
 }
