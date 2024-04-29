@@ -62,41 +62,49 @@ export default function Session({ project, resetProject, language }) {
       step === STEPS.showMainInteractionScreen
     ) {
       return currentQuestion.title[language];
-    } else if (step === STEPS.showBigOption && currentQuestion.explanation) {
+    } else if (step === STEPS.showBigOption && currentQuestion?.explanation) {
       return translate("correct_answer", language);
     }
   })();
   const options = (() => {
     if (phase === 0) {
       if (step === STEPS.showMainInteractionScreen) {
-        assignOptionColors(themes.map((a) => a.name[language]));
+        return assignOptionColors(themes.map((a) => a.name[language]));
       } else if (step === STEPS.showBigOption) {
-        return {
-          value: chosenTheme.name[language],
-          color:
-            COLORS[themes.findIndex((theme) => theme.key === chosenTheme.key)],
-        };
+        return [
+          {
+            value: chosenTheme.name[language],
+            color:
+              COLORS[
+                themes.findIndex((theme) => theme.key === chosenTheme.key)
+              ],
+          },
+        ];
       }
     } else {
       if (step === STEPS.showMainInteractionScreen) {
-        assignOptionColors(
+        return assignOptionColors(
           currentQuestion.options.map((a) => a.value[language]),
         );
       } else if (step === STEPS.showBigOption) {
         const correctAnswerIndex = currentQuestion.options.findIndex(
           (a) => a.correct === true,
         );
-        return {
-          value: currentQuestion.options[correctAnswerIndex]?.value[language],
-          color: COLORS[correctAnswerIndex],
-        };
+        return [
+          {
+            value: currentQuestion.options[correctAnswerIndex]?.value[language],
+            color: COLORS[correctAnswerIndex],
+          },
+        ];
       } else if (step === STEPS.showFact) {
-        return {
-          value:
-            translate("did_you_know", language) +
-            "<br><br>" +
-            currentQuestion.explanation[language],
-        };
+        return [
+          {
+            value:
+              translate("did_you_know", language) +
+              "<br><br>" +
+              currentQuestion.explanation[language],
+          },
+        ];
       }
     }
   })();
