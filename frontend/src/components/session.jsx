@@ -14,6 +14,15 @@ export const STEPS = {
   showFact: "showFact",
 };
 
+const COLORS = ["green", "pink", "orange"];
+
+function assignOptionColors(options) {
+  return options.map((option, index) => ({
+    value: option,
+    color: COLORS[index],
+  }));
+}
+
 export default function Session({ project, resetProject, language }) {
   const [tagsMap, setTagsMap] = useState({});
   const [, setReaderError] = useState(null);
@@ -26,100 +35,71 @@ export default function Session({ project, resetProject, language }) {
   const [registeredAnswersInBackend, setRegisteredAnswersInBackend] =
     useState(false);
 
-  const colors = ["green", "pink", "orange"];
-
   const currentQuestion =
     chosenTheme !== null && chosenTheme.questions[phase - 1];
-
-  const title = {
-    ...((phase === 0 &&
-      step !== STEPS.showBigOption && {
-        value: translate("choose_a_theme", language),
-      }) ||
-      (step === STEPS.showBigTitle &&
-        chosenTheme.questions[phase - 1].type === "quiz" && {
-          value: translate("give_an_answer", language),
-        }) ||
-      (step === STEPS.showBigTitle &&
-        chosenTheme.questions[phase - 1].type === "opinion" && {
-          value: translate("whats_your_opinion", language),
-        }) ||
-      ((step === STEPS.showBigQuestion ||
-        step === STEPS.showMainInteractionScreen) && {
-        value: currentQuestion.title[language],
-      }) ||
-      (phase !== 0 &&
-        step === STEPS.showBigOption &&
-        chosenTheme.questions[phase - 1].explanation && {
-          value: translate("correct_answer", language),
-        })),
-    showBigTitle: [STEPS.showBigTitle, STEPS.showBigQuestion].includes(step),
-  };
-
-  const description = {
-    ...(step === STEPS.showMainInteractionScreen && {
-      value: translate("stand_in_circle", language),
-    }),
-  };
-
-  const options = {
-    ...((step === STEPS.showMainInteractionScreen &&
-      phase === 0 && {
-        list: assignOptionColors(
-          themes.slice(0, 3).map((a) => a.name[language]),
-        ),
-      }) ||
-      (step === STEPS.showBigOption &&
-        phase === 0 && {
-          list: [
-            {
-              value: chosenTheme.name[language],
-              color:
-                colors[
-                  themes.findIndex((theme) => theme.key === chosenTheme.key)
-                ],
-            },
-          ],
-        }) ||
-      (step === STEPS.showMainInteractionScreen &&
-        phase !== 0 && {
-          list: assignOptionColors(
-            currentQuestion.options.map((a) => a.value[language]),
-          ),
-        }) ||
-      (step === STEPS.showBigOption &&
-        phase !== 0 && {
-          list: [
-            {
-              value: currentQuestion.options.find((a) => a.correct === true)
-                ?.value[language],
-              color:
-                colors[
-                  currentQuestion.options.findIndex((a) => a.correct === true)
-                ],
-            },
-          ],
-        }) ||
-      (step === STEPS.showFact && {
-        list: [
-          {
-            value:
-              translate("did_you_know", language) +
-              "<br><br>" +
-              currentQuestion.explanation[language],
-          },
-        ],
-        showDescriptionLayout: true,
-      })),
-  };
-
-  const themeName = {
-    ...(phase !== 0 && { value: chosenTheme.name[language] }),
-  };
-
-  const logo = {
-    ...(step === STEPS.showBigTitle && { show: true }),
-  };
+  const description =
+    step === STEPS.showMainInteractionScreen
+      ? translate("stand_in_circle", language)
+      : null;
+  const themeName = phase !== 0 && chosenTheme.name[language];
+  const showLogo = step === STEPS.showBigTitle;
+  const showBigTitle = [STEPS.showBigTitle, STEPS.showBigQuestion].includes(
+    step,
+  );
+  const showDescriptionLayout = step === STEPS.showFact;
+  const title = (() => {
+    if (phase === 0 && step !== STEPS.showBigOption) {
+      return translate("choose_a_theme", language);
+    } else if (step === STEPS.showBigTitle && currentQuestion.type === "quiz") {
+      return translate("give_an_answer", language);
+    } else if (
+      step === STEPS.showBigTitle &&
+      currentQuestion.type === "opinion"
+    ) {
+      return translate("whats_your_opinion", language);
+    } else if (
+      step === STEPS.showBigQuestion ||
+      step === STEPS.showMainInteractionScreen
+    ) {
+      return currentQuestion.title[language];
+    } else if (step === STEPS.showBigOption && currentQuestion.explanation) {
+      return translate("correct_answer", language);
+    }
+  })();
+  const options = (() => {
+    if (phase === 0) {
+      if (step === STEPS.showMainInteractionScreen) {
+        assignOptionColors(themes.slice(0, 3).map((a) => a.name[language]));
+      } else if (step === STEPS.showBigOption) {
+        return {
+          value: chosenTheme.name[language],
+          color:
+            COLORS[themes.findIndex((theme) => theme.key === chosenTheme.key)],
+        };
+      }
+    } else {
+      if (step === STEPS.showMainInteractionScreen) {
+        assignOptionColors(
+          currentQuestion.options.map((a) => a.value[language]),
+        );
+      } else if (step === STEPS.showBigOption) {
+        const correctAnswerIndex = currentQuestion.options.findIndex(
+          (a) => a.correct === true,
+        );
+        return {
+          value: currentQuestion.options[correctAnswerIndex]?.value[language],
+          color: COLORS[correctAnswerIndex],
+        };
+      } else if (step === STEPS.showFact) {
+        return {
+          value:
+            translate("did_you_know", language) +
+            "<br><br>" +
+            currentQuestion.explanation[language],
+        };
+      }
+    }
+  })();
 
   async function startNewSession(themeKey) {
     try {
@@ -186,13 +166,6 @@ export default function Session({ project, resetProject, language }) {
       setThemes(shuffle(project.themes));
     }
   }, [phase]);
-
-  function assignOptionColors(options) {
-    return options.map((option, index) => ({
-      value: option,
-      color: colors[index],
-    }));
-  }
 
   function goToNextPhase() {
     if (chosenTheme === undefined && phase === 0) {
@@ -308,10 +281,12 @@ export default function Session({ project, resetProject, language }) {
       )}
       <InteractionScreen
         title={title}
+        showBigTitle={showBigTitle}
+        showDescriptionLayout={showDescriptionLayout}
         description={description}
         options={options}
         themeName={themeName}
-        logo={logo}
+        showLogo={showLogo}
         tagCount={tagCount}
       />
     </>

@@ -6,21 +6,23 @@ export function InteractionScreen({
   description,
   options,
   themeName,
-  logo,
+  showLogo,
+  showBigTitle,
+  showDescriptionLayout,
   tagCount,
 }) {
   return (
     <div className="interaction-screen">
-      {title.value && (
+      {title && (
         <div
           className={clsx("interaction-screen__title squircle", {
-            "interaction-screen__title--big": title.showBigTitle,
+            "interaction-screen__title--big": showBigTitle,
           })}
         >
-          {title.value}
+          {title}
         </div>
       )}
-      {description.value && (
+      {description && (
         <div className="interaction-screen__description squircle">
           <svg
             width="38"
@@ -34,16 +36,20 @@ export function InteractionScreen({
               fill="currentColor"
             />
           </svg>
-          {description.value}
+          {description}
         </div>
       )}
-      {options.list && <OptionsView options={options} tagCount={tagCount} />}
-      {themeName.value && (
-        <div className="interaction-screen__theme squircle">
-          {themeName.value}
-        </div>
+      {options && (
+        <OptionsView
+          options={options}
+          showDescriptionLayout={showDescriptionLayout}
+          tagCount={tagCount}
+        />
       )}
-      {logo.show && (
+      {themeName && (
+        <div className="interaction-screen__theme squircle">{themeName}</div>
+      )}
+      {showLogo && (
         <div className="interaction-screen__logo">
           <svg
             width="91"
