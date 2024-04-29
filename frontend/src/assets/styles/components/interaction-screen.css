@@ -21,9 +21,9 @@
 
 .interaction-screen__title {
   justify-self: center;
+  font-size: var(--text-sm);
   text-align: center;
   word-break: break-word;
-  border: 5px solid var(--color-orange);
   border-radius: var(--rounded-full);
 }
 
@@ -33,6 +33,10 @@
   border: unset;
   background-image: unset;
   aspect-ratio: 1;
+}
+
+.interaction-screen__title--fact {
+  aspect-ratio: unset;
 }
 
 .interaction-screen__theme {

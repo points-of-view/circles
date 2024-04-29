@@ -43,11 +43,13 @@ export default function Session({ project, resetProject, language }) {
       : null;
   const themeName = phase !== 0 && chosenTheme.name[language];
   const showLogo = step === STEPS.showBigTitle;
-  const showBigTitle = [STEPS.showBigTitle, STEPS.showBigQuestion].includes(
-    step,
-  );
-  const showDescriptionLayout = step === STEPS.showFact;
   const showBackgroundElements = step !== STEPS.showMainInteractionScreen;
+  const showBigTitle = [
+    STEPS.showBigTitle,
+    STEPS.showBigQuestion,
+    STEPS.showFact,
+  ].includes(step);
+  const showFact = step === STEPS.showFact;
   const title = (() => {
     if (phase === 0 && step !== STEPS.showBigOption) {
       return translate("choose_a_theme", language);
@@ -64,6 +66,12 @@ export default function Session({ project, resetProject, language }) {
       return currentQuestion.title[language];
     } else if (step === STEPS.showBigOption && currentQuestion?.explanation) {
       return translate("correct_answer", language);
+    } else if (step === STEPS.showFact) {
+      return (
+        translate("did_you_know", language) +
+        "<br><br>" +
+        currentQuestion.explanation[language]
+      );
     }
   })();
   const options = (() => {
@@ -94,15 +102,6 @@ export default function Session({ project, resetProject, language }) {
           {
             value: currentQuestion.options[correctAnswerIndex]?.value[language],
             color: COLORS[correctAnswerIndex],
-          },
-        ];
-      } else if (step === STEPS.showFact) {
-        return [
-          {
-            value:
-              translate("did_you_know", language) +
-              "<br><br>" +
-              currentQuestion.explanation[language],
           },
         ];
       }
@@ -287,8 +286,8 @@ export default function Session({ project, resetProject, language }) {
       <InteractionScreen
         title={title}
         showBigTitle={showBigTitle}
-        showDescriptionLayout={showDescriptionLayout}
         showBackgroundElements={showBackgroundElements}
+        showFact={showFact}
         description={description}
         options={options}
         themeName={themeName}
