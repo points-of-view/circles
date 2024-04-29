@@ -51,16 +51,27 @@ export default function Session({ project, resetProject, language }) {
     if (phase === 0 && step !== STEPS.showBigOption) {
       return translate("choose_a_theme", language);
     } else if (step === STEPS.showBigTitle && currentQuestion.type === "quiz") {
-      return translate("give_an_answer", language);
+      return translate("quiz_question", language);
     } else if (
       step === STEPS.showBigTitle &&
       currentQuestion.type === "opinion"
     ) {
-      return translate("whats_your_opinion", language);
-    } else if (
-      step === STEPS.showBigQuestion ||
-      step === STEPS.showMainInteractionScreen
-    ) {
+      return translate("how_do_you_feel_about", language);
+    } else if (step === STEPS.showBigQuestion) {
+      if (currentQuestion.type === "quiz") {
+        return (
+          translate("question", language) +
+          ": " +
+          currentQuestion.title[language]
+        );
+      } else if (currentQuestion.type === "opinion") {
+        return (
+          translate("statement", language) +
+          ": " +
+          currentQuestion.title[language]
+        );
+      }
+    } else if (step === STEPS.showMainInteractionScreen) {
       return currentQuestion.title[language];
     } else if (step === STEPS.showBigOption && currentQuestion?.explanation) {
       return translate("correct_answer", language);
