@@ -17,7 +17,7 @@ export default function Option({
           })}
           dangerouslySetInnerHTML={{ __html: label }}
         ></div>
-        {!big && amount !== 0 && (
+        {!big && (
           <div className="option__figure-container">
             {[...Array(amount)].map((value, index) => (
               <svg
