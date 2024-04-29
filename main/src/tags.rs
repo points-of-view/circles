@@ -8,7 +8,7 @@ use std::{
 
 const MAX_STRENGTH: i8 = 0;
 const MIN_STRENGTH: i8 = -80;
-const MAX_ANTENNA: u16 = 8;
+const MAX_ANTENNA: u16 = 3;
 const MIN_ANTENNA: u16 = 1;
 
 const MOCK_RFID_TAGS: [&str; 9] = [
@@ -71,7 +71,7 @@ impl Tag {
     pub fn random() -> Tag {
         let mut rng = thread_rng();
         let id = MOCK_RFID_TAGS.choose(&mut rng).unwrap().to_string();
-        let antenna = rng.gen_range(MIN_ANTENNA..MAX_ANTENNA);
+        let antenna = rng.gen_range(MIN_ANTENNA..=MAX_ANTENNA);
         let strength = rng.gen_range(MIN_STRENGTH..MAX_STRENGTH);
         Tag {
             id,
@@ -172,7 +172,7 @@ mod tests {
 
         assert!(result.is_err_and(|x| x.kind == TagErrorKind::IncorrectAntenna));
 
-        let result = Tag::build("abc123".into(), 9, -31);
+        let result = Tag::build("abc123".into(), 4, -31);
 
         assert!(result.is_err_and(|x| x.kind == TagErrorKind::IncorrectAntenna));
     }
