@@ -1,11 +1,7 @@
 import Option from "./option";
 import clsx from "clsx";
 
-export default function OptionsView({
-  options,
-  showDescriptionLayout,
-  tagCount,
-}) {
+export default function OptionsView({ options, tagCount }) {
   return (
     <div className="options-view interaction-screen__option-view">
       {options.map((option, index) => (
@@ -16,7 +12,6 @@ export default function OptionsView({
             option.color && `options-view__option--${option.color}`,
           )}
           label={option.value}
-          showDescriptionLayout={showDescriptionLayout}
           big={options.length === 1}
           amount={tagCount[index + 1]}
         />

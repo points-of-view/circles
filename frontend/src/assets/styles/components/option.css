@@ -1,7 +1,9 @@
 .option {
   position: relative;
   z-index: 1;
+  display: flex;
   flex: 1 1 0px;
+  justify-content: center;
 }
 
 .option__content {
@@ -10,7 +12,7 @@
   gap: 2rem;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 90%;
 
   /* Set the border thickness of the gradient */
   border: 12px solid transparent;
@@ -77,7 +79,7 @@
     border-width: 15px;
   }
 
-  .option__label:not(.option__label--description) {
+  .option__label {
     font-size: var(--text-2xl);
   }
 }

@@ -5,18 +5,12 @@ export default function Option({
   label,
   amount = 0,
   big = false,
-  showDescriptionLayout = false,
 }) {
   return (
     <div className={clsx("option", className, { "option--big": big })}>
       {!big && <div className="option__amount">{amount}</div>}
       <div className="option__content">
-        <div
-          className={clsx("option__label", {
-            "option__label--description": showDescriptionLayout,
-          })}
-          dangerouslySetInnerHTML={{ __html: label }}
-        ></div>
+        <div className="option__label">{label}</div>
         {!big && (
           <div className="option__figure-container">
             {[...Array(amount)].map((value, index) => (
