@@ -119,11 +119,10 @@ export default function Session({ project, resetProject, language }) {
         currentStep: currentQuestion.key,
         tagsMap,
       });
-    } catch (e) {
-      throw new Error(
-        "The answers couldn't be saved to the backend. Error:",
-        e,
-      );
+    } catch (error) {
+      // The user cannot fix this error, so we just log it for debugging
+      // eslint-disable-next-line no-console
+      console.error("The answers couldn't be saved to the backend.", error);
     }
   }
 
