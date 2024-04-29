@@ -7,6 +7,7 @@ export function InteractionScreen({
   options,
   themeName,
   logo,
+  tagsMap,
 }) {
   return (
     <div className="interaction-screen">
