@@ -124,9 +124,16 @@ export default function Session({ project, resetProject, language }) {
   }
 
   useEffect(() => {
-    const unlisten = listen("updated-tags", ({ payload }) =>
-      setTagsMap(payload),
-    );
+    const unlisten = listen("updated-tags", ({ payload }) => {
+      const counts = Object.values(payload).reduce(
+        (acc, cur) => {
+          acc[cur.antenna]++;
+          return acc;
+        },
+        { 1: 0, 2: 0, 3: 0 },
+      );
+      setTagsMap(counts);
+    });
 
     return () => unlisten.then((fn) => fn());
   }, []);
@@ -259,6 +266,7 @@ export default function Session({ project, resetProject, language }) {
         options={options}
         themeName={themeName}
         logo={logo}
+        tagsMap={tagsMap}
       />
     </>
   );

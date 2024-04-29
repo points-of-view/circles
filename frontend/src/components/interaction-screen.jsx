@@ -36,7 +36,7 @@ export function InteractionScreen({
           {description.value}
         </div>
       )}
-      {options.list && <OptionsView options={options} />}
+      {options.list && <OptionsView options={options} tagsMap={tagsMap} />}
       {themeName.value && (
         <div className="interaction-screen__theme squircle">
           {themeName.value}

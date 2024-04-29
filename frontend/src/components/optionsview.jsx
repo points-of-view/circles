@@ -1,6 +1,6 @@
 import Option from "./option";
 
-export default function OptionsView({ options }) {
+export default function OptionsView({ options, tagsMap }) {
   return (
     <div className="options-view interaction-screen__option-view">
       {options.list.map((key) => (
@@ -10,7 +10,8 @@ export default function OptionsView({ options }) {
           label={key}
           showDescriptionLayout={options.showDescriptionLayout}
           big={options.list.length === 1}
-        />
+          amount={tagsMap[index + 1]}
+          />
       ))}
     </div>
   );
