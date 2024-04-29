@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { InteractionScreen } from "./interaction-screen";
 import ControlPanel from "./control-panel";
@@ -123,16 +123,21 @@ export default function Session({ project, resetProject, language }) {
     }
   }
 
-  useEffect(() => {
-    const unlisten = listen("updated-tags", ({ payload }) => {
-      const counts = Object.values(payload).reduce(
+  const tagCount = useMemo(
+    () =>
+      Object.values(tagsMap).reduce(
         (acc, cur) => {
           acc[cur.antenna]++;
           return acc;
         },
         { 1: 0, 2: 0, 3: 0 },
-      );
-      setTagsMap(counts);
+      ),
+    [tagsMap],
+  );
+
+  useEffect(() => {
+    const unlisten = listen("updated-tags", ({ payload }) => {
+      setTagsMap(payload);
     });
 
     return () => unlisten.then((fn) => fn());
@@ -149,7 +154,7 @@ export default function Session({ project, resetProject, language }) {
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [step, phase]);
+  }, [step, phase, tagsMap, tagCount]);
 
   useEffect(() => {
     if (phase === 0) {
@@ -166,6 +171,15 @@ export default function Session({ project, resetProject, language }) {
     setStep(STEPS.showBigTitle);
   }
 
+  function chooseTheme() {
+    const highestAmount = Math.max(...Object.values(tagCount));
+    const popularAnswers = Object.keys(tagCount).filter(
+      (key) => tagCount[key] === highestAmount,
+    );
+    const chooseRandomKey = Math.floor(Math.random() * popularAnswers.length);
+    setChosenTheme(themes[popularAnswers[chooseRandomKey] - 1]);
+  }
+
   function goToNextStep() {
     switch (step) {
       case STEPS.showBigTitle:
@@ -180,9 +194,10 @@ export default function Session({ project, resetProject, language }) {
         break;
       case STEPS.showMainInteractionScreen:
         if (phase === 0) {
-          setChosenTheme(themes[0]);
+          chooseTheme();
           setStep(STEPS.showBigOption);
         } else if (currentQuestion.type === "quiz") {
+          saveAnswers();
           setStep(STEPS.showBigOption);
         } else if (currentQuestion.type === "opinion") {
           if (registeredAnswersInBackend === false) {
@@ -266,7 +281,7 @@ export default function Session({ project, resetProject, language }) {
         options={options}
         themeName={themeName}
         logo={logo}
-        tagsMap={tagsMap}
+        tagCount={tagCount}
       />
     </>
   );

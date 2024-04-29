@@ -7,7 +7,7 @@ export function InteractionScreen({
   options,
   themeName,
   logo,
-  tagsMap,
+  tagCount,
 }) {
   return (
     <div className="interaction-screen">
@@ -37,7 +37,7 @@ export function InteractionScreen({
           {description.value}
         </div>
       )}
-      {options.list && <OptionsView options={options} tagsMap={tagsMap} />}
+      {options.list && <OptionsView options={options} tagCount={tagCount} />}
       {themeName.value && (
         <div className="interaction-screen__theme squircle">
           {themeName.value}
