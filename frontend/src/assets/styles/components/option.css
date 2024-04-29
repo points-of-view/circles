@@ -40,6 +40,7 @@
 }
 
 .option__label--description {
+  max-width: 100%;
   font-size: var(--text-md);
   text-align: center;
 }
@@ -49,6 +50,7 @@
   flex-flow: wrap;
   gap: 15px;
   justify-content: center;
+  height: 66px;
   max-width: 75%;
   max-height: 50%;
 }
@@ -76,6 +78,6 @@
   }
 
   .option__label:not(.option__label--description) {
-    font-size: var(--text-xl);
+    font-size: var(--text-2xl);
   }
 }

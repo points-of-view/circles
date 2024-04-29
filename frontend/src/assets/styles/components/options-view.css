@@ -35,3 +35,7 @@
 .options-view__option:nth-child(4):nth-last-child(2) {
   align-self: center;
 }
+
+.options-view__option:first-child:last-child {
+  align-self: center;
+}
