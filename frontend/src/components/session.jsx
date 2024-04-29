@@ -140,9 +140,9 @@ export default function Session({ project, resetProject, language }) {
   );
 
   useEffect(() => {
-    const unlisten = listen("updated-tags", ({ payload }) => {
-      setTagsMap(payload);
-    });
+    const unlisten = listen("updated-tags", ({ payload }) =>
+      setTagsMap(payload),
+    );
 
     return () => unlisten.then((fn) => fn());
   }, []);
