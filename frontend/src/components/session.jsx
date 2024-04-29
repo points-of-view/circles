@@ -58,19 +58,7 @@ export default function Session({ project, resetProject, language }) {
     ) {
       return translate("how_do_you_feel_about", language);
     } else if (step === STEPS.showBigQuestion) {
-      if (currentQuestion.type === "quiz") {
-        return (
-          translate("question", language) +
-          ": " +
-          currentQuestion.title[language]
-        );
-      } else if (currentQuestion.type === "opinion") {
-        return (
-          translate("statement", language) +
-          ": " +
-          currentQuestion.title[language]
-        );
-      }
+      return `${translate(currentQuestion.type === "quiz" ? "question" : "statement")}: ${currentQuestion.title[language]}`;
     } else if (step === STEPS.showMainInteractionScreen) {
       return currentQuestion.title[language];
     } else if (step === STEPS.showBigOption && currentQuestion?.explanation) {
