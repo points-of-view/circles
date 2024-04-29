@@ -69,7 +69,7 @@ export default function Session({ project, resetProject, language }) {
   const options = (() => {
     if (phase === 0) {
       if (step === STEPS.showMainInteractionScreen) {
-        assignOptionColors(themes.slice(0, 3).map((a) => a.name[language]));
+        assignOptionColors(themes.map((a) => a.name[language]));
       } else if (step === STEPS.showBigOption) {
         return {
           value: chosenTheme.name[language],
@@ -163,7 +163,7 @@ export default function Session({ project, resetProject, language }) {
   useEffect(() => {
     if (phase === 0) {
       setChosenTheme(null);
-      setThemes(shuffle(project.themes));
+      setThemes(shuffle(project.themes).slice(0, 3));
     }
   }, [phase]);
 
@@ -274,9 +274,7 @@ export default function Session({ project, resetProject, language }) {
           error={error}
           sessionID={sessionID}
           goToNextPhase={goToNextPhase}
-          options={
-            (phase === 0 && themes.slice(0, 3)) || currentQuestion.options
-          }
+          options={phase === 0 ? themes : currentQuestion.options}
         />
       )}
       <InteractionScreen
