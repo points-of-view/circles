@@ -23,8 +23,10 @@ export default function Session({ project, resetProject, language }) {
   const [step, setStep] = useState(STEPS.showBigTitle);
   const [themes, setThemes] = useState(project.themes);
   const [chosenTheme, setChosenTheme] = useState(null);
+  const [registeredAnswersInBackend, setRegisteredAnswersInBackend] =
+    useState(false);
 
-  let registeredAnswersInBackend = false;
+  const colors = ["green", "pink", "orange"];
 
   const currentQuestion =
     chosenTheme !== null && chosenTheme.questions[phase - 1];
@@ -63,27 +65,49 @@ export default function Session({ project, resetProject, language }) {
   const options = {
     ...((step === STEPS.showMainInteractionScreen &&
       phase === 0 && {
-        list: themes.slice(0, 3).map((a) => a.name[language]),
+        list: assignOptionColors(
+          themes.slice(0, 3).map((a) => a.name[language]),
+        ),
       }) ||
       (step === STEPS.showBigOption &&
-        phase === 0 && { list: [chosenTheme.name[language]] }) ||
-      (step === STEPS.showBigOption &&
-        phase !== 0 && {
+        phase === 0 && {
           list: [
-            currentQuestion.options.find((el) => el.correct === true)?.value[
-              language
-            ],
+            {
+              value: chosenTheme.name[language],
+              color:
+                colors[
+                  themes.findIndex((theme) => theme.key === chosenTheme.key)
+                ],
+            },
           ],
         }) ||
       (step === STEPS.showMainInteractionScreen &&
         phase !== 0 && {
-          list: currentQuestion.options.map((a) => a.value[language]),
+          list: assignOptionColors(
+            currentQuestion.options.map((a) => a.value[language]),
+          ),
+        }) ||
+      (step === STEPS.showBigOption &&
+        phase !== 0 && {
+          list: [
+            {
+              value: currentQuestion.options.find((a) => a.correct === true)
+                ?.value[language],
+              color:
+                colors[
+                  currentQuestion.options.findIndex((a) => a.correct === true)
+                ],
+            },
+          ],
         }) ||
       (step === STEPS.showFact && {
         list: [
-          translate("did_you_know", language) +
-            "<br><br>" +
-            currentQuestion.explanation[language],
+          {
+            value:
+              translate("did_you_know", language) +
+              "<br><br>" +
+              currentQuestion.explanation[language],
+          },
         ],
         showDescriptionLayout: true,
       })),
@@ -154,7 +178,7 @@ export default function Session({ project, resetProject, language }) {
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [step, phase, tagsMap, tagCount]);
+  }, [step, phase, tagsMap, tagCount, registeredAnswersInBackend]);
 
   useEffect(() => {
     if (phase === 0) {
@@ -162,6 +186,13 @@ export default function Session({ project, resetProject, language }) {
       setThemes(shuffle(project.themes));
     }
   }, [phase]);
+
+  function assignOptionColors(options) {
+    return options.map((option, index) => ({
+      value: option,
+      color: colors[index],
+    }));
+  }
 
   function goToNextPhase() {
     if (chosenTheme === undefined && phase === 0) {
@@ -202,10 +233,10 @@ export default function Session({ project, resetProject, language }) {
         } else if (currentQuestion.type === "opinion") {
           if (registeredAnswersInBackend === false) {
             saveAnswers();
-            registeredAnswersInBackend = true;
+            setRegisteredAnswersInBackend(true);
           } else if (registeredAnswersInBackend === true) {
             goToNextPhase();
-            registeredAnswersInBackend = false;
+            setRegisteredAnswersInBackend(false);
           }
         }
         break;
@@ -240,7 +271,7 @@ export default function Session({ project, resetProject, language }) {
         if (phase === 0) {
           setStep(STEPS.showBigTitle);
         } else if (registeredAnswersInBackend) {
-          registeredAnswersInBackend = false;
+          setRegisteredAnswersInBackend(false);
         } else {
           setStep(STEPS.showBigQuestion);
         }
