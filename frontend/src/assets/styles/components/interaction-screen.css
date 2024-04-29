@@ -7,7 +7,6 @@
   width: 100%;
   height: 100vh;
   padding: 2rem;
-  background-color: var(--color-black);
 }
 
 .squircle {
@@ -46,4 +45,71 @@
   position: fixed;
   bottom: 2rem;
   right: 2rem;
+}
+
+.interaction-screen__background {
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-black);
+}
+
+.ball {
+  position: fixed;
+  border-radius: var(--rounded-full);
+  transform-origin: 50% 60%;
+  animation: move-rotate-resize 20s ease-in-out infinite alternate;
+  aspect-ratio: 1;
+}
+
+.ball--blue {
+  top: 3vh;
+  left: 66vw;
+  width: 21vw;
+  background-image: var(--blue-light-gradient);
+}
+
+.ball--orange {
+  top: 4vh;
+  left: 10vw;
+  width: 15vw;
+  background-image: var(--orange-gradient);
+  animation-delay: -5s;
+  rotate: 130deg;
+}
+
+.ball--pink {
+  top: 60vh;
+  left: 70vw;
+  width: 10vw;
+  background-image: var(--pink-gradient);
+  animation-delay: -10s;
+  rotate: 100deg;
+}
+
+.ball--green {
+  top: 60vh;
+  left: 3vw;
+  width: 7vw;
+  background-image: var(--green-gradient);
+  animation-delay: -25s;
+}
+
+.ball--yellow {
+  top: 80vh;
+  left: 13vw;
+  width: 4vw;
+  background-image: var(--yellow-gradient);
+  animation-delay: -20s;
+}
+
+@keyframes move-rotate-resize {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0) scale(1);
+  }
+
+  100% {
+    transform: translateX(6vw) translateY(3vh) rotate(240deg) scale(1.3);
+  }
 }

@@ -9,6 +9,7 @@ export function InteractionScreen({
   showLogo,
   showBigTitle,
   showDescriptionLayout,
+  showBackgroundElements,
   tagCount,
 }) {
   return (
@@ -103,6 +104,17 @@ export function InteractionScreen({
           </svg>
         </div>
       )}
+      <div className="interaction-screen__background">
+        {showBackgroundElements && (
+          <>
+            <div className="ball ball--blue"></div>
+            <div className="ball ball--orange"></div>
+            <div className="ball ball--pink"></div>
+            <div className="ball ball--green"></div>
+            <div className="ball ball--yellow"></div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
