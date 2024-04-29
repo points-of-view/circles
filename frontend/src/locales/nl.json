@@ -1,10 +1,13 @@
 {
   "stand_in_circle": "Ga in de cirkel van je antwoord staan",
   "choose_a_theme": "Kies een thema",
+  "chosen_theme": "Het gekozen thema",
   "give_an_answer": "Beantwoord de volgende vraag",
-  "quiz_question": "We starten met een weetjesvraag!",
+  "quiz_question": "We starten met een quizvraag!",
   "did_you_know": "Wist je dat...?",
   "whats_your_opinion": "Wat is jouw mening hierover?",
-  "how_do_you_feel_about": "Hoe denk jij hierover?",
-  "correct_answer": "Het juiste antwoord"
+  "how_do_you_feel_about": "Wat denk jij over de volgende stelling?",
+  "correct_answer": "Het juiste antwoord",
+  "question": "Vraag",
+  "statement": "Stelling"
 }
