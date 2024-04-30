@@ -2,9 +2,8 @@ use diesel::{ExpressionMethods, RunQueryDsl};
 use diesel::{QueryDsl, SelectableHelper, SqliteConnection};
 use rust_xlsxwriter::{ExcelDateTime, Format, Workbook, Worksheet, XlsxError};
 
-use crate::database::models::{Session, Step};
 use crate::database::{
-    models::Answer,
+    models::{Answer, Session, Step},
     schema::{answers, sessions, steps},
 };
 
