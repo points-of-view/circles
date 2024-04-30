@@ -19,7 +19,7 @@ pub fn export_all_data(connection: &mut SqliteConnection, filepath: String) -> R
         Err(err) => return Err(err.to_string()),
     }
 
-    let count = answers::table.count().get_result(connection).unwrap();
+    let count: i64 = answers::table.count().get_result(connection).unwrap();
     let mut page = 0;
 
     while page * BATCH_SIZE < count {
