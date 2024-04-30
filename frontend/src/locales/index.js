@@ -10,7 +10,7 @@ const LOCALES = {
   PO,
 };
 
-export default function translate(key, language) {
+export default function translate(key, language = EN) {
   let translation;
 
   if (LOCALES[language.toUpperCase()][key]) {
