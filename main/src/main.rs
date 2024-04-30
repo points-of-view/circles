@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use circles::{tags::TagsMap, GlobalState};
+use circles::{export::export_all_data, tags::TagsMap, GlobalState};
 use std::fs;
 use tauri::Manager;
 
@@ -39,6 +39,12 @@ fn close_connection(state: tauri::State<GlobalState>) -> () {
     state.drop_reader();
 }
 
+#[tauri::command]
+async fn save_export(state: tauri::State<'_, GlobalState>, filepath: String) -> Result<(), String> {
+    let mut connection = state.database_connection.lock().unwrap();
+    export_all_data(&mut *connection, filepath)
+}
+
 fn main() {
     let app = tauri::Builder::default()
         .setup(|app| {
@@ -62,7 +68,8 @@ fn main() {
             select_project,
             start_session,
             close_connection,
-            save_step_results
+            save_step_results,
+            save_export
         ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application");
