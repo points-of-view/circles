@@ -168,8 +168,12 @@ export default function Session({ project, resetProject, language }) {
 
   useEffect(() => {
     if (phase === 0) {
+      setThemes(
+        shuffle(project.themes)
+          .filter((t) => chooseTheme?.key !== t.key)
+          .slice(0, 3),
+      );
       setChosenTheme(null);
-      setThemes(shuffle(project.themes).slice(0, 3));
     }
   }, [phase]);
 
