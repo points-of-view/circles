@@ -17,6 +17,7 @@
   padding: 1.25rem 2.5rem;
   border-radius: var(--rounded-full);
   background: var(--blue-gradient);
+  font-size: var(--text-xs);
 }
 
 .interaction-screen__title {
