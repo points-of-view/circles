@@ -15,3 +15,15 @@ html {
     format("truetype-variations");
   font-display: block;
 }
+
+orange {
+  color: var(--color-orange);
+}
+
+pink {
+  color: var(--color-pink);
+}
+
+green {
+  color: var(--color-green);
+}

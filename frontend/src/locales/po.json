@@ -1,10 +1,10 @@
 {
   "stand_in_circle": "Segue para o círculo da tua resposta",
-  "choose_a_theme": "Escolhe um tema",
+  "choose_a_theme": "Escolhe um <orange>tema</orange>",
   "give_an_answer": "Responde à seguinte questão",
-  "quiz_question": "Comecemos com uma pergunta",
+  "quiz_question": "Comecemos com uma <pink>pergunta</pink>",
   "did_you_know": "Sabias que...",
   "whats_your_opinion": "Qual é a tua opinião sobre isto?",
-  "toughts_next_statement": "O que pensas sobre isto?",
+  "toughts_next_statement": "O que pensas sobre <green>isto</green>?",
   "correct_answer": "Resposta correcta"
 }

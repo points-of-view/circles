@@ -25,6 +25,7 @@
   text-align: center;
   word-break: break-word;
   border-radius: var(--rounded-full);
+  flex-direction: column;
 }
 
 .interaction-screen__title--big {
@@ -32,7 +33,7 @@
   font-size: var(--text-xl);
   border: unset;
   background-image: unset;
-  aspect-ratio: 1;
+  gap: 4rem;
 }
 
 .interaction-screen__title--fact {
