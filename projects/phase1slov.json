@@ -1,0 +1,603 @@
+{
+  "name": {
+    "sl": "Testing Phase 1 - Slovenian Copy"
+  },
+  "availableLanguages": ["sl"],
+  "key": "phase1slov",
+  "themes": [
+    {
+      "name": {
+        "sl": "Migracije"
+      },
+      "key": "migration",
+      "questions": [
+        {
+          "title": {
+            "sl": "Koliko ljudi je leta 2023 zaprosilo za azil v EU?"
+          },
+          "key": "question-asylum-2023",
+          "type": "quiz",
+          "explanation": {
+            "sl": "EU je leta 2023 uvedla solidarnostni mehanizem, pri katerem države z manj priseljenci sprejemajo priseljence iz držav z več priseljenci."
+          },
+          "options": [
+            {
+              "key": "question-asylum-2023-option-one",
+              "value": {
+                "sl": "Med 100.000 in 500.000"
+              }
+            },
+            {
+              "key": "question-asylum-2023-option-two",
+              "value": {
+                "sl": "Med 500.000 in 1.000.000"
+              }
+            },
+            {
+              "key": "question-asylum-2023-option-three",
+              "value": {
+                "sl": "Več kot 1.000.000"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Elk EU-land moet een minimumaantal asielzoekers opnemen, evenredig met zijn bevolking"
+          },
+          "key": "question-minimum-asylum-seekers",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-minimum-asylum-seekers-option-disagree",
+              "value": {
+                "sl": "Ne strinjam se"
+              }
+            },
+            {
+              "key": "question-minimum-asylum-seekers-option-unsure",
+              "value": {
+                "sl": "Nisem prepričan_a"
+              }
+            },
+            {
+              "key": "question-minimum-asylum-seekers-option-agree",
+              "value": {
+                "sl": "Se strinjam"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "UI"
+      },
+      "key": "artificial-intelligence",
+      "questions": [
+        {
+          "title": {
+            "sl": "Ali EU na javnih površinah dovoljuje uporabo tehnologije sprotnega prepoznavanja obrazov?"
+          },
+          "key": "question-live-facial-recognition",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Akt o umetni inteligenci iz leta 2024 v EU na javnih mestih prepoveduje uporabo sprotnega prepoznavanja obrazov. Izjema so zelo specifični primeri kazenskega pregona, kot sta iskanje ugrabljenih žrtev ali domnevnih hudih kriminalcev."
+          },
+          "options": [
+            {
+              "key": "question-live-facial-recognition-option-no",
+              "value": {
+                "sl": "Ne"
+              }
+            },
+            {
+              "key": "question-live-facial-recognition-option-sometimes",
+              "value": {
+                "sl": "V nekaterih primerih"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-live-facial-recognition-option-yes",
+              "value": {
+                "sl": "Da"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "EU bi morala biti bolj prilagodljiva glede uporabe tehnologije sprotnega prepoznavanja obrazov na javnih mestih in jo morda dovoliti pogosteje"
+          },
+          "key": "question-flexible-facial-recognition-in-public-space",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-flexible-facial-recognition-in-public-space-option-disagree",
+              "value": {
+                "sl": "Ne strinjam se"
+              }
+            },
+            {
+              "key": "question-flexible-facial-recognition-in-public-space-option-unsure",
+              "value": {
+                "sl": "Nisem prepričan_a"
+              }
+            },
+            {
+              "key": "question-flexible-facial-recognition-in-public-space-option-agree",
+              "value": {
+                "sl": "Se strinjam"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "Podnebje"
+      },
+      "key": "climate",
+      "questions": [
+        {
+          "title": {
+            "sl": "Do katerega leta namerava EU izravnati vse emisije CO₂ s podnebnimi zaščitnimi ukrepi in tako doseči podnebno nevtralnost?"
+          },
+          "key": "question-climate-neutrality",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Podnebni zakon iz leta 2021 določa cilj doseči podnebno nevtralnost EU do leta 2050. EU si prizadeva, da bi Evropa postala prvi podnebno nevtralen kontinent."
+          },
+          "options": [
+            {
+              "key": "question-climate-neutrality-option-one",
+              "value": {
+                "sl": "Do 2030"
+              }
+            },
+            {
+              "key": "question-climate-neutrality-option-two",
+              "value": {
+                "sl": "Do 2040"
+              }
+            },
+            {
+              "key": "question-climate-neutrality-option-three",
+              "value": {
+                "sl": "Do 2050"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Države EU bi morale biti oglobljene, če si ne prizadevajo dovolj za zmanjšanje emisij CO₂"
+          },
+          "key": "question-fine-carbon-emissions",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-fine-carbon-emissions-option-disagree",
+              "value": {
+                "sl": "Ne strinjam se"
+              }
+            },
+            {
+              "key": "question-fine-carbon-emissions-option-unsure",
+              "value": {
+                "sl": "Nisem prepričan_a"
+              }
+            },
+            {
+              "key": "question-fine-carbon-emissions-option-agree",
+              "value": {
+                "sl": "Se strinjam"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "Spol"
+      },
+      "key": "gender",
+      "questions": [
+        {
+          "title": {
+            "sl": "Koliko držav EU na osebni izkaznici omogoča izbiro oznake X namesto \"moški\" ali \"ženska\"?"
+          },
+          "key": "question-x-id-card",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Malta in Danska dovoljujeta oznako X na nacionalnih identifikacijskih izkaznicah. Druge države implementirajo zakonodajo za odstranitev omemb spola iz nacionalnih identifikacijskih izkaznic. EU nima zakonodaje, povezane z oznakami spola v uradnih dokumentih."
+          },
+          "options": [
+            {
+              "key": "question-x-id-card-option-one",
+              "value": {
+                "sl": "2"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-x-id-card-option-two",
+              "value": {
+                "sl": "5"
+              }
+            },
+            {
+              "key": "question-x-id-card-option-three",
+              "value": {
+                "sl": "10"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "EU bi morala spodbujati države članice, da poleg moške in ženske uradno prepoznajo tudi druge spolne identite"
+          },
+          "key": "question-encourage-recognition-other-genders",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-encourage-recognition-other-genders-option-disagree",
+              "value": {
+                "sl": "Ne strinjam se"
+              }
+            },
+            {
+              "key": "question-encourage-recognition-other-genders-option-unsure",
+              "value": {
+                "sl": "Nisem prepričan_a"
+              }
+            },
+            {
+              "key": "question-encourage-recognition-other-genders-option-agree",
+              "value": {
+                "sl": "Se strinjam"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "Vojaška služba"
+      },
+      "key": "military-service",
+      "questions": [
+        {
+          "title": {
+            "sl": "Koliko držav EU ima kakršno koli obliko obveznega služenja vojaškega roka?"
+          },
+          "key": "question-mandatory-military-service",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Neko obliko obveznega služenja vojaškega roka imajo Litva, Danska, Švedska, Ciper, Finska, Latvija, Avstrija, Grčija in Estonija. Vojska EU trenutno ne obstaja. Vsaka država članica je odgovorna za lastne obrambne sile."
+          },
+          "options": [
+            {
+              "key": "question-mandatory-military-service-option-one",
+              "value": {
+                "sl": "Geen"
+              }
+            },
+            {
+              "key": "question-mandatory-military-service-option-two",
+              "value": {
+                "sl": "3"
+              }
+            },
+            {
+              "key": "question-mandatory-military-service-option-three",
+              "value": {
+                "sl": "9"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "EU bi morala vzpostaviti skupno evropsko vojsko"
+          },
+          "key": "question-eu-army",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-eu-army-option-disagree",
+              "value": {
+                "sl": "Ne strinjam se"
+              }
+            },
+            {
+              "key": "question-eu-army-option-unsure",
+              "value": {
+                "sl": "Nisem prepričan_a"
+              }
+            },
+            {
+              "key": "question-eu-army-option-agree",
+              "value": {
+                "sl": "Se strinjam"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "Mobilnost"
+      },
+      "key": "mobility",
+      "questions": [
+        {
+          "title": {
+            "sl": "Od katerega leta naprej bo v EU prepovedana uporaba avtomobilov in dostavnih vozil, ki izpuščajo ogljikov dioksid?"
+          },
+          "key": "question-ban-emissive-cars",
+          "type": "quiz",
+          "explanation": {
+            "sl": "EU je leta 2023 odločila, da morajo nova vozila, ki se prodajajo v EU, od leta 2035 naprej imeti ničelne emisije. To pomeni, da morajo biti od leta 2035 naprej vsa nova vozila električna vozila."
+          },
+          "options": [
+            {
+              "key": "question-ban-emissive-cars-option-one",
+              "value": {
+                "sl": "Vanaf 2025"
+              }
+            },
+            {
+              "key": "question-ban-emissive-cars-option-two",
+              "value": {
+                "sl": "Vanaf 2030"
+              }
+            },
+            {
+              "key": "question-ban-emissive-cars-option-three",
+              "value": {
+                "sl": "Vanaf 2035"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Leto 2035 je razumen časovni okvir za popoln prehod na električne avtomobile in dostavna vozila"
+          },
+          "key": "question-timing-switch-electric-vehicles",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-timing-switch-electric-vehicles-option-disagree",
+              "value": {
+                "sl": "Ne strinjam se"
+              }
+            },
+            {
+              "key": "question-timing-switch-electric-vehicles-option-unsure",
+              "value": {
+                "sl": "Nisem prepričan_a"
+              }
+            },
+            {
+              "key": "question-timing-switch-electric-vehicles-option-agree",
+              "value": {
+                "sl": "Se strinjam"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "Družbeni mediji"
+      },
+      "key": "social-media",
+      "questions": [
+        {
+          "title": {
+            "sl": "Kolikšen odstotek Evropejcev se redno srečuje z lažnimi informacijami na spletu?"
+          },
+          "key": "question-confronted-with-false-information",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Eu je leta 2024 sprejela zakonodajo, ki od velikih tehnoloških podjetij in platform, kot sta TikTok in Facebook, zahteva, da zaznavajo in odstranjujejo nezakonite spletne vsebine. Preden je bil odobren, je zakon sprožil veliko debate."
+          },
+          "options": [
+            {
+              "key": "question-confronted-with-false-information-option-one",
+              "value": {
+                "sl": "Okoli 10%"
+              }
+            },
+            {
+              "key": "question-confronted-with-false-information-option-two",
+              "value": {
+                "sl": "Okoli 20%"
+              }
+            },
+            {
+              "key": "question-confronted-with-false-information-option-three",
+              "value": {
+                "sl": "Okoli 30%"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "EU bi morala spletnim platformam dovoliti, da se same odločajo, kako bodo ravnale s škodljivimi vsebinami"
+          },
+          "key": "question-damaging-content-on-platforms",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-damaging-content-on-platforms-option-disagree",
+              "value": {
+                "sl": "Ne strinjam se"
+              }
+            },
+            {
+              "key": "question-damaging-content-on-platforms-option-unsure",
+              "value": {
+                "sl": "Nisem prepričan_a"
+              }
+            },
+            {
+              "key": "question-damaging-content-on-platforms-option-agree",
+              "value": {
+                "sl": "Se strinjam"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "Mejni nadzor"
+      },
+      "key": "border-controls",
+      "questions": [
+        {
+          "title": {
+            "sl": "Kako se imenuje evropska zakonodaja, ki uveljavlja pravico do prostega gibanj oseb po EU?"
+          },
+          "key": "question-free-traffic-of-persons",
+          "type": "quiz",
+          "explanation": {
+            "sl": "V Schengensko območje spada 27 evropskih držav. Kdor živi v schengenskem območju oziroma je vstopil v schengensko območje, lahko prosto potuje po teh državah, ne da bi bil podvržen nadaljnjim mejnim kontrolam."
+          },
+          "options": [
+            {
+              "key": "question-free-traffic-of-persons-option-one",
+              "value": {
+                "sl": "Maastrichtska pogodba"
+              }
+            },
+            {
+              "key": "question-free-traffic-of-persons-option-two",
+              "value": {
+                "sl": "Schengenski sporazum"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-free-traffic-of-persons-option-three",
+              "value": {
+                "sl": "Bruseljska pogodba"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "EU bi morala ponovno vzpostaviti interno mejno kontrolo med državami, ki spadajo v schengensko območje"
+          },
+          "key": "question-restart-border-control-within-shengen",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-restart-border-control-within-shengen-option-disagree",
+              "value": {
+                "sl": "Ne strinjam se"
+              }
+            },
+            {
+              "key": "question-restart-border-control-within-shengen-option-unsure",
+              "value": {
+                "sl": "Nisem prepričan_a"
+              }
+            },
+            {
+              "key": "question-restart-border-control-within-shengen-option-agree",
+              "value": {
+                "sl": "Se strinjam"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "Volilna pravica"
+      },
+      "key": "eu-voting-rights",
+      "questions": [
+        {
+          "title": {
+            "sl": "Naslednje volitve v Evropski parlament bodo 9. junija 2024. Katera je najnižja starost, pri kateri se jih mladi iz specifičnih držav članic lahko udeležijo?"
+          },
+          "key": "question-youngest-participation-age",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Evropske države se lahko avtonomno odločijo glede najnižje starosti, pri kateri mladim dovolijo udeležbo na evropskih volitvah. V Avstriji, Belgiji, Nemčiji in Malti je ta starost 16, v Grčiji 17, v vseh ostalih državah članicah pa 18 let."
+          },
+          "options": [
+            {
+              "key": "question-youngest-participation-age-option-one",
+              "value": {
+                "sl": "15"
+              }
+            },
+            {
+              "key": "question-youngest-participation-age-option-two",
+              "value": {
+                "sl": "16"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-youngest-participation-age-option-three",
+              "value": {
+                "sl": "17"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Vse države članice EU bi morale minimalno starost za možnost udeležbe na evropskih volitvah znižati na16 let"
+          },
+          "key": "question-generalize-voting-age",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-generalize-voting-age-option-disagree",
+              "value": {
+                "sl": "Ne strinjam se"
+              }
+            },
+            {
+              "key": "question-generalize-voting-age-option-unsure",
+              "value": {
+                "sl": "Nisem prepričan_a"
+              }
+            },
+            {
+              "key": "question-generalize-voting-age-option-agree",
+              "value": {
+                "sl": "Se strinjam"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
