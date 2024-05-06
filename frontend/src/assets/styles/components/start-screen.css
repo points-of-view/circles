@@ -1,0 +1,121 @@
+.start-screen {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 35rem));
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 3rem;
+  background-color: var(--color-purple);
+}
+
+.start-screen__card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  max-width: 35rem;
+  padding: 1.5rem 2rem;
+  color: var(--color-black);
+  border-radius: var(--rounded-base);
+  background-color: var(--color-white);
+  aspect-ratio: 1;
+}
+
+.start-screen__title {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.start-screen__input {
+  width: min(100%, 20rem);
+}
+
+.start-screen__label {
+  display: block;
+  margin-bottom: 0.375rem;
+  color: var(--color-grey);
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+
+.start-screen__field {
+  width: 100%;
+  padding: 0.75rem;
+  font-weight: 400;
+  font-family: var(--font-family);
+  line-height: 1;
+  border: 1px solid var(--color-grey);
+  border-radius: var(--rounded-md);
+
+  &:focus {
+    outline-color: var(--color-purple);
+    outline-offset: 1px;
+  }
+
+  &::placeholder {
+    color: var(--color-grey);
+  }
+}
+
+.start-screen__button {
+  padding: 1rem;
+  color: var(--color-white);
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  border: none;
+  border-radius: var(--rounded-md);
+  background-color: var(--color-purple);
+  appearance: none;
+
+  &:hover {
+    background-color: var(--color-blue-light);
+  }
+
+  &:focus {
+    outline-color: var(--color-purple);
+    outline-offset: 4px;
+  }
+
+  &:disabled {
+    background-color: var(--color-grey);
+  }
+}
+
+.start-screen__message {
+  color: var(--color-purple);
+}
+
+.start-screen__message--success {
+  color: var(--color-green);
+}
+
+.start-screen__message--error {
+  color: var(--color-red);
+}
+
+.start-screen__message--spinner::before {
+  content: "";
+  display: inline-block;
+  height: 1.625rem;
+  margin-right: 0.5rem;
+  margin-bottom: -0.375rem;
+  box-sizing: border-box;
+  border: 5px solid var(--color-purple);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: rotation 2.5s linear infinite;
+  aspect-ratio: 1;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

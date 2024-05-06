@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SelectProject } from "./components/select_project";
+import { StartScreen } from "./components/start_screen";
 import { invoke } from "@tauri-apps/api/tauri";
 import Session from "./components/session";
 
@@ -19,6 +19,6 @@ export default function App() {
       resetProject={() => setProject(null)}
     />
   ) : (
-    <SelectProject setProject={setProject} language={language} />
+    <StartScreen setProject={setProject} language={language} />
   );
 }
