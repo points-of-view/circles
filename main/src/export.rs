@@ -71,7 +71,7 @@ fn write_headers(worksheet: &mut Worksheet) -> Result<(), XlsxError> {
     worksheet.write(0, 1, "Session ID")?;
     worksheet.write(0, 2, "Theme key")?;
     worksheet.write(0, 3, "Question key")?;
-    worksheet.write(0, 4, "Timestamp")?;
+    worksheet.write(0, 4, "Timestamp (UTC)")?;
     worksheet.write(0, 5, "RFID Token")?;
     worksheet.write(0, 6, "Option")?;
     Ok(())
