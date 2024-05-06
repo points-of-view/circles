@@ -57,6 +57,10 @@
   max-height: 50%;
 }
 
+.option__figure-container:has(> :nth-child(18)) {
+  gap: 4px;
+}
+
 .option__amount {
   position: absolute;
   left: 50%;

@@ -43,7 +43,8 @@ export default function Session({ project, resetProject, language }) {
       : null;
   const themeName = phase !== 0 && chosenTheme.name[language];
   const showLogo = step === STEPS.showBigTitle;
-  const showIcon = phase !== 0 && step === STEPS.showBigTitle && currentQuestion.type;
+  const showIcon =
+    phase !== 0 && step === STEPS.showBigTitle && currentQuestion.type;
   const showBackgroundElements = step !== STEPS.showMainInteractionScreen;
   const showBigTitle = [
     STEPS.showBigTitle,
