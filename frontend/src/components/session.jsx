@@ -59,7 +59,7 @@ export default function Session({ project, resetProject, language }) {
       step === STEPS.showBigTitle &&
       currentQuestion.type === "opinion"
     ) {
-      return translate("how_do_you_feel_about", language);
+      return translate("toughts_next_statement", language);
     } else if (step === STEPS.showBigQuestion) {
       return `${translate(currentQuestion.type === "quiz" ? "question" : "statement", language)}: ${currentQuestion.title[language]}`;
     } else if (step === STEPS.showMainInteractionScreen) {

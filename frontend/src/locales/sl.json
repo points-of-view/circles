@@ -5,6 +5,8 @@
   "quiz_question": "Začnimo z vprašanjem",
   "did_you_know": "Ali ste vedeli ...?",
   "whats_your_opinion": "Kakšno je vaše mnenje o tem?",
-  "how_do_you_feel_about": "Kako se počutite glede tega?",
-  "correct_answer": "Pravilni odgovor"
+  "toughts_next_statement": "Kaj si mislite o naslednji trditvi?",
+  "correct_answer": "Pravilni odgovor",
+  "question": "Vprašanje",
+  "statement": "Trditev"
 }

@@ -5,6 +5,8 @@
   "quiz_question": "Let's start with a quiz question!",
   "did_you_know": "Did you know...?",
   "whats_your_opinion": "What's your opinion on this?",
-  "how_do_you_feel_about": "How do you feel about this?",
-  "correct_answer": "Correct answer"
+  "toughts_next_statement": "What do you think about the next statement?",
+  "correct_answer": "Correct answer",
+  "question": "Question",
+  "statement": "Statement"
 }
