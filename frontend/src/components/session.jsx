@@ -170,7 +170,7 @@ export default function Session({ project, resetProject, language }) {
     if (phase === 0) {
       setThemes(
         shuffle(project.themes)
-          .filter((t) => chooseTheme?.key !== t.key)
+          .filter((t) => chosenTheme?.key !== t.key)
           .slice(0, 3),
       );
       setChosenTheme(null);
