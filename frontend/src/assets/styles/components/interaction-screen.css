@@ -40,6 +40,7 @@
   justify-content: center;
   align-items: center;
   padding: 1.25rem 2.5rem;
+  font-size: var(--text-xs);
   border-radius: var(--rounded-full);
   background: var(--squircle-bg-color);
 }
