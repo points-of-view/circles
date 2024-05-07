@@ -23,7 +23,7 @@ function assignOptionColors(options) {
   }));
 }
 
-export default function Session({ project, resetProject, language }) {
+export default function Session({ project, resetProject, language, darkMode }) {
   const [tagsMap, setTagsMap] = useState({});
   const [, setReaderError] = useState(null);
   const [error, setError] = useState(null);
@@ -288,6 +288,7 @@ export default function Session({ project, resetProject, language }) {
         />
       )}
       <InteractionScreen
+        darkMode={darkMode}
         title={title}
         showBigTitle={showBigTitle}
         showBackgroundElements={showBackgroundElements}
