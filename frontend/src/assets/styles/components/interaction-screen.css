@@ -58,11 +58,6 @@
   font-size: var(--text-xl);
   border: unset;
   background: unset;
-  aspect-ratio: 1;
-}
-
-.interaction-screen__title--fact {
-  aspect-ratio: unset;
 }
 
 .interaction-screen__theme {
