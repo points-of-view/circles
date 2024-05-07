@@ -1,11 +1,38 @@
 {
   "stand_in_circle": "Postavite se v krog, ki predstavlja vaš odgovor.",
-  "choose_a_theme": "Izberite temo",
+  "choose_a_theme": [
+    {
+      "text": "Izberite "
+    },
+    {
+      "text": "temo",
+      "color": "var(--color-orange)"
+    }
+  ],
   "give_an_answer": "Odgovorite na naslednje vprašanje",
-  "quiz_question": "Začnimo z vprašanjem",
+  "quiz_question": [
+    {
+      "text": "Začnimo z "
+    },
+    {
+      "text": "vprašanjem",
+      "color": "var(--color-pink)"
+    }
+  ],
   "did_you_know": "Ali ste vedeli ...?",
   "whats_your_opinion": "Kakšno je vaše mnenje o tem?",
-  "toughts_next_statement": "Kaj si mislite o naslednji trditvi?",
+  "toughts_next_statement": [
+    {
+      "text": "Kaj si mislite o naslednji "
+    },
+    {
+      "text": "trditvi",
+      "color": "var(--color-green)"
+    },
+    {
+      "text": "?"
+    }
+  ],
   "correct_answer": "Pravilni odgovor",
   "question": "Vprašanje",
   "statement": "Trditev"

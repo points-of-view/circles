@@ -1,11 +1,41 @@
 {
   "stand_in_circle": "Go stand in the circle of your answer",
-  "choose_a_theme": "Choose a theme",
+  "choose_a_theme": [
+    {
+      "text": "Choose a "
+    },
+    {
+      "text": "theme",
+      "color": "var(--color-orange)"
+    }
+  ],
   "give_an_answer": "Give an answer to the following question ",
-  "quiz_question": "Let's start with a quiz question!",
+  "quiz_question": [
+    {
+      "text": "Let's start with a "
+    },
+    {
+      "text": "quiz question",
+      "color": "var(--color-pink)"
+    },
+    {
+      "text": "!"
+    }
+  ],
   "did_you_know": "Did you know...?",
   "whats_your_opinion": "What's your opinion on this?",
-  "toughts_next_statement": "What do you think about the next statement?",
+  "toughts_next_statement": [
+    {
+      "text": "What do you think about the "
+    },
+    {
+      "text": "next statement",
+      "color": "var(--color-green)"
+    },
+    {
+      "text": "?"
+    }
+  ],
   "correct_answer": "Correct answer",
   "question": "Question",
   "statement": "Statement",

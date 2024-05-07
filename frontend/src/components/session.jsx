@@ -43,6 +43,8 @@ export default function Session({ project, resetProject, language, darkMode }) {
       : null;
   const themeName = phase !== 0 && chosenTheme.name[language];
   const showLogo = step === STEPS.showBigTitle;
+  const showIcon =
+    phase !== 0 && step === STEPS.showBigTitle && currentQuestion.type;
   const showBackgroundElements = step !== STEPS.showMainInteractionScreen;
   const showBigTitle = [
     STEPS.showBigTitle,
@@ -291,6 +293,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
         darkMode={darkMode}
         title={title}
         showBigTitle={showBigTitle}
+        showIcon={showIcon}
         showBackgroundElements={showBackgroundElements}
         showFact={showFact}
         description={description}
