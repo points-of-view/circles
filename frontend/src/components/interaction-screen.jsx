@@ -58,7 +58,15 @@ export function InteractionScreen({
             </svg>
           )}
 
-          <p dangerouslySetInnerHTML={{ __html: title }}></p>
+          <p>
+            {Array.isArray(title)
+              ? title.map((str, i) => (
+                  <span key={i} style={{ color: str.color }}>
+                    {str.text}
+                  </span>
+                ))
+              : title}
+          </p>
         </div>
       )}
       {description && (
