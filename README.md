@@ -21,11 +21,10 @@ If you don't want to (or can't) use an actual RFID reader, set an environment va
 ### Tests
 You can run the tests with `cargo test`
 
-## Production set-up
-
+## Production setup
 ### Raspberry Pi 5 (Raspberry Pi OS/Debian Bookworm)
-For running the circles application you should:
-- Set the Ethernet ipv4 settings from DHCP to Local-Link
-- In file manager 'Preferences' > 'General' > Uncheck 'Don't ask options on launch executable file'
-- Install the package through an AppImage Launcher ([example]([url](https://www.makeuseof.com/add-appimages-to-linux-system-menu/)))
-- Put an icon on the Desktop
+To run the circles application, you should:
+* Set the Ethernet ipv4 settings from DHCP to Local-Link
+* In file manager 'Preferences' > 'General' > Uncheck 'Don't ask options on launch executable file'
+* Install the package through an AppImage Launcher ([example]([url](https://www.makeuseof.com/add-appimages-to-linux-system-menu/)))
+* Put an icon on the Desktop
