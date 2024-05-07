@@ -1,6 +1,7 @@
 import OptionsView from "./optionsview";
 import clsx from "clsx";
-import logos from "../assets/visuals/logos.png";
+import logos_black from "../assets/visuals/logos_black.png";
+import logos_white from "../assets/visuals/logos_white.png";
 
 export function InteractionScreen({
   darkMode,
@@ -51,7 +52,13 @@ export function InteractionScreen({
       {themeName && (
         <div className="interaction-screen__theme squircle">{themeName}</div>
       )}
-      {showLogo && <img width={"70%"} src={logos} alt="Logos" />}
+      {showLogo && (
+        <img
+          width={"70%"}
+          src={darkMode ? logos_white : logos_black}
+          alt="Logos"
+        />
+      )}
       <div className="interaction-screen__background">
         {showBackgroundElements && (
           <>
