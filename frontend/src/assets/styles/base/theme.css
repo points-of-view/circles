@@ -60,34 +60,64 @@
   --screen-2xl: 1536px;
 
   /* Gradients */
-  --blue-gradient: linear-gradient(
+  --blue-gradient-dark: linear-gradient(
     90deg,
     var(--color-black) 0%,
     var(--color-blue) 100%
   );
-  --blue-light-gradient: linear-gradient(
+  --blue-light-gradient-dark: linear-gradient(
     180deg,
     var(--color-black) 0%,
     var(--color-blue-light) 100%
   );
-  --orange-gradient: linear-gradient(
+  --orange-gradient-dark: linear-gradient(
     180deg,
     var(--color-black) 0%,
     var(--color-orange) 100%
   );
-  --pink-gradient: linear-gradient(
+  --pink-gradient-dark: linear-gradient(
     180deg,
     var(--color-black) 0%,
     var(--color-pink) 100%
   );
-  --yellow-gradient: linear-gradient(
+  --yellow-gradient-dark: linear-gradient(
     180deg,
     var(--color-black) 0%,
     var(--color-yellow) 100%
   );
-  --green-gradient: linear-gradient(
+  --green-gradient-dark: linear-gradient(
     180deg,
     var(--color-black) 0%,
+    var(--color-green) 100%
+  );
+  --blue-gradient-light: linear-gradient(
+    90deg,
+    var(--color-white) 0%,
+    var(--color-blue) 100%
+  );
+  --blue-light-gradient-light: linear-gradient(
+    180deg,
+    var(--color-white) 0%,
+    var(--color-blue-light) 100%
+  );
+  --orange-gradient-light: linear-gradient(
+    180deg,
+    var(--color-white) 0%,
+    var(--color-orange) 100%
+  );
+  --pink-gradient-light: linear-gradient(
+    180deg,
+    var(--color-white) 0%,
+    var(--color-pink) 100%
+  );
+  --yellow-gradient-light: linear-gradient(
+    180deg,
+    var(--color-white) 0%,
+    var(--color-yellow) 100%
+  );
+  --green-gradient-light: linear-gradient(
+    180deg,
+    var(--color-white) 0%,
     var(--color-green) 100%
   );
 }

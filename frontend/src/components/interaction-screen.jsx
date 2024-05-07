@@ -3,6 +3,7 @@ import clsx from "clsx";
 import logos from "../assets/visuals/logos.png";
 
 export function InteractionScreen({
+  darkMode,
   title,
   description,
   options,
@@ -14,7 +15,12 @@ export function InteractionScreen({
   tagCount,
 }) {
   return (
-    <div className="interaction-screen">
+    <div
+      className={clsx(
+        "interaction-screen",
+        darkMode ? "interaction-screen--dark" : "interaction-screen--light",
+      )}
+    >
       {title && (
         <div
           className={clsx("interaction-screen__title squircle", {

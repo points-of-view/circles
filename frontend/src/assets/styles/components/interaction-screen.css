@@ -7,6 +7,31 @@
   width: 100%;
   height: 100vh;
   padding: 2rem;
+  color: var(--text-color);
+}
+
+.interaction-screen--dark {
+  --text-color: var(--color-white);
+  --bg-color: var(--color-black);
+  --blue-gradient: var(--blue-gradient-dark);
+  --blue-light-gradient: var(--blue-light-gradient-dark);
+  --orange-gradient: var(--orange-gradient-dark);
+  --pink-gradient: var(--pink-gradient-dark);
+  --yellow-gradient: var(--yellow-gradient-dark);
+  --green-gradient: var(--green-gradient-dark);
+  --squircle-bg-color: var(--blue-gradient);
+}
+
+.interaction-screen--light {
+  --text-color: var(--color-black);
+  --bg-color: var(--color-white);
+  --blue-gradient: var(--blue-gradient-light);
+  --blue-light-gradient: var(--blue-light-gradient-light);
+  --orange-gradient: var(--orange-gradient-light);
+  --pink-gradient: var(--pink-gradient-light);
+  --yellow-gradient: var(--yellow-gradient-light);
+  --green-gradient: var(--green-gradient-light);
+  --squircle-bg-color: var(--color-white);
 }
 
 .squircle {
@@ -16,7 +41,7 @@
   align-items: center;
   padding: 1.25rem 2.5rem;
   border-radius: var(--rounded-full);
-  background: var(--blue-gradient);
+  background: var(--squircle-bg-color);
 }
 
 .interaction-screen__title {
@@ -31,7 +56,7 @@
   flex-grow: 1;
   font-size: var(--text-xl);
   border: unset;
-  background-image: unset;
+  background: unset;
   aspect-ratio: 1;
 }
 
@@ -56,7 +81,7 @@
   z-index: -1;
   width: 100%;
   height: 100vh;
-  background-color: var(--color-black);
+  background-color: var(--bg-color);
 }
 
 .ball {
