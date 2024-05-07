@@ -59,6 +59,23 @@
   }
 }
 
+.start-screen__checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--color-purple);
+}
+
+.start-screen__input--checkbox {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+
+  & .start-screen__label {
+    margin-bottom: 0;
+    line-height: 1;
+  }
+}
+
 .start-screen__button {
   padding: 1rem;
   color: var(--color-white);

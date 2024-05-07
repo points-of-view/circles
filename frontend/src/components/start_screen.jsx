@@ -13,16 +13,16 @@ const STATES = {
   done: "DONE",
 };
 
-export function StartScreen({ setProject }) {
+export function StartScreen({ setProject, setDarkMode }) {
   return (
     <div className="start-screen">
-      <StartProject setProject={setProject} />
+      <StartProject setProject={setProject} setDarkMode={setDarkMode} />
       <ExportCard />
     </div>
   );
 }
 
-function StartProject({ setProject }) {
+function StartProject({ setProject, setDarkMode }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
 
@@ -33,10 +33,12 @@ function StartProject({ setProject }) {
     const data = new FormData(e.target);
     const projectKey = data.get("projectKey");
     const hostname = data.get("hostname");
+    const darkMode = data.get("darkMode");
     try {
       await invoke("select_project", { projectKey, hostname });
-      setProject(projects[projectKey]);
       localStorage.setItem("circles.last_hostname", hostname);
+      setDarkMode(darkMode);
+      setProject(projects[projectKey]);
     } catch (e) {
       setState(STATES.error);
       setError(e);
@@ -82,6 +84,18 @@ function StartProject({ setProject }) {
           required
           defaultValue={previousHostname}
         />
+      </div>
+      <div className="start-screen__input start-screen__input--checkbox">
+        <input
+          type="checkbox"
+          name="darkMode"
+          id="darkMode"
+          className="start-screen__checkbox"
+          defaultChecked={true}
+        />
+        <label htmlFor="darkMode" className="start-screen__label">
+          {translate("start_dark_mode")}
+        </label>
       </div>
       <button
         type="submit"
