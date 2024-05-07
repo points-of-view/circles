@@ -1,4 +1,5 @@
 pub mod database;
+pub mod error;
 pub mod export;
 pub mod projects;
 pub mod reader;
@@ -6,9 +7,10 @@ pub mod tags;
 
 use database::{create_session, save_step_results, setup_database};
 use diesel::prelude::*;
+use error::{GeneralError, GeneralErrorKind};
 use projects::{Project, Theme};
 use reader::{LLRPReader, MockReader, Reader, ReaderError, ReaderProtocol};
-use std::{env, error::Error, path::PathBuf};
+use std::{env, path::PathBuf};
 use tags::TagsMap;
 use tauri::AppHandle;
 
@@ -26,7 +28,7 @@ pub struct GlobalState {
 }
 
 impl GlobalState {
-    pub fn build(database_location: PathBuf) -> Result<GlobalState, Box<dyn Error>> {
+    pub fn build(database_location: PathBuf) -> Result<GlobalState, Box<dyn std::error::Error>> {
         let connection = setup_database(&database_location)?;
 
         let state = GlobalState {
@@ -39,7 +41,7 @@ impl GlobalState {
         Ok(state)
     }
 
-    pub fn select_project(&self, project_key: String) -> Result<(), String> {
+    pub fn select_project(&self, project_key: String) -> Result<(), GeneralError> {
         match Project::build_all()
             .iter()
             .find(|&project| project.key == project_key)
@@ -49,7 +51,10 @@ impl GlobalState {
                 *lock = Some(project.clone());
                 Ok(())
             }
-            None => Err("Project could not be found!".to_owned()),
+            None => Err(GeneralError {
+                kind: GeneralErrorKind::IncorrectProject(project_key),
+                message: String::new(),
+            }),
         }
     }
 

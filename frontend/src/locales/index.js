@@ -22,3 +22,13 @@ export default function translate(key, language = "EN") {
   }
   return translation;
 }
+
+/**
+ * Resolve an error from our backend to a translations
+ *
+ * @param {CirclesError} error
+ * @returns string
+ */
+export function translateError(error, language) {
+  return translate(`error_${error.error_type}_${error.kind}`, language);
+}

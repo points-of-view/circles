@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use circles::{export::export_all_data, tags::TagsMap, GlobalState};
+use circles::{error::CirclesError, export::export_all_data, tags::TagsMap, GlobalState};
 use std::fs;
 use tauri::Manager;
 
@@ -11,13 +11,10 @@ async fn select_project(
     app_handle: tauri::AppHandle,
     project_key: String,
     hostname: String,
-) -> Result<(), String> {
+) -> Result<(), CirclesError> {
     state.select_project(project_key)?;
-    if let Err(err) = state.start_reading(hostname, app_handle) {
-        Err(err.to_string())
-    } else {
-        Ok(())
-    }
+    state.start_reading(hostname, app_handle)?;
+    Ok(())
 }
 
 #[tauri::command]

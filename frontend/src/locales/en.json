@@ -19,5 +19,11 @@
   "start_export_button": "Export",
   "start_export_no_filepath_error": "Please select a location to store the export!",
   "start_export_working": "Exporting data. Please wait...",
-  "start_export_done": "The export is done and saved to your device."
+  "start_export_done": "The export is done and saved to your device.",
+  "error_GeneralError_IncorrectProject": "The project key you entered is not correct.\n Please double check and try again",
+  "error_GeneralError_Unknown": "An unknown error occurred in the application\nPlease restart the application and try again",
+  "error_ReaderError_IncorrectHostname": "The hostname you entered is not correct.\n Please double check the hostname and try again",
+  "error_ReaderError_CouldNotConnect": "Could not connect to the reader.\nPlease check the reader is powered up and connected to the computer",
+  "error_ReaderError_LostConnection": "The connection to the reader was lost.\nPlease check all connections and restart the application",
+  "error_ReaderError_Unknown": "An unknown error occurred in the application\nPlease check all connections and restart the reader and the application"
 }
