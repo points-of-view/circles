@@ -74,6 +74,18 @@
   right: 2rem;
 }
 
+.interaction-screen__accent--orange {
+  color: var(--color-orange);
+}
+
+.interaction-screen__accent--pink {
+  color: var(--color-pink);
+}
+
+.interaction-screen__accent--green {
+  color: var(--color-green);
+}
+
 .interaction-screen__background {
   position: fixed;
   z-index: -1;

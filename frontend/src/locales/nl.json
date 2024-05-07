@@ -1,42 +1,17 @@
 {
   "stand_in_circle": "Ga in de cirkel van je antwoord staan",
-  "choose_a_theme": [
-    {
-      "text": "Kies een "
-    },
-    {
-      "text": "thema",
-      "color": "var(--color-orange)"
-    }
-  ],
+  "choose_a_theme_start": "Kies een ",
+  "choose_a_theme_accent": "thema",
   "chosen_theme": "Het gekozen thema",
   "give_an_answer": "Beantwoord de volgende vraag",
-  "quiz_question": [
-    {
-      "text": "We starten met een "
-    },
-    {
-      "text": "quizvraag",
-      "color": "var(--color-pink)"
-    },
-    {
-      "text": "!"
-    }
-  ],
+  "quiz_question_start": "We starten met een ",
+  "quiz_question_accent": "quizvraag",
+  "quiz_question_end": "!",
   "did_you_know": "Wist je dat...?",
   "whats_your_opinion": "Wat is jouw mening hierover?",
-  "toughts_next_statement": [
-    {
-      "text": "Wat denk jij over de volgende "
-    },
-    {
-      "text": "stelling",
-      "color": "var(--color-green)"
-    },
-    {
-      "text": "?"
-    }
-  ],
+  "toughts_next_statement_start": "Wat denk jij over de ",
+  "toughts_next_statement_accent": "volgende stelling",
+  "toughts_next_statement_end": "?",
   "correct_answer": "Het juiste antwoord",
   "question": "Vraag",
   "statement": "Stelling"
