@@ -8,5 +8,15 @@
   "toughts_next_statement": "What do you think about the next statement?",
   "correct_answer": "Correct answer",
   "question": "Question",
-  "statement": "Statement"
+  "statement": "Statement",
+  "start_project_title": "Fill in the project number",
+  "start_project_button": "Start",
+  "start_project_key": "Project key",
+  "start_connecting": "Connecting with the reader. Please wait...",
+  "start_reader_hostname": "Hostname",
+  "start_export_title": "Export the data",
+  "start_export_button": "Export",
+  "start_export_no_filepath_error": "Please select a location to store the export!",
+  "start_export_working": "Exporting data. Please wait...",
+  "start_export_done": "The export is done and saved to your device."
 }

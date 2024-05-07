@@ -6,8 +6,8 @@ use std::fs;
 use tauri::Manager;
 
 #[tauri::command]
-fn select_project(
-    state: tauri::State<GlobalState>,
+async fn select_project(
+    state: tauri::State<'_, GlobalState>,
     app_handle: tauri::AppHandle,
     project_key: String,
     hostname: String,

@@ -2,6 +2,7 @@
 @import url("./interaction-screen.css");
 @import url("./options-view.css");
 @import url("./control-panel.css");
+@import url("./start-screen.css");
 
 .page {
   width: 100%;
