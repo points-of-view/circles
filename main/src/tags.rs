@@ -22,13 +22,13 @@ pub struct Tag {
     pub antenna: u16,
 }
 
-#[derive(Debug)]
+#[derive(Debug, serde::Serialize)]
 pub struct TagError {
     pub kind: TagErrorKind,
     value: String,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, serde::Serialize)]
 pub enum TagErrorKind {
     Incomplete,
     IncorrectAntenna,

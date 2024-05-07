@@ -103,6 +103,7 @@
 
 .start-screen__message {
   color: var(--color-purple);
+  white-space: preserve;
 }
 
 .start-screen__message--success {

@@ -36,3 +36,14 @@ impl Display for ReaderError {
         }
     }
 }
+
+impl ToString for ReaderErrorKind {
+    fn to_string(&self) -> String {
+        match self {
+            ReaderErrorKind::IncorrectHostname(_) => String::from("IncorrectHostname"),
+            ReaderErrorKind::CouldNotConnect(_) => String::from("CouldNotConnect"),
+            ReaderErrorKind::LostConnection => String::from("LostConnection"),
+            ReaderErrorKind::Unknown => String::from("Unknown"),
+        }
+    }
+}

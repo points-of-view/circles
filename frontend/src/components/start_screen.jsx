@@ -2,7 +2,7 @@ import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { save } from "@tauri-apps/api/dialog";
 import projects from "../../../projects";
-import translate from "../locales";
+import translate, { translateError } from "../locales";
 
 const previousHostname = localStorage.getItem("circles.last_hostname");
 
@@ -29,6 +29,7 @@ function StartProject({ setProject, setDarkMode }) {
   async function handleSubmit(e) {
     e.preventDefault();
     setState(STATES.working);
+    setError(null);
 
     const data = new FormData(e.target);
     const projectKey = data.get("projectKey");
@@ -39,9 +40,12 @@ function StartProject({ setProject, setDarkMode }) {
       localStorage.setItem("circles.last_hostname", hostname);
       setDarkMode(darkMode);
       setProject(projects[projectKey]);
-    } catch (e) {
+    } catch (error) {
       setState(STATES.error);
-      setError(e);
+      setError(error);
+      // If an unknown error occurs, we want to log the details so we can see what went wrong
+      // eslint-disable-next-line no-console
+      if (error.kind === "Unknown") console.error(error);
     }
   }
 
@@ -111,7 +115,7 @@ function StartProject({ setProject, setDarkMode }) {
       )}
       {state === STATES.error && (
         <span className="start-screen__message start-screen__message--error">
-          {error}
+          {translateError(error)}
         </span>
       )}
     </form>
