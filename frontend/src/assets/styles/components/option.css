@@ -13,24 +13,9 @@
   justify-content: center;
   align-items: center;
   width: 90%;
-
-  /* Set the border thickness of the gradient */
-  border: 12px solid transparent;
+  border: 12px solid var(--option-color);
   border-radius: var(--rounded-full);
-
-  /* Create gradient all over the element */
-  background-image: conic-gradient(
-    from 0deg at 50% 43.79%,
-    var(--option-color) 0deg,
-    var(--option-color) 135deg,
-    var(--bg-color) 360deg
-  );
-
-  /* Make sure the gradient fills the whole element (and edges) */
-  background-origin: border-box;
-
-  /* Set the background color of the element with a box-shadow because background-color would be overwritten by background-image */
-  box-shadow: inset 0 100vw var(--bg-color);
+  background-color: var(--bg-color);
   aspect-ratio: 1;
 }
 
