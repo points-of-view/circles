@@ -18,6 +18,9 @@
       },
       "dialog": {
         "save": true
+      },
+      "window": {
+        "setFullscreen": true
       }
     },
     "bundle": {
@@ -37,7 +40,7 @@
     },
     "windows": [
       {
-        "fullscreen": false,
+        "fullscreen": true,
         "resizable": true,
         "title": "circles",
         "width": 800,
