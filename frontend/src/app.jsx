@@ -13,7 +13,7 @@ export default function App() {
   function toggleFullScreen() {
     appWindow.setFullscreen(!fullscreen);
     setFullscreen(!fullscreen);
-  };
+  }
 
   useEffect(() => {
     document.addEventListener("dblclick", toggleFullScreen);
