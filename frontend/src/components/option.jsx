@@ -16,6 +16,7 @@ export default function Option({
             {[...Array(amount)].map((value, index) => (
               <svg
                 key={index}
+                className="option__figure-icon"
                 width="15"
                 height="66"
                 viewBox="0 0 15 66"
