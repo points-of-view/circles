@@ -49,6 +49,7 @@
   flex-direction: column;
   justify-self: center;
   font-size: var(--text-sm);
+  white-space: preserve;
   text-align: center;
   word-break: break-word;
   border-radius: var(--rounded-full);

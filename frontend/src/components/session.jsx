@@ -91,7 +91,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
         {
           text:
             translate("did_you_know", language) +
-            "<br><br>" +
+            "\n\n" +
             currentQuestion.explanation[language],
         },
       ];
