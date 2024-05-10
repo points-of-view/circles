@@ -9,7 +9,7 @@ export function InteractionScreen({
   description,
   options,
   themeName,
-  iconID,
+  iconName,
   accentColor,
   showLogo,
   showBigTitle,
@@ -31,7 +31,7 @@ export function InteractionScreen({
             "interaction-screen__title--fact": showFact,
           })}
         >
-          {iconID === "quiz" && (
+          {iconName === "quiz" && (
             <svg
               className={"interaction-screen__accent--" + accentColor}
               width="63"
@@ -48,7 +48,7 @@ export function InteractionScreen({
               />
             </svg>
           )}
-          {iconID === "opinion" && (
+          {iconName === "opinion" && (
             <svg
               className={"interaction-screen__accent--" + accentColor}
               width="103"
