@@ -52,7 +52,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
     STEPS.showFact,
   ].includes(step);
   const showFact = step === STEPS.showFact;
-  const title = (() => {
+  const titleParts = (() => {
     if (phase === 0 && step !== STEPS.showBigOption) {
       return [
         { text: translate("choose_a_theme_start", language) },
@@ -77,17 +77,24 @@ export default function Session({ project, resetProject, language, darkMode }) {
         { text: translate("toughts_next_statement_end", language) },
       ];
     } else if (step === STEPS.showBigQuestion) {
-      return `${translate(currentQuestion.type === "quiz" ? "question" : "statement", language)}: ${currentQuestion.title[language]}`;
+      return [
+        {
+          text: `${translate(currentQuestion.type === "quiz" ? "question" : "statement", language)}: ${currentQuestion.title[language]}`,
+        },
+      ];
     } else if (step === STEPS.showMainInteractionScreen) {
-      return currentQuestion.title[language];
+      return [{ text: currentQuestion.title[language] }];
     } else if (step === STEPS.showBigOption && currentQuestion?.explanation) {
-      return translate("correct_answer", language);
+      return [{ text: translate("correct_answer", language) }];
     } else if (step === STEPS.showFact) {
-      return (
-        translate("did_you_know", language) +
-        "<br><br>" +
-        currentQuestion.explanation[language]
-      );
+      return [
+        {
+          text:
+            translate("did_you_know", language) +
+            "<br><br>" +
+            currentQuestion.explanation[language],
+        },
+      ];
     }
   })();
   const options = (() => {
@@ -305,7 +312,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
       )}
       <InteractionScreen
         darkMode={darkMode}
-        title={title}
+        titleParts={titleParts}
         showBigTitle={showBigTitle}
         iconID={iconID}
         showBackgroundElements={showBackgroundElements}

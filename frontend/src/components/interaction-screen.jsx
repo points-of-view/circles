@@ -5,7 +5,7 @@ import logos_white from "../assets/visuals/logos_white.png";
 
 export function InteractionScreen({
   darkMode,
-  title,
+  titleParts,
   description,
   options,
   themeName,
@@ -24,7 +24,7 @@ export function InteractionScreen({
         darkMode ? "interaction-screen--dark" : "interaction-screen--light",
       )}
     >
-      {title && (
+      {titleParts && titleParts.length > 0 && (
         <div
           className={clsx("interaction-screen__title squircle", {
             "interaction-screen__title--big": showBigTitle,
@@ -62,18 +62,16 @@ export function InteractionScreen({
           )}
 
           <p>
-            {Array.isArray(title)
-              ? title.map((e, i) => (
-                  <span
-                    className={
-                      e.accent && "interaction-screen__accent--" + accentColor
-                    }
-                    key={i}
-                  >
-                    {e.text}
-                  </span>
-                ))
-              : title}
+            {titleParts.map((e, i) => (
+              <span
+                className={
+                  e.accent && `interaction-screen__text--${accentColor}`
+                }
+                key={i}
+              >
+                {e.text}
+              </span>
+            ))}
           </p>
         </div>
       )}
