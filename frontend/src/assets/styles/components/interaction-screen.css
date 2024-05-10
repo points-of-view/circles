@@ -46,8 +46,10 @@
 }
 
 .interaction-screen__title {
+  flex-direction: column;
   justify-self: center;
   font-size: var(--text-sm);
+  white-space: preserve;
   text-align: center;
   word-break: break-word;
   border-radius: var(--rounded-full);
@@ -55,6 +57,7 @@
 
 .interaction-screen__title--big {
   flex-grow: 1;
+  gap: 4rem;
   font-size: var(--text-xl);
   border: unset;
   background: unset;
@@ -70,6 +73,30 @@
   position: fixed;
   bottom: 2rem;
   right: 2rem;
+}
+
+.interaction-screen__icon--orange {
+  color: var(--color-orange);
+}
+
+.interaction-screen__icon--pink {
+  color: var(--color-pink);
+}
+
+.interaction-screen__icon--green {
+  color: var(--color-green);
+}
+
+.interaction-screen__text--orange {
+  color: var(--color-orange);
+}
+
+.interaction-screen__text--pink {
+  color: var(--color-pink);
+}
+
+.interaction-screen__text--green {
+  color: var(--color-green);
 }
 
 .interaction-screen__background {

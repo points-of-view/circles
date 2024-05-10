@@ -42,7 +42,9 @@ export default function Session({ project, resetProject, language, darkMode }) {
       ? translate("stand_in_circle", language)
       : null;
   const themeName = phase !== 0 && chosenTheme.name[language];
+  const accentColor = COLORS.toReversed()[phase];
   const showLogo = step === STEPS.showBigTitle;
+  const iconName = step === STEPS.showBigTitle ? currentQuestion?.type : null;
   const showBackgroundElements = step !== STEPS.showMainInteractionScreen;
   const showBigTitle = [
     STEPS.showBigTitle,
@@ -50,28 +52,49 @@ export default function Session({ project, resetProject, language, darkMode }) {
     STEPS.showFact,
   ].includes(step);
   const showFact = step === STEPS.showFact;
-  const title = (() => {
+  const titleParts = (() => {
     if (phase === 0 && step !== STEPS.showBigOption) {
-      return translate("choose_a_theme", language);
+      return [
+        { text: translate("choose_a_theme_start", language) },
+        { text: translate("choose_a_theme_accent", language), accent: true },
+      ];
     } else if (step === STEPS.showBigTitle && currentQuestion.type === "quiz") {
-      return translate("quiz_question", language);
+      return [
+        { text: translate("quiz_question_start", language) },
+        { text: translate("quiz_question_accent", language), accent: true },
+        { text: translate("quiz_question_end", language) },
+      ];
     } else if (
       step === STEPS.showBigTitle &&
       currentQuestion.type === "opinion"
     ) {
-      return translate("toughts_next_statement", language);
+      return [
+        { text: translate("toughts_next_statement_start", language) },
+        {
+          text: translate("toughts_next_statement_accent", language),
+          accent: true,
+        },
+        { text: translate("toughts_next_statement_end", language) },
+      ];
     } else if (step === STEPS.showBigQuestion) {
-      return `${translate(currentQuestion.type === "quiz" ? "question" : "statement", language)}: ${currentQuestion.title[language]}`;
+      return [
+        {
+          text: `${translate(currentQuestion.type === "quiz" ? "question" : "statement", language)}: ${currentQuestion.title[language]}`,
+        },
+      ];
     } else if (step === STEPS.showMainInteractionScreen) {
-      return currentQuestion.title[language];
+      return [{ text: currentQuestion.title[language] }];
     } else if (step === STEPS.showBigOption && currentQuestion?.explanation) {
-      return translate("correct_answer", language);
+      return [{ text: translate("correct_answer", language) }];
     } else if (step === STEPS.showFact) {
-      return (
-        translate("did_you_know", language) +
-        "<br><br>" +
-        currentQuestion.explanation[language]
-      );
+      return [
+        {
+          text:
+            translate("did_you_know", language) +
+            "\n\n" +
+            currentQuestion.explanation[language],
+        },
+      ];
     }
   })();
   const options = (() => {
@@ -289,13 +312,15 @@ export default function Session({ project, resetProject, language, darkMode }) {
       )}
       <InteractionScreen
         darkMode={darkMode}
-        title={title}
+        titleParts={titleParts}
         showBigTitle={showBigTitle}
+        iconName={iconName}
         showBackgroundElements={showBackgroundElements}
         showFact={showFact}
         description={description}
         options={options}
         themeName={themeName}
+        accentColor={accentColor}
         showLogo={showLogo}
         tagCount={tagCount}
       />

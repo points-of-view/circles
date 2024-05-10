@@ -5,10 +5,12 @@ import logos_white from "../assets/visuals/logos_white.png";
 
 export function InteractionScreen({
   darkMode,
-  title,
+  titleParts,
   description,
   options,
   themeName,
+  iconName,
+  accentColor,
   showLogo,
   showBigTitle,
   showBackgroundElements,
@@ -22,14 +24,63 @@ export function InteractionScreen({
         darkMode ? "interaction-screen--dark" : "interaction-screen--light",
       )}
     >
-      {title && (
+      {titleParts && titleParts.length > 0 && (
         <div
           className={clsx("interaction-screen__title squircle", {
             "interaction-screen__title--big": showBigTitle,
             "interaction-screen__title--fact": showFact,
           })}
-          dangerouslySetInnerHTML={{ __html: title }}
-        ></div>
+        >
+          {iconName === "quiz" && (
+            <svg
+              className={clsx(
+                "interaction-screen__icon",
+                `interaction-screen__icon--${accentColor}`,
+              )}
+              width="63"
+              height="101"
+              viewBox="0 0 63 101"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M10.7805 21.7645C9.49557 24.334 6.15539 25.3618 3.32889 23.8202C0.759429 22.2786 -0.0113756 18.9381 1.53023 16.3686C11.8079 -1.36053 38.2738 -4.44408 53.1768 8.91705C64.9962 19.4521 66.024 36.4108 56.2603 48.4868C51.3782 54.1397 46.2392 56.7091 39.3016 59.0218C37.2459 59.5356 35.7043 61.5913 35.7043 63.9039V74.6955C35.7043 77.522 33.3919 80.0914 30.3084 80.0914C27.4819 80.0914 24.9126 77.5219 24.9126 74.6955V63.9039C24.9126 56.7094 29.5376 50.5427 36.4755 48.487C41.1005 47.2021 44.6978 45.4035 47.781 41.5495C53.9477 34.0979 53.4339 23.8204 45.9823 17.1393C35.9612 8.14608 17.9747 9.94482 10.7805 21.7644L10.7805 21.7645Z" />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M30.3088 86.0039C34.4198 86.0039 37.7604 89.3442 37.7604 93.1984C37.7604 97.3094 34.4201 100.65 30.3088 100.65C26.4545 100.65 23.1143 97.3098 23.1143 93.1984C23.1143 89.3442 26.4545 86.0039 30.3088 86.0039Z"
+              />
+            </svg>
+          )}
+          {iconName === "opinion" && (
+            <svg
+              className={clsx(
+                "interaction-screen__icon",
+                `interaction-screen__icon--${accentColor}`,
+              )}
+              width="103"
+              height="81"
+              viewBox="0 0 103 81"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M5.34879 24.9248H85.6399L78.9392 30.9569L78.9486 30.9712C77.9742 31.8495 77.3486 33.1089 77.3486 34.5265C77.3486 37.1778 79.4973 39.3265 82.1486 39.3265C83.3822 39.3265 84.4972 38.8482 85.3486 38.0819L85.3599 38.0945L101.36 23.6945L101.349 23.6802C102.323 22.8018 102.949 21.5409 102.949 20.1248C102.949 18.7088 102.323 17.4482 101.349 16.5695L101.36 16.5568L85.3599 2.15681L85.3486 2.16948C84.4972 1.40481 83.3822 0.924805 82.1486 0.924805C79.4973 0.924805 77.3486 3.0735 77.3486 5.72481C77.3486 7.14083 77.9742 8.40147 78.9486 9.28014L78.9372 9.29281L85.6399 15.3249H5.34883C2.69752 15.3249 0.548828 17.4736 0.548828 20.1249C0.548828 22.7762 2.69752 24.9249 5.34883 24.9249L5.34879 24.9248ZM98.1489 56.9248H17.8578L24.5602 50.8928L24.5492 50.8815C25.5252 50.0015 26.1492 48.7422 26.1492 47.3248C26.1492 44.6735 24.0005 42.5248 21.3492 42.5248C20.1138 42.5248 19.0005 43.0048 18.1492 43.7681L18.1378 43.7554L2.1378 58.1554L2.14913 58.1681C1.17479 59.0494 0.549128 60.3088 0.549128 61.7248C0.549128 63.1408 1.17479 64.4002 2.14913 65.2815L2.1378 65.2928L18.1378 79.6928L18.1492 79.6815C19.0005 80.4465 20.1155 80.9248 21.3492 80.9248C24.0005 80.9248 26.1492 78.7761 26.1492 76.1248C26.1492 74.7088 25.5235 73.4482 24.5492 72.5681L24.5605 72.5554L17.8578 66.5248H98.1489C100.8 66.5248 102.949 64.3761 102.949 61.7247C102.949 59.0734 100.8 56.9247 98.1489 56.9247L98.1489 56.9248Z" />
+            </svg>
+          )}
+
+          <p>
+            {titleParts.map((e, i) => (
+              <span
+                className={clsx(
+                  "interaction-screen__text",
+                  e.accent && `interaction-screen__text--${accentColor}`,
+                )}
+                key={i}
+              >
+                {e.text}
+              </span>
+            ))}
+          </p>
+        </div>
       )}
       {description && (
         <div className="interaction-screen__description squircle">
