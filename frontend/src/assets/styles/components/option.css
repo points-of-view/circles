@@ -37,6 +37,7 @@
   flex-flow: wrap;
   gap: 15px;
   justify-content: center;
+  align-items: center;
   height: 66px;
   max-width: 75%;
   max-height: 50%;
@@ -49,6 +50,20 @@
 
 .option__figure-container:has(> :nth-child(16)) {
   height: 100px;
+}
+
+.option__figure-icon {
+  animation: fade-in 0.25s;
+}
+
+@keyframes fade-in {
+  0% {
+    height: 1%;
+  }
+
+  100% {
+    height: 100%;
+  }
 }
 
 .option__amount {
