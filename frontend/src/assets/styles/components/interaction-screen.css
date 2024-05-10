@@ -75,15 +75,27 @@
   right: 2rem;
 }
 
-.interaction-screen__accent--orange {
+.interaction-screen__icon--orange {
   color: var(--color-orange);
 }
 
-.interaction-screen__accent--pink {
+.interaction-screen__icon--pink {
   color: var(--color-pink);
 }
 
-.interaction-screen__accent--green {
+.interaction-screen__icon--green {
+  color: var(--color-green);
+}
+
+.interaction-screen__text--orange {
+  color: var(--color-orange);
+}
+
+.interaction-screen__text--pink {
+  color: var(--color-pink);
+}
+
+.interaction-screen__text--green {
   color: var(--color-green);
 }
 
