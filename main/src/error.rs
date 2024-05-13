@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter};
 
-use crate::{reader::ReaderError, tags::TagError};
+use crate::reader::ReaderError;
 
 #[derive(Debug, PartialEq, Clone, serde::Serialize)]
 pub enum GeneralErrorKind {
