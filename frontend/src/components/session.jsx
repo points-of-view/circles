@@ -177,9 +177,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
   }, []);
 
   useEffect(() => {
-    const unlisten = listen("reader-error", ({ payload }) =>
-      setReaderError(payload),
-    );
+    const unlisten = listen("error", ({ payload }) => setReaderError(payload));
 
     return () => unlisten.then((fn) => fn());
   }, []);
