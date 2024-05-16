@@ -11,7 +11,7 @@ export default function App() {
   const language = project?.availableLanguages[0];
 
   function toggleFullScreen(event) {
-    if (event.code !== "KeyF" || !event.metaKey) return;
+    if (event.code !== "KeyF" || !event.altKey) return;
     setFullscreen((current) => {
       const new_value = !current;
       appWindow.setFullscreen(new_value);
