@@ -15,7 +15,10 @@ use std::{
 };
 use tauri::{AppHandle, Manager};
 
-use crate::tags::{Tag, TagsMap};
+use crate::{
+    error::CirclesError,
+    tags::{Tag, TagsMap},
+};
 
 use self::messages::handle_new_message;
 
@@ -101,19 +104,24 @@ pub fn handle_reader_input<R: tauri::Runtime>(
             if last_alive.elapsed() > alive_interval {
                 // If we are not alive for our interval, we assume the connection has failed
                 // In that case we break from our loop, so an error is sent.
-                app_handle
-                    .emit_all(
-                        "reader-error",
-                        ReaderError {
-                            kind: ReaderErrorKind::LostConnection,
-                            message: String::from(""),
-                        },
-                    )
-                    .unwrap();
+                send_error_to_frontend(
+                    app_handle,
+                    ReaderError {
+                        kind: ReaderErrorKind::LostConnection,
+                        message: String::from(""),
+                    }
+                    .into(),
+                );
                 break;
             }
         }
     })
+}
+
+fn send_error_to_frontend<R: tauri::Runtime>(app_handle: AppHandle<R>, error: CirclesError) {
+    app_handle
+        .emit_all("error", error)
+        .expect("Should be able to emit to app_handle");
 }
 
 fn receive_messages(stream: TcpStream, sender: Sender<Message>) -> std::thread::JoinHandle<()> {
