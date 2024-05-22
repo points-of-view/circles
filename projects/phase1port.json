@@ -1,0 +1,603 @@
+{
+  "name": {
+    "po": "Testing Phase 1 - Portugese Copy"
+  },
+  "availableLanguages": ["po"],
+  "key": "phase1port",
+  "themes": [
+    {
+      "name": {
+        "po": "Migração"
+      },
+      "key": "migration",
+      "questions": [
+        {
+          "title": {
+            "po": "Quantas pessoas solicitaram asilo na UE em 2023?"
+          },
+          "key": "question-asylum-2023",
+          "type": "quiz",
+          "explanation": {
+            "po": "Em 2023, a UE introduziu um mecanismo de solidariedade segundo o qual os países com menos imigrantes acolhem imigrantes de países com mais imigrantes."
+          },
+          "options": [
+            {
+              "key": "question-asylum-2023-option-one",
+              "value": {
+                "po": "Entre 100,000 e 500,000"
+              }
+            },
+            {
+              "key": "question-asylum-2023-option-two",
+              "value": {
+                "po": "Entre 500,000 e um milhão"
+              }
+            },
+            {
+              "key": "question-asylum-2023-option-three",
+              "value": {
+                "po": "Mais de um milhão"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "Cada país da UE deve acolher um número mínimo de requerentes de asilo, proporcional à sua população"
+          },
+          "key": "question-minimum-asylum-seekers",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-minimum-asylum-seekers-option-disagree",
+              "value": {
+                "po": "Discordo"
+              }
+            },
+            {
+              "key": "question-minimum-asylum-seekers-option-unsure",
+              "value": {
+                "po": "Não sei"
+              }
+            },
+            {
+              "key": "question-minimum-asylum-seekers-option-agree",
+              "value": {
+                "po": "Concordo"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "po": "IA"
+      },
+      "key": "artificial-intelligence",
+      "questions": [
+        {
+          "title": {
+            "po": "A UE permite a utilização de tecnologia de reconhecimento facial \"em direto\" em áreas públicas?"
+          },
+          "key": "question-live-facial-recognition",
+          "type": "quiz",
+          "explanation": {
+            "po": "A Lei da IA de 2024 da UE proíbe o reconhecimento facial \"em direto\" em locais públicos, exceto para fins muito específicos de aplicação da lei, como encontrar vítimas de rapto ou suspeitos de crimes graves."
+          },
+          "options": [
+            {
+              "key": "question-live-facial-recognition-option-no",
+              "value": {
+                "po": "Não"
+              }
+            },
+            {
+              "key": "question-live-facial-recognition-option-sometimes",
+              "value": {
+                "po": "Em alguns casos"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-live-facial-recognition-option-yes",
+              "value": {
+                "po": "Sim"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "A UE deveria ser mais flexível quanto à utilização do reconhecimento facial \"em direto\" em locais públicos e talvez autorizá-la com mais frequência"
+          },
+          "key": "question-flexible-facial-recognition-in-public-space",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-flexible-facial-recognition-in-public-space-option-disagree",
+              "value": {
+                "po": "Discordo"
+              }
+            },
+            {
+              "key": "question-flexible-facial-recognition-in-public-space-option-unsure",
+              "value": {
+                "po": "Não sei"
+              }
+            },
+            {
+              "key": "question-flexible-facial-recognition-in-public-space-option-agree",
+              "value": {
+                "po": "Concordo"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "po": "Clima"
+      },
+      "key": "climate",
+      "questions": [
+        {
+          "title": {
+            "po": "Até que ano pretende a UE compensar todas as emissões de CO₂ com medidas de proteção do clima e, assim, alcançar a neutralidade climática?"
+          },
+          "key": "question-climate-neutrality",
+          "type": "quiz",
+          "explanation": {
+            "po": "A Lei do Clima de 2021 da UE estabelece o objetivo de alcançar a neutralidade climática até 2050. A UE pretende fazer da Europa o primeiro continente com impacto neutro no clima."
+          },
+          "options": [
+            {
+              "key": "question-climate-neutrality-option-one",
+              "value": {
+                "po": "Até 2030"
+              }
+            },
+            {
+              "key": "question-climate-neutrality-option-two",
+              "value": {
+                "po": "Até 2040"
+              }
+            },
+            {
+              "key": "question-climate-neutrality-option-three",
+              "value": {
+                "po": "Até 2050"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "Os países da UE devem ser multados se não fizerem esforços suficientes para reduzir as emissões de CO₂"
+          },
+          "key": "question-fine-carbon-emissions",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-fine-carbon-emissions-option-disagree",
+              "value": {
+                "po": "Discordo"
+              }
+            },
+            {
+              "key": "question-fine-carbon-emissions-option-unsure",
+              "value": {
+                "po": "Não sei"
+              }
+            },
+            {
+              "key": "question-fine-carbon-emissions-option-agree",
+              "value": {
+                "po": "Concordo"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "po": "Género"
+      },
+      "key": "gender",
+      "questions": [
+        {
+          "title": {
+            "po": "Em quantos países da UE se pode optar por ter um \"X\", no bilhete de identidade/cartão de cidadão nacional, em vez de \"homem\" ou \"mulher\"?"
+          },
+          "key": "question-x-id-card",
+          "type": "quiz",
+          "explanation": {
+            "po": "Malta e a Dinamarca autorizam a utilização de um \"X\" nos bilhetes de identidade/cartões de cidadão nacionais. Outros países estão a aplicar legislação para eliminar as menções de género nestes documentos. Não existe legislação da UE relativa a marcadores de género em documentos oficiais."
+          },
+          "options": [
+            {
+              "key": "question-x-id-card-option-one",
+              "value": {
+                "po": "2"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-x-id-card-option-two",
+              "value": {
+                "po": "5"
+              }
+            },
+            {
+              "key": "question-x-id-card-option-three",
+              "value": {
+                "po": "10"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "A UE deve incentivar os países membros a reconhecer oficialmente outras identidades de género para além da masculina e da feminina"
+          },
+          "key": "question-encourage-recognition-other-genders",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-encourage-recognition-other-genders-option-disagree",
+              "value": {
+                "po": "Discordo"
+              }
+            },
+            {
+              "key": "question-encourage-recognition-other-genders-option-unsure",
+              "value": {
+                "po": "Não sei"
+              }
+            },
+            {
+              "key": "question-encourage-recognition-other-genders-option-agree",
+              "value": {
+                "po": "Concordo"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "po": "Serviço Militar"
+      },
+      "key": "military-service",
+      "questions": [
+        {
+          "title": {
+            "po": "Quantos países da UE têm alguma forma de serviço militar obrigatório?"
+          },
+          "key": "question-mandatory-military-service",
+          "type": "quiz",
+          "explanation": {
+            "po": "A Lituânia, a Dinamarca, a Suécia, o Chipre, a Finlândia, a Letónia, a Áustria, a Grécia e a Estónia têm alguma forma de serviço militar obrigatório. Atualmente, não existe um exército da UE. Cada país da UE é responsável pela sua própria defesa."
+          },
+          "options": [
+            {
+              "key": "question-mandatory-military-service-option-one",
+              "value": {
+                "po": "Nenhum"
+              }
+            },
+            {
+              "key": "question-mandatory-military-service-option-two",
+              "value": {
+                "po": "3"
+              }
+            },
+            {
+              "key": "question-mandatory-military-service-option-three",
+              "value": {
+                "po": "9"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "A UE deve criar um exército europeu comum"
+          },
+          "key": "question-eu-army",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-eu-army-option-disagree",
+              "value": {
+                "po": "Discordo"
+              }
+            },
+            {
+              "key": "question-eu-army-option-unsure",
+              "value": {
+                "po": "Não sei"
+              }
+            },
+            {
+              "key": "question-eu-army-option-agree",
+              "value": {
+                "po": "Concordo"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "po": "Mobilidade"
+      },
+      "key": "mobility",
+      "questions": [
+        {
+          "title": {
+            "po": "A partir de que ano será proibida a venda de automóveis e carrinhas com emissões de carbono na UE?"
+          },
+          "key": "question-ban-emissive-cars",
+          "type": "quiz",
+          "explanation": {
+            "po": "Em 2023, a UE decidiu que, a partir de 2035, os novos automóveis e carrinhas vendidos na UE devem ter zero emissões. Isto significa que, a partir de 2035, todos os automóveis novos devem ser veículos eléctricos."
+          },
+          "options": [
+            {
+              "key": "question-ban-emissive-cars-option-one",
+              "value": {
+                "po": "A partir de 2025"
+              }
+            },
+            {
+              "key": "question-ban-emissive-cars-option-two",
+              "value": {
+                "po": "A partir de 2030"
+              }
+            },
+            {
+              "key": "question-ban-emissive-cars-option-three",
+              "value": {
+                "po": "A partir de 2035"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "2035 é um prazo realista para a mudança total para automóveis e carrinhas eléctricos"
+          },
+          "key": "question-timing-switch-electric-vehicles",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-timing-switch-electric-vehicles-option-disagree",
+              "value": {
+                "po": "Discordo"
+              }
+            },
+            {
+              "key": "question-timing-switch-electric-vehicles-option-unsure",
+              "value": {
+                "po": "Não sei"
+              }
+            },
+            {
+              "key": "question-timing-switch-electric-vehicles-option-agree",
+              "value": {
+                "po": "Concordo"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "po": "Redes sociais"
+      },
+      "key": "social-media",
+      "questions": [
+        {
+          "title": {
+            "po": "Que percentagem de europeus frequentemente encontra informações falsas quando acede à Internet?"
+          },
+          "key": "question-confronted-with-false-information",
+          "type": "quiz",
+          "explanation": {
+            "po": "Em 2024, a UE aprovou uma lei que exige que as grandes empresas tecnológicas e plataformas digitais, como o TikTok e o Facebook, detectem e removam conteúdos ilegais online. A lei provocou um grande debate antes de ser aprovada."
+          },
+          "options": [
+            {
+              "key": "question-confronted-with-false-information-option-one",
+              "value": {
+                "po": "Cerca de 10%"
+              }
+            },
+            {
+              "key": "question-confronted-with-false-information-option-two",
+              "value": {
+                "po": "Cerca de 20%"
+              }
+            },
+            {
+              "key": "question-confronted-with-false-information-option-three",
+              "value": {
+                "po": "Cerca de 30%"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "A UE deve permitir que as plataformas digitais decidam sozinhas como tratar de conteúdos perigosos"
+          },
+          "key": "question-damaging-content-on-platforms",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-damaging-content-on-platforms-option-disagree",
+              "value": {
+                "po": "Discordo"
+              }
+            },
+            {
+              "key": "question-damaging-content-on-platforms-option-unsure",
+              "value": {
+                "po": "Não sei"
+              }
+            },
+            {
+              "key": "question-damaging-content-on-platforms-option-agree",
+              "value": {
+                "po": "Concordo"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "po": "Controlos Fronteiriços"
+      },
+      "key": "border-controls",
+      "questions": [
+        {
+          "title": {
+            "po": "Qual é o nome do acto legislativo oficial que estabelece o direito de livre circulação de pessoas na UE?"
+          },
+          "key": "question-free-traffic-of-persons",
+          "type": "quiz",
+          "explanation": {
+            "po": "Há 27 países europeus que estão abrangidos pelo espaço Schengen. Qualquer pessoa que viva no espaço Schengen ou que tenha passado os controlos nas fronteiras do espaço Schengen pode viajar livremente entre estes países."
+          },
+          "options": [
+            {
+              "key": "question-free-traffic-of-persons-option-one",
+              "value": {
+                "po": "Tratado de Maastricht"
+              }
+            },
+            {
+              "key": "question-free-traffic-of-persons-option-two",
+              "value": {
+                "po": "Acordo de Schengen"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-free-traffic-of-persons-option-three",
+              "value": {
+                "po": "Tratado de Bruxelas"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "Devem ser restabelecidos os controlos nas fronteiras entre os países da UE que pertencem ao espaço Schengen"
+          },
+          "key": "question-restart-border-control-within-shengen",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-restart-border-control-within-shengen-option-disagree",
+              "value": {
+                "po": "Discordo"
+              }
+            },
+            {
+              "key": "question-restart-border-control-within-shengen-option-unsure",
+              "value": {
+                "po": "Não sei"
+              }
+            },
+            {
+              "key": "question-restart-border-control-within-shengen-option-agree",
+              "value": {
+                "po": "Concordo"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "po": "Direito de Voto na EU"
+      },
+      "key": "eu-voting-rights",
+      "questions": [
+        {
+          "title": {
+            "po": "As próximas eleições europeias vão realizar-se no dia 9 de junho de 2024. Com que idade podem alguns dos jovens europeus mais novos votar nas eleições europeias?"
+          },
+          "key": "question-youngest-participation-age",
+          "type": "quiz",
+          "explanation": {
+            "po": "Os países da UE são livres de fixar a sua idade mínima nacional para votar nas eleições europeias. Na Áustria, Bélgica, Alemanha e Malta podem votar aos 16 anos, na Grécia aos 17 anos e nos restantes países aos 18 anos."
+          },
+          "options": [
+            {
+              "key": "question-youngest-participation-age-option-one",
+              "value": {
+                "po": "15"
+              }
+            },
+            {
+              "key": "question-youngest-participation-age-option-two",
+              "value": {
+                "po": "16"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-youngest-participation-age-option-three",
+              "value": {
+                "po": "17"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "Todos os países da UE deveria fixar a idade mínima de 16 anos para votar nas eleições europeias"
+          },
+          "key": "question-generalize-voting-age",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-generalize-voting-age-option-disagree",
+              "value": {
+                "po": "Discordo"
+              }
+            },
+            {
+              "key": "question-generalize-voting-age-option-unsure",
+              "value": {
+                "po": "Não sei"
+              }
+            },
+            {
+              "key": "question-generalize-voting-age-option-agree",
+              "value": {
+                "po": "Concordo"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

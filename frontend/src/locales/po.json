@@ -11,5 +11,7 @@
   "toughts_next_statement_start": "O que pensas sobre ",
   "toughts_next_statement_accent": "isto",
   "toughts_next_statement_end": "?",
-  "correct_answer": "Resposta correcta"
+  "correct_answer": "Resposta correcta",
+  "question": "Pergunta",
+  "statement": "Declaração"
 }
