@@ -10,6 +10,21 @@
   color: var(--text-color);
 }
 
+.interaction-screen::before {
+  --transparent: #0000;
+
+  position: absolute;
+  content: "";
+  width: 100vw;
+  height: 100vh;
+  background: conic-gradient(
+    var(--transparent),
+    var(--transparent) var(--pos1, 0%),
+    var(--accentcolor) var(--pos2, 5%)
+  );
+  animation: rotate 3s linear 1 forwards;
+}
+
 .interaction-screen--dark {
   --text-color: var(--color-white);
   --bg-color: var(--color-black);
@@ -75,28 +90,24 @@
   right: 2rem;
 }
 
-.interaction-screen__icon--orange {
-  color: var(--color-orange);
+.interaction-screen--orange-accents {
+  --accent-color: var(--color-orange);
 }
 
-.interaction-screen__icon--pink {
-  color: var(--color-pink);
+.interaction-screen--pink-accents {
+  --accent-color: var(--color-pink);
 }
 
-.interaction-screen__icon--green {
-  color: var(--color-green);
+.interaction-screen--green-accents {
+  --accent-color: var(--color-green);
 }
 
-.interaction-screen__text--orange {
-  color: var(--color-orange);
+.interaction-screen__accented-text {
+  color: var(--accent-color);
 }
 
-.interaction-screen__text--pink {
-  color: var(--color-pink);
-}
-
-.interaction-screen__text--green {
-  color: var(--color-green);
+.interaction-screen__icon {
+  color: var(--accent-color);
 }
 
 .interaction-screen__background {
@@ -166,45 +177,25 @@
   }
 }
 
-@property --pos {
-	syntax: '<length-percentage>';
-	initial-value: 0%;
-	inherits: false
+@property --pos1 {
+  inherits: false;
+  initial-value: 0%;
+  syntax: "<length-percentage>";
 }
 
-@property --c0 {
-	syntax: '<color>';
-	initial-value: #FF6106;
-	inherits: false
+@property --pos2 {
+  inherits: false;
+  initial-value: 0%;
+  syntax: "<length-percentage>";
 }
 
-@property --c1 {
-	syntax: '<color>';
-	initial-value: #040422;
-	inherits: false
+@keyframes rotate {
+  100%,
+  80% {
+    --pos2: 100%;
+  }
+
+  99% {
+    --pos1: 100%;
+  }
 }
-
-@property --c2 {
-	syntax: '<color>';
-	initial-value: rgba(4, 4, 34, 0);
-	inherits: false
-}
-
-.interaction-screen::before {
-  --c0: #FF6106;
-  --c1: #040422;
-	--c2: rgba(4, 4, 34, 0);
-  content: "";
-  position: absolute;
-  height: 100vh;
-  width: 100vw;
-  background: conic-gradient(var(--c0) var(--pos, 0%), var(--c1));
-	animation: a 0s infinite;
-	animation-name: c0, rotate, c1;
-	animation-duration: 3s;
-	animation-timing-function: ease-in-out;
-}
-
-@keyframes rotate { 100%, 100% { --pos: 100% } }
-
-/* background: conic-gradient(from 180deg at 50% 50%, rgba(4, 4, 34, 0) 0deg, #040422 127.8deg, #FF6106 360deg); */

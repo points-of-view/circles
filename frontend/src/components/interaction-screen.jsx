@@ -22,6 +22,9 @@ export function InteractionScreen({
       className={clsx(
         "interaction-screen",
         darkMode ? "interaction-screen--dark" : "interaction-screen--light",
+        (accentColor === "orange" && "interaction-screen--orange-accents") ||
+          (accentColor === "pink" && "interaction-screen--pink-accents") ||
+          (accentColor === "green" && "interaction-screen--green-accents"),
       )}
     >
       {titleParts && titleParts.length > 0 && (
@@ -33,10 +36,7 @@ export function InteractionScreen({
         >
           {iconName === "quiz" && (
             <svg
-              className={clsx(
-                "interaction-screen__icon",
-                `interaction-screen__icon--${accentColor}`,
-              )}
+              className="interaction-screen__icon"
               width="63"
               height="101"
               viewBox="0 0 63 101"
@@ -53,10 +53,7 @@ export function InteractionScreen({
           )}
           {iconName === "opinion" && (
             <svg
-              className={clsx(
-                "interaction-screen__icon",
-                `interaction-screen__icon--${accentColor}`,
-              )}
+              className="interaction-screen__icon"
               width="103"
               height="81"
               viewBox="0 0 103 81"
@@ -71,8 +68,7 @@ export function InteractionScreen({
             {titleParts.map((e, i) => (
               <span
                 className={clsx(
-                  "interaction-screen__text",
-                  e.accent && `interaction-screen__text--${accentColor}`,
+                  e.accent && `interaction-screen__accented-text`,
                 )}
                 key={i}
               >
