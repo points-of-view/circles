@@ -21,7 +21,7 @@ include_dir = { version = "0.7.3", features = ["glob"] }
 dunce = "1.0.4"
 rand = "0.8.5"
 llrp = { git = "https://github.com/mchesser/llrp-rs" }
-rust_xlsxwriter = "0.64.2"
+rust_xlsxwriter = "0.66.0"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
