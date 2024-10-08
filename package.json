@@ -12,22 +12,17 @@
     "lint": "yarn lint:js && yarn lint:css",
     "lint:fix": "yarn lint:js --fix && yarn lint:css --fix",
     "lint:css": "stylelint '**/*.{css,scss}' --ignore-path .gitignore",
-    "lint:js": "eslint . --ext js,jsx,ts --ignore-path .gitignore"
+    "lint:js": "eslint"
   },
   "dependencies": {
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.6.2",
-    "@tree-company/eslint-config": "^0.3.2",
-    "@tree-company/stylelint-config": "^0.3.2",
-    "eslint": "^8.57.0",
-    "prettier": "3.2.5",
-    "stylelint": "^16.3.1"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@tree-company/eslint-config/react"
-    ]
+    "@tree-company/eslint-config": "^0.4.3",
+    "@tree-company/stylelint-config": "^0.4.3",
+    "eslint": "^9.11.1",
+    "prettier": "3.3.3",
+    "stylelint": "^16.9.0"
   },
   "stylelint": {
     "extends": [
