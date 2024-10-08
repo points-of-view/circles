@@ -12,7 +12,7 @@
     "lint": "yarn lint:js && yarn lint:css",
     "lint:fix": "yarn lint:js --fix && yarn lint:css --fix",
     "lint:css": "stylelint '**/*.{css,scss}' --ignore-path .gitignore",
-    "lint:js": "eslint . --ext js,jsx,ts --ignore-path .gitignore"
+    "lint:js": "eslint"
   },
   "dependencies": {
   },
@@ -23,11 +23,6 @@
     "eslint": "^9.11.1",
     "prettier": "3.3.3",
     "stylelint": "^16.9.0"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@tree-company/eslint-config/react"
-    ]
   },
   "stylelint": {
     "extends": [
