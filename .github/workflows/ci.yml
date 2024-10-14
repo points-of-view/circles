@@ -52,7 +52,7 @@ jobs:
       - name: Install packages
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
-          echo "http://gb.archive.ubuntu.com/ubuntu" | sudo dd of=/etc/apt/sources.list.d/jammy.list
+          echo "http://gb.archive.ubuntu.com/ubuntu jammy main" | sudo dd of=/etc/apt/sources.list.d/ubuntu-archive.list
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf libsoup2.4-dev
       - name: Run tests
@@ -73,7 +73,7 @@ jobs:
         run: yarn install
       - name: Install packages
         run: |
-          echo "http://gb.archive.ubuntu.com/ubuntu" | sudo dd of=/etc/apt/sources.list.d/jammy.list
+          echo "http://gb.archive.ubuntu.com/ubuntu jammy main" | sudo dd of=/etc/apt/sources.list.d/ubuntu-archive.list
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf libsoup2.4-dev
       - name: Build
