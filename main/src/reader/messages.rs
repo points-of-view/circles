@@ -17,10 +17,14 @@ pub fn write_message<W: io::Write>(
     let message = BinaryMessage::from_dynamic_message(id.unwrap_or(20), &message).unwrap();
     match llrp::write_message(writer, message) {
         Ok(_) => Ok(()),
-        Err(err) => Err(ReaderError {
-            kind: ReaderErrorKind::Unknown,
-            message: format!("Error writing: {:?}", err.to_string()),
-        }),
+        Err(err) => {
+            #[cfg(debug_assertions)]
+            println!("Unknown error {:#?}", err);
+            Err(ReaderError {
+                kind: ReaderErrorKind::Unknown,
+                message: format!("Error writing: {:?}", err.to_string()),
+            })
+        }
     }
 }
 
@@ -29,7 +33,11 @@ pub fn handle_new_message<S: io::Write>(message: Message, tags: &mut Vec<Tag>, s
         Message::RoAccessReport(message) => {
             for report_data in message.tag_report_data {
                 match Tag::from_report_data(report_data) {
-                    Ok(tag) => tags.push(tag),
+                    Ok(tag) => {
+                        #[cfg(debug_assertions)]
+                        println!("Read tag: {:?}", tag);
+                        tags.push(tag)
+                    }
                     Err(err) => {
                         // We print faulty tags in development (so we can learn from them)
                         // In production these get ignored
@@ -57,6 +65,7 @@ where
     for<'a> &'a mut S: io::Read,
 {
     let binary_message = read_message(&mut stream)?;
+    println!("binary message: {:#?}", binary_message);
 
     match &binary_message.to_message::<Keepalive>() {
         Ok(_) => respond_to_keepalive(stream),
