@@ -164,7 +164,7 @@ mod tests {
         let stream = Cursor::<Vec<u8>>::new(vec![]);
 
         let message = construct_report_message(1, -40);
-        let vec = handle_new_message(message,  stream);
+        let vec = handle_new_message(message, stream);
 
         assert_eq!(1, vec.len());
     }

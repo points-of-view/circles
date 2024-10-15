@@ -15,10 +15,7 @@ use std::{
 };
 use tauri::{AppHandle, Manager};
 
-use crate::{
-    error::CirclesError,
-    GlobalState,
-};
+use crate::{error::CirclesError, GlobalState};
 
 use self::messages::handle_new_message;
 
@@ -87,7 +84,9 @@ pub fn handle_reader_input<R: tauri::Runtime>(
             if last_update.elapsed() > update_interval {
                 // Update the frontend with a new map.
                 // We clone the map inside our mutex, since we don't care about any changes while we are sending this event
-                app_handle.emit_all("updated-tags", tags_map.lock().unwrap().clone()).unwrap();
+                app_handle
+                    .emit_all("updated-tags", tags_map.lock().unwrap().clone())
+                    .unwrap();
                 last_update = Instant::now();
             }
 

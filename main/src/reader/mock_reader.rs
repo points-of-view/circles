@@ -46,7 +46,9 @@ impl ReaderProtocol for MockReader {
                     Tag::random(),
                 ];
                 tags_map.lock().unwrap().add_tags(tags);
-                app_handle.emit_all("updated-tags", tags_map.lock().unwrap().clone()).unwrap();
+                app_handle
+                    .emit_all("updated-tags", tags_map.lock().unwrap().clone())
+                    .unwrap();
                 sleep(sleep_duration)
             }
         });

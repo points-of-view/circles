@@ -25,7 +25,7 @@ fn start_session(state: tauri::State<GlobalState>, theme_key: String) -> Result<
 #[tauri::command]
 fn reset_tags_map(state: tauri::State<GlobalState>) {
     state.reset_tags_map()
-} 
+}
 
 #[tauri::command]
 async fn save_step_results(
