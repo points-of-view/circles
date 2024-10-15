@@ -49,7 +49,15 @@ pub fn construct_default_rospec() -> parameters::ROSpec {
               antenna_configuration: vec![parameters::AntennaConfiguration {
                 antenna_id: 0, // Antenna ID 0 means this applies to all antennas
                 rf_receiver: None,
-                rf_transmitter: None,
+                rf_transmitter: Some(parameters::RFTransmitter {
+                    // Our readers do not come with a FrequencyHopTable, so we just set this to `0`. This setting will be ignore by the reader
+                    hop_table_id: 0,
+                    // Our reader come with one fixed frequency. this index is one based
+                    channel_index: 1,
+                    // Our readers come with a table that contains 192 entries, going from 10dBm to 29.2dBm in increments of 0.1dBm
+                    // We set the transmit power to its lowest possible value 
+                    transmit_power: 0,
+                }),
                 air_protocol_inventory_command_settings: vec![
                     choices::AirProtocolInventoryCommandSettings::C1G2InventoryCommand(
                     parameters::C1G2InventoryCommand {
