@@ -115,6 +115,10 @@ impl TagsMap {
     pub fn add_tags(&mut self, new_tags: Vec<Tag>) {
         new_tags.into_iter().for_each(|tag| self.add_tag(tag));
     }
+
+    pub fn reset(&mut self) {
+        self.0 = HashMap::new();
+    }
 }
 
 impl From<Drain<'_, Tag>> for TagsMap {

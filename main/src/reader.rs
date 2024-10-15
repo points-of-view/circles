@@ -17,7 +17,7 @@ use tauri::{AppHandle, Manager};
 
 use crate::{
     error::CirclesError,
-    tags::{Tag, TagsMap},
+    GlobalState,
 };
 
 use self::messages::handle_new_message;
@@ -68,7 +68,7 @@ pub fn handle_reader_input<R: tauri::Runtime>(
 ) -> tauri::async_runtime::JoinHandle<()> {
     tauri::async_runtime::spawn(async move {
         let (tx, rx) = channel::<Message>();
-        let mut tags_map = TagsMap::new();
+        let tags_map = app_handle.state::<GlobalState>().tags_map.clone();
         let mut last_update = Instant::now();
         let mut last_alive = Instant::now();
         let update_interval = Duration::from_millis(REFRESH_INTERVAL.into());
@@ -80,12 +80,14 @@ pub fn handle_reader_input<R: tauri::Runtime>(
         loop {
             if let Ok(message) = rx.recv_timeout(RECV_TIMEOUT) {
                 let tags = handle_new_message(message, &stream);
-                tags_map.add_tags(tags);
+                tags_map.lock().unwrap().add_tags(tags);
                 last_alive = Instant::now();
             }
 
             if last_update.elapsed() > update_interval {
-                app_handle.emit_all("updated-tags", tags_map.clone()).unwrap();
+                // Update the frontend with a new map.
+                // We clone the map inside our mutex, since we don't care about any changes while we are sending this event
+                app_handle.emit_all("updated-tags", tags_map.lock().unwrap().clone()).unwrap();
                 last_update = Instant::now();
             }
 
