@@ -113,17 +113,13 @@ impl GlobalState {
         let mut connection = self.database_connection.lock().unwrap();
         let current_session = self.current_session.lock().unwrap();
 
-        let mut tags_map = self.tags_map.lock().unwrap();
-
         if current_session.is_some() {
             save_step_results(
                 &mut *connection,
                 &current_session.as_ref().unwrap().session_id,
                 &current_step,
-                tags_map.clone(),
+                self.tags_map.lock().unwrap().clone(),
             )?;
-
-            *tags_map = TagsMap::new();
 
             Ok(())
         } else {
