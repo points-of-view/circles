@@ -22,7 +22,7 @@ const DEFAULT_PORT: u16 = 5084;
 /// Interact with an LLRP-compatible RFID-reader
 ///
 /// ## LLRP standard
-/// For more info and the full documentation, see [this this site for a PDF of the standard](https://www.gs1.org/standards/epc-rfid/llrp/1-1-0).  
+/// For more info and the full documentation, see [this site for a PDF of the standard](https://www.gs1.org/standards/epc-rfid/llrp/1-1-0).  
 /// Note that the device we use (a Zebra FX9600) only support version 1.0.0 or 1.0.1 of the standard and we
 /// cannot use feature from version 1.1.0
 ///

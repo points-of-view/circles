@@ -39,7 +39,6 @@ pub fn construct_default_rospec() -> parameters::ROSpec {
           antenna_ids: vec![1, 2, 3],
           ai_spec_stop_trigger: parameters::AISpecStopTrigger {
               ai_spec_stop_trigger_type: enumerations::AISpecStopTriggerType::Null,
-              // This duration sets the dwell time for each antenna (in MS), so we can control how long each antenna reads before going to the next one
               duration_trigger: 0,
               gpi_trigger_value: None,
               tag_observation_trigger: None,
