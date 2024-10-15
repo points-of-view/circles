@@ -23,12 +23,16 @@ fn start_session(state: tauri::State<GlobalState>, theme_key: String) -> Result<
 }
 
 #[tauri::command]
+fn reset_tags_map(state: tauri::State<GlobalState>) {
+    state.reset_tags_map()
+} 
+
+#[tauri::command]
 async fn save_step_results(
     state: tauri::State<'_, GlobalState>,
     current_step: String,
-    tags_map: TagsMap,
 ) -> Result<(), String> {
-    state.save_step_results(current_step, tags_map)
+    state.save_step_results(current_step)
 }
 
 #[tauri::command]
@@ -62,11 +66,12 @@ fn main() {
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            close_connection,
+            reset_tags_map,
+            save_export,
+            save_step_results,
             select_project,
             start_session,
-            close_connection,
-            save_step_results,
-            save_export
         ])
         .build(tauri::generate_context!())
         .expect("error while running tauri application");

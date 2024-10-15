@@ -286,6 +286,11 @@ export default function Session({ project, resetProject, language, darkMode }) {
     }
   }
 
+  useEffect(() => {
+    invoke("reset_tags_map");
+    setTagsMap({});
+  }, [step, phase]);
+
   function handleKeyDown(event) {
     if (event.code === "ArrowRight") goToNextStep();
     else if (event.code === "ArrowLeft") goToPreviousStep();
