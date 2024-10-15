@@ -28,12 +28,13 @@ pub fn write_message<W: io::Write>(
     }
 }
 
-pub fn handle_new_message<S: io::Write>(message: Message, tags: &mut Vec<Tag>, stream: S) {
+pub fn handle_new_message<S: io::Write>(message: Message, stream: S) -> Vec<Tag> {
+    let mut vec = Vec::new();
     match message {
         Message::RoAccessReport(message) => {
             for report_data in message.tag_report_data {
                 match Tag::from_report_data(report_data) {
-                    Ok(tag) => tags.push(tag),
+                    Ok(tag) => vec.push(tag),
                     Err(err) => {
                         // We print faulty tags in development (so we can learn from them)
                         // In production these get ignored
@@ -50,6 +51,7 @@ pub fn handle_new_message<S: io::Write>(message: Message, tags: &mut Vec<Tag>, s
             println!("Got unexpected message {:?}", other_message)
         }
     }
+    vec
 }
 
 pub fn parse_message_and<S, T: LLRPMessage>(
@@ -159,29 +161,26 @@ mod tests {
 
     #[test]
     fn should_add_correct_tag_to_vector() {
-        let mut vec: Vec<Tag> = vec![];
         let stream = Cursor::<Vec<u8>>::new(vec![]);
 
         let message = construct_report_message(1, -40);
-        handle_new_message(message, &mut vec, stream);
+        let vec = handle_new_message(message,  stream);
 
         assert_eq!(1, vec.len());
     }
 
     #[test]
     fn should_ignore_incorrect_tags() {
-        let mut vec: Vec<Tag> = vec![];
         let stream = Cursor::<Vec<u8>>::new(vec![]);
 
         let message = construct_report_message(10, -40);
-        handle_new_message(message, &mut vec, stream);
+        let vec = handle_new_message(message, stream);
 
         assert_eq!(0, vec.len());
     }
 
     #[test]
     fn should_ignore_other_messages() {
-        let mut vec: Vec<Tag> = vec![];
         let stream = Cursor::<Vec<u8>>::new(vec![]);
 
         let message = Message::StopRospecResponse(StopRospecResponse {
@@ -192,18 +191,17 @@ mod tests {
                 parameter_error: None,
             },
         });
-        handle_new_message(message, &mut vec, stream);
+        let vec = handle_new_message(message, stream);
 
         assert_eq!(0, vec.len());
     }
 
     #[test]
     fn should_respond_to_keepalive_with_keepalive_ack() {
-        let mut tags: Vec<Tag> = vec![];
         let mut stream = Cursor::<Vec<u8>>::new(vec![]);
         let message = Message::Keepalive(messages::Keepalive {});
 
-        handle_new_message(message, &mut tags, &mut stream);
+        handle_new_message(message, &mut stream);
         stream.set_position(0);
 
         let raw = llrp::read_message(stream).unwrap();

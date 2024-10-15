@@ -103,37 +103,26 @@ impl Tag {
 #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 pub struct TagsMap(HashMap<String, Tag>);
 
+impl TagsMap {
+    pub fn new() -> Self {
+        TagsMap(HashMap::new())
+    }
+
+    pub fn add_tag(&mut self, new_tag: Tag) {
+        self.0.insert(new_tag.clone().id, new_tag);
+    }
+
+    pub fn add_tags(&mut self, new_tags: Vec<Tag>) {
+        new_tags.into_iter().for_each(|tag| self.add_tag(tag));
+    }
+}
+
 impl From<Drain<'_, Tag>> for TagsMap {
     fn from(tags: Drain<'_, Tag>) -> Self {
-        tags.fold(TagsMap(HashMap::new()), add_tag_to_map)
+        let mut new = Self::new();
+        tags.for_each(|tag| new.add_tag(tag));
+        new
     }
-}
-
-impl From<&Vec<Self>> for TagsMap {
-    fn from(maps: &Vec<Self>) -> Self {
-        maps.into_iter()
-            .map(|m| {
-                m.0.values()
-                    .map(|value| value.clone())
-                    .collect::<Vec<Tag>>()
-            })
-            .flatten()
-            .fold(TagsMap(HashMap::new()), add_tag_to_map)
-    }
-}
-
-fn add_tag_to_map(mut map: TagsMap, new_tag: Tag) -> TagsMap {
-    map.0
-        .entry(new_tag.id.clone())
-        .and_modify(|old_tag: &mut Tag| {
-            // If there is a current tag, we update this if the new one has a stronger signal
-            if old_tag.strength < new_tag.strength.clone() {
-                *old_tag = new_tag.clone();
-            }
-        })
-        // If there isn't a new tag, we insert it
-        .or_insert(new_tag.clone());
-    map
 }
 
 impl TagsMap {
@@ -142,8 +131,10 @@ impl TagsMap {
     }
 
     pub fn random(size: usize) -> Self {
-        let mut tags = vec![Tag::random(); size];
-        Self::from(tags.drain(..))
+        let tags = vec![Tag::random(); size];
+        let mut new = Self::new();
+        new.add_tags(tags);
+        new
     }
 }
 
@@ -205,29 +196,25 @@ mod tests {
     }
 
     #[test]
-    fn should_keep_strongest_of_two_tokens() {
+    fn should_replace_tag_when_updating() {
         let tag1 = Tag {
             id: String::from("abc123"),
             antenna: 2,
             strength: -35,
         };
-        let tag2 = Tag {
-            id: String::from("abc123"),
-            antenna: 1,
-            strength: -30,
-        };
-        let tag3 = Tag {
+        let mut tags = vec![tag1];
+
+        let mut map = TagsMap::from(tags.drain(..));
+
+        map.add_tag(Tag {
             id: String::from("abc123"),
             antenna: 1,
             strength: -65,
-        };
-        let mut tags = vec![tag1, tag2, tag3];
-
-        let map = TagsMap::from(tags.drain(..));
+        });
 
         assert_eq!(1, map.0.keys().len());
         assert_eq!(map.0.contains_key("abc123"), true);
         assert_eq!(map.0["abc123"].antenna, 1);
-        assert_eq!(map.0["abc123"].strength, -30);
+        assert_eq!(map.0["abc123"].strength, -65);
     }
 }
