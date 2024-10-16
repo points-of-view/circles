@@ -22,9 +22,11 @@ const DEFAULT_PORT: u16 = 5084;
 /// Interact with an LLRP-compatible RFID-reader
 ///
 /// ## LLRP standard
-/// For more info and the full documention, see [this site](https://www.gs1.org/standards/epc-rfid/llrp/1-1-0).
+/// For more info and the full documentation, see [this site for a PDF of the standard](https://www.gs1.org/standards/epc-rfid/llrp/1-1-0).  
 /// Note that the device we use (a Zebra FX9600) only support version 1.0.0 or 1.0.1 of the standard and we
-/// cannot use feature from version 1.0.0
+/// cannot use feature from version 1.1.0
+///
+/// We are also able to use the custom extensions made by Zebra. See [Zebra's docs for the available custom extensions](https://www.zebra.com/content/dam/support-dam/en/documentation/unrestricted/guide/software/interface-control-guide-en.pdf)
 #[derive(Debug)]
 pub struct LLRPReader {
     hostname: String,
@@ -105,10 +107,12 @@ impl LLRPReader {
             ) {
                 Ok(stream) => Some(stream),
                 Err(err) => {
+                    #[cfg(debug_assertions)]
+                    println!("Connection error {:#?}", err);
                     return Err(ReaderError {
                         kind: ReaderErrorKind::CouldNotConnect(self.hostname.clone()),
                         message: err.to_string(),
-                    })
+                    });
                 }
             };
         }
@@ -170,7 +174,7 @@ impl LLRPReader {
         self.parse_message_and(|_| true)
     }
 
-    fn await_message_and<T: LLRPMessage>(
+    fn await_message_and<T: LLRPMessage + std::fmt::Debug>(
         &mut self,
         closure: fn(message: &T) -> bool,
     ) -> Result<T, ReaderError> {
@@ -183,14 +187,21 @@ impl LLRPReader {
 
         match closure(&message) {
             true => Ok(message),
-            false => Err(ReaderError {
-                kind: ReaderErrorKind::Unknown,
-                message: String::from("Message did not pass closure check."),
-            }),
+            false => {
+                #[cfg(debug_assertions)]
+                println!(
+                    "Message did not pass closure check. Original message {:#?}",
+                    message
+                );
+                Err(ReaderError {
+                    kind: ReaderErrorKind::Unknown,
+                    message: String::from("Message did not pass closure check."),
+                })
+            }
         }
     }
 
-    fn await_message<T: LLRPMessage>(&mut self) -> Result<T, ReaderError> {
+    fn await_message<T: LLRPMessage + std::fmt::Debug>(&mut self) -> Result<T, ReaderError> {
         self.await_message_and(|_| true)
     }
 

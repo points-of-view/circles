@@ -17,10 +17,14 @@ pub fn write_message<W: io::Write>(
     let message = BinaryMessage::from_dynamic_message(id.unwrap_or(20), &message).unwrap();
     match llrp::write_message(writer, message) {
         Ok(_) => Ok(()),
-        Err(err) => Err(ReaderError {
-            kind: ReaderErrorKind::Unknown,
-            message: format!("Error writing: {:?}", err.to_string()),
-        }),
+        Err(err) => {
+            #[cfg(debug_assertions)]
+            println!("Unknown error {:#?}", err);
+            Err(ReaderError {
+                kind: ReaderErrorKind::Unknown,
+                message: format!("Error writing: {:?}", err.to_string()),
+            })
+        }
     }
 }
 
