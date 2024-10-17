@@ -25,6 +25,7 @@ pub struct GlobalState {
     pub current_project: std::sync::Mutex<Option<Project>>,
     pub current_session: std::sync::Mutex<Option<CurrentSession>>,
     pub reader: std::sync::Mutex<Option<Reader>>,
+    pub tags_map: std::sync::Arc<std::sync::Mutex<TagsMap>>,
 }
 
 impl GlobalState {
@@ -36,6 +37,7 @@ impl GlobalState {
             current_project: std::sync::Mutex::new(None),
             current_session: std::sync::Mutex::new(None),
             reader: std::sync::Mutex::new(None),
+            tags_map: std::sync::Arc::new(std::sync::Mutex::new(TagsMap::new())),
         };
 
         Ok(state)
@@ -98,13 +100,16 @@ impl GlobalState {
             Ok(_) => Reader::MockReader(MockReader::new(hostname)?),
             Err(_) => Reader::LLRPReader(LLRPReader::new(hostname)?),
         };
-
         reader.start_reading(app_handle)?;
         *lock = Some(reader);
         Ok(())
     }
 
-    pub fn save_step_results(&self, current_step: String, tags_map: TagsMap) -> Result<(), String> {
+    pub fn reset_tags_map(&self) {
+        self.tags_map.lock().unwrap().reset()
+    }
+
+    pub fn save_step_results(&self, current_step: String) -> Result<(), String> {
         let mut connection = self.database_connection.lock().unwrap();
         let current_session = self.current_session.lock().unwrap();
 
@@ -113,8 +118,9 @@ impl GlobalState {
                 &mut *connection,
                 &current_session.as_ref().unwrap().session_id,
                 &current_step,
-                tags_map,
+                self.tags_map.lock().unwrap().clone(),
             )?;
+
             Ok(())
         } else {
             Err(String::from("No current session"))
@@ -122,6 +128,7 @@ impl GlobalState {
     }
 
     pub fn stop_reading(&self, await_confirmation: bool) -> Result<(), ReaderError> {
+        self.reset_tags_map();
         let mut lock = self.reader.lock().unwrap();
         if let Some(reader) = &mut *lock {
             reader.stop_reading(await_confirmation)

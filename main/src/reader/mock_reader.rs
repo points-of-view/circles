@@ -5,7 +5,7 @@ use tauri::{
     AppHandle, Manager,
 };
 
-use crate::tags::{Tag, TagsMap};
+use crate::{tags::Tag, GlobalState};
 
 use super::{ReaderProtocol, REFRESH_INTERVAL};
 
@@ -30,9 +30,10 @@ impl ReaderProtocol for MockReader {
         app_handle: AppHandle<R>,
     ) -> Result<(), super::ReaderError> {
         let handle = spawn(async move {
+            let tags_map = app_handle.state::<GlobalState>().tags_map.clone();
             let sleep_duration = Duration::from_millis(REFRESH_INTERVAL.into());
             loop {
-                let mut tags = vec![
+                let tags = vec![
                     Tag::random(),
                     Tag::random(),
                     Tag::random(),
@@ -44,8 +45,10 @@ impl ReaderProtocol for MockReader {
                     Tag::random(),
                     Tag::random(),
                 ];
-                let new_map = TagsMap::from(tags.drain(..));
-                app_handle.emit_all("updated-tags", new_map).unwrap();
+                tags_map.lock().unwrap().add_tags(tags);
+                app_handle
+                    .emit_all("updated-tags", tags_map.lock().unwrap().clone())
+                    .unwrap();
                 sleep(sleep_duration)
             }
         });

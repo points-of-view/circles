@@ -15,17 +15,13 @@ use std::{
 };
 use tauri::{AppHandle, Manager};
 
-use crate::{
-    error::CirclesError,
-    tags::{Tag, TagsMap},
-};
+use crate::{error::CirclesError, GlobalState};
 
 use self::messages::handle_new_message;
 
 const DEFAULT_ROSPEC_ID: u32 = 1234;
-const REFRESH_INTERVAL: u32 = 200;
+const REFRESH_INTERVAL: u32 = 125;
 const RECV_TIMEOUT: Duration = Duration::from_millis(100);
-const KEEP_OLD_MAPS: usize = 15; // At a refresh interval of 200ms, this is 3 secs of data
 
 #[derive(Debug)]
 pub enum Reader {
@@ -69,8 +65,7 @@ pub fn handle_reader_input<R: tauri::Runtime>(
 ) -> tauri::async_runtime::JoinHandle<()> {
     tauri::async_runtime::spawn(async move {
         let (tx, rx) = channel::<Message>();
-        let mut tags: Vec<Tag> = vec![];
-        let mut previous_maps: Vec<TagsMap> = Vec::with_capacity(10);
+        let tags_map = app_handle.state::<GlobalState>().tags_map.clone();
         let mut last_update = Instant::now();
         let mut last_alive = Instant::now();
         let update_interval = Duration::from_millis(REFRESH_INTERVAL.into());
@@ -81,23 +76,17 @@ pub fn handle_reader_input<R: tauri::Runtime>(
         receive_messages(stream.try_clone().unwrap(), tx);
         loop {
             if let Ok(message) = rx.recv_timeout(RECV_TIMEOUT) {
-                handle_new_message(message, &mut tags, &stream);
+                let tags = handle_new_message(message, &stream);
+                tags_map.lock().unwrap().add_tags(tags);
                 last_alive = Instant::now();
             }
 
             if last_update.elapsed() > update_interval {
-                // Create a map from the tags we just saw
-                let new_map = TagsMap::from(tags.drain(..));
-
-                // Remove first item (if needed) and push new map
-                if previous_maps.len() >= KEEP_OLD_MAPS {
-                    previous_maps.drain(0..1);
-                }
-                previous_maps.push(new_map);
-
-                // Create a map from the collection of maps
-                let total_map = TagsMap::from(&previous_maps);
-                app_handle.emit_all("updated-tags", total_map).unwrap();
+                // Update the frontend with a new map.
+                // We clone the map inside our mutex, since we don't care about any changes while we are sending this event
+                app_handle
+                    .emit_all("updated-tags", tags_map.lock().unwrap().clone())
+                    .unwrap();
                 last_update = Instant::now();
             }
 

@@ -145,10 +145,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
 
   async function saveAnswers() {
     try {
-      await invoke("save_step_results", {
-        currentStep: currentQuestion.key,
-        tagsMap,
-      });
+      await invoke("save_step_results", { currentStep: currentQuestion.key });
     } catch (error) {
       // The user cannot fix this error, so we just log it for debugging
       // eslint-disable-next-line no-console
@@ -288,6 +285,11 @@ export default function Session({ project, resetProject, language, darkMode }) {
         break;
     }
   }
+
+  useEffect(() => {
+    invoke("reset_tags_map");
+    setTagsMap({});
+  }, [step, phase]);
 
   function handleKeyDown(event) {
     if (event.code === "ArrowRight") goToNextStep();
