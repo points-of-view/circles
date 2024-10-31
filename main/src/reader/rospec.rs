@@ -51,7 +51,7 @@ pub fn construct_default_rospec() -> parameters::ROSpec {
                 rf_receiver: None,
                 rf_transmitter: Some(parameters::RFTransmitter {
                     // Our readers do not come with a FrequencyHopTable, so we just set this to `0`. This setting will be ignore by the reader
-                    hop_table_id: 0,
+                    hop_table_id: 1,
                     // Our reader come with one fixed frequency. this index is one based
                     channel_index: 1,
                     // Our readers come with a table that contains 192 entries, going from 10dBm to 29.2dBm in increments of 0.1dBm
