@@ -50,7 +50,7 @@ pub fn construct_default_rospec() -> parameters::ROSpec {
                 antenna_id: 0, // Antenna ID 0 means this applies to all antennas
                 rf_receiver: None,
                 rf_transmitter: Some(parameters::RFTransmitter {
-                    // Our readers do not come with a FrequencyHopTable, so we just set this to `0`. This setting will be ignore by the reader
+                    // We don't use frequency hopping, but have to set a value. `1` seems to work on all of our readers
                     hop_table_id: 1,
                     // Our reader come with one fixed frequency. this index is one based
                     channel_index: 1,
