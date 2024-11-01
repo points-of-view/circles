@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1.6.0",
-    "@vitejs/plugin-react": "^4.3.2",
+    "@vitejs/plugin-react": "^4.3.3",
     "clsx": "^2.1.1",
     "lightningcss": "^1.27.0",
     "react": "^18.3.1",
