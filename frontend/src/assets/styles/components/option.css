@@ -74,7 +74,6 @@
   align-items: center;
   width: 6rem;
   height: 6rem;
-  font-weight: 700;
   font-size: var(--text-lg);
   border-radius: var(--rounded-full);
   background-color: var(--option-color);
