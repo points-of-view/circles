@@ -1,10 +1,12 @@
 import clsx from "clsx";
+import tokenlist from "../assets/tokens/list.json";
 
 export default function Option({
   className = "",
   label,
   amount = 0,
   big = false,
+  tagIds = []
 }) {
   return (
     <div className={clsx("option", className, { "option--big": big })}>
@@ -13,7 +15,8 @@ export default function Option({
         <div className="option__label">{label}</div>
         {!big && (
           <div className="option__figure-container">
-            {[...Array(amount)].map((value, index) => (
+            {tagIds.map((value, index) => (
+              tokenlist.hasOwnProperty(value) ? <div>icon</div> :
               <svg
                 key={index}
                 className="option__figure-icon"

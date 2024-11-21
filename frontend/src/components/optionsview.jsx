@@ -1,7 +1,14 @@
 import Option from "./option";
 import clsx from "clsx";
 
-export default function OptionsView({ options, tagCount }) {
+export default function OptionsView({ options, tagCount, tagsMap }) {
+  const tagIds = Object.values(tagsMap).reduce((tag, { id, antenna }) => {
+    if (!tag[antenna]) {
+      tag[antenna] = [];
+    }
+    tag[antenna].push(id);
+    return tag;
+  }, {});
   return (
     <div className="options-view interaction-screen__option-view">
       {options.map((option, index) => (
@@ -14,6 +21,7 @@ export default function OptionsView({ options, tagCount }) {
           label={option.value}
           big={options.length === 1}
           amount={tagCount[index + 1]}
+          tagIds={tagIds[index + 1]}
         />
       ))}
     </div>
