@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import tokenlist from "../assets/tokens/list.json";
+import tokenlist from "../data/tokens/list.json";
 
 export default function Option({
   className = "",
