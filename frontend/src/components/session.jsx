@@ -323,6 +323,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
         accentColor={accentColor}
         showLogo={showLogo}
         tagCount={tagCount}
+        tagsMap={tagsMap}
       />
     </>
   );
