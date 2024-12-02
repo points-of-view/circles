@@ -1,0 +1,603 @@
+{
+    "name": {
+      "en": "Testing Phase 1 - Nederlandstalige Copy"
+    },
+    "availableLanguages": ["en"],
+    "key": "phase1eng",
+    "themes": [
+      {
+        "name": {
+          "en": "Migration"
+        },
+        "key": "migration",
+        "questions": [
+          {
+            "title": {
+              "en": "How many people applied for asylum in the EU in 2023?"
+            },
+            "key": "question-asylum-2023",
+            "type": "quiz",
+            "explanation": {
+              "en": "In 2023, the EU introduced a solidarity mechanism whereby countries with fewer immigrants take in immigrants from countries with more immigrants."
+            },
+            "options": [
+              {
+                "key": "question-asylum-2023-option-one",
+                "value": {
+                  "en": "Between 100,000 and 500,000"
+                }
+              },
+              {
+                "key": "question-asylum-2023-option-two",
+                "value": {
+                  "en": "Between 500,000 and one million"
+                }
+              },
+              {
+                "key": "question-asylum-2023-option-three",
+                "value": {
+                  "en": "More than one million"
+                },
+                "correct": true
+              }
+            ]
+          },
+          {
+            "title": {
+              "en": "Every country in the EU should take up a minimum number of asylum seekers, proportional to its population"
+            },
+            "key": "question-minimum-asylum-seekers",
+            "type": "opinion",
+            "options": [
+              {
+                "key": "question-minimum-asylum-seekers-option-disagree",
+                "value": {
+                  "en": "Disagree"
+                }
+              },
+              {
+                "key": "question-minimum-asylum-seekers-option-unsure",
+                "value": {
+                  "en": "Not sure"
+                }
+              },
+              {
+                "key": "question-minimum-asylum-seekers-option-agree",
+                "value": {
+                  "en": "Agree"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": {
+          "en": "AI"
+        },
+        "key": "artificial-intelligence",
+        "questions": [
+          {
+            "title": {
+              "en": "Does the EU permit the use of live facial recognition technology in public areas?"
+            },
+            "key": "question-live-facial-recognition",
+            "type": "quiz",
+            "explanation": {
+              "en": "The EU's 2024 AI Act prohibits live face scanning in public places except for very specific law enforcement purposes, such as finding kidnapped victims or suspected serious criminals."
+            },
+            "options": [
+              {
+                "key": "question-live-facial-recognition-option-no",
+                "value": {
+                  "en": "No"
+                }
+              },
+              {
+                "key": "question-live-facial-recognition-option-sometimes",
+                "value": {
+                  "en": "In some cases"
+                },
+                "correct": true
+              },
+              {
+                "key": "question-live-facial-recognition-option-yes",
+                "value": {
+                  "en": "Yes"
+                }
+              }
+            ]
+          },
+          {
+            "title": {
+              "en": "The EU should be more flexible about the use of live facial recognition in public places and maybe permit it more often"
+            },
+            "key": "question-flexible-facial-recognition-in-public-space",
+            "type": "opinion",
+            "options": [
+              {
+                "key": "question-flexible-facial-recognition-in-public-space-option-disagree",
+                "value": {
+                  "en": "Disagree"
+                }
+              },
+              {
+                "key": "question-flexible-facial-recognition-in-public-space-option-unsure",
+                "value": {
+                  "en": "Not sure"
+                }
+              },
+              {
+                "key": "question-flexible-facial-recognition-in-public-space-option-agree",
+                "value": {
+                  "en": "Agree"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": {
+          "en": "Climate"
+        },
+        "key": "climate",
+        "questions": [
+          {
+            "title": {
+              "en": "By which year does the EU aim to compensate all CO₂ emissions with climate protection measures and thus reach climate neutrality?"
+            },
+            "key": "question-climate-neutrality",
+            "type": "quiz",
+            "explanation": {
+              "en": "The EU's 2021 Climate Law sets the objective of achieving climate neutrality by 2050. The EU aims to make Europe the first climate-neutral continent."
+            },
+            "options": [
+              {
+                "key": "question-climate-neutrality-option-one",
+                "value": {
+                  "en": "By 2030"
+                }
+              },
+              {
+                "key": "question-climate-neutrality-option-two",
+                "value": {
+                  "en": "By 2040"
+                }
+              },
+              {
+                "key": "question-climate-neutrality-option-three",
+                "value": {
+                  "en": "By 2050"
+                },
+                "correct": true
+              }
+            ]
+          },
+          {
+            "title": {
+              "en": "EU countries should be fined if they don't make sufficient efforts to cut CO₂ emissions"
+            },
+            "key": "question-fine-carbon-emissions",
+            "type": "opinion",
+            "options": [
+              {
+                "key": "question-fine-carbon-emissions-option-disagree",
+                "value": {
+                  "en": "Disagree"
+                }
+              },
+              {
+                "key": "question-fine-carbon-emissions-option-unsure",
+                "value": {
+                  "en": "Not sure"
+                }
+              },
+              {
+                "key": "question-fine-carbon-emissions-option-agree",
+                "value": {
+                  "en": "Agree"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": {
+          "en": "Gender"
+        },
+        "key": "gender",
+        "questions": [
+          {
+            "title": {
+              "en": "In how many EU countries can you choose to have an 'X' on your national identity card instead of 'male' or 'female'?"
+            },
+            "key": "question-x-id-card",
+            "type": "quiz",
+            "explanation": {
+              "en": "Malta and Denmark allow X markers on national IDs. Other countries are implementing legislation to remove gender mentions from national IDs. There is no EU law regarding gender markers in official documents."
+            },
+            "options": [
+              {
+                "key": "question-x-id-card-option-one",
+                "value": {
+                  "en": "2"
+                },
+                "correct": true
+              },
+              {
+                "key": "question-x-id-card-option-two",
+                "value": {
+                  "en": "5"
+                }
+              },
+              {
+                "key": "question-x-id-card-option-three",
+                "value": {
+                  "en": "10"
+                }
+              }
+            ]
+          },
+          {
+            "title": {
+              "en": "The EU should encourage its member countries to officially recognize other gender identities besides male and female"
+            },
+            "key": "question-encourage-recognition-other-genders",
+            "type": "opinion",
+            "options": [
+              {
+                "key": "question-encourage-recognition-other-genders-option-disagree",
+                "value": {
+                  "en": "Disagree"
+                }
+              },
+              {
+                "key": "question-encourage-recognition-other-genders-option-unsure",
+                "value": {
+                  "en": "Not sure"
+                }
+              },
+              {
+                "key": "question-encourage-recognition-other-genders-option-agree",
+                "value": {
+                  "en": "Agree"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": {
+          "en": "Military service"
+        },
+        "key": "military-service",
+        "questions": [
+          {
+            "title": {
+              "en": "How many EU countries have some form of compulsory military service?"
+            },
+            "key": "question-mandatory-military-service",
+            "type": "quiz",
+            "explanation": {
+              "en": "Lithuania, Denmark, Sweden, Cyrpus, Finland, Latvia, Austria, Greece and Estonia have some form of compulsory military service. Currently, there's no EU army. Each EU country is responsible for its own defense force."
+            },
+            "options": [
+              {
+                "key": "question-mandatory-military-service-option-one",
+                "value": {
+                  "en": "None"
+                }
+              },
+              {
+                "key": "question-mandatory-military-service-option-two",
+                "value": {
+                  "en": "3"
+                }
+              },
+              {
+                "key": "question-mandatory-military-service-option-three",
+                "value": {
+                  "en": "9"
+                },
+                "correct": true
+              }
+            ]
+          },
+          {
+            "title": {
+              "en": "The EU should build a common European army"
+            },
+            "key": "question-eu-army",
+            "type": "opinion",
+            "options": [
+              {
+                "key": "question-eu-army-option-disagree",
+                "value": {
+                  "en": "Disagree"
+                }
+              },
+              {
+                "key": "question-eu-army-option-unsure",
+                "value": {
+                  "en": "Not sure"
+                }
+              },
+              {
+                "key": "question-eu-army-option-agree",
+                "value": {
+                  "en": "Agree"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": {
+          "en": "Mobility"
+        },
+        "key": "mobility",
+        "questions": [
+          {
+            "title": {
+              "en": "From which year on will the sale of carbon-emitting (petrol and diesel) cars and vans be prohibited in the EU?"
+            },
+            "key": "question-ban-emissive-cars",
+            "type": "quiz",
+            "explanation": {
+              "en": "In 2023, the EU decided that from 2035 on, new cars and vans sold in the EU must have zero emissions. This means that as from 2035, new cars must all be electric vehicles."
+            },
+            "options": [
+              {
+                "key": "question-ban-emissive-cars-option-one",
+                "value": {
+                  "en": "From 2025"
+                }
+              },
+              {
+                "key": "question-ban-emissive-cars-option-two",
+                "value": {
+                  "en": "From 2030"
+                }
+              },
+              {
+                "key": "question-ban-emissive-cars-option-three",
+                "value": {
+                  "en": "From 2035"
+                },
+                "correct": true
+              }
+            ]
+          },
+          {
+            "title": {
+              "en": "You should still be able to buy a new petrol or diesel car or van after 2035"
+            },
+            "key": "question-timing-switch-electric-vehicles",
+            "type": "opinion",
+            "options": [
+              {
+                "key": "question-timing-switch-electric-vehicles-option-disagree",
+                "value": {
+                  "en": "Disagree"
+                }
+              },
+              {
+                "key": "question-timing-switch-electric-vehicles-option-unsure",
+                "value": {
+                  "en": "Not sure"
+                }
+              },
+              {
+                "key": "question-timing-switch-electric-vehicles-option-agree",
+                "value": {
+                  "en": "Agree"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": {
+          "en": "Social media"
+        },
+        "key": "social-media",
+        "questions": [
+          {
+            "title": {
+              "en": "What percentage of Europeans is frequently confronted with false information when they go online?"
+            },
+            "key": "question-confronted-with-false-information",
+            "type": "quiz",
+            "explanation": {
+              "en": "In 2024, the EU passed a law requiring large tech companies and online platforms like TikTok and Facebook to detect and remove illegal online content. The law faced significant debate before being approved."
+            },
+            "options": [
+              {
+                "key": "question-confronted-with-false-information-option-one",
+                "value": {
+                  "en": "Around 10%"
+                }
+              },
+              {
+                "key": "question-confronted-with-false-information-option-two",
+                "value": {
+                  "en": "Around 20%"
+                }
+              },
+              {
+                "key": "question-confronted-with-false-information-option-three",
+                "value": {
+                  "en": "Around 30%"
+                },
+                "correct": true
+              }
+            ]
+          },
+          {
+            "title": {
+              "en": "The EU should let online platforms decide for themselves how to handle harmful content"
+            },
+            "key": "question-damaging-content-on-platforms",
+            "type": "opinion",
+            "options": [
+              {
+                "key": "question-damaging-content-on-platforms-option-disagree",
+                "value": {
+                  "en": "Disagree"
+                }
+              },
+              {
+                "key": "question-damaging-content-on-platforms-option-unsure",
+                "value": {
+                  "en": "Not sure"
+                }
+              },
+              {
+                "key": "question-damaging-content-on-platforms-option-agree",
+                "value": {
+                  "en": "Agree"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": {
+          "en": "Border controls"
+        },
+        "key": "border-controls",
+        "questions": [
+          {
+            "title": {
+              "en": "What is the name of the official piece of legislation that establishes the right of free movement of persons across the EU?"
+            },
+            "key": "question-free-traffic-of-persons",
+            "type": "quiz",
+            "explanation": {
+              "en": "There are 27 European countries that fall under the Schengen area. Anyone who lives in the Schengen area or passed border controls at the Schengen area borders may travel freely between these countries without further border controls."
+            },
+            "options": [
+              {
+                "key": "question-free-traffic-of-persons-option-one",
+                "value": {
+                  "en": "The Maastricht Treaty"
+                }
+              },
+              {
+                "key": "question-free-traffic-of-persons-option-two",
+                "value": {
+                  "en": "The Schengen Agreement"
+                },
+                "correct": true
+              },
+              {
+                "key": "question-free-traffic-of-persons-option-three",
+                "value": {
+                  "en": "The Treaty of Brussels"
+                }
+              }
+            ]
+          },
+          {
+            "title": {
+              "en": "Internal border controls between the EU countries belonging to the Schengen area should be restored"
+            },
+            "key": "question-restart-border-control-within-shengen",
+            "type": "opinion",
+            "options": [
+              {
+                "key": "question-restart-border-control-within-shengen-option-disagree",
+                "value": {
+                  "en": "Disagree"
+                }
+              },
+              {
+                "key": "question-restart-border-control-within-shengen-option-unsure",
+                "value": {
+                  "en": "Not sure"
+                }
+              },
+              {
+                "key": "question-restart-border-control-within-shengen-option-agree",
+                "value": {
+                  "en": "Agree"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": {
+          "en": "EU voting rights"
+        },
+        "key": "eu-voting-rights",
+        "questions": [
+          {
+            "title": {
+              "en": "The next European elections are taking place on June 9, 2024. What is the youngest age at which some youngsters across the EU can vote in the European elections?"
+            },
+            "key": "question-youngest-participation-age",
+            "type": "quiz",
+            "explanation": {
+              "en": "EU countries are free to set their minimum national voting age for European elections. This age is set at 16 in Austria, Belgium, Germany and Malta, 17 in Greece, and 18 in the remaining countries."
+            },
+            "options": [
+              {
+                "key": "question-youngest-participation-age-option-one",
+                "value": {
+                  "en": "15"
+                }
+              },
+              {
+                "key": "question-youngest-participation-age-option-two",
+                "value": {
+                  "en": "16"
+                },
+                "correct": true
+              },
+              {
+                "key": "question-youngest-participation-age-option-three",
+                "value": {
+                  "en": "17"
+                }
+              }
+            ]
+          },
+          {
+            "title": {
+              "en": "All EU countries should set the minimum age for voting in the European elections at 16"
+            },
+            "key": "question-generalize-voting-age",
+            "type": "opinion",
+            "options": [
+              {
+                "key": "question-generalize-voting-age-option-disagree",
+                "value": {
+                  "en": "Disagree"
+                }
+              },
+              {
+                "key": "question-generalize-voting-age-option-unsure",
+                "value": {
+                  "en": "Not sure"
+                }
+              },
+              {
+                "key": "question-generalize-voting-age-option-agree",
+                "value": {
+                  "en": "Agree"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
