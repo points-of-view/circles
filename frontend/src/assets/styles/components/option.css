@@ -47,17 +47,10 @@
 .option__figure-container:has(> :nth-child(14)) {
   gap: 8px;
   height: 66px;
-
-  img {
-    height: 66px;
-  }
-
-  svg {
-    height: 66px;
-  }
 }
 
 .option__figure-icon {
+  height: 100%;
   animation: fade-in 0.25s;
 }
 
