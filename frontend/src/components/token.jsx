@@ -54,9 +54,7 @@ const icons = {
 };
 
 export default function Token({ tagID }) {
-  const token = Object.keys(tokenlist).find((key) =>
-    tokenlist[key].includes(tagID),
-  );
+  const token = tokenlist[tagID];
 
   if (token !== undefined) {
     return (
