@@ -1,7 +1,8 @@
 {
-  "stand_in_circle": "Go stand in the circle of your answer",
+  "answer_instruction": "Tick the box with your stick to give your answer",
   "choose_a_theme_start": "Choose a ",
   "choose_a_theme_accent": "theme",
+  "chosen_theme": "The chosen theme",
   "give_an_answer": "Give an answer to the following question ",
   "quiz_question_start": "Let's start with a ",
   "quiz_question_accent": "quiz question",

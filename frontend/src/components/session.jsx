@@ -39,7 +39,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
     chosenTheme !== null && chosenTheme.questions[phase - 1];
   const description =
     step === STEPS.showMainInteractionScreen
-      ? translate("stand_in_circle", language)
+      ? translate("answer_instruction", language)
       : null;
   const themeName = phase !== 0 && chosenTheme.name[language];
   const accentColor = COLORS.toReversed()[phase];
