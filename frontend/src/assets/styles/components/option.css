@@ -10,9 +10,10 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 90%;
+  padding-top: 4rem;
   border: 12px solid var(--option-color);
   border-radius: var(--rounded-full);
   background-color: var(--bg-color);
@@ -38,18 +39,22 @@
   gap: 15px;
   justify-content: center;
   align-items: center;
-  height: 66px;
+  height: 80px;
   max-width: 75%;
   max-height: 50%;
 }
 
-.option__figure-container:has(> :nth-child(11)) {
-  gap: 4px;
-  height: 60px;
-}
+.option__figure-container:has(> :nth-child(14)) {
+  gap: 8px;
+  height: 66px;
 
-.option__figure-container:has(> :nth-child(16)) {
-  height: 100px;
+  img {
+    height: 66px;
+  }
+
+  svg {
+    height: 66px;
+  }
 }
 
 .option__figure-icon {
