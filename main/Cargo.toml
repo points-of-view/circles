@@ -1,6 +1,6 @@
 [package]
 name = "circles"
-version = "0.0.7"
+version = "0.1.0"
 license = "CC BY 4.0"
 edition = "2021"
 
