@@ -80,8 +80,10 @@
 
 .option--big {
   .option__content {
+    justify-content: center;
     width: 80vh;
     margin: auto;
+    padding-top: 0;
     border-width: 15px;
   }
 
