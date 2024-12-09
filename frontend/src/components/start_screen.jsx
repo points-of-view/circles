@@ -13,11 +13,22 @@ const STATES = {
   done: "DONE",
 };
 
-export function StartScreen({ setProject, setDarkMode }) {
+export function StartScreen({ setProject, setDarkMode, toggleFullScreen }) {
   return (
     <div className="start-screen">
       <StartProject setProject={setProject} setDarkMode={setDarkMode} />
       <ExportCard />
+      <FullscreenToggle toggleFullScreen={toggleFullScreen} />
+    </div>
+  );
+}
+function FullscreenToggle({ toggleFullScreen }) {
+  return (
+    <div
+      className="start-screen__fullscreen-toggle"
+      onClick={() => toggleFullScreen("toggleFromClick")}
+    >
+      ⛶
     </div>
   );
 }

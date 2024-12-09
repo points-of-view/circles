@@ -11,12 +11,16 @@ export default function App() {
   const language = project?.availableLanguages[0];
 
   function toggleFullScreen(event) {
-    if (event.code !== "KeyF" || !event.altKey) return;
-    setFullscreen((current) => {
-      const new_value = !current;
-      appWindow.setFullscreen(new_value);
-      return new_value;
-    });
+    if (
+      (event.code === "KeyF" && event.altKey) ||
+      event === "toggleFromClick"
+    ) {
+      setFullscreen((current) => {
+        const new_value = !current;
+        appWindow.setFullscreen(new_value);
+        return new_value;
+      });
+    }
   }
 
   useEffect(() => {
@@ -41,6 +45,7 @@ export default function App() {
       setProject={setProject}
       setDarkMode={setDarkMode}
       language={language}
+      toggleFullScreen={toggleFullScreen}
     />
   );
 }
