@@ -1,0 +1,857 @@
+{
+  "name": {
+    "sl": "Slovenia - Bibi"
+  },
+  "availableLanguages": ["sl"],
+  "key": "bibi",
+  "themes": [
+    {
+      "name": {
+        "sl": "BIOREAKTORJI"
+      },
+      "key": "BIOREAKTORJI",
+      "questions": [
+        {
+          "title": {
+            "sl": "Kaj so bioreaktorji?"
+          },
+          "key": "question-bioreaktorji-one",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Biorekator je katerakoli posoda v kateri pod določenimi pogoji gojimo neko biološko snov. Uporabni so celo za gojenje hrane - večinoma iz živalskih celic, encimov ali mikroorganizmov. Obstajajo biorekatorji za meso, mlečne izdelke, alge in tako naprej..."
+          },
+          "options": [
+            {
+              "key": "question-bioreaktorji-option-one",
+              "value": {
+                "sl": "Neka posoda v kateri lahko gojimo biološke snovi."
+              },
+              "correct": true
+            },
+            {
+              "key": "question-bioreaktorji-option-two",
+              "value": {
+                "sl": "Nekaj kar se odziva samo na žive stvari."
+              }
+            },
+            {
+              "key": "question-bioreaktorji-option-three",
+              "value": {
+                "sl": "Rakete na pogon iz mikroorganizmov."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Bi jedel hrano iz bioreaktorja?"
+          },
+          "key": "statement-bioreaktorji-one",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-bioreaktorji-option-one",
+              "value": {
+                "sl": "Ja!"
+              }
+            },
+            {
+              "key": "statement-bioreaktorji-option-two",
+              "value": {
+                "sl": "Mogoče, če ne bi bilo druge..."
+              }
+            },
+            {
+              "key": "statement-bioreaktorji-option-three",
+              "value": {
+                "sl": "Ni šans!"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Kaj bi bila lahko korist biorekatorja proti običajnemu poljedelstvu in živinoreji?"
+          },
+          "key": "question-bioreaktorji-two",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Glavna prednost biorekatorjev je da zavzamejo manj prostora, porabijo manj vode in drugih hranil ter v okolje ne izpuščajo antibiotikov, pesticidov in toliko toplogrednih plinov. Ker pa v njih meso zraste samo iz celic, pa mu moramo teksutro in nekatera druga koristna hranila dodati kasneje."
+          },
+          "options": [
+            {
+              "key": "question-bioreaktorji-two-option-one",
+              "value": {
+                "sl": "Izgledajo kul in futuristično."
+              }
+            },
+            {
+              "key": "question-bioreaktorji-two-option-two",
+              "value": {
+                "sl": "Manj vplivajo na okolje."
+              },
+              "correct": true
+            },
+            {
+              "key": "question-bioreaktorji-two-option-three",
+              "value": {
+                "sl": "Hrana iz njih je bolj zdrava in okusnejša."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Vso proizvodnjo hrane bi morali nadomestiti z biorekatorji?"
+          },
+          "key": "statement-bioreaktorji-two",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-bioreaktorji-option-one",
+              "value": {
+                "sl": "GREMO!"
+              }
+            },
+            {
+              "key": "statement-bioreaktorji-option-two",
+              "value": {
+                "sl": "Mogoče kakšen del..."
+              }
+            },
+            {
+              "key": "statement-bioreaktorji-option-three",
+              "value": {
+                "sl": "Absolutno ne, nobene."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "ODPADNA HRANA"
+      },
+      "key": "odpadna-hrana",
+      "questions": [
+        {
+          "title": {
+            "sl": "Koliko hrane letno vžemo stran v evropski uniji?"
+          },
+          "key": "question-odpadna-hrana-one",
+          "type": "quiz",
+          "explanation": {
+            "sl": "V EU na leto stran vržemo 59 miljon ton hrane - to je 132kg na prebivalca in tretina vseh pridelanih živil!"
+          },
+          "options": [
+            {
+              "key": "question-odpadna-hrana-one-option-one",
+              "value": {
+                "sl": "12 miljonov ton"
+              }
+            },
+            {
+              "key": "question-odpadna-hrana-one-option-two",
+              "value": {
+                "sl": "2 miljona ton"
+              }
+            },
+            {
+              "key": "question-odpadna-hrana-one-option-three",
+              "value": {
+                "sl": "59 miljonov ton"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Se ti zdi odpadna hrana velik problem?"
+          },
+          "key": "statement-odpadna-hrana-one",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-odpadna-hrana-option-one",
+              "value": {
+                "sl": "Da"
+              }
+            },
+            {
+              "key": "statement-odpadna-hrana-option-two",
+              "value": {
+                "sl": "Mogoče"
+              }
+            },
+            {
+              "key": "statement-odpadna-hrana-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Kdo proizvede največ odpadne hrane?"
+          },
+          "key": "question-odpadna-hrana-two",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Kljub temu, da se kar precej hrane zavrže med pridelavo in v trgovinah, pa še nekoliko več odpada nastane s strani potrošnikov - kar 54%."
+          },
+          "options": [
+            {
+              "key": "question-odpadna-hrana-two-option-one",
+              "value": {
+                "sl": "Proizvajalci"
+              }
+            },
+            {
+              "key": "question-odpadna-hrana-two-option-two",
+              "value": {
+                "sl": "Gospodinjstva - posameziniki"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-odpadna-hrana-two-option-three",
+              "value": {
+                "sl": "Trgovine"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Katero vrsto hrane največkrat vržete stran doma?"
+          },
+          "key": "statement-odpadna-hrana-two",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-odpadna-hrana-option-one",
+              "value": {
+                "sl": "Sadje/zelenjavo"
+              }
+            },
+            {
+              "key": "statement-odpadna-hrana-option-two",
+              "value": {
+                "sl": "Kruh"
+              }
+            },
+            {
+              "key": "statement-odpadna-hrana-option-three",
+              "value": {
+                "sl": "Meso in mlečne izdelke"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Bi lahko v svojem vsakdanjem življenju stran vrgel manj hrane?"
+          },
+          "key": "statement-odpadna-hrana-three",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-odpadna-hrana-three-option-one",
+              "value": {
+                "sl": "Da"
+              }
+            },
+            {
+              "key": "statement-odpadna-hrana-three-option-two",
+              "value": {
+                "sl": "Mogoče"
+              }
+            },
+            {
+              "key": "statement-odpadna-hrana-three-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "S KJE PRIHAJA NAŠA HRANA?"
+      },
+      "key": "prihaja",
+      "questions": [
+        {
+          "title": {
+            "sl": "Pojemo več hrane pridelane v Sloveniji ali tiste uvožene iz drugih držav?"
+          },
+          "key": "question-prihaja-one",
+          "type": "quiz",
+          "explanation": {
+            "sl": "V Sloveniji je večina (več kot 70 %) potrošene hrane uvožena, le približno tretjina hrane je domačega, slovenskega izvora.Tako uvoz kot izvoz hrane sta se po vstopu Slovenije v EU, občutno povečala. Več kot polovico uvožene hrane (60 %) se uvozi iz sosednjih držav (Avstrija, Hrvaška, Italija in Madžarska), največ se uvozi žita, sadja, zelenjave in sladkorja."
+          },
+          "options": [
+            {
+              "key": "question-prihaja-option-one",
+              "value": {
+                "sl": "Pridelane izven Slovenije."
+              },
+              "correct": true
+            },
+            {
+              "key": "question-prihaja-option-two",
+              "value": {
+                "sl": "Pridelane v Sloveniji."
+              }
+            },
+            {
+              "key": "question-prihaja-option-three",
+              "value": {
+                "sl": "V slovenskih trgovinah najdemo samo hrano pridelano v Sloveniji."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Kateri hrani bolj zaupaš, pridelani v Sloveniji ali uvoženi iz tujine?"
+          },
+          "key": "statement-prihaja-one",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-prihaja-option-one",
+              "value": {
+                "sl": "Pridelani v Sloveniji."
+              }
+            },
+            {
+              "key": "statement-prihaja-option-two",
+              "value": {
+                "sl": "Pridelani izven Slovenije."
+              }
+            },
+            {
+              "key": "statement-prihaja-option-three",
+              "value": {
+                "sl": "Vseeno mi je."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "So pravila za pridelavo hrane v vseh državah po svetu enaka?"
+          },
+          "key": "question-prihaja-two",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Pravila za pridelavo se med državami lahko zelo razlikujejo. Slovenija je ena izmed držav, ki ima strožje predpise od ostalih."
+          },
+          "options": [
+            {
+              "key": "question-prihaja-two-option-one",
+              "value": {
+                "sl": "Ne"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-prihaja-two-option-two",
+              "value": {
+                "sl": "Mogoče"
+              }
+            },
+            {
+              "key": "question-prihaja-two-option-three",
+              "value": {
+                "sl": "Da"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Si že slišal/a za ponaredke hrane? Razloži."
+          },
+          "key": "statement-prihaja-two",
+          "type": "opinion",
+          "explanation": {
+            "sl": "Trgovina s hrano je zelo dobičkonosna. Pogosto se pojavljajo ponaredki medov, sirov, oljčnega olja, v predelanih živilih pogosto odkrijejo sestavine, ki vanje ne sodijo..."
+          },
+          "options": [
+            {
+              "key": "statement-prihaja-option-one",
+              "value": {
+                "sl": "Da"
+              }
+            },
+            {
+              "key": "statement-prihaja-option-two",
+              "value": {
+                "sl": "Mogoče"
+              }
+            },
+            {
+              "key": "statement-prihaja-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "SAMOSTOJNO GOJENJE HRANE"
+      },
+      "key": "samostojno",
+      "questions": [
+        {
+          "title": {
+            "sl": "Ste že kdaj poiskusili sami vzgojiti kakšno zelenjavo ali sadje?"
+          },
+          "key": "statement-samostojno-one",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-samostojno-option-one",
+              "value": {
+                "sl": "Ja"
+              }
+            },
+            {
+              "key": "statement-samostojno-option-two",
+              "value": {
+                "sl": "Ja. ampak ni čisto uspelo"
+              }
+            },
+            {
+              "key": "statement-samostojno-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Mislite, da bi lahko vsak vzgojil dovolj hrane zase?"
+          },
+          "key": "question-samostojno-two",
+          "type": "quiz",
+          "options": [
+            {
+              "key": "question-samostojno-two-option-one",
+              "value": {
+                "sl": "Ja"
+              }
+            },
+            {
+              "key": "question-samostojno-two-option-two",
+              "value": {
+                "sl": "Samo če bi se temu čisto posvetil"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-samostojno-two-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Mislite, da je samostojno gojenje hrane vseeno pomembno? Zakaj?"
+          },
+          "key": "statement-samostojno-two",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-samostojno-option-one",
+              "value": {
+                "sl": "Ja"
+              }
+            },
+            {
+              "key": "statement-samostojno-option-two",
+              "value": {
+                "sl": "Še kar"
+              }
+            },
+            {
+              "key": "statement-samostojno-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "OZNAKE NA HRANI"
+      },
+      "key": "oznake",
+      "questions": [
+        {
+          "title": {
+            "sl": "Koliko držav EU ima kakršno koli obliko obveznega služenja vojaškega roka?"
+          },
+          "key": "question-oznake-one",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Nekatere besede na embalaži hrane se sicer slišijo zdravo in dobro, a dejansko nimajo uradnega pomena. Evropska Unija v prihodnosti načrtuje boljši nadzor nad zavajujočimi označbami."
+          },
+          "options": [
+            {
+              "key": "question-oznake-one-option-one",
+              "value": {
+                "sl": "Organsko"
+              }
+            },
+            {
+              "key": "question-oznake-one-option-two",
+              "value": {
+                "sl": "Ekološko"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-oznake-one-option-three",
+              "value": {
+                "sl": "Naravno"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Ali kdaj preberete etikete na hrani?"
+          },
+          "key": "statement-oznake-one",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-oznake-one-option-disagree",
+              "value": {
+                "sl": "Pogosto"
+              }
+            },
+            {
+              "key": "statement-oznake-one-option-unsure",
+              "value": {
+                "sl": "Včasih"
+              }
+            },
+            {
+              "key": "statement-oznake-one-option-agree",
+              "value": {
+                "sl": "Nikoli"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "TVOJE NAVADE"
+      },
+      "key": "navade",
+      "questions": [
+        {
+          "title": {
+            "sl": "Mislite da jeste zdravo?"
+          },
+          "key": "statement-navade-one",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-navade-option-one",
+              "value": {
+                "sl": "Ja"
+              }
+            },
+            {
+              "key": "statement-navade-option-two",
+              "value": {
+                "sl": "Včasih"
+              }
+            },
+            {
+              "key": "statement-navade-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },{
+          "title": {
+            "sl": "Ali v družini pogosto kuhate?"
+          },
+          "key": "statement-navade-two",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-navade-option-one",
+              "value": {
+                "sl": "Ja"
+              }
+            },
+            {
+              "key": "statement-navade-option-two",
+              "value": {
+                "sl": "Včasih"
+              }
+            },
+            {
+              "key": "statement-navade-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },{
+          "title": {
+            "sl": "Ali veliko razmišljate o zdravi prehrani?"
+          },
+          "key": "statement-navade-three",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-navade-option-one",
+              "value": {
+                "sl": "Ja"
+              }
+            },
+            {
+              "key": "statement-navade-option-two",
+              "value": {
+                "sl": "Še kar"
+              }
+            },
+            {
+              "key": "statement-navade-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },{
+          "title": {
+            "sl": "Mislite, da je človek lahko 'preveč' zdrav?"
+          },
+          "key": "statement-navade-four",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-navade-option-one",
+              "value": {
+                "sl": "Ja"
+              }
+            },
+            {
+              "key": "statement-navade-option-two",
+              "value": {
+                "sl": "Ne vem"
+              }
+            },
+            {
+              "key": "statement-navade-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },{
+          "title": {
+            "sl": "Ali v hrani uživate?"
+          },
+          "key": "statement-navade-five",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-navade-option-one",
+              "value": {
+                "sl": "Ja"
+              }
+            },
+            {
+              "key": "statement-navade-option-two",
+              "value": {
+                "sl": "Včasih"
+              }
+            },
+            {
+              "key": "statement-navade-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "sl": "EKOLOGIJA"
+      },
+      "key": "ekologija",
+      "questions": [
+        {
+          "title": {
+            "sl": "Katera vrsta proizvodnje hrane ima največji negativni ekološki vpliv?"
+          },
+          "key": "question-ekologija-one",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Od vseh kmetijskih panog ima živinoreja daleč največji vpliv na okolje, saj porabi največ prostora in vode ter izpušča največ toplogrednih plinov."
+          },
+          "options": [
+            {
+              "key": "question-ekologija-one-option-one",
+              "value": {
+                "sl": "Ekstenzivno poljedelstvo"
+              }
+            },
+            {
+              "key": "question-ekologija-one-option-two",
+              "value": {
+                "sl": "Živinoreja"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-ekologija-one-option-three",
+              "value": {
+                "sl": "Intenzivno poljedelstvo"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Bi bili pripravljeni jesti manj mesa?"
+          },
+          "key": "statement-ekologija-one",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-ekologija-option-one",
+              "value": {
+                "sl": "Ja"
+              }
+            },
+            {
+              "key": "statement-ekologija-option-two",
+              "value": {
+                "sl": "Nekoliko"
+              }
+            },
+            {
+              "key": "statement-ekologija-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Zakaj je meso sploh pomembno kot živilo?"
+          },
+          "key": "question-ekologija-two",
+          "type": "quiz",
+          "explanation": {
+            "sl": "Meso je zelo dober vir proteinov - snovi, ki jo naše telo rabi za rast in obnovo tkiv ter nekaterih vitaminov, ki jih težko dobimo iz druge hrane. Vseeno pa naš večina poje veliko več mesa kot ga dejansko potrebujemo-svetovanega je le 350g na dan za odraslo osebo."
+          },
+          "options": [
+            {
+              "key": "question-ekologija-two-option-one",
+              "value": {
+                "sl": "Dober okus ima"
+              }
+            },
+            {
+              "key": "question-ekologija-two-option-two",
+              "value": {
+                "sl": "Dober vir proteinov in vitaminov."
+              },
+              "correct": true
+            },
+            {
+              "key": "question-ekologija-two-option-three",
+              "value": {
+                "sl": "Sploh ni zdravo za nas."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Katere izmed nadomestkov bi najraje jedli?"
+          },
+          "key": "statement-ekologija-two",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-ekologija-option-one",
+              "value": {
+                "sl": "Žuželke"
+              }
+            },
+            {
+              "key": "statement-ekologija-option-two",
+              "value": {
+                "sl": "Alge, Gobe"
+              }
+            },
+            {
+              "key": "statement-ekologija-option-three",
+              "value": {
+                "sl": "tofu, seitan"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Kaj se vam zdi najbolj smiselen način zmanjšanja porabe mesa?"
+          },
+          "key": "statement-ekologija-three",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-ekologija-three-option-one",
+              "value": {
+                "sl": "Nadomestki, ki imajo okus in izgled po mesu."
+              }
+            },
+            {
+              "key": "statement-ekologija-three-option-two",
+              "value": {
+                "sl": "Laboratorijski meso"
+              }
+            },
+            {
+              "key": "statement-ekologija-three-option-three",
+              "value": {
+                "sl": "Nadomestki, ki so čisto drugačni od mesa."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
