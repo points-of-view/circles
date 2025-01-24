@@ -248,6 +248,8 @@ export default function Session({ project, resetProject, language, darkMode }) {
         } else {
           if (currentQuestion.explanation) {
             setStep(STEPS.showFact);
+          } else {
+            goToNextPhase();
           }
         }
         break;
