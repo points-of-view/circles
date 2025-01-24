@@ -185,13 +185,15 @@ export default function Session({ project, resetProject, language, darkMode }) {
   }, [step, phase, tagsMap, tagCount, registeredAnswersInBackend]);
 
   useEffect(() => {
-    if (phase === 0) {
+    if (phase === 0 && project.themes.length > 1) {
       setThemes(
         shuffle(project.themes)
           .filter((t) => chosenTheme?.key !== t.key)
           .slice(0, 3),
       );
       setChosenTheme(null);
+    } else if (project.themes.length === 1) {
+      setChosenTheme(themes[0]);
     }
   }, [phase]);
 
