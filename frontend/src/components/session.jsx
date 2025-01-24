@@ -32,8 +32,6 @@ export default function Session({ project, resetProject, language, darkMode }) {
   const [step, setStep] = useState(STEPS.showBigTitle);
   const [themes, setThemes] = useState(project.themes);
   const [chosenTheme, setChosenTheme] = useState(null);
-  const [registeredAnswersInBackend, setRegisteredAnswersInBackend] =
-    useState(false);
 
   const currentQuestion =
     chosenTheme !== null && chosenTheme.questions[phase - 1];
@@ -182,7 +180,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [step, phase, tagsMap, tagCount, registeredAnswersInBackend]);
+  }, [step, phase, tagsMap, tagCount]);
 
   useEffect(() => {
     if (phase === 0 && project.themes.length > 1) {
@@ -274,8 +272,6 @@ export default function Session({ project, resetProject, language, darkMode }) {
       case STEPS.showMainInteractionScreen:
         if (phase === 0) {
           setStep(STEPS.showBigTitle);
-        } else if (registeredAnswersInBackend) {
-          setRegisteredAnswersInBackend(false);
         } else {
           setStep(STEPS.showBigQuestion);
         }
