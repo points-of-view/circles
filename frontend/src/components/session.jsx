@@ -234,12 +234,11 @@ export default function Session({ project, resetProject, language, darkMode }) {
           saveAnswers();
           setStep(STEPS.showBigOption);
         } else if (currentQuestion.type === "opinion") {
-          if (registeredAnswersInBackend === false) {
-            saveAnswers();
-            setRegisteredAnswersInBackend(true);
-          } else if (registeredAnswersInBackend === true) {
+          saveAnswers();
+          if (currentQuestion.explanation) {
+            setStep(STEPS.showFact);
+          } else {
             goToNextPhase();
-            setRegisteredAnswersInBackend(false);
           }
         }
         break;
