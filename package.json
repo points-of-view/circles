@@ -20,9 +20,9 @@
     "@tauri-apps/cli": "^1.6.2",
     "@tree-company/eslint-config": "^0.4.3",
     "@tree-company/stylelint-config": "^0.4.3",
-    "eslint": "^9.13.0",
-    "prettier": "3.3.3",
-    "stylelint": "^16.10.0"
+    "eslint": "^9.19.0",
+    "prettier": "3.4.2",
+    "stylelint": "^16.14.1"
   },
   "stylelint": {
     "extends": [
