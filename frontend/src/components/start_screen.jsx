@@ -28,7 +28,7 @@ function FullscreenToggle({ toggleFullScreen }) {
       className="start-screen__fullscreen-toggle"
       onClick={() => toggleFullScreen("toggleFromClick")}
     >
-      ⛶
+      Fullscreen
     </div>
   );
 }
