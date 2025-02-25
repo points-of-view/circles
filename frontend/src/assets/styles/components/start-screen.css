@@ -128,6 +128,17 @@
   aspect-ratio: 1;
 }
 
+.start-screen__fullscreen-button {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  padding: 1rem;
+  line-height: 1;
+  border-radius: var(--rounded-base);
+  background-color: var(--color-white);
+  cursor: pointer;
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);

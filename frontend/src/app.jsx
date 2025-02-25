@@ -10,8 +10,11 @@ export default function App() {
   const [fullscreen, setFullscreen] = useState(true);
   const language = project?.availableLanguages[0];
 
-  function toggleFullScreen(event) {
-    if (event.code !== "KeyF" || !event.altKey) return;
+  function handleKeydown(event) {
+    if (event.key === "f" && event.altKey) toggleFullScreen();
+  }
+
+  function toggleFullScreen() {
     setFullscreen((current) => {
       const new_value = !current;
       appWindow.setFullscreen(new_value);
@@ -20,8 +23,8 @@ export default function App() {
   }
 
   useEffect(() => {
-    document.addEventListener("keydown", toggleFullScreen);
-    return () => document.removeEventListener("keydown", toggleFullScreen);
+    document.addEventListener("keydown", handleKeydown);
+    return () => document.removeEventListener("keydown", handleKeydown);
   }, [fullscreen]);
 
   // If this component gets destroyed (on refresh, or on window exit), we stop our reader
@@ -41,6 +44,7 @@ export default function App() {
       setProject={setProject}
       setDarkMode={setDarkMode}
       language={language}
+      toggleFullScreen={toggleFullScreen}
     />
   );
 }
