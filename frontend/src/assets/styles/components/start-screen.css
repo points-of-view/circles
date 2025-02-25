@@ -128,7 +128,7 @@
   aspect-ratio: 1;
 }
 
-.start-screen__fullscreen-toggle {
+.start-screen__fullscreen-button {
   position: absolute;
   top: 2rem;
   right: 2rem;

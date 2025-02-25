@@ -18,17 +18,12 @@ export function StartScreen({ setProject, setDarkMode, toggleFullScreen }) {
     <div className="start-screen">
       <StartProject setProject={setProject} setDarkMode={setDarkMode} />
       <ExportCard />
-      <FullscreenToggle toggleFullScreen={toggleFullScreen} />
-    </div>
-  );
-}
-function FullscreenToggle({ toggleFullScreen }) {
-  return (
-    <div
-      className="start-screen__fullscreen-toggle"
-      onClick={() => toggleFullScreen("toggleFromClick")}
-    >
-      Fullscreen
+      <button
+        className="start-screen__fullscreen-button"
+        onClick={toggleFullScreen}
+      >
+        {translate("start_fullscreen_button")}
+      </button>
     </div>
   );
 }
