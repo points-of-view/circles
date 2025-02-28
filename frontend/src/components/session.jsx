@@ -105,7 +105,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
             value: chosenTheme.name[language],
             color:
               COLORS[
-                themes.findIndex((theme) => theme.key === chosenTheme.key)
+              themes.findIndex((theme) => theme.key === chosenTheme.key)
               ],
           },
         ];
@@ -184,11 +184,13 @@ export default function Session({ project, resetProject, language, darkMode }) {
 
   useEffect(() => {
     if (phase === 0 && project.themes.length > 1) {
-      setThemes(
-        shuffle(project.themes)
-          .filter((t) => chosenTheme?.key !== t.key)
-          .slice(0, 3),
-      );
+      if (project.themes.length > 3) {
+        setThemes(
+          shuffle(project.themes)
+            .filter((t) => chosenTheme?.key !== t.key)
+            .slice(0, 3),
+        );
+      }
       setChosenTheme(null);
     } else if (project.themes.length === 1) {
       setChosenTheme(themes[0]);
