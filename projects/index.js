@@ -4,6 +4,15 @@ import phase1slov from "./phase1slov.json";
 import phase1port from "./phase1port.json";
 import phase1eng from "./phase1eng.json";
 import bibi from "./bibi.json";
+import buitenspeeldag from "./buitenspeeldag.json";
 
-const projects = { test, phase1bel, phase1slov, phase1port, phase1eng, bibi };
+const projects = {
+  test,
+  phase1bel,
+  phase1slov,
+  phase1port,
+  phase1eng,
+  bibi,
+  buitenspeeldag,
+};
 export default projects;

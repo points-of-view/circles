@@ -1,0 +1,886 @@
+{
+  "name": {
+    "nl": "Buitenspeeldag 2025"
+  },
+  "availableLanguages": [
+    "nl"
+  ],
+  "key": "buitenspeeldag",
+  "themes": [
+    {
+      "name": {
+        "nl": "Leeftijd 6 - 12 jaar"
+      },
+      "key": "zes-tot-twaalf",
+      "questions": [
+        {
+          "title": {
+            "nl": "Hoeveel deelnemers waren er vorig jaar aan de buitenspeeldag?"
+          },
+          "key": "zestottwaalf-deelnemers",
+          "type": "quiz",
+          "explanation": {
+            "nl": "Er waren 1500 deelnemers aan buitenspeeldag!"
+          },
+          "options": [
+            {
+              "key": "zestottwaalf-deelnemers-option-one",
+              "value": {
+                "nl": "100"
+              }
+            },
+            {
+              "key": "zestottwaalf-deelnemers-option-two",
+              "value": {
+                "nl": "500"
+              }
+            },
+            {
+              "key": "zestottwaalf-deelnemers-option-three",
+              "value": {
+                "nl": "1500"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Waarom kom je naar buitenspeeldag?"
+          },
+          "key": "waarom-kom-je",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "waarom-option-one",
+              "value": {
+                "nl": "Omdat er héél veel toffe atrracties zijn"
+              }
+            },
+            {
+              "key": "waarom-option-two",
+              "value": {
+                "nl": "Omdat het gratis is"
+              }
+            },
+            {
+              "key": "waarom-option-three",
+              "value": {
+                "nl": "Omdat het moet ..."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoeveel speelpleintjes heeft stad Dendermonde?"
+          },
+          "key": "speelpleintjes",
+          "type": "quiz",
+          "explanation": {
+            "nl": "Stad Dendermonde heeft 34 speelpleintjes, verspreid over de verschillende deelgemeenten. Ze zijn populair bij jong en oud. Stilaan komt ook onze nieuwe visie tot uiting: speelpleintjes moeten vooral bestaan uit natuurlijke materialen die uitnodigen tot ontdekking en beleving."
+          },
+          "options": [
+            {
+              "key": "speelpleintjes-option-one",
+              "value": {
+                "nl": "11"
+              }
+            },
+            {
+              "key": "speelpleintjes-option-two",
+              "value": {
+                "nl": "17"
+              }
+            },
+            {
+              "key": "speelpleintjes-option-three",
+              "value": {
+                "nl": "34"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat doe jij het liefst?"
+          },
+          "key": "wat-doe-jij-het-liefst",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "wat-doe-jij-het-liefst-one",
+              "value": {
+                "nl": "Glijden"
+              }
+            },
+            {
+              "key": "wat-doe-jij-het-liefst-two",
+              "value": {
+                "nl": "Schommelen"
+              }
+            },
+            {
+              "key": "wat-doe-jij-het-liefst-three",
+              "value": {
+                "nl": "Klauteren"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Als jij moet kiezen, wat kies je?"
+          },
+          "key": "als-jij-moet-kiezen",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "als-jij-moet-kiezen-one",
+              "value": {
+                "nl": "Schommel"
+              }
+            },
+            {
+              "key": "als-jij-moet-kiezen-two",
+              "value": {
+                "nl": "Voetbalgoal"
+              }
+            },
+            {
+              "key": "als-jij-moet-kiezen-three",
+              "value": {
+                "nl": "Iets anders"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoe ziet jouw ideale speelplein eruit?"
+          },
+          "key": "hoe-ziet-jouw-ideale-speelplein-eruit",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "hoe-ideale-speelplein-one",
+              "value": {
+                "nl": "Het lijkt een beetje op een bos en het is er avontuurlijk."
+              }
+            },
+            {
+              "key": "hoe-ideale-speelplein-two",
+              "value": {
+                "nl": "Een grasveld met speeltoestellen."
+              }
+            },
+            {
+              "key": "hoe-ideale-speelplein-three",
+              "value": {
+                "nl": "Een plek om te sporten."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Weet jij wat een speelstraat is?"
+          },
+          "key": "weet-jij-wat-een-speelstraat-is",
+          "type": "opinion",
+          "explanation": {
+            "nl": "Een speelstraat is een straat die in de vakantie, tussen bepaalde uren afgesloten wordt voor auto's. Op deze manier kunnen kinderen veilig op straat spelen."
+          },
+          "options": [
+            {
+              "key": "weet-speelstraat-one",
+              "value": {
+                "nl": "Ja, mijn straat is in de zomer een speelstraat"
+              }
+            },
+            {
+              "key": "weet-speelstraat-two",
+              "value": {
+                "nl": "Ja, ik heb er al van gehoord."
+              }
+            },
+            {
+              "key": "weet-speelstraat-three",
+              "value": {
+                "nl": "Neen"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Vind jij spelen op straat leuk?"
+          },
+          "key": "vind-jij-spelen-op-straat-leuk",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "vind-spelen-op-straat-leuk-one",
+              "value": {
+                "nl": "Ja, het is leuk om buiten te spelen in de buurt."
+              }
+            },
+            {
+              "key": "vind-spelen-op-straat-leuk-two",
+              "value": {
+                "nl": "Ik speel graag buiten maar niet op straat."
+              }
+            },
+            {
+              "key": "vind-spelen-op-straat-leuk-three",
+              "value": {
+                "nl": "Neen"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat is jouw favoriete buitenspeelplek?"
+          },
+          "key": "wat-is-jouw-favoriete-buitenspeelplek",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "wat-favoriete-buitenspeelplek-one",
+              "value": {
+                "nl": "Speelplein in de buurt."
+              }
+            },
+            {
+              "key": "wat-favoriete-buitenspeelplek-two",
+              "value": {
+                "nl": "Speelplaats op school."
+              }
+            },
+            {
+              "key": "wat-favoriete-buitenspeelplek-three",
+              "value": {
+                "nl": "Een andere plek."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoe ga jij naar je favoriete buitenspeelplek?"
+          },
+          "key": "hoe-ga-jij-naar-je-favoriete-buitenspeelplek",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "hoe-naar-buitenspeelplek-one",
+              "value": {
+                "nl": "Te voet"
+              }
+            },
+            {
+              "key": "hoe-naar-buitenspeelplek-two",
+              "value": {
+                "nl": "Met de fiets"
+              }
+            },
+            {
+              "key": "hoe-naar-buitenspeelplek-three",
+              "value": {
+                "nl": "Met de auto, bus of trein"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "nl": "Leeftijd 13 - 15 jaar"
+      },
+      "key": "dertien-tot-vijftien",
+      "questions": [
+        {
+          "title": {
+            "nl": "Hoeveel tieners waren er vorig jaar op buitenspeeldag?"
+          },
+          "key": "dertien-tot-vijftien-deelnemers",
+          "type": "quiz",
+          "explanation": {
+            "nl": "Het waren er maar liefst 470!"
+          },
+          "options": [
+            {
+              "key": "dertien-tot-vijftien-deelnemers-option-one",
+              "value": {
+                "nl": "88"
+              }
+            },
+            {
+              "key": "dertien-tot-vijftien-deelnemers-option-two",
+              "value": {
+                "nl": "173"
+              }
+            },
+            {
+              "key": "dertien-tot-vijftien-deelnemers-option-three",
+              "value": {
+                "nl": "470"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Waarom kom je naar buitenspeeldag?"
+          },
+          "key": "waarom-kom-je-naar-buitenspeeldag",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "waarom-buitenspeeldag-one",
+              "value": {
+                "nl": "Omdat er héél veel toffe atrracties zijn"
+              }
+            },
+            {
+              "key": "waarom-buitenspeeldag-two",
+              "value": {
+                "nl": "Omdat het gratis is"
+              }
+            },
+            {
+              "key": "waarom-buitenspeeldag-three",
+              "value": {
+                "nl": "Omdat het moet ..."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoeveel speelpleintjes heeft stad Dendermonde?"
+          },
+          "key": "speelpleintjes",
+          "type": "quiz",
+          "explanation": {
+            "nl": "In Dendermonde zijn er maar liefst 34 pleintjes... en dan rekenen we alle sportveldjes nog niet mee. Tijd om ze snel te gaan ontdekken!"
+          },
+          "options": [
+            {
+              "key": "speelpleintjes-option-one",
+              "value": {
+                "nl": "11"
+              }
+            },
+            {
+              "key": "speelpleintjes-option-two",
+              "value": {
+                "nl": "17"
+              }
+            },
+            {
+              "key": "speelpleintjes-option-three",
+              "value": {
+                "nl": "34"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat doe jij het liefst?"
+          },
+          "key": "wat-doe-jij-het-liefst",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "wat-doe-jij-het-liefst-one",
+              "value": {
+                "nl": "Sporten"
+              }
+            },
+            {
+              "key": "wat-doe-jij-het-liefst-two",
+              "value": {
+                "nl": "Spelen"
+              }
+            },
+            {
+              "key": "wat-doe-jij-het-liefst-three",
+              "value": {
+                "nl": "Chillen"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Als jij moet kiezen, wat kies je?"
+          },
+          "key": "als-jij-moet-kiezen",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "als-jij-moet-kiezen-one",
+              "value": {
+                "nl": "Picknickbank"
+              }
+            },
+            {
+              "key": "als-jij-moet-kiezen-two",
+              "value": {
+                "nl": "Voetbalgoal"
+              }
+            },
+            {
+              "key": "als-jij-moet-kiezen-three",
+              "value": {
+                "nl": "Iets anders"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoeveel denk je dat een voetbalgoal kost?"
+          },
+          "key": "voetbalgoal",
+          "type": "quiz",
+          "explanation": {
+            "nl": "Eén voetbalgoal kost, voor een lokaal bestuur, 4000 euro."
+          },
+          "options": [
+            {
+              "key": "voetbalgoal-option-one",
+              "value": {
+                "nl": "1000 euro"
+              }
+            },
+            {
+              "key": "voetbalgoal-option-two",
+              "value": {
+                "nl": "4000 euro"
+              },
+              "correct": true
+            },
+            {
+              "key": "voetbalgoal-option-three",
+              "value": {
+                "nl": "8500 euro"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Waarom is buiten zijn leuk?"
+          },
+          "key": "waarom-is-buiten-zijn-leuk",
+          "type": "opinion",
+          "explanation": {
+            "nl": "Buiten zijn is van onschatbare waarde. Je leert er met elkaar omgaan, creatieve oplossingen bedenken en risico's inschatten."
+          },
+          "options": [
+            {
+              "key": "waarom-buiten-leuk-one",
+              "value": {
+                "nl": "Contact met vrienden."
+              }
+            },
+            {
+              "key": "waarom-buiten-leuk-two",
+              "value": {
+                "nl": "In de zomer is het buiten leuker dan binnen."
+              }
+            },
+            {
+              "key": "waarom-buiten-leuk-three",
+              "value": {
+                "nl": "Ik vind het buiten eigenlijk niet leuk."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat is jouw favoriete buitenplek?"
+          },
+          "key": "wat-is-jouw-favoriete-buitenplek",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "wat-favoriete-buitenplek-one",
+              "value": {
+                "nl": "Pleintje in mijn buurt."
+              }
+            },
+            {
+              "key": "wat-favoriete-buitenplek-two",
+              "value": {
+                "nl": "Buitenplek in een andere gemeente."
+              }
+            },
+            {
+              "key": "wat-favoriete-buitenplek-three",
+              "value": {
+                "nl": "Ik heb geen favoriete buitenplek."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoe ga je naar je favoriete buitenplek?"
+          },
+          "key": "hoe-ga-je-naar-je-favoriete-buitenplek",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "hoe-naar-buitenplek-one",
+              "value": {
+                "nl": "Te voet"
+              }
+            },
+            {
+              "key": "hoe-naar-buitenplek-two",
+              "value": {
+                "nl": "Met de fiets"
+              }
+            },
+            {
+              "key": "hoe-naar-buitenplek-three",
+              "value": {
+                "nl": "Met de auto, bus of trein"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Kan jij je veilig verplaatsen in Dendermonde?"
+          },
+          "key": "kan-jij-je-veilig-verplaatsen-in-dendermonde",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "kan-je-veilig-verplaatsen-one",
+              "value": {
+                "nl": "Ja"
+              }
+            },
+            {
+              "key": "kan-je-veilig-verplaatsen-two",
+              "value": {
+                "nl": "Nee"
+              }
+            },
+            {
+              "key": "kan-je-veilig-verplaatsen-three",
+              "value": {
+                "nl": "Meestal"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "nl": "Leeftijd 16 - 18 jaar"
+      },
+      "key": "zestien-tot-achttien",
+      "questions": [
+        {
+          "title": {
+            "nl": "Hoeveel tieners waren er vorig jaar op buitenspeeldag?"
+          },
+          "key": "zestien-tot-achttien-deelnemers",
+          "type": "quiz",
+          "explanation": {
+            "nl": "Het waren er maar liefst 470!"
+          },
+          "options": [
+            {
+              "key": "zestien-tot-achttien-deelnemers-option-one",
+              "value": {
+                "nl": "88"
+              }
+            },
+            {
+              "key": "zestien-tot-achttien-deelnemers-option-two",
+              "value": {
+                "nl": "173"
+              }
+            },
+            {
+              "key": "zestien-tot-achttien-deelnemers-option-three",
+              "value": {
+                "nl": "470"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Waarom kom jij naar buitenspeeldag?"
+          },
+          "key": "waarom-kom-jij-naar-buitenspeeldag",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "waarom-jij-buitenspeeldag-one",
+              "value": {
+                "nl": "Omdat er héél veel toffe atrracties zijn"
+              }
+            },
+            {
+              "key": "waarom-jij-buitenspeeldag-two",
+              "value": {
+                "nl": "Omdat het gratis is"
+              }
+            },
+            {
+              "key": "waarom-jij-buitenspeeldag-three",
+              "value": {
+                "nl": "Omdat het moet ..."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoeveel speelpleintjes heeft stad Dendermonde?"
+          },
+          "key": "speelpleintjes",
+          "type": "quiz",
+          "explanation": {
+            "nl": "In Dendermonde zijn er maar liefst 34 pleintjes... en dan rekenen we alle sportveldjes nog niet mee. Tijd om ze snel te gaan ontdekken!"
+          },
+          "options": [
+            {
+              "key": "speelpleintjes-option-one",
+              "value": {
+                "nl": "11"
+              }
+            },
+            {
+              "key": "speelpleintjes-option-two",
+              "value": {
+                "nl": "17"
+              }
+            },
+            {
+              "key": "speelpleintjes-option-three",
+              "value": {
+                "nl": "34"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoe ziet jouw ideale plein eruit?"
+          },
+          "key": "hoe-ziet-jouw-ideale-plein-eruit",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "hoe-ideale-plein-one",
+              "value": {
+                "nl": "Een gezellige plek in de natuur."
+              }
+            },
+            {
+              "key": "hoe-ideale-plein-two",
+              "value": {
+                "nl": "Een plek in het stadscentrum."
+              }
+            },
+            {
+              "key": "hoe-ideale-plein-three",
+              "value": {
+                "nl": "Een plek om te sporten."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat doe jij het liefst?"
+          },
+          "key": "wat-doe-jij-het-liefst",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "wat-doe-jij-het-liefst-one",
+              "value": {
+                "nl": "Sporten"
+              }
+            },
+            {
+              "key": "wat-doe-jij-het-liefst-two",
+              "value": {
+                "nl": "Chillen"
+              }
+            },
+            {
+              "key": "wat-doe-jij-het-liefst-three",
+              "value": {
+                "nl": "Uitgaan"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Als jij moet kiezen, wat kies je?"
+          },
+          "key": "als-jij-moet-kiezen",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "als-jij-moet-kiezen-one",
+              "value": {
+                "nl": "Picknickbank"
+              }
+            },
+            {
+              "key": "als-jij-moet-kiezen-two",
+              "value": {
+                "nl": "Voetbalgoal"
+              }
+            },
+            {
+              "key": "als-jij-moet-kiezen-three",
+              "value": {
+                "nl": "Iets anders"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoeveel denk je dat een picknickbank kost?"
+          },
+          "key": "picknickbank",
+          "type": "quiz",
+          "explanation": {
+            "nl": "Een picknickbank kost al snel 1600 euro."
+          },
+          "options": [
+            {
+              "key": "picknickbank-option-one",
+              "value": {
+                "nl": "700 euro"
+              }
+            },
+            {
+              "key": "picknickbank-option-two",
+              "value": {
+                "nl": "1600 euro"
+              },
+              "correct": true
+            },
+            {
+              "key": "picknickbank-option-three",
+              "value": {
+                "nl": "2100 euro"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Waarom zijn buitenactiviteiten leuk?"
+          },
+          "key": "waarom-zijn-buitenactiviteiten-leuk",
+          "type": "opinion",
+          "explanation": {
+            "nl": "Buiten zijn is van onschatbare waarde. Je leert er met elkaar omgaan, creatieve oplossingen bedenken en risico's inschatten."
+          },
+          "options": [
+            {
+              "key": "waarom-buitenactiviteiten-leuk-one",
+              "value": {
+                "nl": "Contact met vrienden."
+              }
+            },
+            {
+              "key": "waarom-buitenactiviteiten-leuk-two",
+              "value": {
+                "nl": "In de zomer is het buiten leuker dan binnen."
+              }
+            },
+            {
+              "key": "waarom-buitenactiviteiten-leuk-three",
+              "value": {
+                "nl": "Ik vind buitenactiviteiten niet leuk."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat is jouw favoriete buitenplek?"
+          },
+          "key": "wat-is-jouw-favoriete-buitenplek",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "wat-favoriete-buitenplek-one",
+              "value": {
+                "nl": "Pleintje in mijn buurt."
+              }
+            },
+            {
+              "key": "wat-favoriete-buitenplek-two",
+              "value": {
+                "nl": "Buitenplek in een andere stad."
+              }
+            },
+            {
+              "key": "wat-favoriete-buitenplek-three",
+              "value": {
+                "nl": "Ik heb geen favoriete buitenplek."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoe ga je naar je favoriete buitenplek?"
+          },
+          "key": "hoe-ga-je-naar-je-favoriete-buitenplek",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "hoe-naar-buitenplek-one",
+              "value": {
+                "nl": "Te voet"
+              }
+            },
+            {
+              "key": "hoe-naar-buitenplek-two",
+              "value": {
+                "nl": "Met de fiets"
+              }
+            },
+            {
+              "key": "hoe-naar-buitenplek-three",
+              "value": {
+                "nl": "Met de auto, bus of trein"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
