@@ -105,7 +105,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
             value: chosenTheme.name[language],
             color:
               COLORS[
-              themes.findIndex((theme) => theme.key === chosenTheme.key)
+                themes.findIndex((theme) => theme.key === chosenTheme.key)
               ],
           },
         ];
