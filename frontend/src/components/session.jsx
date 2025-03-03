@@ -77,7 +77,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
     } else if (step === STEPS.showBigQuestion) {
       return [
         {
-          text: `${translate(currentQuestion.type === "quiz" ? "question" : "statement", language)}: ${currentQuestion.title[language]}`,
+          text: currentQuestion.title[language],
         },
       ];
     } else if (step === STEPS.showMainInteractionScreen) {
@@ -202,7 +202,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
       throw new Error("A theme should be chosen when going to phase != 0");
     }
     setPhase(chosenTheme.questions[phase] === undefined ? 0 : phase + 1);
-    setStep(STEPS.showBigTitle);
+    setStep(STEPS.showBigQuestion);
   }
 
   function chooseTheme() {
