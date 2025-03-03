@@ -19,7 +19,7 @@ diesel_migrations = { version = "2.2.0", features = ["sqlite"] }
 libsqlite3-sys = { version = "0.31.0", features = ["bundled"] }
 include_dir = { version = "0.7.4", features = ["glob"] }
 dunce = "1.0.5"
-rand = "0.8.5"
+rand = "0.9.0"
 llrp = { git = "https://github.com/mchesser/llrp-rs" }
 rust_xlsxwriter = "0.66.0"
 
