@@ -1,0 +1,243 @@
+{
+  "name": {
+    "po": "Portimao City Hall"
+  },
+  "availableLanguages": [
+    "po"
+  ],
+  "key": "portimao",
+  "themes": [
+    {
+      "name": {
+        "po": "Simulação Assembleia Municipal"
+      },
+      "key": "simulacao-assembleia-municipal",
+      "questions": [
+        {
+          "title": {
+            "po": "Votação - Grupo 1"
+          },
+          "key": "votao---grupo-1",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "votao---grupo-1-favor",
+              "value": {
+                "po": "A favor"
+              }
+            },
+            {
+              "key": "votao---grupo-1-contra",
+              "value": {
+                "po": "Contra"
+              }
+            },
+            {
+              "key": "votao---grupo-1-abstencao",
+              "value": {
+                "po": "Abstenção"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "Votação - Grupo 2"
+          },
+          "key": "votao---grupo-2",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "votao---grupo-2-favor",
+              "value": {
+                "po": "A favor"
+              }
+            },
+            {
+              "key": "votao---grupo-2-contra",
+              "value": {
+                "po": "Contra"
+              }
+            },
+            {
+              "key": "votao---grupo-2-abstencao",
+              "value": {
+                "po": "Abstenção"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "Votação - Grupo 3"
+          },
+          "key": "votao---grupo-3",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "votao---grupo-3-favor",
+              "value": {
+                "po": "A favor"
+              }
+            },
+            {
+              "key": "votao---grupo-3-contra",
+              "value": {
+                "po": "Contra"
+              }
+            },
+            {
+              "key": "votao---grupo-3-abstencao",
+              "value": {
+                "po": "Abstenção"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "Votação - Grupo 4"
+          },
+          "key": "votao---grupo-4",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "votao---grupo-4-favor",
+              "value": {
+                "po": "A favor"
+              }
+            },
+            {
+              "key": "votao---grupo-4-contra",
+              "value": {
+                "po": "Contra"
+              }
+            },
+            {
+              "key": "votao---grupo-4-abstencao",
+              "value": {
+                "po": "Abstenção"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "po": "Simulação Parlamento Europeu"
+      },
+      "key": "simulao-parlamento-europeu",
+      "questions": [
+        {
+          "title": {
+            "po": "Votação Artigo 1.º - Preços e Apoios Financeiros"
+          },
+          "key": "votao-artigo-1---preos-e-apoios-financeiros",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "votao-artigo-1---preos-e-apoios-financeiros-favor",
+              "value": {
+                "po": "A favor"
+              }
+            },
+            {
+              "key": "votao-artigo-1---preos-e-apoios-financeiros-contra",
+              "value": {
+                "po": "Contra"
+              }
+            },
+            {
+              "key": "votao-artigo-1---preos-e-apoios-financeiros-abstencao",
+              "value": {
+                "po": "Abstenção"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "Votação Artigo 2.º - Regulamento dos Bares e Máquinas Automáticas"
+          },
+          "key": "votao-artigo-2---regulamento-dos-bares-e-mquinas-automticas",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "votao-artigo-2---regulamento-dos-bares-e-mquinas-automticas-favor",
+              "value": {
+                "po": "A favor"
+              }
+            },
+            {
+              "key": "votao-artigo-2---regulamento-dos-bares-e-mquinas-automticas-contra",
+              "value": {
+                "po": "Contra"
+              }
+            },
+            {
+              "key": "votao-artigo-2---regulamento-dos-bares-e-mquinas-automticas-abstencao",
+              "value": {
+                "po": "Abstenção"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "Votação Artigo 3.º - Qualidade e Nutrição das refeições escolares"
+          },
+          "key": "votao-artigo-3---qualidade-e-nutrio-das-refeies-escolares",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "votao-artigo-3---qualidade-e-nutrio-das-refeies-escolares-favor",
+              "value": {
+                "po": "A favor"
+              }
+            },
+            {
+              "key": "votao-artigo-3---qualidade-e-nutrio-das-refeies-escolares-contra",
+              "value": {
+                "po": "Contra"
+              }
+            },
+            {
+              "key": "votao-artigo-3---qualidade-e-nutrio-das-refeies-escolares-abstencao",
+              "value": {
+                "po": "Abstenção"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "po": "Votação Artigo 4.º - Sustentabilidade e redução do desperdício alimentar"
+          },
+          "key": "votao-artigo-4---sustentabilidade-e-reduo-do-desperdcio-alimentar",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "votao-artigo-4---sustentabilidade-e-reduo-do-desperdcio-alimentar-favor",
+              "value": {
+                "po": "A favor"
+              }
+            },
+            {
+              "key": "votao-artigo-4---sustentabilidade-e-reduo-do-desperdcio-alimentar-contra",
+              "value": {
+                "po": "Contra"
+              }
+            },
+            {
+              "key": "votao-artigo-4---sustentabilidade-e-reduo-do-desperdcio-alimentar-abstencao",
+              "value": {
+                "po": "Abstenção"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import phase1port from "./phase1port.json";
 import phase1eng from "./phase1eng.json";
 import bibi from "./bibi.json";
 import buitenspeeldag from "./buitenspeeldag.json";
+import portimao from "./portimao.json";
 
 const projects = {
   test,
@@ -14,5 +15,6 @@ const projects = {
   phase1eng,
   bibi,
   buitenspeeldag,
+  portimao,
 };
 export default projects;
