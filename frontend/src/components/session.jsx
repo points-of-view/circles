@@ -206,9 +206,15 @@ export default function Session({ project, resetProject, language, darkMode }) {
   }
 
   function chooseTheme() {
-    const highestAmount = Math.max(...Object.values(tagCount));
-    const popularAnswers = Object.keys(tagCount).filter(
-      (key) => tagCount[key] === highestAmount,
+    const optionFilter = Object.keys(tagCount)
+      .slice(0, themes.length)
+      .reduce((result, key) => {
+        result[key] = tagCount[key];
+        return result;
+      }, {});
+    const highestAmount = Math.max(...Object.values(optionFilter));
+    const popularAnswers = Object.keys(optionFilter).filter(
+      (key) => optionFilter[key] === highestAmount,
     );
     const chooseRandomKey = Math.floor(Math.random() * popularAnswers.length);
     setChosenTheme(themes[popularAnswers[chooseRandomKey] - 1]);
