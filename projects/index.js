@@ -6,6 +6,7 @@ import phase1eng from "./phase1eng.json";
 import bibi from "./bibi.json";
 import buitenspeeldag from "./buitenspeeldag.json";
 import portimao from "./portimao.json";
+import depomg from "./depomg.json";
 
 const projects = {
   test,
@@ -16,5 +17,6 @@ const projects = {
   bibi,
   buitenspeeldag,
   portimao,
+  depomg,
 };
 export default projects;
