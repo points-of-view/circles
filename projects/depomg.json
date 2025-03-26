@@ -1,0 +1,154 @@
+{
+  "name": {
+    "nl": "Departement Omgeving - 27 maart 2025"
+  },
+  "availableLanguages": [
+    "nl"
+  ],
+  "key": "depomg",
+  "themes": [
+    {
+      "name": {
+        "nl": "Start de bevraging"
+      },
+      "key": "start",
+      "questions": [
+        {
+          "title": {
+            "nl": "Ik ben hier omdat…"
+          },
+          "key": "ben-hier-omdat",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "ben-hier-omdat-one",
+              "value": {
+                "nl": "ik eigenlijk niet goed weet wat mijn collega's allemaal doen 😯"
+              }
+            },
+            {
+              "key": "ben-hier-omdat-two",
+              "value": {
+                "nl": "netwerken netwerken netwerken 🤝"
+              }
+            },
+            {
+              "key": "ben-hier-omdat-three",
+              "value": {
+                "nl": "omdat het me leuker leek dan een dag achter mijn bureau ⚡"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Waarom vind jij omgevingscommunicatie bij ruimtelijke projecten belangrijk?"
+          },
+          "key": "communicatie",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "communicatie-one",
+              "value": {
+                "nl": "Om draagvlak te creëren door belanghebbenden te informeren en te betrekken 🙌"
+              }
+            },
+            {
+              "key": "communicatie-two",
+              "value": {
+                "nl": "Om te voldoen aan de verplichtingen rond communicatie in bepaalde processen 📯"
+              }
+            },
+            {
+              "key": "communicatie-three",
+              "value": {
+                "nl": "Om een positief beeld te schetsen van een project 🌍"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat is volgens jou het belangrijkste aspect bij het betrekken van burgers en stakeholders bij ruimtelijke projecten?"
+          },
+          "key": "betrekken",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "betrekken-one",
+              "value": {
+                "nl": "Goede en transparante communicatie."
+              }
+            },
+            {
+              "key": "betrekken-two",
+              "value": {
+                "nl": "Bezorgdheden van burgers meenemen in de plannen."
+              }
+            },
+            {
+              "key": "betrekken-three",
+              "value": {
+                "nl": "Burgers die beslissen wat er komt op een bepaalde plek."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Bij participatie vind ik het vooral belangrijk dat…"
+          },
+          "key": "participatie-belangrijk",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "participatie-belangrijk-one",
+              "value": {
+                "nl": "zoveel mogelijk mensen hun mening kunnen geven."
+              }
+            },
+            {
+              "key": "participatie-belangrijk-two",
+              "value": {
+                "nl": "je met een beperkte groep mensen kan doordenken in de diepte."
+              }
+            },
+            {
+              "key": "participatie-belangrijk-three",
+              "value": {
+                "nl": "er een gedragen en impactvol resultaat ligt."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Participatie bij ruimtelijke projecten…"
+          },
+          "key": "ruimtelijke-projecten",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "ruimtelijke-projecten-one",
+              "value": {
+                "nl": "zorgt vooral voor veel vertraging."
+              }
+            },
+            {
+              "key": "ruimtelijke-projecten-two",
+              "value": {
+                "nl": "zorgt voor meer draagvlak en toekomst voor een project."
+              }
+            },
+            {
+              "key": "ruimtelijke-projecten-three",
+              "value": {
+                "nl": "heeft weinig effect, maar baat het niet dan schaadt het niet."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
