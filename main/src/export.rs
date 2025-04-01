@@ -6,6 +6,9 @@ use crate::database::{
     models::{Answer, Session, Step},
     schema::{answers, sessions, steps},
 };
+use std::collections::HashMap;
+use std::error::Error;
+use std::fs;
 
 const BATCH_SIZE: i64 = 10000;
 
@@ -34,6 +37,16 @@ pub fn export_all_data(connection: &mut SqliteConnection, filepath: String) -> R
     Ok(())
 }
 
+fn translate_token_key(input: &str) -> Result<String, Box<dyn Error>> {
+    let tokenlist_file_path = "../frontend/src/data/tokens/list.json";
+    let data = fs::read_to_string(tokenlist_file_path)?;
+    let tokens: HashMap<String, String> = serde_json::from_str(&data)?;
+    match tokens.get(input) {
+        Some(counterpart) => Ok(counterpart.clone()),
+        None => Ok(input.to_string()),
+    }
+}
+
 fn fetch_batch_and_write(
     connection: &mut SqliteConnection,
     worksheet: &mut Worksheet,
@@ -59,7 +72,7 @@ fn fetch_batch_and_write(
         worksheet.write(row, 2, &session.theme_key)?;
         worksheet.write(row, 3, &step.question_key)?;
         worksheet.write_with_format(row, 4, created_at, &format)?;
-        worksheet.write(row, 5, &answer.token_key)?;
+        worksheet.write(row, 5, translate_token_key(&answer.token_key).unwrap())?;
         worksheet.write(row, 6, &answer.option_key)?;
     }
 
