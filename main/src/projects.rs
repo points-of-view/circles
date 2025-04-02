@@ -75,7 +75,7 @@ mod tests {
 
         let question = &theme.questions[0];
         assert_eq!(question.key, "question-one");
-        assert_eq!(question.options.len(), 2);
+        assert_eq!(question.options.as_ref().unwrap().len(), 2);
     }
 
     #[test]
