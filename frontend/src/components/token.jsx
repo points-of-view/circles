@@ -1,4 +1,4 @@
-import tokenlist from "../data/tokens/list.json";
+import tokenlist from "../../../data/tokens/list.json";
 import bl_bl from "../assets/visuals/tokens/bl_bl.svg";
 import bl_cy from "../assets/visuals/tokens/bl_cy.svg";
 import bl_gr from "../assets/visuals/tokens/bl_gr.svg";
