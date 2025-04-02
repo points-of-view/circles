@@ -47,7 +47,7 @@ pub fn export_project_data(
 }
 
 fn translate_token_key(input: &str) -> Result<String, Box<dyn Error>> {
-    let tokenlist_file_path = "../frontend/src/data/tokens/list.json";
+    let tokenlist_file_path = "../data/tokens/list.json";
     let data = fs::read_to_string(tokenlist_file_path)?;
     let tokens: HashMap<String, String> = serde_json::from_str(&data)?;
     match tokens.get(input) {
