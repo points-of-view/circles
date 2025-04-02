@@ -8,7 +8,6 @@ use crate::database::{
 };
 use std::collections::HashMap;
 use std::error::Error;
-use std::fs;
 
 const BATCH_SIZE: i64 = 10000;
 
@@ -38,9 +37,8 @@ pub fn export_all_data(connection: &mut SqliteConnection, filepath: String) -> R
 }
 
 fn translate_token_key(input: &str) -> Result<String, Box<dyn Error>> {
-    let tokenlist_file_path = "../data/tokens/list.json";
-    let data = fs::read_to_string(tokenlist_file_path)?;
-    let tokens: HashMap<String, String> = serde_json::from_str(&data)?;
+    let tokenlist_file_path = include_str!("../../data/tokens/list.json");
+    let tokens: HashMap<String, String> = serde_json::from_str(&tokenlist_file_path)?;
     match tokens.get(input) {
         Some(counterpart) => Ok(counterpart.clone()),
         None => Ok(input.to_string()),
