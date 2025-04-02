@@ -1,0 +1,80 @@
+{
+  "name": {
+    "nl": "Textslidetest"
+  },
+  "availableLanguages": [
+    "nl"
+  ],
+  "key": "textslidetest",
+  "themes": [
+    {
+      "name": {
+        "nl": "Start de bevraging"
+      },
+      "key": "start",
+      "questions": [
+        {
+          "title": {
+            "nl": "Ik ben hier omdat…"
+          },
+          "key": "ben-hier-omdat",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "ben-hier-omdat-one",
+              "value": {
+                "nl": "ik eigenlijk niet goed weet wat mijn collega's allemaal doen 😯"
+              }
+            },
+            {
+              "key": "ben-hier-omdat-two",
+              "value": {
+                "nl": "netwerken netwerken netwerken 🤝"
+              }
+            },
+            {
+              "key": "ben-hier-omdat-three",
+              "value": {
+                "nl": "omdat het me leuker leek dan een dag achter mijn bureau ⚡"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Gewoon tekst"
+          },
+          "key": "textslide",
+          "type": "text"
+        },
+        {
+          "title": {
+            "nl": "Wat is volgens jou het belangrijkste aspect bij het betrekken van burgers en stakeholders bij ruimtelijke projecten?"
+          },
+          "key": "betrekken",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "betrekken-one",
+              "value": {
+                "nl": "Goede en transparante communicatie."
+              }
+            },
+            {
+              "key": "betrekken-two",
+              "value": {
+                "nl": "Bezorgdheden van burgers meenemen in de plannen."
+              }
+            },
+            {
+              "key": "betrekken-three",
+              "value": {
+                "nl": "Burgers die beslissen wat er komt op een bepaalde plek."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
