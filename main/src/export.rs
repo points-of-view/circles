@@ -83,8 +83,9 @@ fn fetch_batch_and_write(
         worksheet.write(row, 2, &session.theme_key)?;
         worksheet.write(row, 3, &step.question_key)?;
         worksheet.write_with_format(row, 4, created_at, &format)?;
-        worksheet.write(row, 5, translate_token_key(&answer.token_key).unwrap())?;
-        worksheet.write(row, 6, &answer.option_key)?;
+        worksheet.write(row, 5, &answer.token_key)?;
+        worksheet.write(row, 6, translate_token_key(&answer.token_key).unwrap())?;
+        worksheet.write(row, 7, &answer.option_key)?;
     }
 
     Ok(())
@@ -97,6 +98,7 @@ fn write_headers(worksheet: &mut Worksheet) -> Result<(), XlsxError> {
     worksheet.write(0, 3, "Question key")?;
     worksheet.write(0, 4, "Timestamp (UTC)")?;
     worksheet.write(0, 5, "RFID Token")?;
-    worksheet.write(0, 6, "Option")?;
+    worksheet.write(0, 6, "Token Identifier")?;
+    worksheet.write(0, 7, "Option")?;
     Ok(())
 }
