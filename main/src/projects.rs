@@ -24,12 +24,12 @@ pub struct Theme {
 #[serde(rename_all = "camelCase")]
 pub struct Question {
     pub key: String,
-    pub options: Vec<Option>,
+    pub options: Option<Vec<OptionItem>>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct Option {
+pub struct OptionItem {
     pub key: String,
 }
 

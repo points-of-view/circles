@@ -230,7 +230,11 @@ export default function Session({ project, resetProject, language, darkMode }) {
         }
         break;
       case STEPS.showBigQuestion:
-        setStep(STEPS.showMainInteractionScreen);
+        if (currentQuestion?.type === "text") {
+          goToNextPhase();
+        } else {
+          setStep(STEPS.showMainInteractionScreen);
+        }
         break;
       case STEPS.showMainInteractionScreen:
         if (phase === 0) {
