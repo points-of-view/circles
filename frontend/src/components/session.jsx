@@ -41,7 +41,7 @@ export default function Session({ project, resetProject, language, darkMode }) {
       : null;
   const themeName = phase !== 0 && chosenTheme.name[language];
   const accentColor = COLORS.toReversed()[phase];
-  const showLogo = step === STEPS.showBigTitle;
+  const showLogo = step === (STEPS.showBigTitle && STEPS.showBigQuestion);
   const iconName = step === STEPS.showBigTitle ? currentQuestion?.type : null;
   const showBackgroundElements = step !== STEPS.showMainInteractionScreen;
   const showBigTitle = [

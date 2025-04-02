@@ -74,9 +74,7 @@
 }
 
 .interaction-screen__logo {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  padding-bottom: 1.25rem;
 }
 
 .interaction-screen__icon--orange {
