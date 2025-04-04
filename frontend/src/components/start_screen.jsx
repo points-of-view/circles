@@ -132,8 +132,13 @@ function ExportCard() {
   const [state, setState] = useState(STATES.error);
   const [error, setError] = useState(null);
 
-  async function saveExport() {
+  async function handleSubmit(e) {
+    e.preventDefault();
     setState(STATES.working);
+
+    const data = new FormData(e.target);
+    const projectKey = data.get("projectKey");
+
     const filepath = await save({
       filters: [
         {
@@ -148,7 +153,7 @@ function ExportCard() {
     }
 
     try {
-      await invoke("save_export", { filepath });
+      await invoke("save_export", { filepath, projectKey });
       setState(STATES.done);
     } catch (e) {
       setError(e);
@@ -157,12 +162,24 @@ function ExportCard() {
   }
 
   return (
-    <div className="start-screen__card">
+    <form className="start-screen__card" onSubmit={handleSubmit} disabled={[STATES.working, STATES.done].includes(state)}>
       <h2 className="start-screen__title">{translate("start_export_title")}</h2>
+      <div className="start-screen__input">
+        <label className="start-screen__label" htmlFor="projectKey">
+          {translate("start_project_key")}
+        </label>
+        <input
+          className="start-screen__field"
+          type="text"
+          name="projectKey"
+          id="projectKey"
+          autoCapitalize="false"
+          required
+        />
+      </div>
       <button
         className="start-screen__button"
-        onClick={saveExport}
-        disabled={[STATES.working, STATES.done].includes(state)}
+        type="submit"
       >
         {translate("start_export_button")}
       </button>
@@ -181,6 +198,6 @@ function ExportCard() {
           {error}
         </span>
       )}
-    </div>
+    </form>
   );
 }
