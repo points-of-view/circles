@@ -9,7 +9,10 @@ export default function App() {
   const [projectKey, setProjectKey] = useState(null);
   const [darkMode, setDarkMode] = useState(true);
   const [fullscreen, setFullscreen] = useState(true);
-  const project = useMemo(() => projects.find((p) => p.key === projectKey), [projects, projectKey]);
+  const project = useMemo(
+    () => projects.find((p) => p.key === projectKey),
+    [projects, projectKey],
+  );
   const language = project?.availableLanguages[0];
 
   async function fetchProjects() {
@@ -46,7 +49,7 @@ export default function App() {
       project={project}
       language={language}
       darkMode={darkMode}
-      resetProject={() => setProject(null)}
+      resetProject={() => setProjectKey(null)}
     />
   ) : (
     <StartScreen

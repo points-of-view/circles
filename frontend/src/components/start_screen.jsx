@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { save } from "@tauri-apps/api/dialog";
 import translate, { translateError } from "../locales";
@@ -31,7 +31,6 @@ function StartProject({ setProjectKey, setDarkMode }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
 
-
   async function handleSubmit(e) {
     e.preventDefault();
     setState(STATES.working);
@@ -47,7 +46,6 @@ function StartProject({ setProjectKey, setDarkMode }) {
       setDarkMode(darkMode);
       setProjectKey(projectKey);
     } catch (error) {
-      console.error(error);
       setState(STATES.error);
       setError(error);
       // If an unknown error occurs, we want to log the details so we can see what went wrong
