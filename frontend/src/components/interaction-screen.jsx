@@ -108,7 +108,8 @@ export function InteractionScreen({
       )}
       {showLogo && (
         <img
-          width={"70%"}
+          className="interaction-screen__logo"
+          width={"60%"}
           src={darkMode ? logos_white : logos_black}
           alt="Logos"
         />
