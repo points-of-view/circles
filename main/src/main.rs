@@ -11,6 +11,16 @@ async fn get_projects() -> Vec<Project> {
 }
 
 #[tauri::command]
+async fn import_project(filepath: String) -> Result<(), String> {
+    println!("In file {filepath}");
+
+    let contents = fs::read_to_string(filepath).expect("Should have been able to read the file");
+
+    println!("With text:\n{contents}");
+    Ok(())
+}
+
+#[tauri::command]
 async fn select_project(
     state: tauri::State<'_, GlobalState>,
     app_handle: tauri::AppHandle,
@@ -79,6 +89,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             close_connection,
             get_projects,
+            import_project,
             reset_tags_map,
             save_export,
             save_step_results,
