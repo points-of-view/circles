@@ -12,11 +12,10 @@ async fn get_projects() -> Vec<Project> {
 
 #[tauri::command]
 async fn import_project(filepath: String) -> Result<(), String> {
-    println!("In file {filepath}");
-
-    let contents = fs::read_to_string(filepath).expect("Should have been able to read the file");
-
-    println!("With text:\n{contents}");
+    // NOTE: We just print the contents of the file to show that we can use it.
+    // The actual implementation will follow later
+    let contents = fs::read_to_string(&filepath).expect("Should have been able to read the file");
+    println!("Content of {filepath}:\n{contents}");
     Ok(())
 }
 
