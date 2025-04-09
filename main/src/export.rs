@@ -31,7 +31,7 @@ pub fn export_project_data(
     let mut page = 0;
 
     while page * BATCH_SIZE < count {
-        match fetch_batch_and_write(connection, worksheet, &project_key,page * BATCH_SIZE) {
+        match fetch_batch_and_write(connection, worksheet, &project_key, page * BATCH_SIZE) {
             Ok(()) => page += 1,
             Err(err) => return Err(err.to_string()),
         }

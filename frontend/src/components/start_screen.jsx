@@ -162,7 +162,11 @@ function ExportCard() {
   }
 
   return (
-    <form className="start-screen__card" onSubmit={handleSubmit} disabled={[STATES.working, STATES.done].includes(state)}>
+    <form
+      className="start-screen__card"
+      onSubmit={handleSubmit}
+      disabled={[STATES.working, STATES.done].includes(state)}
+    >
       <h2 className="start-screen__title">{translate("start_export_title")}</h2>
       <div className="start-screen__input">
         <label className="start-screen__label" htmlFor="projectKey">
@@ -177,10 +181,7 @@ function ExportCard() {
           required
         />
       </div>
-      <button
-        className="start-screen__button"
-        type="submit"
-      >
+      <button className="start-screen__button" type="submit">
         {translate("start_export_button")}
       </button>
       {state === STATES.working && (
