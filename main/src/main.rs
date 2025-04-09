@@ -1,9 +1,14 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use circles::{error::CirclesError, export::export_project_data, GlobalState};
+use circles::{error::CirclesError, export::export_project_data, projects::Project, GlobalState};
 use std::fs;
 use tauri::Manager;
+
+#[tauri::command]
+async fn get_projects() -> Vec<Project> {
+    Project::build_all()
+}
 
 #[tauri::command]
 async fn select_project(
@@ -73,6 +78,7 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             close_connection,
+            get_projects,
             reset_tags_map,
             save_export,
             save_step_results,

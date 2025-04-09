@@ -1,36 +1,53 @@
 use include_dir::{include_dir, Dir, File};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 // NOTE: This path is relative to the Cargo root
 const PROJECTS_DIR: Dir = include_dir!("../projects");
 
 // NOTE: The structure for projects, themes, ... is not fully mapped here.
 // We only map the properties that we need in our rust app
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Project {
     pub key: String,
     pub themes: Vec<Theme>,
+    pub name: TranslatedProperty,
+    pub available_languages: Vec<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Theme {
     pub key: String,
+    pub name: TranslatedProperty,
     pub questions: Vec<Question>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Question {
+    pub title: TranslatedProperty,
+    pub explanation: Option<TranslatedProperty>,
+    pub r#type: Option<String>,
     pub key: String,
     pub options: Option<Vec<QuestionOption>>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct QuestionOption {
     pub key: String,
+    pub value: TranslatedProperty,
+    pub correct: Option<bool>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct TranslatedProperty {
+    pub nl: Option<String>,
+    pub sl: Option<String>,
+    pub po: Option<String>,
+    pub en: Option<String>,
 }
 
 impl Project {

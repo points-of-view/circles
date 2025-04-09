@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { save } from "@tauri-apps/api/dialog";
-import projects from "../../../projects";
 import translate, { translateError } from "../locales";
 
 const previousHostname = localStorage.getItem("circles.last_hostname");
@@ -13,10 +12,10 @@ const STATES = {
   done: "DONE",
 };
 
-export function StartScreen({ setProject, setDarkMode, toggleFullScreen }) {
+export function StartScreen({ setProjectKey, setDarkMode, toggleFullScreen }) {
   return (
     <div className="start-screen">
-      <StartProject setProject={setProject} setDarkMode={setDarkMode} />
+      <StartProject setProjectKey={setProjectKey} setDarkMode={setDarkMode} />
       <ExportCard />
       <button
         className="start-screen__fullscreen-button"
@@ -28,9 +27,10 @@ export function StartScreen({ setProject, setDarkMode, toggleFullScreen }) {
   );
 }
 
-function StartProject({ setProject, setDarkMode }) {
+function StartProject({ setProjectKey, setDarkMode }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
+
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -45,8 +45,9 @@ function StartProject({ setProject, setDarkMode }) {
       await invoke("select_project", { projectKey, hostname });
       localStorage.setItem("circles.last_hostname", hostname);
       setDarkMode(darkMode);
-      setProject(projects[projectKey]);
+      setProjectKey(projectKey);
     } catch (error) {
+      console.error(error);
       setState(STATES.error);
       setError(error);
       // If an unknown error occurs, we want to log the details so we can see what went wrong
