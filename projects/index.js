@@ -7,6 +7,7 @@ import bibi from "./bibi.json";
 import buitenspeeldag from "./buitenspeeldag.json";
 import portimao from "./portimao.json";
 import depomg from "./depomg.json";
+import textslidetest from "./textslidetest.json";
 
 const projects = {
   test,
@@ -18,5 +19,6 @@ const projects = {
   buitenspeeldag,
   portimao,
   depomg,
+  textslidetest,
 };
 export default projects;

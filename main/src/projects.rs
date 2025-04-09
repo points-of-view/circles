@@ -24,12 +24,12 @@ pub struct Theme {
 #[serde(rename_all = "camelCase")]
 pub struct Question {
     pub key: String,
-    pub options: Vec<Option>,
+    pub options: Option<Vec<QuestionOption>>,
 }
 
 #[derive(Debug, Deserialize, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct Option {
+pub struct QuestionOption {
     pub key: String,
 }
 
@@ -75,7 +75,8 @@ mod tests {
 
         let question = &theme.questions[0];
         assert_eq!(question.key, "question-one");
-        assert_eq!(question.options.len(), 2);
+        assert!(question.options.is_some());
+        assert_eq!(question.options.as_ref().unwrap().len(), 2);
     }
 
     #[test]
