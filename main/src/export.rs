@@ -9,7 +9,11 @@ use crate::database::{
 
 const BATCH_SIZE: i64 = 10000;
 
-pub fn export_all_data(connection: &mut SqliteConnection, filepath: String) -> Result<(), String> {
+pub fn export_project_data(
+    connection: &mut SqliteConnection,
+    filepath: String,
+    project_key: String,
+) -> Result<(), String> {
     let mut workbook = Workbook::new();
 
     let worksheet = workbook.add_worksheet();
@@ -18,11 +22,16 @@ pub fn export_all_data(connection: &mut SqliteConnection, filepath: String) -> R
         Err(err) => return Err(err.to_string()),
     }
 
-    let count: i64 = answers::table.count().get_result(connection).unwrap();
+    let count: i64 = answers::table
+        .inner_join(steps::table.inner_join(sessions::table))
+        .filter(sessions::project_key.eq(&project_key))
+        .count()
+        .get_result(connection)
+        .unwrap();
     let mut page = 0;
 
     while page * BATCH_SIZE < count {
-        match fetch_batch_and_write(connection, worksheet, page * BATCH_SIZE) {
+        match fetch_batch_and_write(connection, worksheet, &project_key, page * BATCH_SIZE) {
             Ok(()) => page += 1,
             Err(err) => return Err(err.to_string()),
         }
@@ -37,10 +46,12 @@ pub fn export_all_data(connection: &mut SqliteConnection, filepath: String) -> R
 fn fetch_batch_and_write(
     connection: &mut SqliteConnection,
     worksheet: &mut Worksheet,
+    project_key: &str,
     offset: i64,
 ) -> Result<(), XlsxError> {
     let results: Vec<(Answer, Step, Session)> = answers::table
         .inner_join(steps::table.inner_join(sessions::table))
+        .filter(sessions::project_key.eq(project_key))
         .limit(BATCH_SIZE)
         .offset(offset)
         .select((Answer::as_select(), Step::as_select(), Session::as_select()))
