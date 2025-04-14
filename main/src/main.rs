@@ -1,9 +1,23 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use circles::{error::CirclesError, export::export_project_data, GlobalState};
+use circles::{error::CirclesError, export::export_project_data, projects::Project, GlobalState};
 use std::fs;
 use tauri::Manager;
+
+#[tauri::command]
+async fn get_projects() -> Vec<Project> {
+    Project::build_all()
+}
+
+#[tauri::command]
+async fn import_project(filepath: String) -> Result<(), String> {
+    // NOTE: We just print the contents of the file to show that we can use it.
+    // The actual implementation will follow later
+    let contents = fs::read_to_string(&filepath).expect("Should have been able to read the file");
+    println!("Content of {filepath}:\n{contents}");
+    Ok(())
+}
 
 #[tauri::command]
 async fn select_project(
@@ -73,6 +87,8 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             close_connection,
+            get_projects,
+            import_project,
             reset_tags_map,
             save_export,
             save_step_results,
