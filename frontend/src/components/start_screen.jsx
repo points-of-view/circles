@@ -12,18 +12,35 @@ const STATES = {
   done: "DONE",
 };
 
-export function StartScreen({ setProjectKey, setDarkMode, toggleFullScreen }) {
+export function StartScreen({ setProjectKey, setDarkMode, toggleFullScreen, importProject }) {
   return (
     <div className="start-screen">
-      <StartProject setProjectKey={setProjectKey} setDarkMode={setDarkMode} />
-      <ExportCard />
+      <h1 className="start-screen__title">Circles</h1>
       <button
         className="start-screen__fullscreen-button"
         onClick={toggleFullScreen}
       >
         {translate("start_fullscreen_button")}
       </button>
+      <button
+        className="start-screen__import-button"
+        onClick={importProject}
+      >
+        {translate("import_project")}
+      </button>
+      <StartProject setProjectKey={setProjectKey} setDarkMode={setDarkMode} />
     </div>
+  );
+}
+
+function ProjectItem({ projectKey }) {
+  return (
+    <li className="start-screen__project-item">
+      <form>
+      <span>{projectKey}</span>
+
+      </form>
+    </li>
   );
 }
 
@@ -55,149 +72,87 @@ function StartProject({ setProjectKey, setDarkMode }) {
   }
 
   return (
-    <form
-      action=""
-      onSubmit={handleSubmit}
-      className="start-screen__card"
-      disabled={[STATES.working, STATES.done].includes(state)}
-    >
-      <h1 className="start-screen__title">
-        {translate("start_project_title")}
-      </h1>
-      <div className="start-screen__input">
-        <label className="start-screen__label" htmlFor="projectKey">
-          {translate("start_project_key")}
-        </label>
-        <input
-          className="start-screen__field"
-          type="text"
-          name="projectKey"
-          id="projectKey"
-          autoCapitalize="false"
-          required
-        />
-      </div>
-      <div className="start-screen__input">
-        <label className="start-screen__label" htmlFor="hostname">
-          {translate("start_reader_hostname")}
-        </label>
-        <input
-          className="start-screen__field"
-          type="text"
-          name="hostname"
-          id="hostname"
-          autoCapitalize="false"
-          placeholder="fx9600123456"
-          minLength={12}
-          maxLength={12}
-          required
-          defaultValue={previousHostname}
-        />
-      </div>
-      <div className="start-screen__input start-screen__input--checkbox">
-        <input
-          type="checkbox"
-          name="darkMode"
-          id="darkMode"
-          className="start-screen__checkbox"
-          defaultChecked={true}
-        />
-        <label htmlFor="darkMode" className="start-screen__label">
-          {translate("start_dark_mode")}
-        </label>
-      </div>
-      <button
-        type="submit"
-        className="start-screen__button"
-        disabled={[STATES.working, STATES.done].includes(state)}
-      >
-        {translate("start_project_button")}
-      </button>
-      {state === STATES.working && (
-        <span className="start-screen__message start-screen__message--spinner">
-          {translate("start_connecting")}
-        </span>
-      )}
-      {state === STATES.error && (
-        <span className="start-screen__message start-screen__message--error">
-          {translateError(error)}
-        </span>
-      )}
-    </form>
+    <div className="start-screen__card">
+      <h3>{translate("start_project_key")}</h3>
+      <ul className="start-screen__project-list">
+        <ProjectItem projectKey={"test"} />
+        <ProjectItem projectKey={"2"} />
+      </ul>
+    </div>
   );
 }
 
-function ExportCard() {
-  const [state, setState] = useState(STATES.error);
-  const [error, setError] = useState(null);
+// function ExportCard() {
+//   const [state, setState] = useState(STATES.error);
+//   const [error, setError] = useState(null);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setState(STATES.working);
+//   async function handleSubmit(e) {
+//     e.preventDefault();
+//     setState(STATES.working);
 
-    const data = new FormData(e.target);
-    const projectKey = data.get("projectKey");
+//     const data = new FormData(e.target);
+//     const projectKey = data.get("projectKey");
 
-    const filepath = await save({
-      filters: [
-        {
-          name: "export",
-          extensions: ["xlsx"],
-        },
-      ],
-    });
-    if (filepath === null) {
-      setError(translate("start_export_no_filepath_error"));
-      return;
-    }
+//     const filepath = await save({
+//       filters: [
+//         {
+//           name: "export",
+//           extensions: ["xlsx"],
+//         },
+//       ],
+//     });
+//     if (filepath === null) {
+//       setError(translate("start_export_no_filepath_error"));
+//       return;
+//     }
 
-    try {
-      await invoke("save_export", { filepath, projectKey });
-      setState(STATES.done);
-    } catch (e) {
-      setError(e);
-      setState(STATES.error);
-    }
-  }
+//     try {
+//       await invoke("save_export", { filepath, projectKey });
+//       setState(STATES.done);
+//     } catch (e) {
+//       setError(e);
+//       setState(STATES.error);
+//     }
+//   }
 
-  return (
-    <form
-      className="start-screen__card"
-      onSubmit={handleSubmit}
-      disabled={[STATES.working, STATES.done].includes(state)}
-    >
-      <h2 className="start-screen__title">{translate("start_export_title")}</h2>
-      <div className="start-screen__input">
-        <label className="start-screen__label" htmlFor="projectKey">
-          {translate("start_project_key")}
-        </label>
-        <input
-          className="start-screen__field"
-          type="text"
-          name="projectKey"
-          id="projectKey"
-          autoCapitalize="false"
-          required
-        />
-      </div>
-      <button className="start-screen__button" type="submit">
-        {translate("start_export_button")}
-      </button>
-      {state === STATES.working && (
-        <span className="start-screen__message start-screen__message--spinner">
-          {translate("start_export_working")}
-        </span>
-      )}
-      {state === STATES.done && (
-        <span className="start-screen__message start-screen__message--success">
-          {translate("start_export_done")}
-        </span>
-      )}
-      {state === STATES.error && (
-        <span className="start-screen__message start-screen__message--error">
-          {error}
-        </span>
-      )}
-    </form>
-  );
-}
+//   return (
+//     <form
+//       className="start-screen__card"
+//       onSubmit={handleSubmit}
+//       disabled={[STATES.working, STATES.done].includes(state)}
+//     >
+//       <h2 className="start-screen__title">{translate("start_export_title")}</h2>
+//       <div className="start-screen__input">
+//         <label className="start-screen__label" htmlFor="projectKey">
+//           {translate("start_project_key")}
+//         </label>
+//         <input
+//           className="start-screen__field"
+//           type="text"
+//           name="projectKey"
+//           id="projectKey"
+//           autoCapitalize="false"
+//           required
+//         />
+//       </div>
+//       <button className="start-screen__button" type="submit">
+//         {translate("start_export_button")}
+//       </button>
+//       {state === STATES.working && (
+//         <span className="start-screen__message start-screen__message--spinner">
+//           {translate("start_export_working")}
+//         </span>
+//       )}
+//       {state === STATES.done && (
+//         <span className="start-screen__message start-screen__message--success">
+//           {translate("start_export_done")}
+//         </span>
+//       )}
+//       {state === STATES.error && (
+//         <span className="start-screen__message start-screen__message--error">
+//           {error}
+//         </span>
+//       )}
+//     </form>
+//   );
+// }

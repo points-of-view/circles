@@ -1,10 +1,12 @@
 .start-screen {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 35rem));
+  grid-template:  "title import fullscreen" auto
+  "project_list project_list project_list" 1fr
+  / 1fr auto auto;
   gap: 1rem;
   justify-content: center;
-  align-items: center;
   height: 100vh;
+  width: 100%;
   padding: 3rem;
   background-color: var(--color-purple);
 }
@@ -13,19 +15,18 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  justify-content: center;
-  align-items: center;
-  max-width: 35rem;
   padding: 1.5rem 2rem;
   color: var(--color-black);
   border-radius: var(--rounded-base);
   background-color: var(--color-white);
-  aspect-ratio: 1;
+  grid-area: project_list;
 }
 
 .start-screen__title {
   font-weight: 600;
   font-size: 1.25rem;
+  color: var(--color-white);
+  grid-area: title;
 }
 
 .start-screen__input {
@@ -129,7 +130,6 @@
 }
 
 .start-screen__fullscreen-button {
-  position: absolute;
   top: 2rem;
   right: 2rem;
   padding: 1rem;
@@ -137,6 +137,26 @@
   border-radius: var(--rounded-base);
   background-color: var(--color-white);
   cursor: pointer;
+  grid-area: fullscreen;
+}
+
+.start-screen__import-button {
+  top: 2rem;
+  right: 2rem;
+  padding: 1rem;
+  line-height: 1;
+  border-radius: var(--rounded-base);
+  background-color: var(--color-white);
+  cursor: pointer;
+  grid-area: import;
+}
+
+.start-screen__project-list{
+  list-style-type: none; 
+}
+
+.start-screen__project-item{
+  display: flex;
 }
 
 @keyframes rotation {
