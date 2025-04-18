@@ -1,31 +1,32 @@
 .start-screen {
   display: grid;
-  grid-template:  "title import fullscreen" auto
-  "project_list project_list project_list" 1fr
-  / 1fr auto auto;
+  grid-template:
+    "title import fullscreen" auto
+    "project_list project_list project_list" 1fr
+    / 1fr auto auto;
   gap: 1rem;
   justify-content: center;
-  height: 100vh;
   width: 100%;
+  height: 100vh;
   padding: 3rem;
   background-color: var(--color-purple);
 }
 
 .start-screen__card {
+  grid-area: project_list;
   display: flex;
   flex-direction: column;
   color: var(--color-black);
+  font-weight: 500;
   border-radius: var(--rounded-base);
   background-color: var(--color-white);
-  grid-area: project_list;
-  font-weight: 500;
 }
 
 .start-screen__title {
+  grid-area: title;
+  color: var(--color-white);
   font-weight: 800;
   font-size: var(--text-md);
-  color: var(--color-white);
-  grid-area: title;
 }
 
 .start-screen__input {
@@ -128,6 +129,7 @@
 }
 
 .start-screen__fullscreen-button {
+  grid-area: fullscreen;
   top: 2rem;
   right: 2rem;
   padding: 1rem;
@@ -135,10 +137,10 @@
   border-radius: var(--rounded-base);
   background-color: var(--color-white);
   cursor: pointer;
-  grid-area: fullscreen;
 }
 
 .start-screen__import-button {
+  grid-area: import;
   top: 2rem;
   right: 2rem;
   padding: 1rem;
@@ -146,39 +148,39 @@
   border-radius: var(--rounded-base);
   background-color: var(--color-white);
   cursor: pointer;
-  grid-area: import;
 }
 
-.start-screen__project-title{
-  padding: 1.5rem;
+.start-screen__project-title {
+  padding: 1rem 1.5rem;
+  text-transform: uppercase;
   border-bottom: 1px solid var(--color-grey-light);
 }
 
-.start-screen__project-list{
-  list-style-type: none; 
+.start-screen__project-list {
+  max-height: 70vh;
   margin: 0;
   padding: 0;
-  max-height: 70vh;
+  list-style-type: none;
   overflow: auto;
 }
 
-.start-screen__project-item{
+.start-screen__project-item {
   display: flex;
   gap: 1rem;
-  width: 100%;
-  border-bottom: 1px solid var(--color-grey-light);
   justify-content: space-between;
   align-items: center;
-  padding: .5rem 1.5rem;
+  width: 100%;
+  padding: 0.5rem 1.5rem;
+  border-bottom: 1px solid var(--color-grey-light);
 }
 
-.project-item__title{
+.project-item__title {
   flex-grow: 1;
 }
 
-.project-item__spacer{
-  border: 1px solid var(--color-grey-light);
+.project-item__spacer {
   height: 2rem;
+  border: 1px solid var(--color-grey-light);
 }
 
 @keyframes rotation {
