@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { save } from "@tauri-apps/api/dialog";
 import translate, { translateError } from "../locales";
@@ -53,6 +53,21 @@ function ProjectItem({ projectKey }) {
 function StartProject({ setProjectKey, setDarkMode }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
+  const [projectList, setProjectList] = useState([]);
+
+  async function getProjects() {
+    try {
+      await invoke("get_projects").then((projects) => setProjectList(projects));
+    } catch (e) {
+      setError(e);
+      setProjectList([]);
+    }
+  }
+
+  useEffect(() => {
+    getProjects()
+  }, [])
+
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -81,10 +96,10 @@ function StartProject({ setProjectKey, setDarkMode }) {
     <div className="start-screen__card">
       <div className="start-screen__project-title">{translate("start_project_key")}</div>
       <ul className="start-screen__project-list">
-        <ProjectItem projectKey={"test"} />
-        <ProjectItem projectKey={"2"} />
-        <ProjectItem projectKey={"2"} />
-        <ProjectItem projectKey={"2"} />
+        {projectList.map((i, e) => (
+          <ProjectItem key={e} projectKey={i.key} />
+        )
+        )}
       </ul>
     </div>
   );
