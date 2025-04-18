@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
-import { save } from "@tauri-apps/api/dialog";
+import { save, open } from "@tauri-apps/api/dialog";
 import translate, { translateError } from "../locales";
 
 const previousHostname = localStorage.getItem("circles.last_hostname");
@@ -12,62 +12,45 @@ const STATES = {
   done: "DONE",
 };
 
-export function StartScreen({ setProjectKey, setDarkMode, toggleFullScreen, importProject }) {
+export function StartScreen({ setDarkMode, toggleFullScreen, projects }) {
+  const [error, setError] = useState(null);
+
+  async function importProject() {
+    const filepath = await open({
+      multiple: false,
+      directory: false,
+    });
+
+    try {
+      await invoke("import_project", { filepath });
+    } catch (error) {
+      setError(error);
+    }
+  }
+
   return (
     <div className="start-screen">
       <div className="start-screen__title">Circles</div>
       <button
-        className="start-screen__import-button"
+        className="start-screen__button"
         onClick={importProject}
       >
         {translate("import_project")}
       </button>
       <button
-        className="start-screen__fullscreen-button"
+        className="start-screen__button"
         onClick={toggleFullScreen}
       >
         {translate("start_fullscreen_button")}
       </button>
-      <StartProject setProjectKey={setProjectKey} setDarkMode={setDarkMode} />
+      <ProjectView projects={projects} setDarkMode={setDarkMode} />
     </div>
   );
 }
 
 function ProjectItem({ projectKey }) {
-  return (
-    <li className="start-screen__project-item">
-      <span className="project-item__title">{projectKey}</span>
-      <button
-        type="submit"
-        className="start-screen__button"
-      >
-        {translate("start_project_button")}
-      </button>
-      <span className="project-item__spacer"></span>
-      <a href="export">{translate("start_export_title")}</a>
-      <a href="delete">{translate("start_delete_title")}</a>
-    </li>
-  );
-}
-
-function StartProject({ setProjectKey, setDarkMode }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
-  const [projectList, setProjectList] = useState([]);
-
-  async function getProjects() {
-    try {
-      await invoke("get_projects").then((projects) => setProjectList(projects));
-    } catch (e) {
-      setError(e);
-      setProjectList([]);
-    }
-  }
-
-  useEffect(() => {
-    getProjects()
-  }, [])
-
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -93,10 +76,40 @@ function StartProject({ setProjectKey, setDarkMode }) {
   }
 
   return (
+    <li className="start-screen__project-item">
+      <span className="project-item__title">{projectKey}</span>
+      <form className="project-item__controls">
+        <button
+          type="submit"
+          className="start-screen__button start-screen__button--start"
+        >
+          {translate("start_project_button")}
+        </button>
+        <span className="project-item__spacer"></span>
+        <button
+          type="submit"
+          className="start-screen__button start-screen__button--link"
+        >
+          {translate("start_export_title")}
+        </button>
+        <button
+          type="submit"
+          className="start-screen__button start-screen__button--link"
+        >
+          {translate("start_delete_title")}
+        </button>
+      </form>
+    </li>
+  );
+}
+
+function ProjectView({ projects, setDarkMode }) {
+
+  return (
     <div className="start-screen__card">
       <div className="start-screen__project-title">{translate("start_project_key")}</div>
       <ul className="start-screen__project-list">
-        {projectList.map((i, e) => (
+        {projects.map((i, e) => (
           <ProjectItem key={e} projectKey={i.key} />
         )
         )}
