@@ -15,18 +15,18 @@ const STATES = {
 export function StartScreen({ setProjectKey, setDarkMode, toggleFullScreen, importProject }) {
   return (
     <div className="start-screen">
-      <h1 className="start-screen__title">Circles</h1>
-      <button
-        className="start-screen__fullscreen-button"
-        onClick={toggleFullScreen}
-      >
-        {translate("start_fullscreen_button")}
-      </button>
+      <div className="start-screen__title">Circles</div>
       <button
         className="start-screen__import-button"
         onClick={importProject}
       >
         {translate("import_project")}
+      </button>
+      <button
+        className="start-screen__fullscreen-button"
+        onClick={toggleFullScreen}
+      >
+        {translate("start_fullscreen_button")}
       </button>
       <StartProject setProjectKey={setProjectKey} setDarkMode={setDarkMode} />
     </div>
@@ -36,10 +36,16 @@ export function StartScreen({ setProjectKey, setDarkMode, toggleFullScreen, impo
 function ProjectItem({ projectKey }) {
   return (
     <li className="start-screen__project-item">
-      <form>
-      <span>{projectKey}</span>
-
-      </form>
+      <span className="project-item__title">{projectKey}</span>
+      <button
+        type="submit"
+        className="start-screen__button"
+      >
+        {translate("start_project_button")}
+      </button>
+      <span className="project-item__spacer"></span>
+      <a href="export">{translate("start_export_title")}</a>
+      <a href="delete">{translate("start_delete_title")}</a>
     </li>
   );
 }
@@ -73,9 +79,11 @@ function StartProject({ setProjectKey, setDarkMode }) {
 
   return (
     <div className="start-screen__card">
-      <h3>{translate("start_project_key")}</h3>
+      <div className="start-screen__project-title">{translate("start_project_key")}</div>
       <ul className="start-screen__project-list">
         <ProjectItem projectKey={"test"} />
+        <ProjectItem projectKey={"2"} />
+        <ProjectItem projectKey={"2"} />
         <ProjectItem projectKey={"2"} />
       </ul>
     </div>
