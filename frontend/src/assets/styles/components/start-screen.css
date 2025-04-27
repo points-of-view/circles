@@ -12,7 +12,7 @@
   background-color: var(--color-blue-dark);
 }
 
-.start-screen__card {
+.start-screen__project-list {
   grid-area: project_list;
   display: flex;
   flex-direction: column;
@@ -20,6 +20,39 @@
   font-weight: 500;
   border-radius: var(--rounded-base);
   background-color: var(--color-white);
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  overflow: auto;
+}
+
+.start-screen__popup {
+  background: var(--color-white);
+  width: 50vw;
+  border-radius: var(--rounded-base);
+  padding: 1.5rem 2rem;
+  margin: auto;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.start-screen__card {
+  position: absolute;
+  z-index: 1;
+  color: var(--color-black);
+  backdrop-filter: blur(12px);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  display: flex;
+}
+
+.start-screen__button-container{
+  display: flex;
+  gap: 1rem;
 }
 
 .start-screen__title {
@@ -27,6 +60,10 @@
   color: var(--color-white);
   font-weight: 800;
   font-size: var(--text-md);
+}
+
+.start-screen__title--dialog {
+  color: var(--color-black);
 }
 
 .start-screen__input {
@@ -180,14 +217,6 @@
   padding: 1rem 1.5rem;
   text-transform: uppercase;
   border-bottom: 1px solid var(--color-grey-light);
-}
-
-.start-screen__project-list {
-  max-height: 70vh;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  overflow: auto;
 }
 
 .start-screen__project-item {
