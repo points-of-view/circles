@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { save, open } from "@tauri-apps/api/dialog";
 import translate, { translateError } from "../locales";
@@ -12,10 +12,15 @@ const STATES = {
   done: "DONE",
 };
 
-export function StartScreen({ setProjectKey, setDarkMode, toggleFullScreen, projects }) {
-  const [error, setError] = useState(null); //nog iets mee doen
-  const [viewStartCard, setViewStartCard] = useState(false)
-  const [selectedProject,setSelectedProject] = useState(null);
+export function StartScreen({
+  setProjectKey,
+  setDarkMode,
+  toggleFullScreen,
+  projects,
+}) {
+  // const [error, setError] = useState(null); //nog iets mee doen, naar import dialog migreren
+  const [viewPopUp, setViewPopUp] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   async function importProject() {
     const filepath = await open({
@@ -26,69 +31,89 @@ export function StartScreen({ setProjectKey, setDarkMode, toggleFullScreen, proj
     try {
       await invoke("import_project", { filepath });
     } catch (error) {
-      setError(error);
+      // eslint-disable-next-line no-console
+      console.log(error);
+      // setError(error);
     }
   }
 
   return (
     <div className="start-screen">
-      {viewStartCard && <StartProject setProjectKey={setProjectKey} setDarkMode={setDarkMode} setViewStartCard={setViewStartCard} selectedProject={selectedProject} />}
+      {viewPopUp === "start" && (
+        <StartProject
+          setProjectKey={setProjectKey}
+          setDarkMode={setDarkMode}
+          setViewPopUp={setViewPopUp}
+          selectedProject={selectedProject}
+        />
+      )}
+      {viewPopUp === "export" && (
+        <ExportCard
+          setViewPopUp={setViewPopUp}
+          selectedProject={selectedProject}
+        />
+      )}
       <div className="start-screen__title">Circles</div>
-      <button
-        className="start-screen__button"
-        onClick={importProject}
-      >
+      <button className="start-screen__button" onClick={importProject}>
         {translate("import_project")}
       </button>
-      <button
-        className="start-screen__button"
-        onClick={toggleFullScreen}
-      >
+      <button className="start-screen__button" onClick={toggleFullScreen}>
         {translate("start_fullscreen_button")}
       </button>
-      <ProjectView projects={projects} setViewStartCard={setViewStartCard} setSelectedProject={setSelectedProject} />
+      <ProjectView
+        projects={projects}
+        setViewPopUp={setViewPopUp}
+        setSelectedProject={setSelectedProject}
+      />
     </div>
   );
 }
 
-function ProjectView({ projects, setViewStartCard, setSelectedProject }) {
-
+function ProjectView({ projects, setViewPopUp, setSelectedProject }) {
   return (
     <div className="start-screen__project-list">
-      <div className="start-screen__project-title">{translate("start_project_key")}</div>
+      <div className="start-screen__project-title">
+        {translate("start_project_key")}
+      </div>
       <ul className="start-screen__project-list">
         {projects.map((i, e) => (
-          <ProjectItem key={e} projectKey={i.key} setViewStartCard={setViewStartCard} setSelectedProject={setSelectedProject} />
-        )
-        )}
+          <ProjectItem
+            key={e}
+            projectKey={i.key}
+            setViewPopUp={setViewPopUp}
+            setSelectedProject={setSelectedProject}
+          />
+        ))}
       </ul>
     </div>
   );
 }
 
-function ProjectItem({ projectKey, setViewStartCard, setSelectedProject }) {
+function ProjectItem({ projectKey, setViewPopUp, setSelectedProject }) {
   return (
     <li className="start-screen__project-item">
       <span className="project-item__title">{projectKey}</span>
-      <div
-        className="project-item__controls">
+      <div className="project-item__controls">
         <button
-          onClick={() => {setViewStartCard(true); setSelectedProject(projectKey);}}
+          onClick={() => {
+            setViewPopUp("start");
+            setSelectedProject(projectKey);
+          }}
           className="start-screen__button start-screen__button--start"
         >
           {translate("start_project_button")}
         </button>
         <span className="project-item__spacer"></span>
         <button
-          type="submit"
+          onClick={() => {
+            setViewPopUp("export");
+            setSelectedProject(projectKey);
+          }}
           className="start-screen__button start-screen__button--link"
         >
           {translate("start_export_title")}
         </button>
-        <button
-          type="submit"
-          className="start-screen__button start-screen__button--link"
-        >
+        <button className="start-screen__button start-screen__button--link">
           {translate("start_delete_title")}
         </button>
       </div>
@@ -96,7 +121,12 @@ function ProjectItem({ projectKey, setViewStartCard, setSelectedProject }) {
   );
 }
 
-function StartProject ({setProjectKey, selectedProject , setDarkMode, setViewStartCard }) {
+function StartProject({
+  setProjectKey,
+  selectedProject,
+  setDarkMode,
+  setViewPopUp,
+}) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
 
@@ -130,68 +160,137 @@ function StartProject ({setProjectKey, selectedProject , setDarkMode, setViewSta
       className="start-screen__card"
       disabled={[STATES.working, STATES.done].includes(state)}
     >
-      <div
-      className="start-screen__popup"
-      >
-      <h1 className="start-screen__title--dialog">
-        {translate("start_project_title")}
-      </h1>
-      <div className="start-screen__input">
-        <label className="start-screen__label" htmlFor="hostname">
-          {translate("start_reader_hostname")}
-        </label>
-        <input
-          className="start-screen__field"
-          type="text"
-          name="hostname"
-          id="hostname"
-          autoCapitalize="false"
-          placeholder="fx9600123456"
-          minLength={12}
-          maxLength={12}
-          required
-          defaultValue={previousHostname}
-        />
-      </div>
-      <div className="start-screen__input start-screen__input--checkbox">
-        <input
-          type="checkbox"
-          name="darkMode"
-          id="darkMode"
-          className="start-screen__checkbox"
-          defaultChecked={true}
-        />
-        <label htmlFor="darkMode" className="start-screen__label">
-          {translate("start_dark_mode")}
-        </label>
-      </div>
-      <div className="start-screen__button-container">
-      <button
-        type="submit"
-        className="start-screen__button"
-        disabled={[STATES.working, STATES.done].includes(state)}
-      >
-        {translate("start_project_button")}
-      </button>
-      <button
-        type="button"
-        className="start-screen__button"
-        onClick={() => setViewStartCard(false)}
-      >
-        {translate("cancel_button")}
-      </button>
-      </div>
-      {state === STATES.working && (
-        <span className="start-screen__message start-screen__message--spinner">
-          {translate("start_connecting")}
-        </span>
-      )}
-      {state === STATES.error && (
-        <span className="start-screen__message start-screen__message--error">
-          {translateError(error)}
-        </span>
-      )}
+      <div className="start-screen__popup">
+        <h1 className="start-screen__title--dialog">
+          {translate("start_project_title")}
+        </h1>
+        <div className="start-screen__input">
+          <label className="start-screen__label" htmlFor="hostname">
+            {translate("start_reader_hostname")}
+          </label>
+          <input
+            className="start-screen__field"
+            type="text"
+            name="hostname"
+            id="hostname"
+            autoCapitalize="false"
+            placeholder="fx9600123456"
+            minLength={12}
+            maxLength={12}
+            required
+            defaultValue={previousHostname}
+          />
+        </div>
+        <div className="start-screen__input start-screen__input--checkbox">
+          <input
+            type="checkbox"
+            name="darkMode"
+            id="darkMode"
+            className="start-screen__checkbox"
+            defaultChecked={true}
+          />
+          <label htmlFor="darkMode" className="start-screen__label">
+            {translate("start_dark_mode")}
+          </label>
+        </div>
+        <div className="start-screen__button-container">
+          <button
+            type="submit"
+            className="start-screen__button"
+            disabled={[STATES.working, STATES.done].includes(state)}
+          >
+            {translate("start_project_button")}
+          </button>
+          <button
+            type="button"
+            className="start-screen__button"
+            onClick={() => setViewPopUp(null)}
+          >
+            {translate("cancel_button")}
+          </button>
+        </div>
+        {state === STATES.working && (
+          <span className="start-screen__message start-screen__message--spinner">
+            {translate("start_connecting")}
+          </span>
+        )}
+        {state === STATES.error && (
+          <span className="start-screen__message start-screen__message--error">
+            {translateError(error)}
+          </span>
+        )}
       </div>
     </form>
+  );
+}
+
+function ExportCard({ setViewPopUp, selectedProject }) {
+  const [state, setState] = useState(STATES.error);
+  const [error, setError] = useState(null);
+
+  async function exportData() {
+    const projectKey = selectedProject;
+    const filepath = await save({
+      filters: [
+        {
+          name: "export",
+          extensions: ["xlsx"],
+        },
+      ],
+    });
+    if (filepath === null) {
+      setError(translate("start_export_no_filepath_error"));
+      return;
+    }
+
+    try {
+      await invoke("save_export", { filepath, projectKey });
+      setState(STATES.done);
+    } catch (e) {
+      setError(e);
+      setState(STATES.error);
+    }
+  }
+
+  return (
+    <div
+      className="start-screen__card"
+      disabled={[STATES.working, STATES.done].includes(state)}
+    >
+      <div className="start-screen__popup">
+        <h2 className="start-screen__title--dialog">
+          {translate("start_export_title")}
+        </h2>
+        {state === STATES.working && (
+          <span className="start-screen__message start-screen__message--spinner">
+            {translate("start_export_working")}
+          </span>
+        )}
+        {state === STATES.done && (
+          <span className="start-screen__message start-screen__message--success">
+            {translate("start_export_done")}
+          </span>
+        )}
+        {state === STATES.error && (
+          <span className="start-screen__message start-screen__message--error">
+            {error}
+          </span>
+        )}
+        <button
+          className="start-screen__button"
+          type="button"
+          onClick={() => exportData()}
+        >
+          {translate("start_export_button")}
+        </button>
+        <button
+          type="button"
+          className="start-screen__button"
+          onClick={() => setViewPopUp(null)}
+        >
+          {translate("close_button")}
+        </button>
+      </div>
+    </div>
   );
 }

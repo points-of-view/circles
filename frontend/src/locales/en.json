@@ -18,6 +18,7 @@
   "start_project_title": "Fill in the project number",
   "start_project_button": "Start project",
   "cancel_button": "Cancel",
+  "close_button": "Close",
   "start_project_key": "Project key",
   "start_dark_mode": "Dark mode",
   "start_connecting": "Connecting with the reader. Please wait...",

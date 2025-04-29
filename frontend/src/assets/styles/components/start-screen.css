@@ -16,41 +16,41 @@
   grid-area: project_list;
   display: flex;
   flex-direction: column;
+  margin: 0;
+  padding: 0;
   color: var(--color-black);
   font-weight: 500;
   border-radius: var(--rounded-base);
   background-color: var(--color-white);
-  margin: 0;
-  padding: 0;
   list-style-type: none;
   overflow: auto;
 }
 
 .start-screen__popup {
-  background: var(--color-white);
-  width: 50vw;
-  border-radius: var(--rounded-base);
-  padding: 1.5rem 2rem;
-  margin: auto;
-  gap: 1rem;
   display: flex;
   flex-direction: column;
-}
-.start-screen__card {
-  position: absolute;
-  z-index: 1;
-  color: var(--color-black);
-  backdrop-filter: blur(12px);
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(15px);
-  display: flex;
+  gap: 1rem;
+  width: 50vw;
+  margin: auto;
+  padding: 1.5rem 2rem;
+  border-radius: var(--rounded-base);
+  background: var(--color-white);
 }
 
-.start-screen__button-container{
+.start-screen__card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  color: var(--color-black);
+  background-color: rgb(0 0 0 / 40%);
+  backdrop-filter: blur(12px);
+}
+
+.start-screen__button-container {
   display: flex;
   gap: 1rem;
 }
