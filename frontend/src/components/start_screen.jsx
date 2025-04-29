@@ -53,6 +53,12 @@ export function StartScreen({
           selectedProject={selectedProject}
         />
       )}
+      {viewPopUp === "delete" && (
+        <DeleteData
+          setViewPopUp={setViewPopUp}
+          selectedProject={selectedProject}
+        />
+      )}
       <div className="start-screen__title">Circles</div>
       <button className="start-screen__button" onClick={importProject}>
         {translate("import_project")}
@@ -95,25 +101,31 @@ function ProjectItem({ projectKey, setViewPopUp, setSelectedProject }) {
       <span className="project-item__title">{projectKey}</span>
       <div className="project-item__controls">
         <button
+          className="start-screen__button start-screen__button--start"
           onClick={() => {
             setViewPopUp("start");
             setSelectedProject(projectKey);
           }}
-          className="start-screen__button start-screen__button--start"
         >
           {translate("start_project_button")}
         </button>
         <span className="project-item__spacer"></span>
         <button
+          className="start-screen__button start-screen__button--link"
           onClick={() => {
             setViewPopUp("export");
             setSelectedProject(projectKey);
           }}
-          className="start-screen__button start-screen__button--link"
         >
           {translate("start_export_title")}
         </button>
-        <button className="start-screen__button start-screen__button--link">
+        <button
+          className="start-screen__button start-screen__button--link"
+          onClick={() => {
+            setViewPopUp("delete");
+            setSelectedProject(projectKey);
+          }}
+        >
           {translate("start_delete_title")}
         </button>
       </div>
@@ -253,10 +265,7 @@ function ExportCard({ setViewPopUp, selectedProject }) {
   }
 
   return (
-    <div
-      className="start-screen__card"
-      disabled={[STATES.working, STATES.done].includes(state)}
-    >
+    <div className="start-screen__card">
       <div className="start-screen__popup">
         <h2 className="start-screen__title--dialog">
           {translate("start_export_title")}
@@ -289,6 +298,58 @@ function ExportCard({ setViewPopUp, selectedProject }) {
           onClick={() => setViewPopUp(null)}
         >
           {translate("close_button")}
+        </button>
+      </div>
+    </div>
+  );
+}
+function DeleteData({ setViewPopUp, selectedProject }) {
+  const [state, setState] = useState(STATES.error);
+  const [error, setError] = useState(null);
+
+  async function DeleteProjectData() {
+    const projectKey = selectedProject;
+    try {
+      await invoke("delete_project_data", { projectKey }); // this is a placeholder function
+      setState(STATES.done);
+    } catch (e) {
+      setError(e);
+      setState(STATES.error);
+    }
+  }
+
+  return (
+    <div className="start-screen__card">
+      <div className="start-screen__popup">
+        <h2 className="start-screen__title--dialog">
+          {translate("start_delete_title")}
+        </h2>
+        <span className="start-screen__message">
+          {translate("delete_project_data_subtitle")}
+        </span>
+        {state === STATES.done && (
+          <span className="start-screen__message start-screen__message--success">
+            {translate("start_export_done")}
+          </span>
+        )}
+        {state === STATES.error && (
+          <span className="start-screen__message start-screen__message--error">
+            {translateError(error)}
+          </span>
+        )}
+        <button
+          className="start-screen__button"
+          type="button"
+          onClick={() => DeleteProjectData()}
+        >
+          {translate("delete_button")}
+        </button>
+        <button
+          type="button"
+          className="start-screen__button"
+          onClick={() => setViewPopUp(null)}
+        >
+          {translate("cancel_button")}
         </button>
       </div>
     </div>
