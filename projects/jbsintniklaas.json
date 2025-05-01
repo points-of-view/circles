@@ -1,0 +1,233 @@
+{
+  "name": {
+    "nl": "Jeugdbudget Sint-Niklaas 2025"
+  },
+  "availableLanguages": ["nl"],
+  "key": "jbsintniklaas",
+  "themes": [
+    {
+      "name": {
+        "nl": "Jeugdbudget Sint-Niklaas 2025"
+      },
+      "key": "jbsintniklaas-vragen",
+      "questions": [
+        {
+          "title": {
+            "nl": "Wat moet er zeker zijn om van het Sint-Nicolaasplein een gezellige plek te maken?"
+          },
+          "key": "gezellige-plek",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "gezellige-plek-optie-een",
+              "value": {
+                "nl": "Extra groen en verlichting"
+              }
+            },
+            {
+              "key": "gezellige-plek-optie-twee",
+              "value": {
+                "nl": "Activiteiten en muziek"
+              }
+            },
+            {
+              "key": "gezellige-plek-optie-drie",
+              "value": {
+                "nl": "Betaalbare foodtrucks en eetkraampjes"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Welke activiteiten spreken jullie het meest aan?"
+          },
+          "key": "activiteiten",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "activiteiten-optie-een",
+              "value": {
+                "nl": "Optredens en DJ-sets"
+              }
+            },
+            {
+              "key": "activiteiten-optie-twee",
+              "value": {
+                "nl": "Chille hangmomenten met spelletjes"
+              }
+            },
+            {
+              "key": "activiteiten-optie-drie",
+              "value": {
+                "nl": "Sportactiviteiten en tornooien"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wanneer moeten die activiteiten vooral doorgaan?"
+          },
+          "key": "wanneer",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "wanneer-optie-een",
+              "value": {
+                "nl": "Na schooltijd en op vrijdagavond"
+              }
+            },
+            {
+              "key": "wanneer-optie-twee",
+              "value": {
+                "nl": "In het weekend en tijdens vakanties"
+              }
+            },
+            {
+              "key": "wanneer-optie-drie",
+              "value": {
+                "nl": "Het hele jaar door, maar minder in de winter"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoe zien jullie de horeca op `t Plein?"
+          },
+          "key": "horeca",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "horeca-optie-een",
+              "value": {
+                "nl": "Pop-up zomerbar in samenwerking met aanwezige horeca"
+              }
+            },
+            {
+              "key": "horeca-optie-twee",
+              "value": {
+                "nl": "Enkel foodtrucks bij events"
+              }
+            },
+            {
+              "key": "horeca-optie-drie",
+              "value": {
+                "nl": "Horeca is niet onze focus"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat is het belangrijkste voor de sfeer op `t Plein?"
+          },
+          "key": "sfeer",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "sfeer-optie-een",
+              "value": {
+                "nl": "Gezellig ingerichte zit- en chillplekken"
+              }
+            },
+            {
+              "key": "sfeer-optie-twee",
+              "value": {
+                "nl": "Toffe muziek en sfeerverlichting"
+              }
+            },
+            {
+              "key": "sfeer-optie-drie",
+              "value": {
+                "nl": "Horeca"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoe zorgen we dat het veilig blijft?"
+          },
+          "key": "veiligheid",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "veiligheid-optie-een",
+              "value": {
+                "nl": "Cameratoezicht en duidelijke regels"
+              }
+            },
+            {
+              "key": "veiligheid-optie-twee",
+              "value": {
+                "nl": "Aanwezigheid van begeleiders of vrijwilligers"
+              }
+            },
+            {
+              "key": "veiligheid-optie-drie",
+              "value": {
+                "nl": "Goed onderhouden, propere en overzichtelijke plek"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Met wie moet de stad vooral samenwerken voor dit project?"
+          },
+          "key": "samenwerking",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "samenwerking-optie-een",
+              "value": {
+                "nl": "Jeugdorganisaties (Den Eglantier, StudentPlek, OverKop)"
+              }
+            },
+            {
+              "key": "samenwerking-optie-twee",
+              "value": {
+                "nl": "Lokale horeca en foodtrucks"
+              }
+            },
+            {
+              "key": "samenwerking-optie-drie",
+              "value": {
+                "nl": "Jongeren zelf als ambassadeurs/vrijwilligers"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat moet er sowieso aanwezig zijn, ook als er geen activiteiten zijn?"
+          },
+          "key": "sowieso-aanwezig",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "sowieso-aanwezig-optie-een",
+              "value": {
+                "nl": "Zitbanken, schaduw en verlichting"
+              }
+            },
+            {
+              "key": "sowieso-aanwezig-optie-twee",
+              "value": {
+                "nl": "Lockers en fietsenstalling"
+              }
+            },
+            {
+              "key": "sowieso-aanwezig-optie-drie",
+              "value": {
+                "nl": "Snack- en drankautomaat"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
