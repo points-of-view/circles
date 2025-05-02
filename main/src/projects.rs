@@ -70,6 +70,12 @@ impl Project {
 
         result
     }
+
+    pub fn find_by_key(project_key: Into<String>) -> Option<Project> {
+        Project::build_all()
+            .iter()
+            .find(|&project| project.key == project_key)
+    }
 }
 
 #[cfg(test)]
@@ -100,5 +106,13 @@ mod tests {
     fn can_parse_all_projects() {
         // NOTE: We simply assert that no file will give an error when parsing
         Project::build_all();
+    }
+
+    #[test]
+    fn should_be_able_to_find_project_by_key() {
+        let project = Project::find_by_key("test");
+
+        assert!(project.is_some());
+        assert_eq!(project.key, "test");
     }
 }

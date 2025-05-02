@@ -44,10 +44,7 @@ impl GlobalState {
     }
 
     pub fn select_project(&self, project_key: String) -> Result<(), GeneralError> {
-        match Project::build_all()
-            .iter()
-            .find(|&project| project.key == project_key)
-        {
+        match Project::find_by_key(project_key) {
             Some(project) => {
                 let mut lock = self.current_project.lock().unwrap();
                 *lock = Some(project.clone());
