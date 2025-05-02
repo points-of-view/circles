@@ -93,6 +93,8 @@ fn fetch_batch_and_write(
         let row = 1 + row as u32;
         let created_at =
             ExcelDateTime::from_timestamp(step.created_at.assume_utc().unix_timestamp()).unwrap();
+        
+        // If somewhere in the chain of theme, question, ... when can't find an object, we simply ignore this and print nothing
         let theme = project.find_theme_by_key(&session.theme_key);
         let question = theme.map_or(None, |t| t.find_question_by_key(&step.question_key));
         let option = question.map_or(None, |q| q.find_option_by_key(&answer.option_key));
