@@ -51,7 +51,8 @@
   font-size: var(--text-md);
   white-space: preserve;
   text-align: center;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: anywhere;
   border-radius: var(--rounded-full);
 }
 
