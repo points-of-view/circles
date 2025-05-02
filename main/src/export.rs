@@ -2,7 +2,6 @@ use diesel::{ExpressionMethods, RunQueryDsl};
 use diesel::{QueryDsl, SelectableHelper, SqliteConnection};
 use rust_xlsxwriter::{ExcelDateTime, Format, Workbook, Worksheet, XlsxError};
 
-use crate::database::schema::sessions::theme_key;
 use crate::database::{
     models::{Answer, Session, Step},
     schema::{answers, sessions, steps},
@@ -24,7 +23,7 @@ pub fn export_project_data(
     project_key: String,
 ) -> Result<(), GeneralError> {
     let mut workbook = Workbook::new();
-    let Some(project) = Project::find_by_key(project_key) else {
+    let Some(project) = Project::find_by_key(&project_key) else {
         return Err(GeneralError {
             kind: GeneralErrorKind::IncorrectProject(project_key),
             message: String::new(),
@@ -53,7 +52,12 @@ pub fn export_project_data(
     while page * BATCH_SIZE < count {
         match fetch_batch_and_write(connection, worksheet, &project, page * BATCH_SIZE) {
             Ok(()) => page += 1,
-            Err(err) => return Err(err.to_string()),
+            Err(err) => {
+                return Err(GeneralError {
+                    kind: GeneralErrorKind::Unknown,
+                    message: err.to_string(),
+                })
+            }
         }
     }
 
@@ -78,7 +82,7 @@ fn fetch_batch_and_write(
 ) -> Result<(), XlsxError> {
     let results: Vec<(Answer, Step, Session)> = answers::table
         .inner_join(steps::table.inner_join(sessions::table))
-        .filter(sessions::project_key.eq(project.key))
+        .filter(sessions::project_key.eq(&project.key))
         .limit(BATCH_SIZE)
         .offset(offset)
         .select((Answer::as_select(), Step::as_select(), Session::as_select()))
@@ -93,23 +97,27 @@ fn fetch_batch_and_write(
         let row = 1 + row as u32;
         let created_at =
             ExcelDateTime::from_timestamp(step.created_at.assume_utc().unix_timestamp()).unwrap();
-        
+
         // If somewhere in the chain of theme, question, ... when can't find an object, we simply ignore this and print nothing
         let theme = project.find_theme_by_key(&session.theme_key);
-        let question = theme.map_or(None, |t| t.find_question_by_key(&step.question_key));
-        let option = question.map_or(None, |q| q.find_option_by_key(&answer.option_key));
+        let question = theme
+            .as_ref()
+            .and_then(|t| t.find_question_by_key(&step.question_key));
+        let option = question
+            .as_ref()
+            .and_then(|q| q.find_option_by_key(&answer.option_key));
 
         worksheet.write(row, 0, &session.project_key)?;
         worksheet.write(row, 1, session.id)?;
         worksheet.write(row, 2, &session.theme_key)?;
-        worksheet.write(row, 3, theme?.name?.get(language))?;
+        worksheet.write(row, 3, theme.and_then(|t| t.name.get(&language)))?;
         worksheet.write(row, 4, &step.question_key)?;
-        worksheet.write(row, 5, question?.title?.get(language))?;
+        worksheet.write(row, 5, question.and_then(|q| q.title.get(&language)))?;
         worksheet.write_with_format(row, 6, created_at, &format)?;
         worksheet.write(row, 7, &answer.token_key)?;
         worksheet.write(row, 8, get_token_type_from_key(&answer.token_key))?;
         worksheet.write(row, 9, &answer.option_key)?;
-        worksheet.write(row, 10, option?.value?.get(language))?;
+        worksheet.write(row, 10, option.and_then(|o| o.value.get(&language)))?;
     }
 
     Ok(())

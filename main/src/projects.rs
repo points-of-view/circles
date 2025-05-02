@@ -71,28 +71,47 @@ impl Project {
         result
     }
 
-    pub fn find_by_key(project_key: Into<String>) -> Option<Project> {
+    pub fn find_by_key(project_key: &str) -> Option<Project> {
         Project::build_all()
             .iter()
-            .find(|&project| project.key == project_key)
+            .find(|project| project.key == project_key)
+            .cloned()
     }
 }
 
 impl Project {
-    pub fn find_theme_by_key(&self, key: Into<String>) -> Option<&Theme> {
-        self.themes.iter().find(|theme| theme.key == key)
+    pub fn find_theme_by_key(&self, key: &str) -> Option<Theme> {
+        let theme_key: String = key.into();
+        self.themes
+            .iter()
+            .find(|theme| theme.key == theme_key)
+            .cloned()
     }
 }
 
 impl Theme {
-    pub fn find_question_by_key(&self, key: Into<String>) -> Option<&Question> {
-        self.questions.iter().find(|q| q.key == key)
+    pub fn find_question_by_key(&self, key: &str) -> Option<Question> {
+        self.questions.iter().find(|q| q.key == key).cloned()
     }
 }
 
 impl Question {
-    pub fn find_option_by_key(&self, key: Into<String>) -> Option<&QuestionOption> {
-        self.options.iter().find(|o| o.key == key)
+    pub fn find_option_by_key(&self, key: &str) -> Option<QuestionOption> {
+        self.options
+            .clone()
+            .and_then(|opts| opts.iter().find(|o| o.key == key).cloned())
+    }
+}
+
+impl TranslatedProperty {
+    pub fn get(&self, language: &str) -> Option<String> {
+        match language {
+            "nl" => self.nl.clone(),
+            "sl" => self.sl.clone(),
+            "po" => self.po.clone(),
+            "en" => self.en.clone(),
+            _ => None,
+        }
     }
 }
 
@@ -131,6 +150,6 @@ mod tests {
         let project = Project::find_by_key("test");
 
         assert!(project.is_some());
-        assert_eq!(project.key, "test");
+        assert_eq!(project.unwrap().key, "test");
     }
 }

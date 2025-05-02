@@ -63,7 +63,8 @@ async fn save_export(
     // NOTE: This allows any arbitrary project_key, but will simply not find results if the project key does not exists
     // Once we move projects to the database, we'll solve this in a more fundamental way
     let mut connection = state.database_connection.lock().unwrap();
-    export_project_data(&mut *connection, filepath, project_key)
+    export_project_data(&mut *connection, filepath, project_key)?;
+    Ok(())
 }
 
 fn main() {
