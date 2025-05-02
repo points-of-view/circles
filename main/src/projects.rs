@@ -80,7 +80,7 @@ impl Project {
 
 impl Project {
     pub fn find_theme_by_key(&self, key: Into<String>) -> Option<&Theme> {
-        self.themes.iter().find(|theme | theme.key == key)
+        self.themes.iter().find(|theme| theme.key == key)
     }
 }
 

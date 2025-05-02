@@ -27,16 +27,19 @@ pub fn export_project_data(
     let Some(project) = Project::find_by_key(project_key) else {
         return Err(GeneralError {
             kind: GeneralErrorKind::IncorrectProject(project_key),
-            message: String::new()
+            message: String::new(),
         });
     };
-
-
 
     let worksheet = workbook.add_worksheet();
     match write_headers(worksheet) {
         Ok(_) => (),
-        Err(err) => return Err(GeneralError { kind: GeneralErrorKind::Unknown, message: err.to_string() }),
+        Err(err) => {
+            return Err(GeneralError {
+                kind: GeneralErrorKind::Unknown,
+                message: err.to_string(),
+            })
+        }
     }
 
     let count: i64 = answers::table
