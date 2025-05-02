@@ -78,6 +78,24 @@ impl Project {
     }
 }
 
+impl Project {
+    pub fn find_theme_by_key(&self, key: Into<String>) -> Option<&Theme> {
+        self.themes.iter().find(|theme | theme.key == key)
+    }
+}
+
+impl Theme {
+    pub fn find_question_by_key(&self, key: Into<String>) -> Option<&Question> {
+        self.questions.iter().find(|q| q.key == key)
+    }
+}
+
+impl Question {
+    pub fn find_option_by_key(&self, key: Into<String>) -> Option<&QuestionOption> {
+        self.options.iter().find(|o| o.key == key)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
