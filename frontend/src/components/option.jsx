@@ -7,12 +7,19 @@ export default function Option({
   amount = 0,
   big = false,
   tagIds = [],
+  longOptionText = false,
 }) {
   return (
     <div className={clsx("option", className, { "option--big": big })}>
       {!big && <div className="option__amount">{amount}</div>}
       <div className="option__content">
-        <div className="option__label">{label}</div>
+        <div
+          className={clsx("option__label", {
+            "option__label--small-text": longOptionText,
+          })}
+        >
+          {label}
+        </div>
         {!big && (
           <div className="option__figure-container">
             {tagIds.map((value) => (
