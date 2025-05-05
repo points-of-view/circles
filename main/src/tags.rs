@@ -1,4 +1,4 @@
-use rand::{seq::SliceRandom, thread_rng, Rng};
+use rand::{rng, seq::IndexedRandom, Rng};
 use serde;
 use std::{
     collections::{hash_map::Values, HashMap},
@@ -77,10 +77,10 @@ impl Tag {
     }
 
     pub fn random() -> Tag {
-        let mut rng = thread_rng();
+        let mut rng = rng();
         let id = MOCK_RFID_TAGS.choose(&mut rng).unwrap().to_string();
-        let antenna = rng.gen_range(MIN_ANTENNA..=MAX_ANTENNA);
-        let strength = rng.gen_range(MIN_STRENGTH..MAX_STRENGTH);
+        let antenna = rng.random_range(MIN_ANTENNA..=MAX_ANTENNA);
+        let strength = rng.random_range(MIN_STRENGTH..MAX_STRENGTH);
         Tag {
             id,
             antenna,
