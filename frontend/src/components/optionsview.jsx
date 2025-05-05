@@ -25,6 +25,7 @@ export default function OptionsView({ options, tagCount, tagsMap }) {
           big={options.length === 1}
           amount={tagCount[index + 1]}
           tagIds={tagsByAntenna[index + 1]}
+          longOptionText={options.some((opt) => opt.value.length > 22)}
         />
       ))}
     </div>
