@@ -103,9 +103,14 @@ fn fetch_batch_and_write(
         let question = theme
             .as_ref()
             .and_then(|t| t.find_question_by_key(&step.question_key));
-        let option = question
-            .as_ref()
-            .and_then(|q| q.find_option_by_key(&answer.option_key));
+        let option = match answer.option_key.parse::<usize>() {
+            Ok(index) => question
+                .as_ref()
+                .and_then(|q| q.find_option_by_index(index)),
+            // If we can't parse the value, we simply ignore this
+            Err(_) => None,
+        };
+        println!("Option: {:#?}", option);
 
         worksheet.write(row, 0, &session.project_key)?;
         worksheet.write(row, 1, session.id)?;
