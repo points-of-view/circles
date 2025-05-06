@@ -37,11 +37,7 @@ export function StartScreen({
           selectedProject={selectedProject}
         />
       )}
-      {viewPopUp === "import" && (
-        <ImportProject
-          setViewPopUp={setViewPopUp}
-        />
-      )}
+      {viewPopUp === "import" && <ImportProject setViewPopUp={setViewPopUp} />}
       {viewPopUp === "delete" && (
         <DeleteData
           setViewPopUp={setViewPopUp}
@@ -49,7 +45,10 @@ export function StartScreen({
         />
       )}
       <div className="start-screen__title">Circles</div>
-      <button className="start-screen__button" onClick={() => setViewPopUp("import")}>
+      <button
+        className="start-screen__button"
+        onClick={() => setViewPopUp("import")}
+      >
         {translate("import_project")}
       </button>
       <button className="start-screen__button" onClick={toggleFullScreen}>
@@ -163,8 +162,11 @@ function StartProject({
     >
       <div className="start-screen__popup">
         <h1 className="start-screen__title--dialog">
-          {translate("start_project_title")}
+          {translate("start_project_title") + selectedProject}
         </h1>
+        <span className="start-screen__label">
+          {translate("start_reader_hostname_subtitle")}
+        </span>
         <div className="start-screen__input">
           <label className="start-screen__label" htmlFor="hostname">
             {translate("start_reader_hostname")}
@@ -200,7 +202,7 @@ function StartProject({
             className="start-screen__button"
             disabled={[STATES.working, STATES.done].includes(state)}
           >
-            {translate("start_project_button")}
+            {translate("start_button")}
           </button>
           <button
             type="button"
@@ -260,6 +262,9 @@ function ExportCard({ setViewPopUp, selectedProject }) {
         <h2 className="start-screen__title--dialog">
           {translate("start_export_title")}
         </h2>
+        <span className="start-screen__label">
+          {translate("export_project_data_subtitle")}
+        </span>
         {state === STATES.working && (
           <span className="start-screen__message start-screen__message--spinner">
             {translate("start_export_working")}
@@ -295,7 +300,7 @@ function ExportCard({ setViewPopUp, selectedProject }) {
 }
 
 function DeleteData({ setViewPopUp, selectedProject }) {
-  const [state, setState] = useState(STATES.error);
+  const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
 
   async function DeleteProjectData() {
@@ -320,7 +325,7 @@ function DeleteData({ setViewPopUp, selectedProject }) {
         </span>
         {state === STATES.done && (
           <span className="start-screen__message start-screen__message--success">
-            {translate("start_export_done")}
+            {translate("start_delete_done")}
           </span>
         )}
         {state === STATES.error && (
@@ -340,7 +345,7 @@ function DeleteData({ setViewPopUp, selectedProject }) {
           className="start-screen__button"
           onClick={() => setViewPopUp(null)}
         >
-          {translate("cancel_button")}
+          {translate(state === STATES.done ? "close_button" : "cancel_button")}
         </button>
       </div>
     </div>
@@ -351,7 +356,6 @@ function ImportProject({ setViewPopUp }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
 
-  
   async function importProjectData() {
     setState(STATES.working);
 
@@ -364,8 +368,8 @@ function ImportProject({ setViewPopUp }) {
       await invoke("import_project", { filepath });
       setState(STATES.done);
     } catch (error) {
-      setError(error); // We should add different errors for: the user canceled the dialog, the file extension isn't compatible, the project couldn't be read 
-      setState(STATES.error); // We should add different errors for: the user canceled the dialog, the file extension isn't compatible, the project couldn't be read 
+      setError(error); // We should add different errors for: the user canceled the dialog, the file extension isn't compatible, the project couldn't be read
+      setState(STATES.error); // We should add different errors for: the user canceled the dialog, the file extension isn't compatible, the project couldn't be read
     }
   }
 
