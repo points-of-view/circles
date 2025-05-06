@@ -110,7 +110,6 @@ fn fetch_batch_and_write(
             // If we can't parse the value, we simply ignore this
             Err(_) => None,
         };
-        println!("Option: {:#?}", option);
 
         worksheet.write(row, 0, &session.project_key)?;
         worksheet.write(row, 1, session.id)?;
