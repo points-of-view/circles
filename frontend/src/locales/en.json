@@ -39,5 +39,9 @@
   "error_ReaderError_CouldNotConnect": "Could not connect to the reader.\nPlease check the reader is powered up and connected to the computer",
   "error_ReaderError_LostConnection": "The connection to the reader was lost.\nPlease check all connections and restart the application",
   "error_ReaderError_Unknown": "An unknown error occurred in the application\nPlease check all connections and restart the reader and the application",
-  "import_project": "Import project"
+  "import_project": "Import project",
+  "import_in_progress": "Opening dialog...",
+  "import_choose_file": "Choose file...",
+  "import_project_subtitle": "Choose a file from your disk that you want to import.",
+  "import_done": "The import is done and the project is ready to be launched."
 }
