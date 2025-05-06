@@ -70,6 +70,50 @@ impl Project {
 
         result
     }
+
+    pub fn find_by_key(project_key: &str) -> Option<Project> {
+        Project::build_all()
+            .iter()
+            .find(|project| project.key == project_key)
+            .cloned()
+    }
+}
+
+impl Project {
+    pub fn find_theme_by_key(&self, key: &str) -> Option<Theme> {
+        let theme_key: String = key.into();
+        self.themes
+            .iter()
+            .find(|theme| theme.key == theme_key)
+            .cloned()
+    }
+}
+
+impl Theme {
+    pub fn find_question_by_key(&self, key: &str) -> Option<Question> {
+        self.questions.iter().find(|q| q.key == key).cloned()
+    }
+}
+
+impl Question {
+    pub fn find_option_by_antenna_index(&self, index: usize) -> Option<QuestionOption> {
+        self.options
+            .clone()
+            // Our antenna's use 1-based indexing
+            .and_then(|opts| opts.get(index - 1).cloned())
+    }
+}
+
+impl TranslatedProperty {
+    pub fn get(&self, language: &str) -> Option<String> {
+        match language {
+            "nl" => self.nl.clone(),
+            "sl" => self.sl.clone(),
+            "po" => self.po.clone(),
+            "en" => self.en.clone(),
+            _ => None,
+        }
+    }
 }
 
 #[cfg(test)]
@@ -100,5 +144,13 @@ mod tests {
     fn can_parse_all_projects() {
         // NOTE: We simply assert that no file will give an error when parsing
         Project::build_all();
+    }
+
+    #[test]
+    fn should_be_able_to_find_project_by_key() {
+        let project = Project::find_by_key("test");
+
+        assert!(project.is_some());
+        assert_eq!(project.unwrap().key, "test");
     }
 }
