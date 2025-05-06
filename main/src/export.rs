@@ -106,7 +106,7 @@ fn fetch_batch_and_write(
         let option = match answer.option_key.parse::<usize>() {
             Ok(index) => question
                 .as_ref()
-                .and_then(|q| q.find_option_by_index(index)),
+                .and_then(|q| q.find_option_by_antenna_index(index)),
             // If we can't parse the value, we simply ignore this
             Err(_) => None,
         };

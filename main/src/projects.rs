@@ -96,10 +96,11 @@ impl Theme {
 }
 
 impl Question {
-    pub fn find_option_by_index(&self, index: usize) -> Option<QuestionOption> {
+    pub fn find_option_by_antenna_index(&self, index: usize) -> Option<QuestionOption> {
         self.options
             .clone()
-            .and_then(|opts| opts.get(index).cloned())
+            // Our antenna's use 1-based indexing
+            .and_then(|opts| opts.get(index - 1).cloned())
     }
 }
 
