@@ -66,6 +66,10 @@
   color: var(--color-black);
 }
 
+.start-screen__title--red {
+  color: var(--color-red);
+}
+
 .start-screen__input {
   width: min(100%, 20rem);
 }
@@ -75,7 +79,7 @@
   margin-bottom: 0.375rem;
   color: var(--color-grey);
   font-weight: 400;
-  font-size: 0.875rem;
+  font-size: var(--text-2xs);
 }
 
 .start-screen__field {
@@ -115,6 +119,9 @@
 }
 
 .start-screen__button {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
   padding: 1rem;
   color: var(--color-white);
   font-weight: 600;
@@ -157,6 +164,41 @@
     border-radius: 0;
     outline: 1px solid var(--color-purple);
     outline-offset: 10px;
+  }
+
+  &:disabled {
+    background-color: var(--color-grey);
+  }
+}
+
+.start-screen__button--light {
+  color: var(--color-purple);
+  border: 1px solid var(--color-grey-light);
+  background-color: var(--color-white);
+
+  &:hover {
+    background-color: var(--color-grey-light);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-pink);
+  }
+
+  &:disabled {
+    background-color: var(--color-grey);
+  }
+}
+
+.start-screen__button--red {
+  color: var(--color-white);
+  background-color: var(--color-red);
+
+  &:hover {
+    background-color: var(--color-black);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-pink);
   }
 
   &:disabled {

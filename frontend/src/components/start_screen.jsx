@@ -2,7 +2,10 @@ import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { save, open } from "@tauri-apps/api/dialog";
 import translate, { translateError } from "../locales";
-
+import eastIcon from "../assets/visuals/east.svg";
+import deleteIcon from "../assets/visuals/delete.svg";
+import importIcon from "../assets/visuals/add.svg";
+import fullscreenIcon from "../assets/visuals/fullscreen.svg";
 const previousHostname = localStorage.getItem("circles.last_hostname");
 
 const STATES = {
@@ -49,9 +52,11 @@ export function StartScreen({
         className="start-screen__button"
         onClick={() => setViewPopUp("import")}
       >
+        <img src={importIcon} alt="import_icon" />
         {translate("import_project")}
       </button>
       <button className="start-screen__button" onClick={toggleFullScreen}>
+        <img src={fullscreenIcon} alt="fullscreen_icon" />
         {translate("start_fullscreen_button")}
       </button>
       <ProjectView
@@ -203,10 +208,11 @@ function StartProject({
             disabled={[STATES.working, STATES.done].includes(state)}
           >
             {translate("start_button")}
+            <img src={eastIcon} alt="arrow_east" />
           </button>
           <button
             type="button"
-            className="start-screen__button"
+            className="start-screen__button start-screen__button--light"
             onClick={() => setViewPopUp(null)}
           >
             {translate("cancel_button")}
@@ -280,20 +286,22 @@ function ExportCard({ setViewPopUp, selectedProject }) {
             {error}
           </span>
         )}
-        <button
-          className="start-screen__button"
-          type="button"
-          onClick={() => exportData()}
-        >
-          {translate("start_export_button")}
-        </button>
-        <button
-          type="button"
-          className="start-screen__button"
-          onClick={() => setViewPopUp(null)}
-        >
-          {translate("close_button")}
-        </button>
+        <div className="start-screen__button-container">
+          <button
+            className="start-screen__button"
+            type="button"
+            onClick={() => exportData()}
+          >
+            {translate("start_export_button")}
+          </button>
+          <button
+            type="button"
+            className="start-screen__button start-screen__button--light"
+            onClick={() => setViewPopUp(null)}
+          >
+            {translate("close_button")}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -317,10 +325,10 @@ function DeleteData({ setViewPopUp, selectedProject }) {
   return (
     <div className="start-screen__card">
       <div className="start-screen__popup">
-        <h2 className="start-screen__title--dialog">
+        <h2 className="start-screen__title--red">
           {translate("start_delete_title")}
         </h2>
-        <span className="start-screen__message">
+        <span className="start-screen__label">
           {translate("delete_project_data_subtitle")}
         </span>
         {state === STATES.done && (
@@ -333,20 +341,25 @@ function DeleteData({ setViewPopUp, selectedProject }) {
             {translateError(error)}
           </span>
         )}
-        <button
-          className="start-screen__button"
-          type="button"
-          onClick={() => DeleteProjectData()}
-        >
-          {translate("delete_button")}
-        </button>
-        <button
-          type="button"
-          className="start-screen__button"
-          onClick={() => setViewPopUp(null)}
-        >
-          {translate(state === STATES.done ? "close_button" : "cancel_button")}
-        </button>
+        <div className="start-screen__button-container">
+          <button
+            className="start-screen__button start-screen__button--red"
+            type="button"
+            onClick={() => DeleteProjectData()}
+          >
+            <img src={deleteIcon} alt="delete_icon" />
+            {translate("delete_button")}
+          </button>
+          <button
+            type="button"
+            className="start-screen__button start-screen__button--light"
+            onClick={() => setViewPopUp(null)}
+          >
+            {translate(
+              state === STATES.done ? "close_button" : "cancel_button",
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -379,7 +392,7 @@ function ImportProject({ setViewPopUp }) {
         <h2 className="start-screen__title--dialog">
           {translate("import_project")}
         </h2>
-        <span className="start-screen__message">
+        <span className="start-screen__label">
           {translate("import_project_subtitle")}
         </span>
         {state === STATES.done && (
@@ -397,20 +410,22 @@ function ImportProject({ setViewPopUp }) {
             {translateError(error)}
           </span>
         )}
-        <button
-          className="start-screen__button"
-          type="button"
-          onClick={() => importProjectData()}
-        >
-          {translate("import_choose_file")}
-        </button>
-        <button
-          type="button"
-          className="start-screen__button"
-          onClick={() => setViewPopUp(null)}
-        >
-          {translate("close_button")}
-        </button>
+        <div className="start-screen__button-container">
+          <button
+            className="start-screen__button"
+            type="button"
+            onClick={() => importProjectData()}
+          >
+            {translate("import_choose_file")}
+          </button>
+          <button
+            type="button"
+            className="start-screen__button start-screen__button--light"
+            onClick={() => setViewPopUp(null)}
+          >
+            {translate("close_button")}
+          </button>
+        </div>
       </div>
     </div>
   );
