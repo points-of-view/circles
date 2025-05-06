@@ -41,10 +41,10 @@
   --color-red: hsl(var(--hsl-red));
 
   /* Fonts */
-  --font-family: "Manrope", ui-sans-serif, system-ui, -apple-system,
-    blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans",
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    "Noto Color Emoji";
+  --font-family:
+    "Manrope", ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont,
+    "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --text-2xs: 1rem;
   --text-xs: 1.25rem;
   --text-sm: 1.75rem;
