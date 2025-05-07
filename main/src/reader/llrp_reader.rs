@@ -8,7 +8,7 @@ use std::{
     net::{self, TcpStream},
     time::Duration,
 };
-use tauri::{async_runtime::JoinHandle, AppHandle};
+use tauri::{async_runtime::JoinHandle, AppHandle, Manager};
 
 use super::{
     handle_reader_input,
@@ -35,7 +35,10 @@ pub struct LLRPReader {
 }
 
 impl ReaderProtocol for LLRPReader {
-    fn new(hostname: String) -> Result<Self, ReaderError> {
+    fn new<R: tauri::Runtime>(
+        hostname: String,
+        app_handle: AppHandle<R>,
+    ) -> Result<Self, ReaderError> {
         if hostname.len() != 12 {
             return Err(ReaderError {
                 kind: ReaderErrorKind::IncorrectHostname(hostname.clone()),
@@ -51,8 +54,13 @@ impl ReaderProtocol for LLRPReader {
             stream: None,
             handle: None,
         };
-        reader.connect()?;
-        reader.prepare()?;
+        // NOTE: We log every step of the connection process to make it easier to understand when something goes wrong
+        // We always ignore the output these emit events, since we don't care if this fails.
+        let _ = app_handle.emit_all("connection-status", "Start connecting to reader");
+        reader.connect(app_handle.clone())?;
+        let _ = app_handle.emit_all("connection-status", "Start preparing reader for usage");
+        reader.prepare(app_handle.clone())?;
+        let _ = app_handle.emit_all("connection-status", "Connected and ready to go");
         Ok(reader)
     }
 
@@ -94,7 +102,7 @@ impl LLRPReader {
     ///
     /// We first try the hostname and check if we can connect that way.
     /// If the hostname is unavailable, we fall back on the LinkLocal ipv4.
-    fn connect(&mut self) -> Result<(), ReaderError> {
+    fn connect<R: tauri::Runtime>(&mut self, app_handle: AppHandle<R>) -> Result<(), ReaderError> {
         self.stream = match net::TcpStream::connect(format!("{}:{}", self.hostname, DEFAULT_PORT)) {
             Ok(stream) => Some(stream),
             Err(_) => None,
@@ -116,6 +124,7 @@ impl LLRPReader {
                 }
             };
         }
+        let _ = app_handle.emit_all("connection-status", "Opened connection to reader");
 
         // Wait for the first ReaderEventNotification and confirm that we are connected
         self.await_message_and::<messages::ReaderEventNotification>(
@@ -126,6 +135,7 @@ impl LLRPReader {
                     })
             },
         )?;
+        let _ = app_handle.emit_all("connection-status", "Receiving connection ");
 
         // Just in case the reader is holding on to some old reports, we try to flush the stream
         let _ = self.stream.as_ref().unwrap().flush();
@@ -205,7 +215,7 @@ impl LLRPReader {
         self.await_message_and(|_| true)
     }
 
-    fn prepare(&mut self) -> Result<(), ReaderError> {
+    fn prepare<R: tauri::Runtime>(&mut self, app_handle: AppHandle<R>) -> Result<(), ReaderError> {
         // Set reader config to emit keepalive messages
         self.write_message(Message::SetReaderConfig(messages::SetReaderConfig {
             reset_to_factory_default: true,
@@ -227,6 +237,8 @@ impl LLRPReader {
         self.await_message_and::<messages::SetReaderConfigResponse>(|m| {
             m.status.status_code == enumerations::StatusCode::M_Success
         })?;
+        let _ = app_handle.emit_all("connection-status", "Reset reader settings");
+
         // Remove all existing ro_specs in the reader. ro_spec_id `0` means all ro_spec's should be deleted
         self.write_message(Message::DeleteRospec(messages::DeleteRospec {
             ro_spec_id: 0,
@@ -234,6 +246,8 @@ impl LLRPReader {
         self.await_message_and::<messages::DeleteRospecResponse>(|m| {
             m.status.status_code == enumerations::StatusCode::M_Success
         })?;
+        let _ = app_handle.emit_all("connection-status", "Removed old reader config");
+
         // Add our new ro_spec
         self.write_message(Message::AddRospec(messages::AddRospec {
             ro_spec: construct_default_rospec(),
@@ -241,6 +255,8 @@ impl LLRPReader {
         self.await_message_and::<messages::AddRospecResponse>(|m| {
             m.status.status_code == enumerations::StatusCode::M_Success
         })?;
+        let _ = app_handle.emit_all("connection-status", "Added new reader config");
+
         // Enable our new ro_spec
         self.write_message(Message::EnableRospec(messages::EnableRospec {
             ro_spec_id: DEFAULT_ROSPEC_ID,
@@ -248,6 +264,8 @@ impl LLRPReader {
         self.await_message_and::<messages::EnableRospecResponse>(|m| {
             m.status.status_code == enumerations::StatusCode::M_Success
         })?;
+        let _ = app_handle.emit_all("connection-status", "Enabled reader config");
+
         Ok(())
     }
 }

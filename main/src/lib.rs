@@ -94,8 +94,8 @@ impl GlobalState {
         }
 
         let mut reader = match env::var("MOCK_RFID_READER") {
-            Ok(_) => Reader::MockReader(MockReader::new(hostname)?),
-            Err(_) => Reader::LLRPReader(LLRPReader::new(hostname)?),
+            Ok(_) => Reader::MockReader(MockReader::new(hostname, app_handle.clone())?),
+            Err(_) => Reader::LLRPReader(LLRPReader::new(hostname, app_handle.clone())?),
         };
         reader.start_reading(app_handle)?;
         *lock = Some(reader);
