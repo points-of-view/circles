@@ -32,7 +32,7 @@ export default function App() {
     });
   }
 
-  useEffect(() => fetchProjects, []);
+  useEffect(() => fetchProjects(), []);
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeydown);
