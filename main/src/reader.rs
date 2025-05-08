@@ -49,7 +49,10 @@ impl Reader {
 }
 
 pub trait ReaderProtocol {
-    fn new(hostname: String) -> Result<Self, ReaderError>
+    fn new<R: tauri::Runtime>(
+        hostname: String,
+        app_handle: AppHandle<R>,
+    ) -> Result<Self, ReaderError>
     where
         Self: Sized;
     fn start_reading<R: tauri::Runtime>(

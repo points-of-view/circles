@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
+import { listen } from "@tauri-apps/api/event";
 import { save } from "@tauri-apps/api/dialog";
 import translate, { translateError } from "../locales";
 
@@ -30,6 +31,15 @@ export function StartScreen({ setProjectKey, setDarkMode, toggleFullScreen }) {
 function StartProject({ setProjectKey, setDarkMode }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
+  const [connectionStatus, setConnectionStatus] = useState(null);
+
+  useEffect(() => {
+    const unlisten = listen("connection-status", ({ payload }) =>
+      setConnectionStatus(payload),
+    );
+
+    return () => unlisten.then((fn) => fn());
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -48,6 +58,7 @@ function StartProject({ setProjectKey, setDarkMode }) {
     } catch (error) {
       setState(STATES.error);
       setError(error);
+      setConnectionStatus(null);
       // If an unknown error occurs, we want to log the details so we can see what went wrong
       // eslint-disable-next-line no-console
       if (error.kind === "Unknown") console.error(error);
@@ -122,6 +133,9 @@ function StartProject({ setProjectKey, setDarkMode }) {
         <span className="start-screen__message start-screen__message--error">
           {translateError(error)}
         </span>
+      )}
+      {connectionStatus && (
+        <span className="start-screen__detail">{connectionStatus}</span>
       )}
     </form>
   );
