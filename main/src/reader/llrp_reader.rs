@@ -69,16 +69,20 @@ impl ReaderProtocol for LLRPReader {
         app_handle: AppHandle<R>,
     ) -> Result<(), ReaderError> {
         // Just in case we are already reading, we should try to stop
+        let _ = app_handle.emit_all("connection-status", "Stopping previous session");
         self.stop_reading(true)?;
+        let _ = app_handle.emit_all("connection-status", "Previous session stopped");
 
         // Actually start
         self.write_message(Message::StartRospec(messages::StartRospec {
             ro_spec_id: DEFAULT_ROSPEC_ID,
         }))?;
+        let _ = app_handle.emit_all("connection-status", "Started new session");
 
         let stream = self.stream.as_ref().unwrap().try_clone().unwrap();
-        let handle = handle_reader_input::<R>(stream, app_handle);
+        let handle = handle_reader_input::<R>(stream, app_handle.clone());
         self.handle = Some(handle);
+        let _ = app_handle.emit_all("connection-status", "Ready to receive messages");
         Ok(())
     }
 
