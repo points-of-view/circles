@@ -4,7 +4,7 @@ import DeleteData from "./popups/delete_project_data";
 import ExportCard from "./popups/export_project_data";
 import StartProject from "./popups/start_project";
 import ImportCard from "./popups/import_project";
-import importIcon from "../assets/visuals/add.svg";
+// import importIcon from "../assets/visuals/add.svg";
 import fullscreenIcon from "../assets/visuals/fullscreen.svg";
 
 export function StartScreen({
@@ -40,13 +40,13 @@ export function StartScreen({
         />
       )}
       <div className="start-screen__title">Circles</div>
-      <button
+      {/* <button
         className="start-screen__button"
         onClick={() => setViewPopUp("import")}
       >
         <img src={importIcon} alt="" />
         {translate("import_project")}
-      </button>
+      </button> */}
       <button className="start-screen__button" onClick={toggleFullScreen}>
         <img src={fullscreenIcon} alt="" />
         {translate("start_fullscreen_button")}
@@ -104,7 +104,7 @@ function ProjectItem({ projectKey, setViewPopUp, setSelectedProjectKey }) {
         >
           {translate("start_export_title")}
         </button>
-        <button
+        {/* <button
           className="start-screen__button start-screen__button--link"
           onClick={() => {
             setViewPopUp("delete");
@@ -112,7 +112,7 @@ function ProjectItem({ projectKey, setViewPopUp, setSelectedProjectKey }) {
           }}
         >
           {translate("start_delete_title")}
-        </button>
+        </button> */}
       </div>
     </li>
   );
