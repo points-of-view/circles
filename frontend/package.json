@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tauri-apps/api": "^1.6.0",
+    "@tauri-apps/api": "^2.5.0",
     "@vitejs/plugin-react": "^4.4.1",
     "clsx": "^2.1.1",
     "lightningcss": "^1.30.0",
