@@ -1,7 +1,7 @@
 {
   "name": "circles",
   "private": true,
-  "version": "0.1.5",
+  "version": "0.1.7",
   "type": "module",
   "license": "CC BY 4.0",
   "workspaces": [
@@ -20,7 +20,7 @@
     "@tauri-apps/cli": "^1.6.2",
     "@tree-company/eslint-config": "^0.5.0",
     "@tree-company/stylelint-config": "^0.5.0",
-    "eslint": "^9.25.1",
+    "eslint": "^9.26.0",
     "prettier": "3.5.3",
     "stylelint": "^16.19.1"
   },

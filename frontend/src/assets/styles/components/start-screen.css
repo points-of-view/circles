@@ -233,6 +233,14 @@
   aspect-ratio: 1;
 }
 
+.start-screen__detail {
+  display: inline-block;
+  width: 100%;
+  font-weight: 400;
+  font-size: 0.875rem;
+  text-align: left;
+}
+
 .start-screen__fullscreen-button {
   grid-area: fullscreen;
   top: 2rem;

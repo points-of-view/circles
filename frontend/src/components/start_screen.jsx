@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
+import { listen } from "@tauri-apps/api/event";
 import { save, open } from "@tauri-apps/api/dialog";
 import translate, { translateError } from "../locales";
 import eastIcon from "../assets/visuals/east.svg";
@@ -135,6 +136,15 @@ function StartProject({
 }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
+  const [connectionStatus, setConnectionStatus] = useState(null);
+
+  useEffect(() => {
+    const unlisten = listen("connection-status", ({ payload }) =>
+      setConnectionStatus(payload),
+    );
+
+    return () => unlisten.then((fn) => fn());
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -153,6 +163,7 @@ function StartProject({
     } catch (error) {
       setState(STATES.error);
       setError(error);
+      setConnectionStatus(null);
       // If an unknown error occurs, we want to log the details so we can see what went wrong
       // eslint-disable-next-line no-console
       if (error.kind === "Unknown") console.error(error);
@@ -230,6 +241,9 @@ function StartProject({
           </span>
         )}
       </div>
+      {connectionStatus && (
+        <span className="start-screen__detail">{connectionStatus}</span>
+      )}
     </form>
   );
 }

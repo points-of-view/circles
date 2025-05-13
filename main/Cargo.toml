@@ -1,6 +1,6 @@
 [package]
 name = "circles"
-version = "0.1.5"
+version = "0.1.7"
 license = "CC BY 4.0"
 edition = "2021"
 
@@ -10,13 +10,13 @@ edition = "2021"
 tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
-tauri = { version = "1.8.2", features = [ "dialog-open", "window-set-fullscreen", "dialog-save", "updater", "shell-open", "process-command-api", "test" ] }
+tauri = { version = "1.8.2", features = [ "dialog-open", "window-set-fullscreen", "dialog-save", "updater", "shell-open", "process-command-api", "test", "devtools" ] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-diesel = { version = "2.2.9", features = ["sqlite", "time", "returning_clauses_for_sqlite_3_35"] }
+diesel = { version = "2.2.10", features = ["sqlite", "time", "returning_clauses_for_sqlite_3_35"] }
 time = "0.3.41"
 diesel_migrations = { version = "2.2.0", features = ["sqlite"] }
-libsqlite3-sys = { version = "0.31.0", features = ["bundled"] }
+libsqlite3-sys = { version = "0.33.0", features = ["bundled"] }
 include_dir = { version = "0.7.4", features = ["glob"] }
 dunce = "1.0.5"
 rand = "0.9.1"

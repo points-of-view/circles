@@ -18,7 +18,10 @@ pub struct MockReader {
 }
 
 impl ReaderProtocol for MockReader {
-    fn new(_hostname: String) -> Result<Self, super::ReaderError>
+    fn new<R: tauri::Runtime>(
+        _hostname: String,
+        _app_handle: AppHandle<R>,
+    ) -> Result<Self, super::ReaderError>
     where
         Self: Sized,
     {

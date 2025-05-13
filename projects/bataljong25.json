@@ -1,0 +1,91 @@
+{
+  "name": {
+    "nl": "Bataljong 2025"
+  },
+  "availableLanguages": ["nl"],
+  "key": "bataljong25",
+  "themes": [
+    {
+      "name": { "nl": "Jongerenparticipatie" },
+      "key": "jongerenparticipatie",
+      "questions": [
+        {
+          "title": { "nl": "Ik gebruik digitale tools om jongeren te informeren en/of hun input te verzamelen" },
+          "key": "digitale-tools",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "digitale-tools-nooit",
+              "value": { "nl": "(Bijna) nooit" }
+            },
+            {
+              "key": "digitale-tools-soms",
+              "value": { "nl": "Soms" }
+            },
+            {
+              "key": "digitale-tools-vaak",
+              "value": { "nl": "Vaak" }
+            }
+          ]
+        },
+        {
+          "title": { "nl": "Veel jongeren willen niet participeren" },
+          "key": "willen",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "willen-nooit",
+              "value": { "nl": "Eens" }
+            },
+            {
+              "key": "willen-soms",
+              "value": { "nl": "Neutraal" }
+            },
+            {
+              "key": "willen-vaak",
+              "value": { "nl": "Oneens" }
+            }
+          ]
+        },
+        {
+          "title": { "nl": "Voor jongerenparticipatie moet je niets anders doen dan voor participatie bij de brede bevolking" },
+          "key": "niets-anders",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "niets-anders-nooit",
+              "value": { "nl": "Eens" }
+            },
+            {
+              "key": "niets-anders-soms",
+              "value": { "nl": "Neutraal" }
+            },
+            {
+              "key": "niets-anders-vaak",
+              "value": { "nl": "Oneens" }
+            }
+          ]
+        },
+        {
+          "title": { "nl": "Campagnes voor jongerenparticipatie zijn vaak té duidelijk gemaakt door volwassenen" },
+          "key": "campagnes",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "campagnes-nooit",
+              "value": { "nl": "Eens" }
+            },
+            {
+              "key": "campagnes-soms",
+              "value": { "nl": "Neutraal" }
+            },
+            {
+              "key": "campagnes-vaak",
+              "value": { "nl": "Oneens" }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
