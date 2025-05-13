@@ -24,7 +24,7 @@ export function StartScreen({
   projects,
 }) {
   const [viewPopUp, setViewPopUp] = useState(null);
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProjectKey, setSelectedProjectKey] = useState(null);
 
   return (
     <div className="start-screen">
@@ -33,20 +33,20 @@ export function StartScreen({
           setProjectKey={setProjectKey}
           setDarkMode={setDarkMode}
           setViewPopUp={setViewPopUp}
-          selectedProject={selectedProject}
+          selectedProjectKey={selectedProjectKey}
         />
       )}
       {viewPopUp === "import" && <ImportCard setViewPopUp={setViewPopUp} />}
       {viewPopUp === "export" && (
         <ExportCard
           setViewPopUp={setViewPopUp}
-          selectedProject={selectedProject}
+          selectedProjectKey={selectedProjectKey}
         />
       )}
       {viewPopUp === "delete" && (
         <DeleteData
           setViewPopUp={setViewPopUp}
-          selectedProject={selectedProject}
+          selectedProjectKey={selectedProjectKey}
         />
       )}
       <div className="start-screen__title">Circles</div>
@@ -64,13 +64,13 @@ export function StartScreen({
       <ProjectView
         projects={projects}
         setViewPopUp={setViewPopUp}
-        setSelectedProject={setSelectedProject}
+        setSelectedProjectKey={setSelectedProjectKey}
       />
     </div>
   );
 }
 
-function ProjectView({ projects, setViewPopUp, setSelectedProject }) {
+function ProjectView({ projects, setViewPopUp, setSelectedProjectKey }) {
   return (
     <div className="start-screen__project-list">
       <div className="start-screen__project-title">
@@ -82,7 +82,7 @@ function ProjectView({ projects, setViewPopUp, setSelectedProject }) {
             key={e}
             projectKey={i.key}
             setViewPopUp={setViewPopUp}
-            setSelectedProject={setSelectedProject}
+            setSelectedProjectKey={setSelectedProjectKey}
           />
         ))}
       </ul>
@@ -90,7 +90,7 @@ function ProjectView({ projects, setViewPopUp, setSelectedProject }) {
   );
 }
 
-function ProjectItem({ projectKey, setViewPopUp, setSelectedProject }) {
+function ProjectItem({ projectKey, setViewPopUp, setSelectedProjectKey }) {
   return (
     <li className="start-screen__project-item">
       <span className="project-item__title">{projectKey}</span>
@@ -99,7 +99,7 @@ function ProjectItem({ projectKey, setViewPopUp, setSelectedProject }) {
           className="start-screen__button start-screen__button--start"
           onClick={() => {
             setViewPopUp("start");
-            setSelectedProject(projectKey);
+            setSelectedProjectKey(projectKey);
           }}
         >
           {translate("start_project_button")}
@@ -109,7 +109,7 @@ function ProjectItem({ projectKey, setViewPopUp, setSelectedProject }) {
           className="start-screen__button start-screen__button--link"
           onClick={() => {
             setViewPopUp("export");
-            setSelectedProject(projectKey);
+            setSelectedProjectKey(projectKey);
           }}
         >
           {translate("start_export_title")}
@@ -118,7 +118,7 @@ function ProjectItem({ projectKey, setViewPopUp, setSelectedProject }) {
           className="start-screen__button start-screen__button--link"
           onClick={() => {
             setViewPopUp("delete");
-            setSelectedProject(projectKey);
+            setSelectedProjectKey(projectKey);
           }}
         >
           {translate("start_delete_title")}
@@ -130,7 +130,7 @@ function ProjectItem({ projectKey, setViewPopUp, setSelectedProject }) {
 
 function StartProject({
   setProjectKey,
-  selectedProject,
+  selectedProjectKey,
   setDarkMode,
   setViewPopUp,
 }) {
@@ -152,7 +152,7 @@ function StartProject({
     setError(null);
 
     const data = new FormData(e.target);
-    const projectKey = selectedProject;
+    const projectKey = selectedProjectKey;
     const hostname = data.get("hostname");
     const darkMode = data.get("darkMode");
     try {
@@ -179,7 +179,7 @@ function StartProject({
     >
       <div className="start-screen__popup">
         <h1 className="start-screen__title--dialog">
-          {translate("start_project_title") + selectedProject}
+          {translate("start_project_title") + selectedProjectKey}
         </h1>
         <span className="start-screen__label">
           {translate("start_reader_hostname_subtitle")}
@@ -314,14 +314,14 @@ function ImportCard({ setViewPopUp }) {
   );
 }
 
-function ExportCard({ setViewPopUp, selectedProject }) {
+function ExportCard({ setViewPopUp, selectedProjectKey }) {
   const [state, setState] = useState(STATES.error);
   const [error, setError] = useState(null);
 
   async function exportData() {
     setState(STATES.working);
 
-    const projectKey = selectedProject;
+    const projectKey = selectedProjectKey;
 
     const filepath = await save({
       filters: [
@@ -390,12 +390,12 @@ function ExportCard({ setViewPopUp, selectedProject }) {
   );
 }
 
-function DeleteData({ setViewPopUp, selectedProject }) {
+function DeleteData({ setViewPopUp, selectedProjectKey }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
 
   async function DeleteProjectData() {
-    const projectKey = selectedProject;
+    const projectKey = selectedProjectKey;
     try {
       await invoke("delete_project_data", { projectKey }); // this is a placeholder function
       setState(STATES.done);
