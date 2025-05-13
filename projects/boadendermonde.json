@@ -1,0 +1,117 @@
+{
+  "name": {
+    "nl": "BOA Dendermonde 2025"
+  },
+  "availableLanguages": [
+    "nl"
+  ],
+  "key": "boadendermonde",
+  "themes": [
+    {
+      "name": {
+        "nl": "Kleuters"
+      },
+      "key": "kleuters",
+      "questions": []
+    },
+    {
+      "name": {
+        "nl": "Lagere schoolkinderen"
+      },
+      "key": "lagere-schoolkinderen",
+      "questions": []
+    },
+    {
+      "name": {
+        "nl": "Ouders"
+      },
+      "key": "ouders",
+      "questions": [
+        {
+          "title": {
+            "nl": "ALGEMEEN Hoe oud is jouw kind? (Als je meerdere kinderen hebt, neem je de leeftijd van je oudste kind)"
+          },
+          "key": "leeftijd-kind",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "leeftijd-kind-option-one",
+              "value": {
+                "nl": "0 - 3 jaar"
+              }
+            },
+            {
+              "key": "leeftijd-kind-option-two",
+              "value": {
+                "nl": "4 - 6 jaar"
+              }
+            },
+            {
+              "key": "leeftijd-kind-option-three",
+              "value": {
+                "nl": "7 - 12 jaar"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "ALGEMEEN Waar woon je?"
+          },
+          "key": "waar-woon-je",
+          "type": "opinion",
+          "explanation": {
+            "nl": "Kinderen grootbrengen, dat brengt onvermijdelijk vragen met zich mee. Verschillende leeftijdsfases vragen een andere aanpak. Ieder kind heeft daarnaast ook zijn eigen, unieke noden. Ook de omgeving heeft invloed op jouw gezin. Op verschillende terreinen kan je als ouder ondersteuning krijgen. Dat kan praktisch, inhoudelijk, financieel,…"
+          },
+          "options": [
+            {
+              "key": "waar-woon-je-option-one",
+              "value": {
+                "nl": "In de buurt"
+              }
+            },
+            {
+              "key": "waar-woon-je-option-two",
+              "value": {
+                "nl": "In een andere deelgemeente"
+              }
+            },
+            {
+              "key": "waar-woon-je-option-three",
+              "value": {
+                "nl": "Buiten Dendermonde"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "GEZIN Via Huis van het Kind willen organisaties samenwerken om ouders te ondersteunen. Dit doen ze door het aanbieden van info, diensten of activiteiten."
+          },
+          "key": "huis-van-het-kind",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "huis-van-het-kind-option-one",
+              "value": {
+                "nl": "Ik heb al gebruik gemaakt van het aanbod"
+              }
+            },
+            {
+              "key": "huis-van-het-kind-option-two",
+              "value": {
+                "nl": "Het aanbod sluit niet aan bij mijn noden"
+              }
+            },
+            {
+              "key": "huis-van-het-kind-option-three",
+              "value": {
+                "nl": "Ik weet niet goed wat het Huis van het Kind allemaal doet"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
