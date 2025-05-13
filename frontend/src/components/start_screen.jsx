@@ -54,11 +54,11 @@ export function StartScreen({
         className="start-screen__button"
         onClick={() => setViewPopUp("import")}
       >
-        <img src={importIcon} alt="import_icon" />
+        <img src={importIcon} alt="" />
         {translate("import_project")}
       </button>
       <button className="start-screen__button" onClick={toggleFullScreen}>
-        <img src={fullscreenIcon} alt="fullscreen_icon" />
+        <img src={fullscreenIcon} alt="" />
         {translate("start_fullscreen_button")}
       </button>
       <ProjectView
@@ -220,7 +220,7 @@ function StartProject({
             disabled={[STATES.working, STATES.done].includes(state)}
           >
             {translate("start_button")}
-            <img src={eastIcon} alt="arrow_east" />
+            <img src={eastIcon} alt="" />
           </button>
           <button
             type="button"
@@ -430,7 +430,7 @@ function DeleteData({ setViewPopUp, selectedProjectKey }) {
             type="button"
             onClick={() => DeleteProjectData()}
           >
-            <img src={deleteIcon} alt="delete_icon" />
+            <img src={deleteIcon} alt="" />
             {translate("delete_button")}
           </button>
           <button
