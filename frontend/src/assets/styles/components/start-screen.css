@@ -171,7 +171,7 @@
   }
 }
 
-.start-screen__button--light {
+.start-screen__button--outline {
   color: var(--color-purple);
   border: 1px solid var(--color-grey-light);
   background-color: var(--color-white);

@@ -224,7 +224,7 @@ function StartProject({
           </button>
           <button
             type="button"
-            className="start-screen__button start-screen__button--light"
+            className="start-screen__button start-screen__button--outline"
             onClick={() => setViewPopUp(null)}
           >
             {translate("cancel_button")}
@@ -303,7 +303,7 @@ function ImportCard({ setViewPopUp }) {
           </button>
           <button
             type="button"
-            className="start-screen__button start-screen__button--light"
+            className="start-screen__button start-screen__button--outline"
             onClick={() => setViewPopUp(null)}
           >
             {translate("close_button")}
@@ -379,7 +379,7 @@ function ExportCard({ setViewPopUp, selectedProject }) {
           </button>
           <button
             type="button"
-            className="start-screen__button start-screen__button--light"
+            className="start-screen__button start-screen__button--outline"
             onClick={() => setViewPopUp(null)}
           >
             {translate("close_button")}
@@ -435,7 +435,7 @@ function DeleteData({ setViewPopUp, selectedProject }) {
           </button>
           <button
             type="button"
-            className="start-screen__button start-screen__button--light"
+            className="start-screen__button start-screen__button--outline"
             onClick={() => setViewPopUp(null)}
           >
             {translate(
