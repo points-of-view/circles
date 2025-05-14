@@ -111,6 +111,7 @@ export default function StartProject({
             type="button"
             className="start-screen__button start-screen__button--outline"
             onClick={() => setViewPopUp(null)}
+            disabled={state !== STATES.working}
           >
             {translate("cancel_button")}
           </button>
