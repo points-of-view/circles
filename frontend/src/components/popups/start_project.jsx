@@ -7,12 +7,12 @@ import eastIcon from "../../assets/visuals/east.svg";
 const previousHostname = localStorage.getItem("circles.last_hostname");
 
 const STATES = {
-    idle: "IDLE",
-    working: "WORKING",
-    error: "ERROR",
-    done: "DONE",
-  };
-  
+  idle: "IDLE",
+  working: "WORKING",
+  error: "ERROR",
+  done: "DONE",
+};
+
 export default function StartProject({
   setProjectKey,
   selectedProjectKey,
