@@ -10,7 +10,7 @@ const STATES = {
   done: "DONE",
 };
 
-export default function ImportCard({ setViewPopUp }) {
+export default function ImportCard({ importDialog }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
 
@@ -32,30 +32,28 @@ export default function ImportCard({ setViewPopUp }) {
   }
 
   return (
-    <div className="start-screen__card">
+    <dialog className="dialog" ref={importDialog}>
       <div className="start-screen__popup">
-        <h2 className="start-screen__title--dialog">
-          {translate("import_project")}
-        </h2>
-        <span className="start-screen__label">
+        <h2 className="dialog__title">{translate("import_project")}</h2>
+        <span className="dialog__label">
           {translate("import_project_subtitle")}
         </span>
         {state === STATES.done && (
-          <span className="start-screen__message start-screen__message--success">
+          <span className="dialog__message dialog__message--success">
             {translate("import_done")}
           </span>
         )}
         {state === STATES.working && (
-          <span className="start-screen__message start-screen__message--spinner">
+          <span className="dialog__message dialog__message--spinner">
             {translate("import_in_progress")}
           </span>
         )}
         {state === STATES.error && (
-          <span className="start-screen__message start-screen__message--error">
+          <span className="dialog__message dialog__message--error">
             {translateError(error)}
           </span>
         )}
-        <div className="start-screen__button-container">
+        <div className="dialog__button-container">
           <button
             className="start-screen__button"
             type="button"
@@ -66,12 +64,12 @@ export default function ImportCard({ setViewPopUp }) {
           <button
             type="button"
             className="start-screen__button start-screen__button--outline"
-            onClick={() => setViewPopUp(null)}
+            onClick={() => importDialog.current?.close()}
           >
             {translate("close_button")}
           </button>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }

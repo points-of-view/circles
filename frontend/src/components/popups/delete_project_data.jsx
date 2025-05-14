@@ -9,7 +9,7 @@ const STATES = {
   done: "DONE",
 };
 
-export default function DeleteData({ setViewPopUp, selectedProjectKey }) {
+export default function DeleteData({ deleteDialog, selectedProjectKey }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
 
@@ -25,33 +25,32 @@ export default function DeleteData({ setViewPopUp, selectedProjectKey }) {
   }
 
   return (
-    <div className="start-screen__card">
+    <dialog className="dialog" ref={deleteDialog}>
       <div className="start-screen__popup">
-        <h2 className="start-screen__title--red">
+        <h2 className="dialog__title--red">
           {translate("start_delete_title")}
         </h2>
-        <span className="start-screen__label">
+        <span className="dialog__label">
           {translate("delete_project_data_subtitle")}
         </span>
         {state === STATES.done && (
-          <span className="start-screen__message start-screen__message--success">
+          <span className="dialog__message dialog__message--success">
             {translate("start_delete_done")}
           </span>
         )}
         {state === STATES.error && (
-          <span className="start-screen__message start-screen__message--error">
+          <span className="dialog__message dialog__message--error">
             {translateError(error)}
           </span>
         )}
-        <div className="start-screen__button-container">
+        <div className="dialog__button-container">
           <button
             className="start-screen__button start-screen__button--red"
             type="button"
             onClick={() => DeleteProjectData()}
           >
             <svg
-              width="20"
-              height="21"
+              className="dialog__icon--delete"
               viewBox="0 0 20 21"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -65,7 +64,7 @@ export default function DeleteData({ setViewPopUp, selectedProjectKey }) {
           <button
             type="button"
             className="start-screen__button start-screen__button--outline"
-            onClick={() => setViewPopUp(null)}
+            onClick={() => deleteDialog.current?.close()}
           >
             {translate(
               state === STATES.done ? "close_button" : "cancel_button",
@@ -73,6 +72,6 @@ export default function DeleteData({ setViewPopUp, selectedProjectKey }) {
           </button>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }

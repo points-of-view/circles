@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import translate from "../locales";
 import DeleteData from "./popups/delete_project_data";
 import ExportCard from "./popups/export_project_data";
@@ -11,46 +11,35 @@ export function StartScreen({
   toggleFullScreen,
   projects,
 }) {
-  const [viewPopUp, setViewPopUp] = useState(null);
   const [selectedProjectKey, setSelectedProjectKey] = useState(null);
+  const startDialog = useRef();
+  const exportDialog = useRef();
+  const importDialog = useRef();
+  const deleteDialog = useRef();
 
   return (
     <div className="start-screen">
-      {viewPopUp === "start" && (
-        <StartProject
-          setProjectKey={setProjectKey}
-          setDarkMode={setDarkMode}
-          setViewPopUp={setViewPopUp}
-          selectedProjectKey={selectedProjectKey}
-        />
-      )}
-      {viewPopUp === "import" && <ImportCard setViewPopUp={setViewPopUp} />}
-      {viewPopUp === "export" && (
-        <ExportCard
-          setViewPopUp={setViewPopUp}
-          selectedProjectKey={selectedProjectKey}
-        />
-      )}
-      {viewPopUp === "delete" && (
-        <DeleteData
-          setViewPopUp={setViewPopUp}
-          selectedProjectKey={selectedProjectKey}
-        />
-      )}
       <div className="start-screen__title">Circles</div>
-      {/* <button
+      <button
         className="start-screen__button"
-        onClick={() => setViewPopUp("import")}
+        onClick={() => importDialog.current?.showModal()}
+        style={{ visibility: "hidden" }}
       >
-        <svg width="20" height="21" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9.16667 18.3652V11.6986H2.5V10.0319H9.16667V3.36523H10.8333V10.0319H17.5V11.6986H10.8333V18.3652H9.16667Z" fill="currentColor" />
+        <svg
+          className="dialog__icon--import"
+          viewBox="0 0 20 21"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9.16667 18.3652V11.6986H2.5V10.0319H9.16667V3.36523H10.8333V10.0319H17.5V11.6986H10.8333V18.3652H9.16667Z"
+            fill="currentColor"
+          />
         </svg>
         {translate("import_project")}
-      </button> */}
+      </button>
       <button className="start-screen__button" onClick={toggleFullScreen}>
         <svg
-          width="16"
-          height="16"
+          className="dialog__icon--fullscreen"
           viewBox="0 0 16 16"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -63,14 +52,37 @@ export function StartScreen({
       </button>
       <ProjectView
         projects={projects}
-        setViewPopUp={setViewPopUp}
         setSelectedProjectKey={setSelectedProjectKey}
+        startDialog={startDialog}
+        exportDialog={exportDialog}
+        deleteDialog={deleteDialog}
+      />
+      <StartProject
+        setProjectKey={setProjectKey}
+        setDarkMode={setDarkMode}
+        selectedProjectKey={selectedProjectKey}
+        startDialog={startDialog}
+      />
+      <ImportCard importDialog={importDialog} />
+      <ExportCard
+        exportDialog={exportDialog}
+        selectedProjectKey={selectedProjectKey}
+      />
+      <DeleteData
+        deleteDialog={deleteDialog}
+        selectedProjectKey={selectedProjectKey}
       />
     </div>
   );
 }
 
-function ProjectView({ projects, setViewPopUp, setSelectedProjectKey }) {
+function ProjectView({
+  projects,
+  setSelectedProjectKey,
+  startDialog,
+  exportDialog,
+  deleteDialog,
+}) {
   return (
     <div className="start-screen__project-list">
       <div className="start-screen__project-title">
@@ -81,8 +93,10 @@ function ProjectView({ projects, setViewPopUp, setSelectedProjectKey }) {
           <ProjectItem
             key={e}
             projectKey={i.key}
-            setViewPopUp={setViewPopUp}
             setSelectedProjectKey={setSelectedProjectKey}
+            startDialog={startDialog}
+            exportDialog={exportDialog}
+            deleteDialog={deleteDialog}
           />
         ))}
       </ul>
@@ -90,7 +104,13 @@ function ProjectView({ projects, setViewPopUp, setSelectedProjectKey }) {
   );
 }
 
-function ProjectItem({ projectKey, setViewPopUp, setSelectedProjectKey }) {
+function ProjectItem({
+  projectKey,
+  setSelectedProjectKey,
+  startDialog,
+  exportDialog,
+  deleteDialog,
+}) {
   return (
     <li className="start-screen__project-item">
       <span className="project-item__title">{projectKey}</span>
@@ -98,7 +118,7 @@ function ProjectItem({ projectKey, setViewPopUp, setSelectedProjectKey }) {
         <button
           className="start-screen__button start-screen__button--start"
           onClick={() => {
-            setViewPopUp("start");
+            startDialog.current?.showModal();
             setSelectedProjectKey(projectKey);
           }}
         >
@@ -108,21 +128,22 @@ function ProjectItem({ projectKey, setViewPopUp, setSelectedProjectKey }) {
         <button
           className="start-screen__button start-screen__button--link"
           onClick={() => {
-            setViewPopUp("export");
+            exportDialog.current?.showModal();
             setSelectedProjectKey(projectKey);
           }}
         >
           {translate("start_export_title")}
         </button>
-        {/* <button
+        <button
           className="start-screen__button start-screen__button--link"
           onClick={() => {
-            setViewPopUp("delete");
+            deleteDialog.current?.showModal();
             setSelectedProjectKey(projectKey);
           }}
+          style={{ visibility: "hidden" }}
         >
           {translate("start_delete_title")}
-        </button> */}
+        </button>
       </div>
     </li>
   );

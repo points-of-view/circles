@@ -16,7 +16,7 @@ export default function StartProject({
   setProjectKey,
   selectedProjectKey,
   setDarkMode,
-  setViewPopUp,
+  startDialog,
 }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
@@ -55,25 +55,25 @@ export default function StartProject({
   }
 
   return (
-    <form
-      action=""
-      onSubmit={handleSubmit}
-      className="start-screen__card"
-      disabled={[STATES.working, STATES.done].includes(state)}
-    >
-      <div className="start-screen__popup">
-        <h1 className="start-screen__title--dialog">
+    <dialog className="dialog" ref={startDialog}>
+      <form
+        action=""
+        onSubmit={handleSubmit}
+        className="start-screen__popup"
+        disabled={[STATES.working, STATES.done].includes(state)}
+      >
+        <h1 className="dialog__title">
           {translate("start_project_title") + selectedProjectKey}
         </h1>
-        <span className="start-screen__label">
+        <span className="dialog__label">
           {translate("start_reader_hostname_subtitle")}
         </span>
-        <div className="start-screen__input">
-          <label className="start-screen__label" htmlFor="hostname">
+        <div className="dialog__input">
+          <label className="dialog__label" htmlFor="hostname">
             {translate("start_reader_hostname")}
           </label>
           <input
-            className="start-screen__field"
+            className="dialog__input-field"
             type="text"
             name="hostname"
             id="hostname"
@@ -85,19 +85,19 @@ export default function StartProject({
             defaultValue={previousHostname}
           />
         </div>
-        <div className="start-screen__input start-screen__input--checkbox">
+        <div className="dialog__input dialog__input--checkbox">
           <input
             type="checkbox"
             name="darkMode"
             id="darkMode"
-            className="start-screen__checkbox"
+            className="dialog__checkbox"
             defaultChecked={true}
           />
-          <label htmlFor="darkMode" className="start-screen__label">
+          <label htmlFor="darkMode" className="dialog__label">
             {translate("start_dark_mode")}
           </label>
         </div>
-        <div className="start-screen__button-container">
+        <div className="dialog__button-container">
           <button
             type="submit"
             className="start-screen__button"
@@ -105,8 +105,7 @@ export default function StartProject({
           >
             {translate("start_button")}
             <svg
-              width="18"
-              height="13"
+              className="dialog__icon--start"
               viewBox="0 0 18 13"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -119,26 +118,26 @@ export default function StartProject({
           <button
             type="button"
             className="start-screen__button start-screen__button--outline"
-            onClick={() => setViewPopUp(null)}
-            disabled={state !== STATES.working}
+            onClick={() => startDialog.current?.close()}
+            disabled={state === STATES.working}
           >
             {translate("cancel_button")}
           </button>
         </div>
         {state === STATES.working && (
-          <span className="start-screen__message start-screen__message--spinner">
+          <span className="dialog__message dialog__message--spinner">
             {translate("start_connecting")}
           </span>
         )}
         {state === STATES.error && (
-          <span className="start-screen__message start-screen__message--error">
+          <span className="dialog__message dialog__message--error">
             {translateError(error)}
           </span>
         )}
-      </div>
-      {connectionStatus && (
-        <span className="start-screen__detail">{connectionStatus}</span>
-      )}
-    </form>
+        {connectionStatus && (
+          <span className="dialog__detail">{connectionStatus}</span>
+        )}
+      </form>
+    </dialog>
   );
 }

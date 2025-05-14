@@ -10,7 +10,7 @@ const STATES = {
   done: "DONE",
 };
 
-export default function ExportCard({ setViewPopUp, selectedProjectKey }) {
+export default function ExportCard({ exportDialog, selectedProjectKey }) {
   const [state, setState] = useState(STATES.idle);
   const [error, setError] = useState(null);
 
@@ -42,30 +42,28 @@ export default function ExportCard({ setViewPopUp, selectedProjectKey }) {
   }
 
   return (
-    <div className="start-screen__card">
+    <dialog className="dialog" ref={exportDialog}>
       <div className="start-screen__popup">
-        <h2 className="start-screen__title--dialog">
-          {translate("start_export_title")}
-        </h2>
-        <span className="start-screen__label">
+        <h2 className="dialog__title">{translate("start_export_title")}</h2>
+        <span className="dialog__label">
           {translate("export_project_data_subtitle")}
         </span>
         {state === STATES.working && (
-          <span className="start-screen__message start-screen__message--spinner">
+          <span className="dialog__message dialog__message--spinner">
             {translate("start_export_working")}
           </span>
         )}
         {state === STATES.done && (
-          <span className="start-screen__message start-screen__message--success">
+          <span className="dialog__message dialog__message--success">
             {translate("start_export_done")}
           </span>
         )}
         {state === STATES.error && (
-          <span className="start-screen__message start-screen__message--error">
+          <span className="dialog__message dialog__message--error">
             {translateError(error)}
           </span>
         )}
-        <div className="start-screen__button-container">
+        <div className="dialog__button-container">
           <button
             className="start-screen__button"
             type="button"
@@ -76,12 +74,12 @@ export default function ExportCard({ setViewPopUp, selectedProjectKey }) {
           <button
             type="button"
             className="start-screen__button start-screen__button--outline"
-            onClick={() => setViewPopUp(null)}
+            onClick={() => exportDialog.current?.close()}
           >
             {translate("close_button")}
           </button>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }

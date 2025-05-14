@@ -33,24 +33,41 @@
   width: 50vw;
   margin: auto;
   padding: 1.5rem 2rem;
+}
+
+.dialog {
+  color: var(--color-black);
+  border: unset;
   border-radius: var(--rounded-base);
   background: var(--color-white);
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 40%);
+    backdrop-filter: blur(12px);
+  }
 }
 
-.start-screen__card {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  color: var(--color-black);
-  background-color: rgb(0 0 0 / 40%);
-  backdrop-filter: blur(12px);
+.dialog__icon--delete {
+  width: 20px;
+  height: 21px;
 }
 
-.start-screen__button-container {
+.dialog__icon--fullscreen {
+  width: 16px;
+  height: 16px;
+}
+
+.dialog__icon--import {
+  width: 20px;
+  height: 21px;
+}
+
+.dialog__icon--start {
+  width: 18px;
+  height: 13px;
+}
+
+.dialog__button-container {
   display: flex;
   gap: 1rem;
 }
@@ -62,19 +79,19 @@
   font-size: var(--text-md);
 }
 
-.start-screen__title--dialog {
+.dialog__title {
   color: var(--color-black);
 }
 
-.start-screen__title--red {
+.dialog__title--red {
   color: var(--color-red);
 }
 
-.start-screen__input {
+.dialog__input {
   width: min(100%, 20rem);
 }
 
-.start-screen__label {
+.dialog__label {
   display: block;
   margin-bottom: 0.375rem;
   color: var(--color-grey);
@@ -82,7 +99,7 @@
   font-size: var(--text-2xs);
 }
 
-.start-screen__field {
+.dialog__input-field {
   width: 100%;
   padding: 0.75rem;
   font-weight: 400;
@@ -101,18 +118,18 @@
   }
 }
 
-.start-screen__checkbox {
+.dialog__checkbox {
   width: 1.25rem;
   height: 1.25rem;
   accent-color: var(--color-purple);
 }
 
-.start-screen__input--checkbox {
+.dialog__input--checkbox {
   display: flex;
   gap: 0.25rem;
   align-items: center;
 
-  & .start-screen__label {
+  & .dialog__label {
     margin-bottom: 0;
     line-height: 1;
   }
@@ -206,20 +223,20 @@
   }
 }
 
-.start-screen__message {
+.dialog__message {
   color: var(--color-purple);
   white-space: preserve;
 }
 
-.start-screen__message--success {
+.dialog__message--success {
   color: var(--color-green);
 }
 
-.start-screen__message--error {
+.dialog__message--error {
   color: var(--color-red);
 }
 
-.start-screen__message--spinner::before {
+.dialog__message--spinner::before {
   content: "";
   display: inline-block;
   height: 1.625rem;
@@ -233,7 +250,7 @@
   aspect-ratio: 1;
 }
 
-.start-screen__detail {
+.dialog__detail {
   display: inline-block;
   width: 100%;
   font-weight: 400;
