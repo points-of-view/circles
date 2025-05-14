@@ -4,8 +4,6 @@ import DeleteData from "./popups/delete_project_data";
 import ExportCard from "./popups/export_project_data";
 import StartProject from "./popups/start_project";
 import ImportCard from "./popups/import_project";
-// import importIcon from "../assets/visuals/add.svg";
-import fullscreenIcon from "../assets/visuals/fullscreen.svg";
 
 export function StartScreen({
   setProjectKey,
@@ -44,11 +42,23 @@ export function StartScreen({
         className="start-screen__button"
         onClick={() => setViewPopUp("import")}
       >
-        <img src={importIcon} alt="" />
+        <svg width="20" height="21" viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.16667 18.3652V11.6986H2.5V10.0319H9.16667V3.36523H10.8333V10.0319H17.5V11.6986H10.8333V18.3652H9.16667Z" fill="currentColor" />
+        </svg>
         {translate("import_project")}
       </button> */}
       <button className="start-screen__button" onClick={toggleFullScreen}>
-        <img src={fullscreenIcon} alt="" />
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0.5 15.3652V8.69857H2.16667V12.5319L12.6667 2.0319H8.83333V0.365234H15.5V7.0319H13.8333V3.19857L3.33333 13.6986H7.16667V15.3652H0.5Z"
+            fill="currentColor"
+          />
+        </svg>
         {translate("start_fullscreen_button")}
       </button>
       <ProjectView

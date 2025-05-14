@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { listen } from "@tauri-apps/api/event";
 import translate, { translateError } from "../../locales";
-import eastIcon from "../../assets/visuals/east.svg";
 
 const previousHostname = localStorage.getItem("circles.last_hostname");
 
@@ -105,7 +104,17 @@ export default function StartProject({
             disabled={[STATES.working, STATES.done].includes(state)}
           >
             {translate("start_button")}
-            <img src={eastIcon} alt="" />
+            <svg
+              width="18"
+              height="13"
+              viewBox="0 0 18 13"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.4998 12.1139L10.3123 10.9473L14.1457 7.11393H0.666504V5.44727H14.1457L10.3332 1.61393L11.4998 0.447266L17.3332 6.2806L11.4998 12.1139Z"
+                fill="currentColor"
+              />
+            </svg>
           </button>
           <button
             type="button"
