@@ -1,567 +1,563 @@
 {
-    "name": {
-        "nl": "BOA Dendermonde 2025"
-    },
-    "availableLanguages": [
-        "nl"
-    ],
-    "key": "boadendermonde",
-    "themes": [
+  "name": {
+    "nl": "BOA Dendermonde 2025"
+  },
+  "availableLanguages": ["nl"],
+  "key": "boadendermonde",
+  "themes": [
+    {
+      "name": {
+        "nl": "Kleuters (3 tot 6 jaar)"
+      },
+      "key": "kleuters",
+      "questions": [
         {
-            "name": {
-                "nl": "Kleuters (3 tot 6 jaar)"
+          "title": {
+            "nl": "Waar ga je na school naar toe?"
+          },
+          "key": "waar-na-school",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "waar-na-school-option-one",
+              "value": {
+                "nl": "Ik ga naar de IBO/buitenschoolse opvang"
+              }
             },
-            "key": "kleuters",
-            "questions": [
-                {
-                    "title": {
-                        "nl": "Waar ga je na school naar toe?"
-                    },
-                    "key": "waar-na-school",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "waar-na-school-option-one",
-                            "value": {
-                                "nl": "Ik ga naar de IBO/buitenschoolse opvang"
-                            }
-                        },
-                        {
-                            "key": "waar-na-school-option-two",
-                            "value": {
-                                "nl": "Ik blijf op school"
-                            }
-                        },
-                        {
-                            "key": "waar-na-school-option-three",
-                            "value": {
-                                "nl": "Ik ga naar huis, vrienden of familie"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Waar ga je na school het liefst naar toe?"
-                    },
-                    "key": "waar-liefst-na-school",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "waar-liefst-na-school-option-one",
-                            "value": {
-                                "nl": "Ik ga liefst naar de IBO/buitenschoolse opvang"
-                            }
-                        },
-                        {
-                            "key": "waar-liefst-na-school-option-two",
-                            "value": {
-                                "nl": "Ik blijf liefst op school "
-                            }
-                        },
-                        {
-                            "key": "waar-liefst-na-school-option-three",
-                            "value": {
-                                "nl": "Ik ga liefst naar huis, vrienden of familie"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Wat doe je liefst na school?"
-                    },
-                    "key": "wat-liefst-na-school-one",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "wat-liefst-na-school-one-option-one",
-                            "value": {
-                                "nl": "Rusten"
-                            }
-                        },
-                        {
-                            "key": "wat-liefst-na-school-one-option-two",
-                            "value": {
-                                "nl": "Vrij spelen"
-                            }
-                        },
-                        {
-                            "key": "wat-liefst-na-school-one-option-three",
-                            "value": {
-                                "nl": "Sporten"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Wat doe je liefst na school?"
-                    },
-                    "key": "wat-liefst-na-school-two",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "wat-liefst-na-school-two-option-one",
-                            "value": {
-                                "nl": "Tekenen"
-                            }
-                        },
-                        {
-                            "key": "wat-liefst-na-school-two-option-two",
-                            "value": {
-                                "nl": "Dansen"
-                            }
-                        },
-                        {
-                            "key": "wat-liefst-na-school-two-option-three",
-                            "value": {
-                                "nl": "Toneel spelen"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Wat doe je liefst na school?"
-                    },
-                    "key": "wat-liefst-na-school-three",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "wat-liefst-na-school-three-option-one",
-                            "value": {
-                                "nl": "Zingen"
-                            }
-                        },
-                        {
-                            "key": "wat-liefst-na-school-three-option-two",
-                            "value": {
-                                "nl": "Bouwen met speelgoed"
-                            }
-                        },
-                        {
-                            "key": "wat-liefst-na-school-three-option-three",
-                            "value": {
-                                "nl": "Spelletjes doen"
-                            }
-                        }
-                    ]
-                }
-            ]
+            {
+              "key": "waar-na-school-option-two",
+              "value": {
+                "nl": "Ik blijf op school"
+              }
+            },
+            {
+              "key": "waar-na-school-option-three",
+              "value": {
+                "nl": "Ik ga naar huis, vrienden of familie"
+              }
+            }
+          ]
         },
         {
-            "name": {
-                "nl": "Lagere school (7 tot 12 jaar)"
+          "title": {
+            "nl": "Waar ga je na school het liefst naar toe?"
+          },
+          "key": "waar-liefst-na-school",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "waar-liefst-na-school-option-one",
+              "value": {
+                "nl": "Ik ga liefst naar de IBO/buitenschoolse opvang"
+              }
             },
-            "key": "lagere-schoolkinderen",
-            "questions": [
-                [
-                    {
-                        "title": {
-                            "nl": "Waar ga je na school naar toe?"
-                        },
-                        "key": "waar-na-school-lager",
-                        "type": "opinion",
-                        "options": [
-                            {
-                                "key": "waar-na-school-lager-option-one",
-                                "value": {
-                                    "nl": "Ik ga naar de IBO/buitenschoolse opvang"
-                                }
-                            },
-                            {
-                                "key": "waar-na-school-lager-option-two",
-                                "value": {
-                                    "nl": "Ik ga naar de opvang op school"
-                                }
-                            },
-                            {
-                                "key": "waar-na-school-lager-option-three",
-                                "value": {
-                                    "nl": "Ik ga naar huis, vrienden of familie"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "title": {
-                            "nl": "Waar ga je na school het liefst naar toe?"
-                        },
-                        "key": "waar-liefst-na-school-lager",
-                        "type": "opinion",
-                        "options": [
-                            {
-                                "key": "waar-liefst-na-school-lager-option-one",
-                                "value": {
-                                    "nl": "Ik ga liefst naar de IBO/buitenschoolse opvang"
-                                }
-                            },
-                            {
-                                "key": "waar-liefst-na-school-lager-option-two",
-                                "value": {
-                                    "nl": "Ik ga liefst naar de opvang op school"
-                                }
-                            },
-                            {
-                                "key": "waar-liefst-na-school-lager-option-three",
-                                "value": {
-                                    "nl": "Ik ga liefst naar huis, vrienden of familie"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "title": {
-                            "nl": "Heb je een hobby na school?"
-                        },
-                        "key": "hobby-na-school",
-                        "type": "opinion",
-                        "options": [
-                            {
-                                "key": "hobby-na-school-option-one",
-                                "value": {
-                                    "nl": "Ik heb geen hobby`s"
-                                }
-                            },
-                            {
-                                "key": "hobby-na-school-option-two",
-                                "value": {
-                                    "nl": "Ik sport"
-                                }
-                            },
-                            {
-                                "key": "hobby-na-school-option-three",
-                                "value": {
-                                    "nl": "Ik doe iets creatief (muziek, toneel, tekenen,...)"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "title": {
-                            "nl": "Hoe ga je naar de hobby?"
-                        },
-                        "key": "vervoer-hobby",
-                        "type": "opinion",
-                        "options": [
-                            {
-                                "key": "vervoer-hobby-option-one",
-                                "value": {
-                                    "nl": "Ik ga zelf naar daar"
-                                }
-                            },
-                            {
-                                "key": "vervoer-hobby-option-two",
-                                "value": {
-                                    "nl": "Ik wordt gebracht door (groot)ouder, familielid,..."
-                                }
-                            },
-                            {
-                                "key": "vervoer-hobby-option-three",
-                                "value": {
-                                    "nl": "Ik ga met de rij van school of opvang"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "title": {
-                            "nl": "Wat doe je liefst na school?"
-                        },
-                        "key": "wat-liefst-na-school-lager",
-                        "type": "opinion",
-                        "options": [
-                            {
-                                "key": "wat-liefst-na-school-lager-option-one",
-                                "value": {
-                                    "nl": "Rusten"
-                                }
-                            },
-                            {
-                                "key": "wat-liefst-na-school-lager-option-two",
-                                "value": {
-                                    "nl": "Buitenspelen"
-                                }
-                            },
-                            {
-                                "key": "wat-liefst-na-school-lager-option-three",
-                                "value": {
-                                    "nl": "Binnenspelen"
-                                }
-                            }
-                        ]
-                    }
-                ]
-            ]
+            {
+              "key": "waar-liefst-na-school-option-two",
+              "value": {
+                "nl": "Ik blijf liefst op school "
+              }
+            },
+            {
+              "key": "waar-liefst-na-school-option-three",
+              "value": {
+                "nl": "Ik ga liefst naar huis, vrienden of familie"
+              }
+            }
+          ]
         },
         {
-            "name": {
-                "nl": "Ouders"
+          "title": {
+            "nl": "Wat doe je liefst na school?"
+          },
+          "key": "wat-liefst-na-school-one",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "wat-liefst-na-school-one-option-one",
+              "value": {
+                "nl": "Rusten"
+              }
             },
-            "key": "ouders",
-            "questions": [
-                {
-                    "title": {
-                        "nl": "Hoe oud is jouw kind? (Als je meerdere kinderen hebt, neem je de leeftijd van je oudste kind)"
-                    },
-                    "key": "leeftijd-kind",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "leeftijd-kind-option-one",
-                            "value": {
-                                "nl": "0 - 3 jaar"
-                            }
-                        },
-                        {
-                            "key": "leeftijd-kind-option-two",
-                            "value": {
-                                "nl": "4 - 6 jaar"
-                            }
-                        },
-                        {
-                            "key": "leeftijd-kind-option-three",
-                            "value": {
-                                "nl": "7 - 12 jaar"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Waar woon je?"
-                    },
-                    "key": "waar-woon-je",
-                    "type": "opinion",
-                    "explanation": {
-                        "nl": "Kinderen grootbrengen, dat brengt onvermijdelijk vragen met zich mee. Verschillende leeftijdsfases vragen een andere aanpak. Ieder kind heeft daarnaast ook zijn eigen, unieke noden. Ook de omgeving heeft invloed op jouw gezin. Op verschillende terreinen kan je als ouder ondersteuning krijgen. Dat kan praktisch, inhoudelijk, financieel, ..."
-                    },
-                    "options": [
-                        {
-                            "key": "waar-woon-je-option-one",
-                            "value": {
-                                "nl": "In de buurt"
-                            }
-                        },
-                        {
-                            "key": "waar-woon-je-option-two",
-                            "value": {
-                                "nl": "In een andere deelgemeente"
-                            }
-                        },
-                        {
-                            "key": "waar-woon-je-option-three",
-                            "value": {
-                                "nl": "Buiten Dendermonde"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Via Huis van het Kind werken organisaties samen om ouders te ondersteunen door het aanbieden van info, diensten of activiteiten."
-                    },
-                    "key": "huis-van-het-kind-uitleg",
-                    "type": "text"
-                },
-                {
-                    "title": {
-                        "nl": "Heb je al gebruik gemaakt van het aanbod van Huis van het Kind?"
-                    },
-                    "key": "huis-van-het-kind",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "huis-van-het-kind-option-one",
-                            "value": {
-                                "nl": "Ja"
-                            }
-                        },
-                        {
-                            "key": "huis-van-het-kind-option-two",
-                            "value": {
-                                "nl": "Neen, het aanbod sluit niet aan bij mijn noden"
-                            }
-                        },
-                        {
-                            "key": "huis-van-het-kind-option-three",
-                            "value": {
-                                "nl": "Ik weet niet goed wat het Huis van het Kind allemaal doet"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Als ik vragen heb over de opvoeding, het opgroeien of de ontwikkeling van mijn kind, zou ik in de eerste plaats op zoek gaan naar antwoorden:"
-                    },
-                    "key": "vragen-opvoeding",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "vragen-opvoeding-option-one",
-                            "value": {
-                                "nl": "via informatie in een folder of op een website"
-                            }
-                        },
-                        {
-                            "key": "vragen-opvoeding-option-two",
-                            "value": {
-                                "nl": "door deel te nemen aan een vorming of info-avond"
-                            }
-                        },
-                        {
-                            "key": "vragen-opvoeding-option-three",
-                            "value": {
-                                "nl": "door in gesprek te gaan met andere ouders of een professional"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Als je tijdens de schoolperiodes gebruik maakt van (buitenschoolse) kinderopvang, wanneer heb je dan het meeste nood aan opvang?"
-                    },
-                    "key": "opvang-schoolperiodes",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "opvang-schoolperiodes-option-one",
-                            "value": {
-                                "nl": "Ik heb geen nood aan opvang"
-                            }
-                        },
-                        {
-                            "key": "opvang-schoolperiodes-option-two",
-                            "value": {
-                                "nl": "Af en toe"
-                            }
-                        },
-                        {
-                            "key": "opvang-schoolperiodes-option-three",
-                            "value": {
-                                "nl": "In schoolperiodes heb ik structureel opvang nodig"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Als je tijdens vakanties gebruik maakt van (buitenschoolse) kinderopvang, wanneer heb je dan het meeste nood aan opvang?"
-                    },
-                    "key": "opvang-vakanties",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "opvang-vakanties-option-one",
-                            "value": {
-                                "nl": "Ik heb geen nood aan opvang"
-                            }
-                        },
-                        {
-                            "key": "opvang-vakanties-option-two",
-                            "value": {
-                                "nl": "Af en toe"
-                            }
-                        },
-                        {
-                            "key": "opvang-vakanties-option-three",
-                            "value": {
-                                "nl": "In vakanties heb ik structureel nood aan opvang"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "In de opvang na schooltijd wil ik dat mijn kind vooral:"
-                    },
-                    "key": "opvang-invulling",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "opvang-invulling-option-one",
-                            "value": {
-                                "nl": "vrij kan spelen"
-                            }
-                        },
-                        {
-                            "key": "opvang-invulling-option-two",
-                            "value": {
-                                "nl": "tot rust kan komen na een schooldag"
-                            }
-                        },
-                        {
-                            "key": "opvang-invulling-option-three",
-                            "value": {
-                                "nl": "begeleide activiteiten kan doen"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Als mijn kind na schooltijd ergens opgevangen wordt, vind ik het belangrijkste:"
-                    },
-                    "key": "opvang-prioriteit",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "opvang-prioriteit-option-one",
-                            "value": {
-                                "nl": "dat mijn kind (onder begeleiding) huiswerk kan maken"
-                            }
-                        },
-                        {
-                            "key": "opvang-prioriteit-option-two",
-                            "value": {
-                                "nl": "dat er toezicht is tot ik mijn kind ophaal"
-                            }
-                        },
-                        {
-                            "key": "opvang-prioriteit-option-three",
-                            "value": {
-                                "nl": "dat de begeleiding gebeurt door deskundige medewerkers"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Wat is de belangrijkste reden om je kind al dan niet in te schrijven in een buitenschoolse activiteit?"
-                    },
-                    "key": "niet-inschrijven-prioriteit",
-                    "type": "opinion",
-                    "options": [
-                        {
-                            "key": "niet-inschrijven-prioriteit-option-one",
-                            "value": {
-                                "nl": "Waar iets doorgaat. De manier waarop ze daar geraken, is bepalend. "
-                            }
-                        },
-                        {
-                            "key": "niet-inschrijven-prioriteit-option-two",
-                            "value": {
-                                "nl": "Wat er doorgaat. Het moet aansluiten bij de interesse van mijn kind."
-                            }
-                        },
-                        {
-                            "key": "niet-inschrijven-prioriteit-option-three",
-                            "value": {
-                                "nl": "Wanneer iets doorgaat. De gezinsplanning bepaalt wat haalbaar is."
-                            }
-                        }
-                    ]
-                },
-                {
-                    "title": {
-                        "nl": "Stel, je bent schepen van gezin en mag bepalen wat jij wil veranderen of aanpakken voor de gezinnen van Dendermonde. Wat zet je bovenaan jouw to do-lijst?"
-                    },
-                    "key": "schepen-todo",
-                    "type": "text"
-                }
-            ]
+            {
+              "key": "wat-liefst-na-school-one-option-two",
+              "value": {
+                "nl": "Vrij spelen"
+              }
+            },
+            {
+              "key": "wat-liefst-na-school-one-option-three",
+              "value": {
+                "nl": "Sporten"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat doe je liefst na school?"
+          },
+          "key": "wat-liefst-na-school-two",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "wat-liefst-na-school-two-option-one",
+              "value": {
+                "nl": "Tekenen"
+              }
+            },
+            {
+              "key": "wat-liefst-na-school-two-option-two",
+              "value": {
+                "nl": "Dansen"
+              }
+            },
+            {
+              "key": "wat-liefst-na-school-two-option-three",
+              "value": {
+                "nl": "Toneel spelen"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat doe je liefst na school?"
+          },
+          "key": "wat-liefst-na-school-three",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "wat-liefst-na-school-three-option-one",
+              "value": {
+                "nl": "Zingen"
+              }
+            },
+            {
+              "key": "wat-liefst-na-school-three-option-two",
+              "value": {
+                "nl": "Bouwen met speelgoed"
+              }
+            },
+            {
+              "key": "wat-liefst-na-school-three-option-three",
+              "value": {
+                "nl": "Spelletjes doen"
+              }
+            }
+          ]
         }
-    ]
+      ]
+    },
+    {
+      "name": {
+        "nl": "Lagere school (7 tot 12 jaar)"
+      },
+      "key": "lagere-schoolkinderen",
+      "questions": [
+        {
+          "title": {
+            "nl": "Waar ga je na school naar toe?"
+          },
+          "key": "waar-na-school-lager",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "waar-na-school-lager-option-one",
+              "value": {
+                "nl": "Ik ga naar de IBO/buitenschoolse opvang"
+              }
+            },
+            {
+              "key": "waar-na-school-lager-option-two",
+              "value": {
+                "nl": "Ik ga naar de opvang op school"
+              }
+            },
+            {
+              "key": "waar-na-school-lager-option-three",
+              "value": {
+                "nl": "Ik ga naar huis, vrienden of familie"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Waar ga je na school het liefst naar toe?"
+          },
+          "key": "waar-liefst-na-school-lager",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "waar-liefst-na-school-lager-option-one",
+              "value": {
+                "nl": "Ik ga liefst naar de IBO/buitenschoolse opvang"
+              }
+            },
+            {
+              "key": "waar-liefst-na-school-lager-option-two",
+              "value": {
+                "nl": "Ik ga liefst naar de opvang op school"
+              }
+            },
+            {
+              "key": "waar-liefst-na-school-lager-option-three",
+              "value": {
+                "nl": "Ik ga liefst naar huis, vrienden of familie"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Heb je een hobby na school?"
+          },
+          "key": "hobby-na-school",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "hobby-na-school-option-one",
+              "value": {
+                "nl": "Ik heb geen hobby`s"
+              }
+            },
+            {
+              "key": "hobby-na-school-option-two",
+              "value": {
+                "nl": "Ik sport"
+              }
+            },
+            {
+              "key": "hobby-na-school-option-three",
+              "value": {
+                "nl": "Ik doe iets creatief (muziek, toneel, tekenen,...)"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Hoe ga je naar de hobby?"
+          },
+          "key": "vervoer-hobby",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "vervoer-hobby-option-one",
+              "value": {
+                "nl": "Ik ga zelf naar daar"
+              }
+            },
+            {
+              "key": "vervoer-hobby-option-two",
+              "value": {
+                "nl": "Ik wordt gebracht door (groot)ouder, familielid,..."
+              }
+            },
+            {
+              "key": "vervoer-hobby-option-three",
+              "value": {
+                "nl": "Ik ga met de rij van school of opvang"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat doe je liefst na school?"
+          },
+          "key": "wat-liefst-na-school-lager",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "wat-liefst-na-school-lager-option-one",
+              "value": {
+                "nl": "Rusten"
+              }
+            },
+            {
+              "key": "wat-liefst-na-school-lager-option-two",
+              "value": {
+                "nl": "Buitenspelen"
+              }
+            },
+            {
+              "key": "wat-liefst-na-school-lager-option-three",
+              "value": {
+                "nl": "Binnenspelen"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "nl": "Ouders"
+      },
+      "key": "ouders",
+      "questions": [
+        {
+          "title": {
+            "nl": "Hoe oud is jouw kind? (Als je meerdere kinderen hebt, neem je de leeftijd van je oudste kind)"
+          },
+          "key": "leeftijd-kind",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "leeftijd-kind-option-one",
+              "value": {
+                "nl": "0 - 3 jaar"
+              }
+            },
+            {
+              "key": "leeftijd-kind-option-two",
+              "value": {
+                "nl": "4 - 6 jaar"
+              }
+            },
+            {
+              "key": "leeftijd-kind-option-three",
+              "value": {
+                "nl": "7 - 12 jaar"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Waar woon je?"
+          },
+          "key": "waar-woon-je",
+          "type": "opinion",
+          "explanation": {
+            "nl": "Kinderen grootbrengen, dat brengt onvermijdelijk vragen met zich mee. Verschillende leeftijdsfases vragen een andere aanpak. Ieder kind heeft daarnaast ook zijn eigen, unieke noden. Ook de omgeving heeft invloed op jouw gezin. Op verschillende terreinen kan je als ouder ondersteuning krijgen. Dat kan praktisch, inhoudelijk, financieel, ..."
+          },
+          "options": [
+            {
+              "key": "waar-woon-je-option-one",
+              "value": {
+                "nl": "In de buurt"
+              }
+            },
+            {
+              "key": "waar-woon-je-option-two",
+              "value": {
+                "nl": "In een andere deelgemeente"
+              }
+            },
+            {
+              "key": "waar-woon-je-option-three",
+              "value": {
+                "nl": "Buiten Dendermonde"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Via Huis van het Kind werken organisaties samen om ouders te ondersteunen door het aanbieden van info, diensten of activiteiten."
+          },
+          "key": "huis-van-het-kind-uitleg",
+          "type": "text"
+        },
+        {
+          "title": {
+            "nl": "Heb je al gebruik gemaakt van het aanbod van Huis van het Kind?"
+          },
+          "key": "huis-van-het-kind",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "huis-van-het-kind-option-one",
+              "value": {
+                "nl": "Ja"
+              }
+            },
+            {
+              "key": "huis-van-het-kind-option-two",
+              "value": {
+                "nl": "Neen, het aanbod sluit niet aan bij mijn noden"
+              }
+            },
+            {
+              "key": "huis-van-het-kind-option-three",
+              "value": {
+                "nl": "Ik weet niet goed wat het Huis van het Kind allemaal doet"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Als ik vragen heb over de opvoeding, het opgroeien of de ontwikkeling van mijn kind, zou ik in de eerste plaats op zoek gaan naar antwoorden:"
+          },
+          "key": "vragen-opvoeding",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "vragen-opvoeding-option-one",
+              "value": {
+                "nl": "via informatie in een folder of op een website"
+              }
+            },
+            {
+              "key": "vragen-opvoeding-option-two",
+              "value": {
+                "nl": "door deel te nemen aan een vorming of info-avond"
+              }
+            },
+            {
+              "key": "vragen-opvoeding-option-three",
+              "value": {
+                "nl": "door in gesprek te gaan met andere ouders of een professional"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Als je tijdens de schoolperiodes gebruik maakt van (buitenschoolse) kinderopvang, wanneer heb je dan het meeste nood aan opvang?"
+          },
+          "key": "opvang-schoolperiodes",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "opvang-schoolperiodes-option-one",
+              "value": {
+                "nl": "Ik heb geen nood aan opvang"
+              }
+            },
+            {
+              "key": "opvang-schoolperiodes-option-two",
+              "value": {
+                "nl": "Af en toe"
+              }
+            },
+            {
+              "key": "opvang-schoolperiodes-option-three",
+              "value": {
+                "nl": "In schoolperiodes heb ik structureel opvang nodig"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Als je tijdens vakanties gebruik maakt van (buitenschoolse) kinderopvang, wanneer heb je dan het meeste nood aan opvang?"
+          },
+          "key": "opvang-vakanties",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "opvang-vakanties-option-one",
+              "value": {
+                "nl": "Ik heb geen nood aan opvang"
+              }
+            },
+            {
+              "key": "opvang-vakanties-option-two",
+              "value": {
+                "nl": "Af en toe"
+              }
+            },
+            {
+              "key": "opvang-vakanties-option-three",
+              "value": {
+                "nl": "In vakanties heb ik structureel nood aan opvang"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "In de opvang na schooltijd wil ik dat mijn kind vooral:"
+          },
+          "key": "opvang-invulling",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "opvang-invulling-option-one",
+              "value": {
+                "nl": "vrij kan spelen"
+              }
+            },
+            {
+              "key": "opvang-invulling-option-two",
+              "value": {
+                "nl": "tot rust kan komen na een schooldag"
+              }
+            },
+            {
+              "key": "opvang-invulling-option-three",
+              "value": {
+                "nl": "begeleide activiteiten kan doen"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Als mijn kind na schooltijd ergens opgevangen wordt, vind ik het belangrijkste:"
+          },
+          "key": "opvang-prioriteit",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "opvang-prioriteit-option-one",
+              "value": {
+                "nl": "dat mijn kind (onder begeleiding) huiswerk kan maken"
+              }
+            },
+            {
+              "key": "opvang-prioriteit-option-two",
+              "value": {
+                "nl": "dat er toezicht is tot ik mijn kind ophaal"
+              }
+            },
+            {
+              "key": "opvang-prioriteit-option-three",
+              "value": {
+                "nl": "dat de begeleiding gebeurt door deskundige medewerkers"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Wat is de belangrijkste reden om je kind al dan niet in te schrijven in een buitenschoolse activiteit?"
+          },
+          "key": "niet-inschrijven-prioriteit",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "niet-inschrijven-prioriteit-option-one",
+              "value": {
+                "nl": "Waar iets doorgaat. De manier waarop ze daar geraken, is bepalend. "
+              }
+            },
+            {
+              "key": "niet-inschrijven-prioriteit-option-two",
+              "value": {
+                "nl": "Wat er doorgaat. Het moet aansluiten bij de interesse van mijn kind."
+              }
+            },
+            {
+              "key": "niet-inschrijven-prioriteit-option-three",
+              "value": {
+                "nl": "Wanneer iets doorgaat. De gezinsplanning bepaalt wat haalbaar is."
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "nl": "Stel, je bent schepen van gezin en mag bepalen wat jij wil veranderen of aanpakken voor de gezinnen van Dendermonde. Wat zet je bovenaan jouw to do-lijst?"
+          },
+          "key": "schepen-todo",
+          "type": "text"
+        }
+      ]
+    }
+  ]
 }
