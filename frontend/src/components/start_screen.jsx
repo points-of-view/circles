@@ -1,217 +1,165 @@
-import { useEffect, useState } from "react";
-import { invoke } from "@tauri-apps/api/tauri";
-import { listen } from "@tauri-apps/api/event";
-import { save } from "@tauri-apps/api/dialog";
-import translate, { translateError } from "../locales";
+import { useState, useRef } from "react";
+import translate from "../locales";
+import DeleteData from "./popups/delete_project_data";
+import ExportCard from "./popups/export_project_data";
+import StartProject from "./popups/start_project";
+import ImportCard from "./popups/import_project";
 
-const previousHostname = localStorage.getItem("circles.last_hostname");
+export function StartScreen({
+  setProjectKey,
+  setDarkMode,
+  toggleFullScreen,
+  projects,
+}) {
+  const [selectedProjectKey, setSelectedProjectKey] = useState(null);
+  const startDialog = useRef();
+  const exportDialog = useRef();
+  const importDialog = useRef();
+  const deleteDialog = useRef();
 
-const STATES = {
-  idle: "IDLE",
-  working: "WORKING",
-  error: "ERROR",
-  done: "DONE",
-};
-
-export function StartScreen({ setProjectKey, setDarkMode, toggleFullScreen }) {
   return (
     <div className="start-screen">
-      <StartProject setProjectKey={setProjectKey} setDarkMode={setDarkMode} />
-      <ExportCard />
+      <div className="start-screen__title">
+        {translate("installation_name")}
+      </div>
       <button
-        className="start-screen__fullscreen-button"
-        onClick={toggleFullScreen}
+        className="start-screen__button"
+        onClick={() => importDialog.current?.showModal()}
+        style={{ visibility: "hidden" }}
       >
+        <svg
+          className="dialog__icon--import"
+          viewBox="0 0 20 21"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M9.16667 18.3652V11.6986H2.5V10.0319H9.16667V3.36523H10.8333V10.0319H17.5V11.6986H10.8333V18.3652H9.16667Z"
+            fill="currentColor"
+          />
+        </svg>
+        {translate("import_project")}
+      </button>
+      <button className="start-screen__button" onClick={toggleFullScreen}>
+        <svg
+          className="dialog__icon--fullscreen"
+          viewBox="0 0 16 16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0.5 15.3652V8.69857H2.16667V12.5319L12.6667 2.0319H8.83333V0.365234H15.5V7.0319H13.8333V3.19857L3.33333 13.6986H7.16667V15.3652H0.5Z"
+            fill="currentColor"
+          />
+        </svg>
         {translate("start_fullscreen_button")}
       </button>
+      <ProjectView
+        projects={projects}
+        setSelectedProjectKey={setSelectedProjectKey}
+        startDialog={startDialog}
+        exportDialog={exportDialog}
+        deleteDialog={deleteDialog}
+      />
+      <StartProject
+        setProjectKey={setProjectKey}
+        setDarkMode={setDarkMode}
+        selectedProjectKey={selectedProjectKey}
+        startDialog={startDialog}
+      />
+      <ImportCard importDialog={importDialog} />
+      <ExportCard
+        exportDialog={exportDialog}
+        selectedProjectKey={selectedProjectKey}
+      />
+      <DeleteData
+        deleteDialog={deleteDialog}
+        selectedProjectKey={selectedProjectKey}
+      />
     </div>
   );
 }
 
-function StartProject({ setProjectKey, setDarkMode }) {
-  const [state, setState] = useState(STATES.idle);
-  const [error, setError] = useState(null);
-  const [connectionStatus, setConnectionStatus] = useState(null);
-
-  useEffect(() => {
-    const unlisten = listen("connection-status", ({ payload }) =>
-      setConnectionStatus(payload),
-    );
-
-    return () => unlisten.then((fn) => fn());
-  }, []);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setState(STATES.working);
-    setError(null);
-
-    const data = new FormData(e.target);
-    const projectKey = data.get("projectKey");
-    const hostname = data.get("hostname");
-    const darkMode = data.get("darkMode");
-    try {
-      await invoke("select_project", { projectKey, hostname });
-      localStorage.setItem("circles.last_hostname", hostname);
-      setDarkMode(darkMode);
-      setProjectKey(projectKey);
-    } catch (error) {
-      setState(STATES.error);
-      setError(error);
-      setConnectionStatus(null);
-      // If an unknown error occurs, we want to log the details so we can see what went wrong
-      // eslint-disable-next-line no-console
-      if (error.kind === "Unknown") console.error(error);
-    }
-  }
-
+function ProjectView({
+  projects,
+  setSelectedProjectKey,
+  startDialog,
+  exportDialog,
+  deleteDialog,
+}) {
+  const sortedProjects = projects.sort(function (a, b) {
+    var textA = (
+      Object.values(a.name).find((value) => value !== null) || a.key
+    ).toUpperCase();
+    var textB = (
+      Object.values(b.name).find((value) => value !== null) || b.key
+    ).toUpperCase();
+    return textA < textB ? -1 : textA > textB ? 1 : 0;
+  });
   return (
-    <form
-      action=""
-      onSubmit={handleSubmit}
-      className="start-screen__card"
-      disabled={[STATES.working, STATES.done].includes(state)}
-    >
-      <h1 className="start-screen__title">
-        {translate("start_project_title")}
-      </h1>
-      <div className="start-screen__input">
-        <label className="start-screen__label" htmlFor="projectKey">
-          {translate("start_project_key")}
-        </label>
-        <input
-          className="start-screen__field"
-          type="text"
-          name="projectKey"
-          id="projectKey"
-          autoCapitalize="false"
-          required
-        />
+    <div className="start-screen__project-list">
+      <div className="start-screen__project-title">
+        {translate("start_project_key")}
       </div>
-      <div className="start-screen__input">
-        <label className="start-screen__label" htmlFor="hostname">
-          {translate("start_reader_hostname")}
-        </label>
-        <input
-          className="start-screen__field"
-          type="text"
-          name="hostname"
-          id="hostname"
-          autoCapitalize="false"
-          placeholder="fx9600123456"
-          minLength={12}
-          maxLength={12}
-          required
-          defaultValue={previousHostname}
-        />
-      </div>
-      <div className="start-screen__input start-screen__input--checkbox">
-        <input
-          type="checkbox"
-          name="darkMode"
-          id="darkMode"
-          className="start-screen__checkbox"
-          defaultChecked={true}
-        />
-        <label htmlFor="darkMode" className="start-screen__label">
-          {translate("start_dark_mode")}
-        </label>
-      </div>
-      <button
-        type="submit"
-        className="start-screen__button"
-        disabled={[STATES.working, STATES.done].includes(state)}
-      >
-        {translate("start_project_button")}
-      </button>
-      {state === STATES.working && (
-        <span className="start-screen__message start-screen__message--spinner">
-          {translate("start_connecting")}
-        </span>
-      )}
-      {state === STATES.error && (
-        <span className="start-screen__message start-screen__message--error">
-          {translateError(error)}
-        </span>
-      )}
-      {connectionStatus && (
-        <span className="start-screen__detail">{connectionStatus}</span>
-      )}
-    </form>
+      <ul className="start-screen__project-list">
+        {sortedProjects.map((i, e) => (
+          <ProjectItem
+            key={e}
+            projectKey={i.key}
+            projectName={
+              Object.values(i.name).find((value) => value !== null) || i.key
+            }
+            setSelectedProjectKey={setSelectedProjectKey}
+            startDialog={startDialog}
+            exportDialog={exportDialog}
+            deleteDialog={deleteDialog}
+          />
+        ))}
+      </ul>
+    </div>
   );
 }
 
-function ExportCard() {
-  const [state, setState] = useState(STATES.error);
-  const [error, setError] = useState(null);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setState(STATES.working);
-
-    const data = new FormData(e.target);
-    const projectKey = data.get("projectKey");
-
-    const filepath = await save({
-      filters: [
-        {
-          name: "export",
-          extensions: ["xlsx"],
-        },
-      ],
-    });
-    if (filepath === null) {
-      setError(translate("start_export_no_filepath_error"));
-      return;
-    }
-
-    try {
-      await invoke("save_export", { filepath, projectKey });
-      setState(STATES.done);
-    } catch (e) {
-      setError(e);
-      setState(STATES.error);
-    }
-  }
-
+function ProjectItem({
+  projectKey,
+  projectName,
+  setSelectedProjectKey,
+  startDialog,
+  exportDialog,
+  deleteDialog,
+}) {
   return (
-    <form
-      className="start-screen__card"
-      onSubmit={handleSubmit}
-      disabled={[STATES.working, STATES.done].includes(state)}
-    >
-      <h2 className="start-screen__title">{translate("start_export_title")}</h2>
-      <div className="start-screen__input">
-        <label className="start-screen__label" htmlFor="projectKey">
-          {translate("start_project_key")}
-        </label>
-        <input
-          className="start-screen__field"
-          type="text"
-          name="projectKey"
-          id="projectKey"
-          autoCapitalize="false"
-          required
-        />
+    <li className="start-screen__project-item">
+      <span className="project-item__title">{projectName}</span>
+      <div className="project-item__controls">
+        <button
+          className="start-screen__button start-screen__button--start"
+          onClick={() => {
+            startDialog.current?.showModal();
+            setSelectedProjectKey(projectKey);
+          }}
+        >
+          {translate("start_project_button")}
+        </button>
+        <span className="project-item__spacer"></span>
+        <button
+          className="start-screen__button start-screen__button--link"
+          onClick={() => {
+            exportDialog.current?.showModal();
+            setSelectedProjectKey(projectKey);
+          }}
+        >
+          {translate("start_export_title")}
+        </button>
+        <button
+          className="start-screen__button start-screen__button--link"
+          onClick={() => {
+            deleteDialog.current?.showModal();
+            setSelectedProjectKey(projectKey);
+          }}
+          style={{ visibility: "hidden" }}
+        >
+          {translate("start_delete_title")}
+        </button>
       </div>
-      <button className="start-screen__button" type="submit">
-        {translate("start_export_button")}
-      </button>
-      {state === STATES.working && (
-        <span className="start-screen__message start-screen__message--spinner">
-          {translate("start_export_working")}
-        </span>
-      )}
-      {state === STATES.done && (
-        <span className="start-screen__message start-screen__message--success">
-          {translate("start_export_done")}
-        </span>
-      )}
-      {state === STATES.error && (
-        <span className="start-screen__message start-screen__message--error">
-          {error}
-        </span>
-      )}
-    </form>
+    </li>
   );
 }

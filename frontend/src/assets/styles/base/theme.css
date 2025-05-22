@@ -9,10 +9,13 @@
   /* HSL values */
   --hsl-white: 0 0% 100%;
   --hsl-grey: 0 0% 50%;
-  --hsl-grey-light: 0 0% 30%;
+  --hsl-grey-light: 0 0% 82%;
   --hsl-black: 241 80% 7%;
   --hsl-blue-light: 240 72% 47%;
   --hsl-blue: 240 70% 26%;
+  --hsl-blue-dark: 263 100% 12%;
+  --hsl-purple-lighter: 263 100% 30%;
+  --hsl-purple-light: 263 100% 24%;
   --hsl-purple: 263 100% 19%;
   --hsl-green: 120 100% 34%;
   --hsl-pink: 342 73% 67%;
@@ -27,6 +30,9 @@
   --color-black: hsl(var(--hsl-black));
   --color-blue-light: hsl(var(--hsl-blue-light));
   --color-blue: hsl(var(--hsl-blue));
+  --color-blue-dark: hsl(var(--hsl-blue-dark));
+  --color-purple-lighter: hsl(var(--hsl-purple-lighter));
+  --color-purple-light: hsl(var(--hsl-purple-light));
   --color-purple: hsl(var(--hsl-purple));
   --color-green: hsl(var(--hsl-green));
   --color-pink: hsl(var(--hsl-pink));
@@ -39,6 +45,7 @@
     "Manrope", ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont,
     "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --text-2xs: 1rem;
   --text-xs: 1.25rem;
   --text-sm: 1.75rem;
   --text-md: 2rem;

@@ -59,6 +59,7 @@ export default function App() {
       setDarkMode={setDarkMode}
       language={language}
       toggleFullScreen={toggleFullScreen}
+      projects={projects}
     />
   );
 }

@@ -1,46 +1,105 @@
 .start-screen {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 35rem));
+  grid-template:
+    "title import fullscreen" auto
+    "project_list project_list project_list" 1fr
+    / 1fr auto auto;
   gap: 1rem;
   justify-content: center;
-  align-items: center;
+  width: 100%;
   height: 100vh;
   padding: 3rem;
-  background-color: var(--color-purple);
+  background-color: var(--color-blue-dark);
 }
 
-.start-screen__card {
+.start-screen__project-list {
+  grid-area: project_list;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  justify-content: center;
-  align-items: center;
-  max-width: 35rem;
-  padding: 1.5rem 2rem;
+  margin: 0;
+  padding: 0;
   color: var(--color-black);
+  font-weight: 500;
   border-radius: var(--rounded-base);
   background-color: var(--color-white);
-  aspect-ratio: 1;
+  list-style-type: none;
+  overflow: auto;
+}
+
+.start-screen__popup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 50vw;
+  margin: auto;
+  padding: 1.5rem 2rem;
+}
+
+.dialog {
+  color: var(--color-black);
+  border: unset;
+  border-radius: var(--rounded-base);
+  background: var(--color-white);
+
+  &::backdrop {
+    background-color: rgb(0 0 0 / 40%);
+    backdrop-filter: blur(12px);
+  }
+}
+
+.dialog__icon--delete {
+  width: 20px;
+  height: 21px;
+}
+
+.dialog__icon--fullscreen {
+  width: 16px;
+  height: 16px;
+}
+
+.dialog__icon--import {
+  width: 20px;
+  height: 21px;
+}
+
+.dialog__icon--start {
+  width: 18px;
+  height: 13px;
+}
+
+.dialog__button-container {
+  display: flex;
+  gap: 1rem;
 }
 
 .start-screen__title {
-  font-weight: 600;
-  font-size: 1.25rem;
+  grid-area: title;
+  color: var(--color-white);
+  font-weight: 800;
+  font-size: var(--text-md);
 }
 
-.start-screen__input {
+.dialog__title {
+  color: var(--color-black);
+}
+
+.dialog__title--red {
+  color: var(--color-red);
+}
+
+.dialog__input {
   width: min(100%, 20rem);
 }
 
-.start-screen__label {
+.dialog__label {
   display: block;
   margin-bottom: 0.375rem;
   color: var(--color-grey);
   font-weight: 400;
-  font-size: 0.875rem;
+  font-size: var(--text-2xs);
 }
 
-.start-screen__field {
+.dialog__input-field {
   width: 100%;
   padding: 0.75rem;
   font-weight: 400;
@@ -59,41 +118,42 @@
   }
 }
 
-.start-screen__checkbox {
+.dialog__checkbox {
   width: 1.25rem;
   height: 1.25rem;
   accent-color: var(--color-purple);
 }
 
-.start-screen__input--checkbox {
+.dialog__input--checkbox {
   display: flex;
   gap: 0.25rem;
   align-items: center;
 
-  & .start-screen__label {
+  & .dialog__label {
     margin-bottom: 0;
     line-height: 1;
   }
 }
 
 .start-screen__button {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
   padding: 1rem;
   color: var(--color-white);
   font-weight: 600;
   line-height: 1;
-  text-transform: uppercase;
   border: none;
   border-radius: var(--rounded-md);
-  background-color: var(--color-purple);
+  background-color: var(--color-purple-light);
   appearance: none;
 
   &:hover {
-    background-color: var(--color-blue-light);
+    background-color: var(--color-purple-lighter);
   }
 
   &:focus {
-    outline-color: var(--color-purple);
-    outline-offset: 4px;
+    outline: 2px solid var(--color-pink);
   }
 
   &:disabled {
@@ -101,20 +161,82 @@
   }
 }
 
-.start-screen__message {
+.start-screen__button--link {
+  padding: 0;
+  color: var(--color-black);
+  font-size: inherit;
+  font-family: inherit;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  outline: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+    background-color: unset;
+  }
+
+  &:focus {
+    border-radius: 0;
+    outline: 1px solid var(--color-purple);
+    outline-offset: 10px;
+  }
+
+  &:disabled {
+    background-color: var(--color-grey);
+  }
+}
+
+.start-screen__button--outline {
+  color: var(--color-purple);
+  border: 1px solid var(--color-grey-light);
+  background-color: var(--color-white);
+
+  &:hover {
+    background-color: var(--color-grey-light);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-pink);
+  }
+
+  &:disabled {
+    background-color: var(--color-grey);
+  }
+}
+
+.start-screen__button--red {
+  color: var(--color-white);
+  background-color: var(--color-red);
+
+  &:hover {
+    background-color: var(--color-black);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-pink);
+  }
+
+  &:disabled {
+    background-color: var(--color-grey);
+  }
+}
+
+.dialog__message {
   color: var(--color-purple);
   white-space: preserve;
 }
 
-.start-screen__message--success {
+.dialog__message--success {
   color: var(--color-green);
 }
 
-.start-screen__message--error {
+.dialog__message--error {
   color: var(--color-red);
 }
 
-.start-screen__message--spinner::before {
+.dialog__message--spinner::before {
   content: "";
   display: inline-block;
   height: 1.625rem;
@@ -128,7 +250,7 @@
   aspect-ratio: 1;
 }
 
-.start-screen__detail {
+.dialog__detail {
   display: inline-block;
   width: 100%;
   font-weight: 400;
@@ -137,7 +259,7 @@
 }
 
 .start-screen__fullscreen-button {
-  position: absolute;
+  grid-area: fullscreen;
   top: 2rem;
   right: 2rem;
   padding: 1rem;
@@ -145,6 +267,49 @@
   border-radius: var(--rounded-base);
   background-color: var(--color-white);
   cursor: pointer;
+}
+
+.start-screen__import-button {
+  grid-area: import;
+  top: 2rem;
+  right: 2rem;
+  padding: 1rem;
+  line-height: 1;
+  border-radius: var(--rounded-base);
+  background-color: var(--color-white);
+  cursor: pointer;
+}
+
+.start-screen__project-title {
+  padding: 1rem 1.5rem;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-grey-light);
+}
+
+.start-screen__project-item {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 1.5rem;
+  border-bottom: 1px solid var(--color-grey-light);
+}
+
+.project-item__title {
+  flex-grow: 1;
+}
+
+.project-item__controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-item__spacer {
+  height: 2rem;
+  border: 1px solid var(--color-grey-light);
 }
 
 @keyframes rotation {
