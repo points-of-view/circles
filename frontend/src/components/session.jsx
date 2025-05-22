@@ -272,14 +272,11 @@ export default function Session({ project, resetProject, language, darkMode }) {
 
   function goToPreviousStep() {
     switch (step) {
-      case STEPS.showBigTitle:
+      case STEPS.showBigQuestion:
         if (phase > 0) {
           setPhase((currentPhase) => currentPhase - 1);
           setStep(STEPS.showMainInteractionScreen);
         }
-        break;
-      case STEPS.showBigQuestion:
-        setStep(STEPS.showBigTitle);
         break;
       case STEPS.showMainInteractionScreen:
         if (phase === 0) {
