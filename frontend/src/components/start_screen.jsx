@@ -85,16 +85,28 @@ function ProjectView({
   exportDialog,
   deleteDialog,
 }) {
+  const sortedProjects = projects.sort(function (a, b) {
+    var textA = (
+      Object.values(a.name).find((value) => value !== null) || a.key
+    ).toUpperCase();
+    var textB = (
+      Object.values(b.name).find((value) => value !== null) || b.key
+    ).toUpperCase();
+    return textA < textB ? -1 : textA > textB ? 1 : 0;
+  });
   return (
     <div className="start-screen__project-list">
       <div className="start-screen__project-title">
         {translate("start_project_key")}
       </div>
       <ul className="start-screen__project-list">
-        {projects.map((i, e) => (
+        {sortedProjects.map((i, e) => (
           <ProjectItem
             key={e}
             projectKey={i.key}
+            projectName={
+              Object.values(i.name).find((value) => value !== null) || i.key
+            }
             setSelectedProjectKey={setSelectedProjectKey}
             startDialog={startDialog}
             exportDialog={exportDialog}
@@ -108,6 +120,7 @@ function ProjectView({
 
 function ProjectItem({
   projectKey,
+  projectName,
   setSelectedProjectKey,
   startDialog,
   exportDialog,
@@ -115,7 +128,7 @@ function ProjectItem({
 }) {
   return (
     <li className="start-screen__project-item">
-      <span className="project-item__title">{projectKey}</span>
+      <span className="project-item__title">{projectName}</span>
       <div className="project-item__controls">
         <button
           className="start-screen__button start-screen__button--start"
