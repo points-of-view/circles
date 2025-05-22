@@ -19,7 +19,9 @@ export function StartScreen({
 
   return (
     <div className="start-screen">
-      <div className="start-screen__title">Circles</div>
+      <div className="start-screen__title">
+        {translate("installation_name")}
+      </div>
       <button
         className="start-screen__button"
         onClick={() => importDialog.current?.showModal()}
