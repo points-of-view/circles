@@ -10,7 +10,7 @@ edition = "2021"
 tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
-tauri = { version = "1.8.2", features = [ "dialog-open", "window-set-fullscreen", "dialog-save", "updater", "shell-open", "process-command-api", "test", "devtools" ] }
+tauri = { version = "1.8.3", features = [ "dialog-open", "window-set-fullscreen", "dialog-save", "updater", "shell-open", "process-command-api", "test", "devtools" ] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 diesel = { version = "2.2.10", features = ["sqlite", "time", "returning_clauses_for_sqlite_3_35"] }
