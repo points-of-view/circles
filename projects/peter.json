@@ -1,0 +1,344 @@
+{
+  "name": {
+    "sl": "MCC testing"
+  },
+  "availableLanguages": ["sl"],
+  "key": "peter",
+  "themes": [
+    {
+      "name": {
+        "sl": "Umetna inteligenca in ti"
+      },
+      "key": "Umetna",
+      "questions": [
+        {
+          "title": {
+            "sl": "Umetna inteligenca (UI) se uči na podlagi ..."
+          },
+          "key": "question-umetna-inteligenca-one",
+          "type": "quiz",
+          "options": [
+            {
+              "key": "question-umetna-inteligenca-option-one",
+              "value": {
+                "sl": "Podatkov"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-umetna-inteligenca-option-two",
+              "value": {
+                "sl": "Izkušenj"
+              }
+            },
+            {
+              "key": "question-umetna-inteligenca-option-three",
+              "value": {
+                "sl": "Logičnega sklepanja"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Generativna UI pomeni da lahko UI ..."
+          },
+          "key": "question-umetna-inteligenca-two",
+          "type": "quiz",
+          "options": [
+            {
+              "key": "question-umetna-inteligenca-two-option-one",
+              "value": {
+                "sl": "Razvršča vsebine"
+              }
+            },
+            {
+              "key": "question-umetna-inteligenca-two-option-two",
+              "value": {
+                "sl": "Ustvarja vsebine"
+              },
+              "correct": true
+            },
+            {
+              "key": "question-umetna-inteligenca-two-option-three",
+              "value": {
+                "sl": "Prepozna vzorce"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "UI je objektivna, nevtralna in brez predsodkov ..."
+          },
+          "key": "question-umetna-inteligenca-three",
+          "type": "quiz",
+          "options": [
+            {
+              "key": "question-umetna-inteligenca-three-option-one",
+              "value": {
+                "sl": "Drži"
+              }
+            },
+            {
+              "key": "question-umetna-inteligenca-three-option-two",
+              "value": {
+                "sl": "Drži delno"
+              }
+            },
+            {
+              "key": "question-umetna-inteligenca-three-option-three",
+              "value": {
+                "sl": "Ne drži"
+              },
+              "correct": true
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Umetno inteligenco uporabljam ..."
+          },
+          "key": "statement-umetna-inteligenca-one",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-umetna-inteligenca-one-option-one",
+              "value": {
+                "sl": "Vsak dan"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-one-option-two",
+              "value": {
+                "sl": "Enkrat na teden"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-one-option-three",
+              "value": {
+                "sl": "Zelo redko"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Avtorske pravice za vsebine, na podlagi katerih se je UI naučil_a so nepomembne."
+          },
+          "key": "statement-umetna-inteligenca-two",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-umetna-inteligenca-two-option-one",
+              "value": {
+                "sl": "Da"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-two-option-two",
+              "value": {
+                "sl": "Ne vem"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-two-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Umetna inteligenca škoduje naravi."
+          },
+          "key": "statement-umetna-inteligenca-three",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-umetna-inteligenca-three-option-one",
+              "value": {
+                "sl": "Da"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-three-option-two",
+              "value": {
+                "sl": "Ne vem"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-three-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Umetna inteligenca bo kmalu presegla človeško!"
+          },
+          "key": "statement-umetna-inteligenca-four",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-umetna-inteligenca-four-option-one",
+              "value": {
+                "sl": "Da"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-four-option-two",
+              "value": {
+                "sl": "Ne vem"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-four-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Umetna inteligenca nam bo vzela službe!"
+          },
+          "key": "statement-umetna-inteligenca-five",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-umetna-inteligenca-five-option-one",
+              "value": {
+                "sl": "Da"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-five-option-two",
+              "value": {
+                "sl": "Ne vem"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-five-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Dobro je, da nam bo umetna inteligenca vzela službe!"
+          },
+          "key": "statement-umetna-inteligenca-six",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-umetna-inteligenca-six-option-one",
+              "value": {
+                "sl": "Da"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-six-option-two",
+              "value": {
+                "sl": "Ne vem"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-six-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Kdo naj omejuje rabo umetne inteligence?"
+          },
+          "key": "statement-umetna-inteligenca-seven",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-umetna-inteligenca-seven-option-one",
+              "value": {
+                "sl": "Država"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-seven-option-two",
+              "value": {
+                "sl": "Razvijalci (podjetja)"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-seven-option-three",
+              "value": {
+                "sl": "Nihče"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Šole bi morale vzpodbujati uporabo umetne inteligence."
+          },
+          "key": "statement-umetna-inteligenca-eight",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-umetna-inteligenca-eight-option-one",
+              "value": {
+                "sl": "Da"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-eight-option-two",
+              "value": {
+                "sl": "Ne vem"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-eight-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        },
+        {
+          "title": {
+            "sl": "Spletni giganti bi morali razkrivati kako delujejo njihovi algoritmi."
+          },
+          "key": "statement-umetna-inteligenca-nine",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "statement-umetna-inteligenca-nine-option-one",
+              "value": {
+                "sl": "Da"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-nine-option-two",
+              "value": {
+                "sl": "Ne vem"
+              }
+            },
+            {
+              "key": "statement-umetna-inteligenca-nine-option-three",
+              "value": {
+                "sl": "Ne"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
