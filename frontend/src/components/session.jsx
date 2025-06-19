@@ -35,6 +35,8 @@ export default function Session({ project, resetProject, language, darkMode }) {
 
   const currentQuestion =
     chosenTheme !== null && chosenTheme.questions[phase - 1];
+  const previousQuestion =
+    chosenTheme !== null && chosenTheme.questions[phase - 2];
   const description =
     step === STEPS.showMainInteractionScreen
       ? translate("answer_instruction", language)
@@ -275,7 +277,11 @@ export default function Session({ project, resetProject, language, darkMode }) {
       case STEPS.showBigQuestion:
         if (phase > 0) {
           setPhase((currentPhase) => currentPhase - 1);
-          setStep(STEPS.showMainInteractionScreen);
+          if (previousQuestion.type === "text") {
+            setStep(STEPS.showBigQuestion);
+          } else {
+            setStep(STEPS.showMainInteractionScreen);
+          }
         }
         break;
       case STEPS.showMainInteractionScreen:
@@ -289,7 +295,11 @@ export default function Session({ project, resetProject, language, darkMode }) {
         setStep(STEPS.showMainInteractionScreen);
         break;
       case STEPS.showFact:
-        setStep(STEPS.showBigOption);
+        if (currentQuestion.type === "quiz") {
+          setStep(STEPS.showBigOption);
+        } else if (currentQuestion.type === "opinion") {
+          setStep(STEPS.showMainInteractionScreen);
+        }
         break;
     }
   }
