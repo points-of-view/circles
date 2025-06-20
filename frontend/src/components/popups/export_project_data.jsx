@@ -74,7 +74,10 @@ export default function ExportCard({ exportDialog, selectedProjectKey }) {
           <button
             type="button"
             className="start-screen__button start-screen__button--outline"
-            onClick={() => exportDialog.current?.close()}
+            onClick={() => {
+              exportDialog.current?.close();
+              setState(STATES.idle);
+            }}
           >
             {translate("close_button")}
           </button>
