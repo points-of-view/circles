@@ -42,7 +42,11 @@ export default function ExportCard({ exportDialog, selectedProjectKey }) {
   }
 
   return (
-    <dialog className="dialog" ref={exportDialog}>
+    <dialog
+      className="dialog"
+      ref={exportDialog}
+      onClose={() => setState(STATES.idle)}
+    >
       <div className="start-screen__popup">
         <h2 className="dialog__title">{translate("start_export_title")}</h2>
         <span className="dialog__label">
