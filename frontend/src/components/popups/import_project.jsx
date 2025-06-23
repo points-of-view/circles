@@ -32,7 +32,11 @@ export default function ImportCard({ importDialog }) {
   }
 
   return (
-    <dialog className="dialog" ref={importDialog}>
+    <dialog
+      className="dialog"
+      ref={importDialog}
+      onClose={() => setState(STATES.idle)}
+    >
       <div className="start-screen__popup">
         <h2 className="dialog__title">{translate("import_project")}</h2>
         <span className="dialog__label">
