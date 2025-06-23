@@ -25,7 +25,11 @@ export default function DeleteData({ deleteDialog, selectedProjectKey }) {
   }
 
   return (
-    <dialog className="dialog" ref={deleteDialog}>
+    <dialog
+      className="dialog"
+      ref={deleteDialog}
+      onClose={() => setState(STATES.idle)}
+    >
       <div className="start-screen__popup">
         <h2 className="dialog__title--red">
           {translate("start_delete_title")}

@@ -55,7 +55,11 @@ export default function StartProject({
   }
 
   return (
-    <dialog className="dialog" ref={startDialog}>
+    <dialog
+      className="dialog"
+      ref={startDialog}
+      onClose={() => setState(STATES.idle)}
+    >
       <form
         action=""
         onSubmit={handleSubmit}
