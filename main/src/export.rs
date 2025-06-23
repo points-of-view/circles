@@ -90,7 +90,7 @@ fn fetch_batch_and_write(
         .load::<(Answer, Step, Session)>(connection)
         .unwrap();
 
-    let format = Format::new().set_num_format("yyyy-mm-dd hh::mm:ss");
+    let format = Format::new().set_num_format("yyyy-mm-dd hh:mm:ss");
     let language = project.available_languages.first().unwrap();
 
     for (row, (answer, step, session)) in results.iter().enumerate() {
