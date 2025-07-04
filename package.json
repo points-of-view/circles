@@ -17,7 +17,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.6.2",
+    "@tauri-apps/cli": "^2.6.2",
     "@tree-company/eslint-config": "^0.5.0",
     "@tree-company/stylelint-config": "^0.5.0",
     "eslint": "^9.30.1",
