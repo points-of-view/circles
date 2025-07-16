@@ -18,6 +18,14 @@
   --option-color: var(--color-orange);
 }
 
+.options-view__option--blue {
+  --option-color: var(--color-blue-light);
+}
+
+.options-view__option--yellow {
+  --option-color: var(--color-yellow-light);
+}
+
 .options-view__option:first-child {
   align-self: flex-start;
 }
