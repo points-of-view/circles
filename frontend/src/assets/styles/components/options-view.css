@@ -47,3 +47,30 @@
 .options-view__option:first-child:last-child {
   align-self: center;
 }
+
+.options-view__option:nth-child(1):nth-last-child(2),
+.options-view__option:nth-child(2):nth-last-child(1) {
+  align-self: flex-end;
+
+  .option__content {
+    width: 75%;
+  }
+}
+
+.options-view:has(> :nth-child(4)) {
+  gap: unset;
+
+  .option__amount {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .option__figure-container {
+    gap: 4px;
+    height: 30px;
+  }
+
+  .option__figure-icon {
+    height: 30px;
+  }
+}
