@@ -12,14 +12,98 @@
         {
           "title": { "en": "How is your day going?" },
           "key": "question-one",
+          "type": "opinion",
           "options": [
             {
               "key": "question-one-option-one",
               "value": { "en": "Great" }
+            }
+          ]
+        },
+        {
+          "title": { "en": "How is your day going?" },
+          "key": "question-two",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-two-option-two",
+              "value": { "en": "Great" }
             },
             {
-              "key": "question-one-option-two",
+              "key": "question-two-option-two",
+              "value": { "en": "Greatgreat" }
+            }
+          ]
+        },
+        {
+          "title": { "en": "How is your day going?" },
+          "key": "question-three",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-two-option-two",
+              "value": { "en": "Great" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "en": "Great" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "en": "Greatgreat" }
+            }
+          ]
+        },
+        {
+          "title": { "en": "How is your day going?" },
+          "key": "question-foour",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-two-option-two",
+              "value": { "en": "Great" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "en": "Great" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "en": "Great" }
+            },
+            {
+              "key": "question-two-option-two",
+              "value": { "en": "Greatgreat" }
+            }
+          ]
+        },
+        {
+          "title": { "en": "How is your day going?" },
+          "key": "question-five",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "question-two-option-two",
+              "value": { "en": "Great" }
+            },
+            {
+              "key": "question-two-option-two",
               "value": { "en": "Really great!" }
+            }
+            ,
+            {
+              "key": "question-two-option-thrte",
+              "value": { "en": "Really greatgreat!" }
+            }
+            ,
+            {
+              "key": "question-two-option-dsaf",
+              "value": { "en": "Really greatgreatgreat!" }
+            }
+            ,
+            {
+              "key": "question-two-option-twasdfasdfo",
+              "value": { "en": "Really greatgreatgreat!" }
             }
           ]
         }

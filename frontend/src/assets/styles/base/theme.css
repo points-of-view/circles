@@ -20,6 +20,7 @@
   --hsl-green: 120 100% 34%;
   --hsl-pink: 342 73% 67%;
   --hsl-orange: 22 100% 51%;
+  --hsl-yellow-light: 44 100% 50%;
   --hsl-yellow: 49 100% 30%;
   --hsl-red: 0 69% 48%;
 
@@ -37,6 +38,7 @@
   --color-green: hsl(var(--hsl-green));
   --color-pink: hsl(var(--hsl-pink));
   --color-orange: hsl(var(--hsl-orange));
+  --color-yellow-light: hsl(var(--hsl-yellow-light));
   --color-yellow: hsl(var(--hsl-yellow));
   --color-red: hsl(var(--hsl-red));
 

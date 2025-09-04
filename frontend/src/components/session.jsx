@@ -14,13 +14,33 @@ export const STEPS = {
   showFact: "showFact",
 };
 
-const COLORS = ["green", "pink", "orange"];
+const COLORS = ["green", "yellow", "pink", "blue", "orange"];
 
-function assignOptionColors(options) {
-  return options.map((option, index) => ({
-    value: option,
-    color: COLORS[index],
-  }));
+function assignOptionColors(options, chosenAnswer) {
+  const colorMapping = {
+    1: [COLORS[2]],
+    2: [COLORS[0], COLORS[4]],
+    3: [COLORS[0], COLORS[2], COLORS[4]],
+    4: [COLORS[0], COLORS[1], COLORS[3], COLORS[4]],
+    5: [COLORS[0], COLORS[1], COLORS[2], COLORS[3], COLORS[4]],
+  };
+
+  // Determine which color array to use based on the number of options
+  const selectedColors = colorMapping[options.length];
+
+  if (typeof chosenAnswer === "undefined") {
+    return options.map((option, index) => ({
+      value: option,
+      color: selectedColors[index],
+    }));
+  } else {
+    return [
+      {
+        value: chosenAnswer,
+        color: selectedColors[options.findIndex((e) => e === chosenAnswer)],
+      },
+    ];
+  }
 }
 
 export default function Session({ project, resetProject, language, darkMode }) {
@@ -102,15 +122,10 @@ export default function Session({ project, resetProject, language, darkMode }) {
       if (step === STEPS.showMainInteractionScreen) {
         return assignOptionColors(themes.map((a) => a.name[language]));
       } else if (step === STEPS.showBigOption) {
-        return [
-          {
-            value: chosenTheme.name[language],
-            color:
-              COLORS[
-                themes.findIndex((theme) => theme.key === chosenTheme.key)
-              ],
-          },
-        ];
+        return assignOptionColors(
+          themes.map((a) => a.name[language]),
+          chosenTheme.name[language],
+        );
       }
     } else {
       if (step === STEPS.showMainInteractionScreen) {
@@ -121,12 +136,10 @@ export default function Session({ project, resetProject, language, darkMode }) {
         const correctAnswerIndex = currentQuestion.options.findIndex(
           (a) => a.correct === true,
         );
-        return [
-          {
-            value: currentQuestion.options[correctAnswerIndex]?.value[language],
-            color: COLORS[correctAnswerIndex],
-          },
-        ];
+        return assignOptionColors(
+          currentQuestion.options.map((a) => a.value[language]),
+          currentQuestion.options[correctAnswerIndex]?.value[language],
+        );
       }
     }
   })();
