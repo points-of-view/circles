@@ -277,7 +277,10 @@ export default function Session({ project, resetProject, language, darkMode }) {
       case STEPS.showBigQuestion:
         if (phase > 0) {
           setPhase((currentPhase) => currentPhase - 1);
-          if (previousQuestion.type === "text") {
+          if (
+            typeof previousQuestion !== "undefined" &&
+            previousQuestion.type === "text"
+          ) {
             setStep(STEPS.showBigQuestion);
           } else {
             setStep(STEPS.showMainInteractionScreen);
