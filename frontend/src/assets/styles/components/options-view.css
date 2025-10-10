@@ -26,35 +26,36 @@
   --option-color: var(--color-yellow-light);
 }
 
-.options-view__option:first-child {
+.options-view .options-view__option {
   align-self: flex-start;
 }
 
-.options-view__option:last-child {
-  align-self: flex-start;
-}
-
-.options-view__option:not(:first-child, :last-child) {
-  align-self: flex-end;
-}
-
-/* In case of 5 options, move the 2nd and 4th child to the center */
-.options-view__option:nth-child(2):nth-last-child(4),
-.options-view__option:nth-child(4):nth-last-child(2) {
+.options-view[data-options-count="1"] .options-view__option {
   align-self: center;
 }
 
-.options-view__option:first-child:last-child {
-  align-self: center;
-}
-
-.options-view__option:nth-child(1):nth-last-child(2),
-.options-view__option:nth-child(2):nth-last-child(1) {
-  align-self: flex-end;
-
+.options-view[data-options-count="2"] .options-view__option {
   .option__content {
     width: 75%;
   }
+}
+
+.options-view[data-options-count="3"] .options-view__option:nth-child(2) {
+  align-self: flex-end;
+}
+
+.options-view[data-options-count="4"] .options-view__option:nth-child(2),
+.options-view[data-options-count="4"] .options-view__option:nth-child(3) {
+  align-self: flex-end;
+}
+
+.options-view[data-options-count="5"] .options-view__option:nth-child(3) {
+  align-self: flex-end;
+}
+
+.options-view[data-options-count="5"] .options-view__option:nth-child(2),
+.options-view[data-options-count="5"] .options-view__option:nth-child(4) {
+  align-self: center;
 }
 
 .options-view:has(> :nth-child(4)) {
