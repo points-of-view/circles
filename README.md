@@ -12,7 +12,6 @@ This repository contains 4 main folders that define the structure of the program
 ## Setup
 
 ### Requirements
-This application is developped to run on a Raspberry Pi 5 with Raspberry Pi OS installed. The application is an interface that's made to connect with an RFID Reader, the Zebra FX9600. Other RFID readers using the LLRP may work but are not tested. For an extensive list of the exact materials, please refer to the Installation Toolkit linked above.
 
 This application can run on all systems that tauri supports (though we only provide a build for Arm64-Linux). The application is an interface that connects with an RFID reader through LLRP. We made this using the Zebra FX9600. Other RFID readers from Zebra using LLRP may work but are not tested. Readers from other brands probably won't work, since we rely on some custom extensions to LLRP. For an extensive list of the exact materials, please refer to the Installation Toolkit linked above.
 It's recommended to use nix when working on circles, this will ensure that you have all the necessary dependencies and that we all use the same version of dependencies.
