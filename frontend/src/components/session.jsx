@@ -16,19 +16,19 @@ export const STEPS = {
 
 const COLORS = ["green", "yellow", "pink", "blue", "orange"];
 
-function assignOptionColors(options, chosenAnswer) {
-  const colorMapping = {
-    1: [COLORS[2]],
-    2: [COLORS[0], COLORS[4]],
-    3: [COLORS[0], COLORS[2], COLORS[4]],
-    4: [COLORS[0], COLORS[1], COLORS[3], COLORS[4]],
-    5: [COLORS[0], COLORS[1], COLORS[2], COLORS[3], COLORS[4]],
-  };
+const colorMapping = {
+  1: [COLORS[2]],
+  2: [COLORS[0], COLORS[4]],
+  3: [COLORS[0], COLORS[2], COLORS[4]],
+  4: [COLORS[0], COLORS[1], COLORS[3], COLORS[4]],
+  5: [COLORS[0], COLORS[1], COLORS[2], COLORS[3], COLORS[4]],
+};
 
+function assignOptionColors(options, chosenAnswer = undefined) {
   // Determine which color array to use based on the number of options
   const selectedColors = colorMapping[options.length];
 
-  if (typeof chosenAnswer === "undefined") {
+  if (chosenAnswer === undefined) {
     return options.map((option, index) => ({
       value: option,
       color: selectedColors[index],
