@@ -1,0 +1,72 @@
+name: Publish new version of app
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  release:
+    env:
+      GITHUB_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      uses: pguyot/arm-runner-action@v2.5.2
+      with:
+        base_image: https://dietpi.com/downloads/images/DietPi_RPi-ARMv8-Bullseye.img.xz
+        cpu: cortex-a53
+        bind_mount_repository: true
+        image_additional_mb: 10240
+        optimize_image: false
+        commands: |
+          # Rust complains (rightly) that $HOME doesn't match eid home
+          export HOME=/root
+          # Workaround to CI worker being stuck on Updating crates.io index
+          export CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
+          # Install setup prerequisites
+          apt-get update -y --allow-releaseinfo-change
+          apt-get upgrade -y
+          apt-get autoremove -y
+          apt-get install curl
+          curl https://sh.rustup.rs -sSf | sh -s -- -y
+          . "$HOME/.cargo/env"
+          curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash
+          # Install framework specific packages
+          apt-get install -y nodejs yarn
+          # Install build tools and tauri-cli requirements
+          apt-get install -y libwebkit2gtk-4.0-dev build-essential wget libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
+          cargo install tauri-cli
+          # Install frontend dependencies
+          yarn install
+          LIBGL_ALWAYS_SOFTWARE=1 TAURI_PRIVATE_KEY=${{ secrets.TAURI_PRIVATE_KEY }} TAURI_KEY_PASSWORD="" yarn tauri build
+    - name: Parse tag
+      id: parse_tag
+      run: "echo ${{ github.ref }} | sed 's#^refs/tags/#::set-output name=version::#'"
+    - name: Copy output
+      run: |
+        mkdir out/v${{ steps.parse_tag.outputs.version }}
+        cp ${{ github.workspace }}/target/release/bundle/appimage/circles_${{ steps.parse_tag.outputs.version }}_aarch64.AppImage.tar.gz out/
+    - name: Create update file
+      run: |
+        cat > out/update.json <<EOL
+          {
+            "version": "v${{ steps.parse_tag.outputs.version }}",
+            "platforms": {
+              "linux-aarch64": {
+                "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVTM29zREg1V2VsOXZ3ZUFGc0tEN0c0aWFqSUFXUUZVc1dIRm5sb25LQjRVajgvQjhUczc1M2s3MEk3SjRnQzdlUU4wdElIR3loRnN6UFhac0ZhTHpUOFJaajdqZHZVVXcwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzUwMDkwMjM2CWZpbGU6Y2lyY2xlc18wLjEuMTBfYWFyY2g2NC5BcHBJbWFnZS50YXIuZ3oKTVZ6MU85VkVrYkNYQUY4c2dYK1NvdEd3dmNZLzZid3J1Z0R4VFBiZXJGWGQvbU5tZWtwTCszalZ0MFZxcDlvWjg0QXh0Z2lTTHlPaEdYb1Y2amlhQ3c9PQo=",
+                "url": "https://tree-projects.s3.eu-central-1.amazonaws.com/circles/v"v${{ steps.parse_tag.outputs.version }}/circles_"v${{ steps.parse_tag.outputs.version }}_aarch64.AppImage.tar.gz"
+              }
+            }
+          }
+        EOL
+    - uses: jakejarvis/s3-sync-action@master
+      env:
+        AWS_REGION: "eu-central-1"
+        AWS_BUCKET: "tree-projects"
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        SOURCE_DIR: out/
+        DEST_DIR: circles/
