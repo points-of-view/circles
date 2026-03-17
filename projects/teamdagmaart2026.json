@@ -1,0 +1,149 @@
+{
+  "name": {
+    "nl": "Teamdag 19 maart 2026"
+  },
+  "availableLanguages": ["nl"],
+  "key": "teamdagmaart",
+  "themes": [
+    {
+      "name": {
+        "nl": "Levuurdag"
+      },
+      "key": "levuurdag",
+      "questions": [
+        {
+          "title": {
+            "nl": "Hoe voel je je?"
+          },
+          "key": "gevoel",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "gevoel-option-one",
+              "value": {
+                "nl": "Super blij om hier te zijn!"
+              }
+            },
+            {
+              "key": "gevoel-option-two",
+              "value": {
+                "nl": "Ik moet nog even landen..."
+              }
+            },
+            {
+              "key": "gevoel-option-three",
+              "value": {
+                "nl": "Ik heb het echt druk, dus ik hoop dat het een relevante namiddag wordt."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "nl": "Programma"
+      },
+      "key": "programma",
+      "questions": [
+        {
+          "title": {
+            "nl": "Wat hoop je vandaag te vinden?"
+          },
+          "key": "vandaag",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "vandaag-option-one",
+              "value": {
+                "nl": "Een oplossing voor mijn uitdaging"
+              }
+            },
+            {
+              "key": "vandaag-option-two",
+              "value": {
+                "nl": "Inspiratie, inzicht en goesting"
+              }
+            },
+            {
+              "key": "vandaag-option-three",
+              "value": {
+                "nl": "Toffe connecties"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "nl": "Verjaardagsfeest"
+      },
+      "key": "verjaardagsfeest",
+      "questions": [
+        {
+          "title": {
+            "nl": "Hoe moeten we 15 jaar Levuur volgens jou vieren?"
+          },
+          "key": "verjaardag",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "verjaardag-option-one",
+              "value": {
+                "nl": "Een sterk inhoudelijk congres"
+              }
+            },
+            {
+              "key": "verjaardag-option-two",
+              "value": {
+                "nl": "Dansend rond een vuur"
+              }
+            },
+            {
+              "key": "verjaardag-option-three",
+              "value": {
+                "nl": "Fijn volk, lekker eten, klaar"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "nl": "Phygital"
+      },
+      "key": "phygital",
+      "questions": [
+        {
+          "title": {
+            "nl": "Kan deze installatie een meerwaarde zijn in je werk?"
+          },
+          "key": "verjaardag",
+          "type": "opinion",
+          "options": [
+            {
+              "key": "verjaardag-option-one",
+              "value": {
+                "nl": "Lijkt me in elk project relevant!"
+              }
+            },
+            {
+              "key": "verjaardag-option-two",
+              "value": {
+                "nl": "Ik zie het nog niet helemaal, inspireer mij maar..."
+              }
+            },
+            {
+              "key": "verjaardag-option-three",
+              "value": {
+                "nl": "Ik zie wel wat opties om het gericht in te zetten. Let's try!"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
