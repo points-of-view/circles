@@ -13,7 +13,10 @@ export default function OptionsView({ options, tagCount, tagsMap }) {
     {},
   );
   return (
-    <div className="options-view interaction-screen__option-view">
+    <div
+      className="options-view interaction-screen__option-view"
+      data-options-count={options.length}
+    >
       {options.map((option, index) => (
         <Option
           key={option.value}
