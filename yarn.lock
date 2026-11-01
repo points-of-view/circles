@@ -734,10 +734,10 @@
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.40.2.tgz#8dae04d01a2cbd84d6297d99356674c6b993f0fc"
   integrity sha512-bwspbWB04XJpeElvsp+DCylKfF4trJDa2Y9Go8O6A7YLX2LIKGcNK/CYImJN6ZP4DcuOHB4Utl3iCbnR62DudA==
 
-"@tauri-apps/api@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-1.6.0.tgz#745b7e4e26782c3b2ad9510d558fa5bb2cf29186"
-  integrity sha512-rqI++FWClU5I2UBp4HXFvl+sBWkdigBkxnpJDQUWttNyG7IZP4FwQGhTNL5EOw0vI8i6eSAJ5frLqO7n7jbJdg==
+"@tauri-apps/api@^2.12.4":
+  version "2.12.4"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/api/-/api-2.12.4.tgz#2bab72b87696ae8dcfb4f4db2119e46a87aeabe0"
+  integrity sha512-pVmfis+4zT8H0Qhp3xPZx9Ju7kpzvA6rr/PSJPyuwfvucTQ8sVt61NYU9KMkK703UFlYadFmjKA4HhybOtN0gg==
 
 "@tauri-apps/cli-darwin-arm64@1.6.2":
   version "1.6.2"
